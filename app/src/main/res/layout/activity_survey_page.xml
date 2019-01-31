@@ -10,10 +10,10 @@
 
     <ImageView
         android:id="@+id/user_butterfly_imageView"
-        android:layout_width="294dp"
-        android:layout_height="284dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="56dp"
+        android:layout_width="255dp"
+        android:layout_height="234dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="76dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/orange_butterfly_image" />
@@ -43,11 +43,12 @@
         app:layout_constraintTop_toBottomOf="@+id/username_textView" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
@@ -113,11 +114,12 @@
         android:id="@+id/imageButton6"
         android:layout_width="62dp"
         android:layout_height="72dp"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="52dp"
         android:background="#00000000"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/home_button"
-        tools:layout_editor_absoluteX="174dp"
-        tools:layout_editor_absoluteY="605dp"
 
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:srcCompat="@drawable/home_button" />
 </android.support.constraint.ConstraintLayout>

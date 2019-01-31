@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MindfullnessSelection"
+    android:background="@drawable/background"
+    >
+
+    <ImageView
+        android:id="@+id/user_butterfly_imageView"
+        android:layout_width="255dp"
+        android:layout_height="234dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="76dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/orange_butterfly_image" />
+</android.support.constraint.ConstraintLayout>
