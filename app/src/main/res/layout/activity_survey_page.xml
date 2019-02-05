@@ -12,9 +12,12 @@
         android:id="@+id/user_butterfly_imageView"
         android:layout_width="255dp"
         android:layout_height="234dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="76dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.972"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/orange_butterfly_image" />
 
@@ -24,36 +27,44 @@
         android:layout_height="36dp"
         android:layout_marginStart="92dp"
         android:layout_marginTop="48dp"
+        android:layout_marginEnd="8dp"
         android:text="UserName32"
         android:textColor="#989898"
         android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_butterfly_imageView" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/survey_question_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
+        android:layout_marginEnd="8dp"
         android:text="How are you feeling?"
         android:textColor="#989898"
         android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username_textView" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+        android:layout_width="365dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/survey_question_tv">
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/red_mood_button"
             android:layout_width="68dp"
             android:layout_height="68dp"
             android:layout_weight="1"
@@ -64,7 +75,7 @@
             tools:layout_editor_absoluteY="543dp" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/darkorange_mood_button"
             android:layout_width="68dp"
             android:layout_height="68dp"
             android:layout_weight="1"
@@ -75,7 +86,7 @@
             tools:layout_editor_absoluteY="543dp" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/orange_mood_button"
             android:layout_width="68dp"
             android:layout_height="68dp"
             android:layout_weight="1"
@@ -86,7 +97,7 @@
             tools:layout_editor_absoluteY="543dp" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/yellow_mood_button"
             android:layout_width="68dp"
             android:layout_height="68dp"
             android:layout_weight="1"
@@ -97,7 +108,7 @@
             tools:layout_editor_absoluteY="543dp" />
 
         <ImageButton
-            android:id="@+id/imageButton5"
+            android:id="@+id/green_mood_button"
             android:layout_width="68dp"
             android:layout_height="68dp"
             android:layout_weight="1"
@@ -111,14 +122,16 @@
 
     <ImageButton
         android:id="@+id/imageButton6"
-        android:layout_width="57dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="180dp"
-
-        android:layout_marginBottom="24dp"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="168dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="28dp"
         android:background="#00000000"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.017"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/home_button" />
 
