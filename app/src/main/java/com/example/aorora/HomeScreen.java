@@ -70,7 +70,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
             return true;
         }
         if (motionEvent2.getX() - motionEvent1.getX() > 50) {
-            Intent mindfullness = new Intent(homeScreen, MindfullnessSelection.class);
+            Intent mindfullness = new Intent(homeScreen, CommunityPage.class);
             startActivity(mindfullness);
             return true;
         } else {
