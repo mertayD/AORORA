@@ -24,7 +24,7 @@ public class MindfullnessSelection extends AppCompatActivity implements GestureD
     public boolean onFling (MotionEvent motionEvent1, MotionEvent motionEvent2, float X, float Y)
     {
         if (motionEvent1.getX() - motionEvent2.getX() > 50) {
-            Intent surveyPage = new Intent(mindfullnessSelection, SurveyPage.class);
+            Intent surveyPage = new Intent(mindfullnessSelection, HomeScreen.class);
             startActivity(surveyPage);
             return true;
         }else {

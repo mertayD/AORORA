@@ -14,8 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SurveyPage extends AppCompatActivity implements GestureDetector.OnGestureListener, View.OnClickListener {
-    GestureDetector gestureDetector;
+public class SurveyPage extends AppCompatActivity implements View.OnClickListener {
     Context surveyPage;
     ImageButton red_mood_button;
     ImageButton darkorange_mood_button;
@@ -43,62 +42,11 @@ public class SurveyPage extends AppCompatActivity implements GestureDetector.OnG
         survey_question_tv.setText(questions[question_order_count]);
         surveyPage = this;
 
-        gestureDetector = new GestureDetector(surveyPage, SurveyPage.this);
-
         red_mood_button.setOnClickListener(this);
         darkorange_mood_button.setOnClickListener(this);
         orange_mood_button.setOnClickListener(this);
         yellow_mood_button.setOnClickListener(this);
         green_mood_button.setOnClickListener(this);
-
-    }
-
-
-    @Override
-    public boolean onFling (MotionEvent motionEvent1, MotionEvent motionEvent2, float X, float Y)
-    {
-        if (motionEvent1.getX() - motionEvent2.getX() > 50) {
-            Toast.makeText(surveyPage, "You Swiped Left!", Toast.LENGTH_LONG).show();
-            return true;
-        }
-        if (motionEvent2.getX() - motionEvent1.getX() > 50) {
-            Intent mindfullness = new Intent(surveyPage, MindfullnessSelection.class);
-            startActivity(mindfullness);
-            return true;
-        } else {
-            return true;
-        }
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent motionEvent) {
-        return gestureDetector.onTouchEvent(motionEvent);
-    }
-
-    // We don't need to implement those unless otherwise told. They just need to be there
-    // because we are implementing the GestureDetector class
-    @Override
-    public boolean onDown(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
 
     }
 
@@ -141,7 +89,8 @@ public class SurveyPage extends AppCompatActivity implements GestureDetector.OnG
         }
         else
         {
-            Toast.makeText(surveyPage, "We Ran Out of Questions This is the End of the Survey!!!", Toast.LENGTH_LONG).show();
+            Intent home_page = new Intent(surveyPage, HomeScreen.class);
+            startActivity(home_page);
         }
 
 

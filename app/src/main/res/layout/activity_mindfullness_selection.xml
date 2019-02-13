@@ -62,7 +62,7 @@
         app:layout_constraintHorizontal_bias="0.891"
         app:layout_constraintStart_toEndOf="@+id/imageButton7"
         app:layout_constraintTop_toBottomOf="@+id/user_butterfly_imageView"
-        app:srcCompat="@drawable/home_button" />
+        app:srcCompat="@drawable/menu_button_filled" />
 
     <ImageButton
         android:id="@+id/imageButton10"
@@ -77,7 +77,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/home_button" />
+        app:srcCompat="@drawable/menu_button_filled" />
 
     <ImageView
         android:id="@+id/imageView2"
