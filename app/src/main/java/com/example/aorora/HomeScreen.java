@@ -66,7 +66,8 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     public boolean onFling (MotionEvent motionEvent1, MotionEvent motionEvent2, float X, float Y)
     {
         if (motionEvent1.getX() - motionEvent2.getX() > 50) {
-            Toast.makeText(homeScreen, "You Swiped Left!", Toast.LENGTH_LONG).show();
+            Intent profilePage = new Intent(homeScreen, ProfilePage.class);
+            startActivity(profilePage);
             return true;
         }
         if (motionEvent2.getX() - motionEvent1.getX() > 50) {
