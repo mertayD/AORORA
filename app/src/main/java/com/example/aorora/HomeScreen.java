@@ -117,8 +117,8 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         Intent to_navigate;
         if(view_id == profile_button_bottombar.getId())
         {
-            Toast.makeText(homeScreen, "Profile Page", Toast.LENGTH_LONG).show();
-            //to_navigate = new Intent(homeScreen, );
+            to_navigate = new Intent(homeScreen, ProfilePage.class);
+            startActivity(to_navigate);
         }
         else if(view_id == community_button_bottombar.getId())
         {

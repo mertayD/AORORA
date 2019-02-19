@@ -28,7 +28,7 @@
         android:layout_marginStart="92dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="8dp"
-        android:text="UserName32"
+        android:text="JohnnyBaby21"
         android:textColor="#989898"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +72,8 @@
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/red_butterfly_button"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="543dp" />
+            tools:layout_editor_absoluteY="543dp"
+            android:layout_margin="4dp"/>
 
         <ImageButton
             android:id="@+id/darkorange_mood_button"
@@ -83,7 +84,8 @@
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/darkorange_butterfly_button"
             tools:layout_editor_absoluteX="92dp"
-            tools:layout_editor_absoluteY="543dp" />
+            tools:layout_editor_absoluteY="543dp"
+            android:layout_margin="4dp"/>
 
         <ImageButton
             android:id="@+id/orange_mood_button"
@@ -94,7 +96,8 @@
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/orange_butterfly_button"
             tools:layout_editor_absoluteX="171dp"
-            tools:layout_editor_absoluteY="543dp" />
+            tools:layout_editor_absoluteY="543dp"
+            android:layout_margin="4dp"/>
 
         <ImageButton
             android:id="@+id/yellow_mood_button"
@@ -105,7 +108,9 @@
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/yellow_butterflu_button"
             tools:layout_editor_absoluteX="246dp"
-            tools:layout_editor_absoluteY="543dp" />
+            tools:layout_editor_absoluteY="543dp"
+            android:layout_margin="4dp"
+            />
 
         <ImageButton
             android:id="@+id/green_mood_button"
@@ -116,7 +121,9 @@
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/green_butterfly_button"
             tools:layout_editor_absoluteX="327dp"
-            tools:layout_editor_absoluteY="543dp" />
+            tools:layout_editor_absoluteY="543dp"
+            android:layout_margin="4dp"
+            />
 
     </LinearLayout>
 

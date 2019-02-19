@@ -24,33 +24,33 @@
         android:layout_below="@+id/community_string"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView"
+        <ImageButton
+            android:id="@+id/social_tabs_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Friends"
-            android:textSize="20sp"
-            android:textColor="#FFFFFF"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/social_tabs_button"
             />
 
-        <TextView
-            android:id="@+id/textView2"
+        <ImageButton
+            android:id="@+id/friends_tabs_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Friends"
-            android:textSize="20sp"
-            android:textColor="#FFFFFF" />
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/friends_tabs_button"/>
 
-        <TextView
-            android:id="@+id/textView3"
+        <ImageButton
+            android:id="@+id/notifications_tabs_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Friends"
-            android:textSize="20sp"
-            android:textColor="#FFFFFF"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/notifications_tabs_button"
             />
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
@@ -59,6 +59,7 @@
         android:id="@+id/customRecyclerView"
         android:layout_below="@+id/community_page_ll"
         android:layout_above="@+id/community_page_bottom_menu_bar"
+        android:layout_marginTop="8dp"
         android:background="#00000000">
 
     </android.support.v7.widget.RecyclerView>
@@ -69,5 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        />
 </RelativeLayout>

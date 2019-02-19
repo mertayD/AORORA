@@ -51,13 +51,16 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
         holder.txtTitle.setText(dataList.get(position).getTitle());
-
+        holder.coverImage.setImageResource(R.drawable.orange_butterfly_image);
+        /*
         Picasso.Builder builder = new Picasso.Builder(context);
         builder.downloader(new OkHttp3Downloader(context));
         builder.build().load(dataList.get(position).getThumbnailUrl())
-                .placeholder((R.drawable.ic_launcher_background))
+                .placeholder((R.drawable.orange_butterfly_button))
                 .error(R.drawable.ic_launcher_background)
                 .into(holder.coverImage);
+                */
+
 
     }
 
