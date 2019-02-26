@@ -166,7 +166,7 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
         gridAdapter = new com.example.aorora.adapter.GridViewAdapter(this, photoList, new OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                Toast.makeText(communityPage,"You clicked item no" + position, Toast.LENGTH_SHORT).show();
+                // do something in future
             }
         });
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 3);

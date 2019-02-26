@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.gesture.GestureOverlayView;
 import android.media.Image;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -52,6 +53,34 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
         survey_question_tv.setText(questions[question_order_count]);
         surveyPage = this;
 
+        survey_question_tv.setVisibility(View.INVISIBLE);
+        red_mood_button.setVisibility(View.INVISIBLE);
+        darkorange_mood_button.setVisibility(View.INVISIBLE);
+        orange_mood_button.setVisibility(View.INVISIBLE);
+        yellow_mood_button.setVisibility(View.INVISIBLE);
+        green_mood_button.setVisibility(View.INVISIBLE);
+
+        //Delay for survey buttons
+        new CountDownTimer(1500, 100) {
+
+            public void onTick(long millisUntilFinished) {
+                if(millisUntilFinished < 800 )
+                {
+                    survey_question_tv.setVisibility(View.VISIBLE);
+                }
+
+            }
+
+            public void onFinish() {
+
+                red_mood_button.setVisibility(View.VISIBLE);
+                darkorange_mood_button.setVisibility(View.VISIBLE);
+                orange_mood_button.setVisibility(View.VISIBLE);
+                yellow_mood_button.setVisibility(View.VISIBLE);
+                green_mood_button.setVisibility(View.VISIBLE);
+            }
+        }.start();
+
         red_mood_button.setOnClickListener(this);
         darkorange_mood_button.setOnClickListener(this);
         orange_mood_button.setOnClickListener(this);
@@ -60,7 +89,7 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
 
         move_to_animation =
                 AnimationUtils.loadAnimation(getApplicationContext(),
-                        R.anim.move);
+                        R.anim.blink);
         move_from_animation = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.movefromnegative);
 
@@ -71,6 +100,12 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                red_mood_button.setVisibility(View.VISIBLE);
+                darkorange_mood_button.setVisibility(View.VISIBLE);
+                orange_mood_button.setVisibility(View.VISIBLE);
+                yellow_mood_button.setVisibility(View.VISIBLE);
+                green_mood_button.setVisibility(View.VISIBLE);
+
                 red_mood_button.setClickable(true);
                 darkorange_mood_button.setClickable(true);
                 orange_mood_button.setClickable(true);
@@ -118,22 +153,27 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
 
         if(v_id == red_mood_button.getId())
         {
+            red_mood_button.setVisibility(View.INVISIBLE);
             result = 1;
         }
         else if(v_id == darkorange_mood_button.getId())
         {
+            darkorange_mood_button.setVisibility(View.INVISIBLE);
             result = 2;
         }
         else if(v_id == orange_mood_button.getId())
         {
-            result =32;
+            orange_mood_button.setVisibility(View.INVISIBLE);
+            result =3;
         }
         else if(v_id == yellow_mood_button.getId())
         {
+            yellow_mood_button.setVisibility(View.INVISIBLE);
             result = 4;
         }
         else if(v_id == green_mood_button.getId())
         {
+            green_mood_button.setVisibility(View.INVISIBLE);
             result = 5;
         }
 

@@ -27,7 +27,7 @@
             android:lines="1"
             android:text="FancyNancy33"
             android:textColor="#FFFFFF"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
         <TextView
             android:id="@+id/notification_content_tv"
             style="@style/Base.Animation.AppCompat.DropDownUp"
@@ -38,8 +38,8 @@
             android:lines="2"
             android:layout_below="@id/user_sent_notification_tv"
             android:text="Notifications will pop up here"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp" />
+            android:textColor="#989898"
+            android:textSize="16dp" />
 
     </RelativeLayout>
 

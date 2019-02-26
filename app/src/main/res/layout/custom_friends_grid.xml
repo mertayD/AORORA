@@ -25,7 +25,7 @@
         android:lines="1"
         android:text="FancyNancy33"
         android:textColor="#FFFFFF"
-        android:textSize="20dp"
+        android:textSize="8pt"
         android:layout_gravity="center"
         />
 
