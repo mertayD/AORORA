@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aorora.R;
+import com.example.aorora.interfaces.OnItemClickListener;
 import com.example.aorora.model.RetroPhoto;
 
 import java.util.List;
@@ -17,11 +18,14 @@ import java.util.List;
 public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridViewHolder> {
     private List<RetroPhoto> dataList;
     private Context context;
+    private OnItemClickListener onItemClickListener;
 
-    public GridViewAdapter(Context context, List<RetroPhoto> dataList){
+    public GridViewAdapter(Context context, List<RetroPhoto> dataList, OnItemClickListener clickListener){
         this.context = context;
         this.dataList = dataList;
+        onItemClickListener = clickListener;
     }
+
 
     class GridViewHolder extends RecyclerView.ViewHolder {
 
@@ -49,9 +53,16 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GridViewAdapter.GridViewHolder customViewHolder, int position) {
+    public void onBindViewHolder(@NonNull final GridViewAdapter.GridViewHolder customViewHolder, final int position) {
         customViewHolder.userName.setText(dataList.get(position).getTitle().substring(1,7));
         customViewHolder.coverImage.setImageResource(R.drawable.orange_butterfly_image);
+        customViewHolder.coverImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClick(v, position);
+            }
+        });
+
     }
 
     @Override

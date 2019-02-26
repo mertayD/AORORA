@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import com.example.aorora.adapter.GridViewAdapter;
 
+import com.example.aorora.interfaces.OnItemClickListener;
 import com.example.aorora.model.RetroPhoto;
 
 import java.util.List;
@@ -79,7 +80,13 @@ public class ButterflyCollectionPage extends AppCompatActivity implements View.O
     /*Method to generate List of data using RecyclerView with custom adapter*/
     private void generateDataListGrid(List<com.example.aorora.model.RetroPhoto> photoList) {
         recyclerView = findViewById(R.id.customRecyclerView);
-        adapter = new com.example.aorora.adapter.GridViewAdapter(butterflyCollection,photoList);
+        adapter = new com.example.aorora.adapter.GridViewAdapter(butterflyCollection, photoList, new OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent details = new Intent(butterflyCollection, ButterflyDetailsPage.class);
+                startActivity(details);
+            }
+        });
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(butterflyCollection, 3);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -97,8 +104,8 @@ public class ButterflyCollectionPage extends AppCompatActivity implements View.O
         }
         else if(view_id == quest_button_bottombar.getId())
         {
-            Toast.makeText(butterflyCollection, "Quest Page", Toast.LENGTH_LONG).show();
-            //to_navigate = new Intent(homeScreen, );
+            to_navigate = new Intent(butterflyCollection, MindfullnessSelection.class);
+            startActivity(to_navigate);
         }
         else if(view_id == home_button_bottombar.getId())
         {

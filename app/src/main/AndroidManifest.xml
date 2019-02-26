@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ButterflyCollectionPage"></activity>
+        <activity android:name=".ButterflyDetailsPage"></activity>
+        <activity android:name=".ButterflyCollectionPage" />
         <activity android:name=".ProfilePage" />
         <activity android:name=".CommunityPage" />
         <activity android:name=".HomeScreen" />

@@ -83,8 +83,8 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         }
         else if(view_id == quest_button_bottombar.getId())
         {
-            Toast.makeText(profilePage, "Quest Page", Toast.LENGTH_LONG).show();
-            //to_navigate = new Intent(homeScreen, );
+            to_navigate = new Intent(profilePage, MindfullnessSelection.class);
+            startActivity(to_navigate);
         }
         else if(view_id == home_button_bottombar.getId())
         {

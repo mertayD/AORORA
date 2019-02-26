@@ -9,18 +9,22 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class MindfullnessSelection extends AppCompatActivity implements View.OnClickListener {
-    Context mindfullnessSelection;
+public class ButterflyDetailsPage extends AppCompatActivity implements View.OnClickListener {
+
     ImageButton home_button_bottombar;
     ImageButton profile_button_bottombar;
     ImageButton community_button_bottombar;
     ImageButton quest_button_bottombar;
+    Context bfDetailsPage;
+    Button selectButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mindfullness_selection);
-        mindfullnessSelection = this;
+        setContentView(R.layout.activity_butterfly_details_page);
 
+        bfDetailsPage = this;
+        selectButton = (Button) findViewById(R.id.select_button_bf_details_page);
         home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
@@ -30,10 +34,8 @@ public class MindfullnessSelection extends AppCompatActivity implements View.OnC
         profile_button_bottombar.setOnClickListener(this);
         community_button_bottombar.setOnClickListener(this);
         quest_button_bottombar.setOnClickListener(this);
-
-
+        selectButton.setOnClickListener(this);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -41,22 +43,27 @@ public class MindfullnessSelection extends AppCompatActivity implements View.OnC
         Intent to_navigate;
         if(view_id == profile_button_bottombar.getId())
         {
-            to_navigate = new Intent(mindfullnessSelection, ProfilePage.class );
+            to_navigate = new Intent(bfDetailsPage, ProfilePage.class );
             startActivity(to_navigate);
         }
         else if(view_id == quest_button_bottombar.getId())
         {
-            Toast.makeText(mindfullnessSelection, "Quest Page", Toast.LENGTH_LONG).show();
-            //to_navigate = new Intent(homeScreen, );
+            to_navigate = new Intent(bfDetailsPage, MindfullnessSelection.class);
+            startActivity(to_navigate);
         }
         else if(view_id == home_button_bottombar.getId())
         {
-            to_navigate = new Intent(mindfullnessSelection, HomeScreen.class);
+            to_navigate = new Intent(bfDetailsPage, HomeScreen.class);
             startActivity(to_navigate);
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            to_navigate = new Intent(mindfullnessSelection, CommunityPage.class);
+            to_navigate = new Intent(bfDetailsPage, CommunityPage.class);
+            startActivity(to_navigate);
+        }
+        else if(view_id == selectButton.getId())
+        {
+            to_navigate = new Intent(bfDetailsPage, ProfilePage.class);
             startActivity(to_navigate);
         }
     }

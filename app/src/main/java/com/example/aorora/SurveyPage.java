@@ -1,14 +1,22 @@
 package com.example.aorora;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.gesture.GestureOverlayView;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -16,6 +24,8 @@ import android.widget.Toast;
 
 public class SurveyPage extends AppCompatActivity implements View.OnClickListener {
     Context surveyPage;
+    Animation move_to_animation;
+    Animation move_from_animation;
     ImageButton red_mood_button;
     ImageButton darkorange_mood_button;
     ImageButton orange_mood_button;
@@ -48,6 +58,55 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
         yellow_mood_button.setOnClickListener(this);
         green_mood_button.setOnClickListener(this);
 
+        move_to_animation =
+                AnimationUtils.loadAnimation(getApplicationContext(),
+                        R.anim.move);
+        move_from_animation = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.movefromnegative);
+
+        move_from_animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                red_mood_button.setClickable(true);
+                darkorange_mood_button.setClickable(true);
+                orange_mood_button.setClickable(true);
+                yellow_mood_button.setClickable(true);
+                green_mood_button.setClickable(true);
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        move_to_animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                red_mood_button.setClickable(false);
+                darkorange_mood_button.setClickable(false);
+                orange_mood_button.setClickable(false);
+                yellow_mood_button.setClickable(false);
+                green_mood_button.setClickable(false);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                survey_question_tv.setText(questions[question_order_count]);
+                survey_question_tv.startAnimation(move_from_animation);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
     }
 
     @Override
@@ -60,32 +119,28 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
         if(v_id == red_mood_button.getId())
         {
             result = 1;
-            Toast.makeText(surveyPage, "Your answer is reported as RED", Toast.LENGTH_SHORT).show();
         }
         else if(v_id == darkorange_mood_button.getId())
         {
             result = 2;
-            Toast.makeText(surveyPage, "Your answer is reported as DarkOrange", Toast.LENGTH_SHORT).show();
         }
         else if(v_id == orange_mood_button.getId())
         {
             result =32;
-            Toast.makeText(surveyPage, "Your answer is reported as Orange", Toast.LENGTH_SHORT).show();
         }
         else if(v_id == yellow_mood_button.getId())
         {
             result = 4;
-            Toast.makeText(surveyPage, "Your answer is reported as Yellow", Toast.LENGTH_SHORT).show();
         }
         else if(v_id == green_mood_button.getId())
         {
             result = 5;
-            Toast.makeText(surveyPage, "Your answer is reported as Green", Toast.LENGTH_SHORT).show();
         }
 
         question_order_count++;
         if(question_order_count < questions_array_size) {
-            survey_question_tv.setText(questions[question_order_count]);
+            survey_question_tv.startAnimation(move_to_animation);
+
         }
         else
         {
@@ -95,4 +150,7 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
 
 
     }
+
+
+
 }

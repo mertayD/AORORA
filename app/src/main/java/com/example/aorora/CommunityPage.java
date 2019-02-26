@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import com.example.aorora.R;
 import com.example.aorora.adapter.CustomAdapter;
+import com.example.aorora.interfaces.OnItemClickListener;
 import com.example.aorora.model.RetroPhoto;
 import com.example.aorora.network.GetDataService;
 import com.example.aorora.network.RetrofitClientInstance;
@@ -22,6 +23,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static java.lang.Boolean.TRUE;
 
 public class CommunityPage extends AppCompatActivity implements GestureDetector.OnGestureListener, View.OnClickListener {
 
@@ -45,6 +48,7 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
         setContentView(R.layout.activity_community_page);
 
         communityPage = this;
+
         progressDoalog = new ProgressDialog(communityPage);
 
         home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);
@@ -62,6 +66,9 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
         quest_button_bottombar.setOnClickListener(this);
 
         gestureDetector = new GestureDetector(communityPage, CommunityPage.this);
+
+
+
 
         /*Create handle for the RetrofitInstance interface*/
 
@@ -89,6 +96,8 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
                 });
             }
         });
+
+        friends_tab_button.performClick();
 
         social_tab_button.setOnClickListener(new ImageButton.OnClickListener() {
             public void onClick(View v) {
@@ -154,7 +163,12 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
 
     private void generateDataListGrid(List<com.example.aorora.model.RetroPhoto> photoList) {
         recyclerView = findViewById(R.id.customRecyclerView);
-        gridAdapter = new com.example.aorora.adapter.GridViewAdapter(this,photoList);
+        gridAdapter = new com.example.aorora.adapter.GridViewAdapter(this, photoList, new OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Toast.makeText(communityPage,"You clicked item no" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(gridAdapter);
@@ -214,8 +228,8 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
         }
         else if(view_id == quest_button_bottombar.getId())
         {
-            Toast.makeText(communityPage, "Quest Page", Toast.LENGTH_LONG).show();
-            //to_navigate = new Intent(homeScreen, );
+            to_navigate = new Intent(communityPage, MindfullnessSelection.class);
+            startActivity(to_navigate);
         }
         else if(view_id == home_button_bottombar.getId())
         {

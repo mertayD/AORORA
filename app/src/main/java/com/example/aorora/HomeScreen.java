@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 public class HomeScreen extends AppCompatActivity implements GestureDetector.OnGestureListener, View.OnClickListener {
     Context homeScreen;
     GestureDetector gestureDetector;
@@ -43,6 +46,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         profile_button_bottombar.setOnClickListener(this);
         community_button_bottombar.setOnClickListener(this);
         quest_button_bottombar.setOnClickListener(this);
+        quest_button.setOnClickListener(this);
 
         pop_up_twobuttons_button.setOnClickListener(new ImageButton.OnClickListener() {
             public void onClick(View v) {
@@ -51,12 +55,16 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
                     quest_button.setVisibility(View.VISIBLE);
                     ar_game_button.setVisibility(View.VISIBLE);
                     isButtonsPoppedUp = true;
+                    ar_game_button.setClickable(TRUE);
+                    quest_button.setClickable(TRUE);
                 }
                 else{
                     pop_up_twobuttons_button.setImageDrawable(getResources().getDrawable(R.drawable.menu_button_filled));
                     quest_button.setVisibility(View.INVISIBLE);
                     ar_game_button.setVisibility(View.INVISIBLE);
                     isButtonsPoppedUp = false;
+                    ar_game_button.setClickable(FALSE);
+                    quest_button.setClickable(FALSE);
                 }
             }
         });
@@ -125,10 +133,10 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
             to_navigate = new Intent(homeScreen, CommunityPage.class);
             startActivity(to_navigate);
         }
-        else if(view_id == quest_button_bottombar.getId())
+        else if(view_id == quest_button_bottombar.getId() || view_id == quest_button.getId())
         {
-            Toast.makeText(homeScreen, "Quest Page", Toast.LENGTH_LONG).show();
-            //to_navigate = new Intent(homeScreen, );
+            to_navigate = new Intent(homeScreen, MindfullnessSelection.class);
+            startActivity(to_navigate);
         }
         else if(view_id == home_button_bottombar.getId())
         {
