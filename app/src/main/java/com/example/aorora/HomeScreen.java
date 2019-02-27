@@ -3,14 +3,18 @@ package com.example.aorora;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
+import android.os.CountDownTimer;
 import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import static java.lang.Boolean.FALSE;
@@ -26,7 +30,9 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     ImageButton ar_game_button;
     ImageButton quest_button;
     ImageButton pop_up_twobuttons_button;
+    TextView notification_tv;
     Boolean isButtonsPoppedUp;
+    Animation notification_anim;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +47,35 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         quest_button = (ImageButton) findViewById(R.id.quest_button);
         pop_up_twobuttons_button = findViewById(R.id.pop_up_buttons_button);
         gestureDetector = new GestureDetector(homeScreen, HomeScreen.this);
+        notification_tv = (TextView) findViewById(R.id.notification_body_homescreen);
 
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
         community_button_bottombar.setOnClickListener(this);
         quest_button_bottombar.setOnClickListener(this);
         quest_button.setOnClickListener(this);
+        notification_tv.setOnClickListener(this);
+        notification_tv.setVisibility(View.INVISIBLE);
+
+        notification_anim = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.blink_reverse);
+
+        notification_anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                notification_tv.setVisibility(View.VISIBLE);
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
 
         pop_up_twobuttons_button.setOnClickListener(new ImageButton.OnClickListener() {
             public void onClick(View v) {
@@ -68,6 +97,17 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
                 }
             }
         });
+
+        new CountDownTimer(1500, 100) {
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                notification_tv.startAnimation(notification_anim);
+            }
+        }.start();
 
     }
     @Override
@@ -133,7 +173,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
             to_navigate = new Intent(homeScreen, CommunityPage.class);
             startActivity(to_navigate);
         }
-        else if(view_id == quest_button_bottombar.getId() || view_id == quest_button.getId())
+        else if(view_id == quest_button_bottombar.getId() || view_id == quest_button.getId() || view_id == notification_tv.getId())
         {
             to_navigate = new Intent(homeScreen, MindfullnessSelection.class);
             startActivity(to_navigate);

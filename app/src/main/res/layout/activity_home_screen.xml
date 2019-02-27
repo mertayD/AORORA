@@ -94,7 +94,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="78dp" />
+        app:layout_constraintGuide_begin="-503dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline4"
@@ -102,5 +102,22 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="333dp" />
+
+    <TextView
+        android:id="@+id/notification_body_homescreen"
+        android:layout_width="297dp"
+        android:layout_height="57dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/notifications_sidebar"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="@string/quest_notification"
+        android:textColor="#FFFFFF"
+        android:textSize="6pt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        
+        />
 
 </android.support.constraint.ConstraintLayout>
