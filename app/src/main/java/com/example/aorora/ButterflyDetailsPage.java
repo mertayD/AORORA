@@ -15,6 +15,7 @@ public class ButterflyDetailsPage extends AppCompatActivity implements View.OnCl
     ImageButton profile_button_bottombar;
     ImageButton community_button_bottombar;
     ImageButton quest_button_bottombar;
+    ImageButton selectButterfly_ib;
     Context bfDetailsPage;
     Button selectButton;
 
@@ -29,7 +30,7 @@ public class ButterflyDetailsPage extends AppCompatActivity implements View.OnCl
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
-
+        selectButterfly_ib = (ImageButton) findViewById(R.id.butterfly_details_page_bf);
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
         community_button_bottombar.setOnClickListener(this);
@@ -61,7 +62,7 @@ public class ButterflyDetailsPage extends AppCompatActivity implements View.OnCl
             to_navigate = new Intent(bfDetailsPage, CommunityPage.class);
             startActivity(to_navigate);
         }
-        else if(view_id == selectButton.getId())
+        else if(view_id == selectButton.getId() && view_id == selectButterfly_ib.getId())
         {
             to_navigate = new Intent(bfDetailsPage, ProfilePage.class);
             startActivity(to_navigate);

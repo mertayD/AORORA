@@ -3,7 +3,11 @@ package com.example.aorora;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.CountDownTimer;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +37,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     TextView notification_tv;
     Boolean isButtonsPoppedUp;
     Animation notification_anim;
+    Vibrator myVibrate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         pop_up_twobuttons_button = findViewById(R.id.pop_up_buttons_button);
         gestureDetector = new GestureDetector(homeScreen, HomeScreen.this);
         notification_tv = (TextView) findViewById(R.id.notification_body_homescreen);
+        myVibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
@@ -99,7 +105,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
             }
         });
 
-        new CountDownTimer(15000, 100) {
+        new CountDownTimer(1500, 100) {
 
             public void onTick(long millisUntilFinished) {
 
@@ -107,6 +113,15 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
 
             public void onFinish() {
                 notification_tv.startAnimation(notification_anim);
+                MediaPlayer ring= MediaPlayer.create(homeScreen,R.raw.notify_2);
+                ring.start();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    //deprecated in API 26
+                    myVibrate.vibrate(500);
+                }
+
             }
         }.start();
 
