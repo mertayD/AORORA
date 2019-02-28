@@ -8,101 +8,67 @@
     tools:context=".ProfilePage">
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:background="#00000000"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/profile_butterfly_button"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <ImageButton
-                android:id="@+id/back_button_profile_page"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="11dp"
-                android:layout_weight="1"
-                android:src="@drawable/back_button"
-                android:background="#00000000"
-                android:scaleType="fitCenter"
-                />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="10"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/profile_user_name_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:maxLines="1"
-                    android:text="JohnyBaby21"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/profile_user_score"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:text="00"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-
-            <ImageButton
-                android:id="@+id/settings_button_profile_page"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="11dp"
-                android:layout_weight="1"
-                android:background="#00000000"
-                android:scaleType="fitCenter"
-                android:src="@drawable/settings_button"
-                />
-
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/back_button_profile_page"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="11dp"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/back_button" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:orientation="horizontal">
+            android:layout_weight="10"
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/pollen_button_profile_page"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="#00000000"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/pollen_button" />
+            <TextView
+                android:id="@+id/profile_user_name_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:maxLines="1"
+                android:text="JohnyBaby21"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
 
-            <ImageButton
-                android:id="@+id/jar_button_profile_page"
-                android:layout_width="60dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="266dp"
-                android:background="#00000000"
-                android:foregroundGravity="right"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/jar_button" />
+            <TextView
+                android:id="@+id/profile_user_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="00"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/settings_button_profile_page"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="11dp"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/settings_button" />
+
     </LinearLayout>
 
     <ImageButton
@@ -110,14 +76,13 @@
         android:layout_width="255dp"
         android:layout_height="234dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="192dp"
-        android:layout_marginEnd="76dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.972"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="168dp"
+        android:layout_marginEnd="8dp"
         android:background="#00000000"
         android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
         app:srcCompat="@drawable/orange_butterfly_image" />
 
     <ImageView
@@ -185,4 +150,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_page_bf_name_tv" />
+
+    <ImageButton
+        android:id="@+id/jar_button_profile_page"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:background="#00000000"
+        android:gravity="end"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:srcCompat="@drawable/jar_button" />
+
+    <ImageButton
+        android:id="@+id/pollen_button_profile_page"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:srcCompat="@drawable/pollen_button" />
 </android.support.constraint.ConstraintLayout>

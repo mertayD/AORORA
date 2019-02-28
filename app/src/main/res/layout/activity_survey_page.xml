@@ -14,33 +14,31 @@
         android:layout_height="234dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="80dp"
-        android:layout_marginEnd="76dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.972"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/orange_butterfly_image" />
 
     <TextView
         android:id="@+id/survey_question_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="371dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="68dp"
         android:layout_marginEnd="8dp"
         android:text="How are you feeling?"
         android:textColor="#FFFFFF"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.016"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="365dp"
+        android:layout_width="395dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:orientation="horizontal"
@@ -52,63 +50,61 @@
             android:id="@+id/red_mood_button"
             android:layout_width="68dp"
             android:layout_height="68dp"
+            android:layout_margin="4dp"
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/red_butterfly_button"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="543dp"
-            android:layout_margin="4dp"/>
+            tools:layout_editor_absoluteY="543dp" />
 
         <ImageButton
             android:id="@+id/darkorange_mood_button"
             android:layout_width="68dp"
             android:layout_height="68dp"
+            android:layout_margin="4dp"
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/darkorange_butterfly_button"
             tools:layout_editor_absoluteX="92dp"
-            tools:layout_editor_absoluteY="543dp"
-            android:layout_margin="4dp"/>
+            tools:layout_editor_absoluteY="543dp" />
 
         <ImageButton
             android:id="@+id/orange_mood_button"
             android:layout_width="68dp"
             android:layout_height="68dp"
+            android:layout_margin="4dp"
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/orange_butterfly_button"
             tools:layout_editor_absoluteX="171dp"
-            tools:layout_editor_absoluteY="543dp"
-            android:layout_margin="4dp"/>
+            tools:layout_editor_absoluteY="543dp" />
 
         <ImageButton
             android:id="@+id/yellow_mood_button"
             android:layout_width="68dp"
             android:layout_height="68dp"
+            android:layout_margin="4dp"
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/yellow_butterflu_button"
             tools:layout_editor_absoluteX="246dp"
-            tools:layout_editor_absoluteY="543dp"
-            android:layout_margin="4dp"
-            />
+            tools:layout_editor_absoluteY="543dp" />
 
         <ImageButton
             android:id="@+id/green_mood_button"
             android:layout_width="68dp"
             android:layout_height="68dp"
+            android:layout_margin="4dp"
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/green_butterfly_button"
             tools:layout_editor_absoluteX="327dp"
-            tools:layout_editor_absoluteY="543dp"
-            android:layout_margin="4dp"
-            />
+            tools:layout_editor_absoluteY="543dp" />
 
     </LinearLayout>
 
@@ -116,56 +112,55 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="52dp"
         android:layout_marginEnd="8dp"
         android:text="Take the Quick BaseLine Survey"
         android:textColor="#FFFFFF"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.44"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_butterfly_imageView" />
 
     <LinearLayout
+        android:id="@+id/mood_desc_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="19dp"
-        android:layout_marginEnd="27dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        android:id="@+id/mood_desc_ll">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <TextView
             android:id="@+id/mood_desc_tv_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="start"
             android:text="Very Bad"
             android:textColor="#FFFFFF"
-            android:gravity="center_horizontal"
-            />
+            android:layout_margin="4dp"/>
 
         <TextView
             android:id="@+id/mood_desc_tv_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Good"
-            android:textColor="#FFFFFF"
             android:gravity="center_horizontal"
-            />
+            android:text="Good"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/mood_desc_tv_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="end"
             android:text="Very Good"
-            android:gravity="center_horizontal"
             android:textColor="#FFFFFF"
+            android:layout_margin="4dp"
 
             />
     </LinearLayout>
