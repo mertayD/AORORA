@@ -20,10 +20,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class SurveyPage extends AppCompatActivity implements View.OnClickListener {
+    LinearLayout mood_desc_ll;
     Context surveyPage;
     Animation move_to_animation;
     Animation move_from_animation;
@@ -52,7 +54,9 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
         question_order_count = 0;
         survey_question_tv.setText(questions[question_order_count]);
         surveyPage = this;
+        mood_desc_ll = findViewById(R.id.mood_desc_ll);
 
+        mood_desc_ll.setVisibility(View.INVISIBLE);
         survey_question_tv.setVisibility(View.INVISIBLE);
         red_mood_button.setVisibility(View.INVISIBLE);
         darkorange_mood_button.setVisibility(View.INVISIBLE);
@@ -78,6 +82,8 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
                 orange_mood_button.setVisibility(View.VISIBLE);
                 yellow_mood_button.setVisibility(View.VISIBLE);
                 green_mood_button.setVisibility(View.VISIBLE);
+                mood_desc_ll.setVisibility(View.VISIBLE);
+
             }
         }.start();
 

@@ -33,6 +33,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     TextView notification_tv;
     Boolean isButtonsPoppedUp;
     Animation notification_anim;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +99,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
             }
         });
 
-        new CountDownTimer(1500, 100) {
+        new CountDownTimer(15000, 100) {
 
             public void onTick(long millisUntilFinished) {
 
@@ -116,11 +117,13 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         if (motionEvent1.getX() - motionEvent2.getX() > 50) {
             Intent profilePage = new Intent(homeScreen, ProfilePage.class);
             startActivity(profilePage);
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             return true;
         }
         if (motionEvent2.getX() - motionEvent1.getX() > 50) {
             Intent mindfullness = new Intent(homeScreen, CommunityPage.class);
             startActivity(mindfullness);
+            overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             return true;
         } else {
             return true;

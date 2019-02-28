@@ -106,6 +106,7 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         if (motionEvent2.getX() - motionEvent1.getX() > 50) {
             to_navigate = new Intent(profilePage, HomeScreen.class);
             startActivity(to_navigate);
+            overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             return true;
         } else {
             return true;

@@ -205,6 +205,7 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
         if (motionEvent1.getX() - motionEvent2.getX() > 50) {
             Intent homePage = new Intent(communityPage, HomeScreen.class);
             startActivity(homePage);
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             return true;
         }
         else {
