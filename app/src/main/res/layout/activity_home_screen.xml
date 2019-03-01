@@ -62,7 +62,7 @@
         android:id="@+id/ar_game_button"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="73dp"
         android:layout_marginBottom="60dp"
         android:background="#00000000"
         android:scaleType="fitCenter"
@@ -81,7 +81,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/pop_up_buttons_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.641"
+        app:layout_constraintHorizontal_bias="0.683"
         app:layout_constraintStart_toEndOf="@+id/ar_game_button"
         app:srcCompat="@drawable/quest_button" />
 
