@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/survey_question_tv"
-        android:layout_width="371dp"
+        android:layout_width="370dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="68dp"
@@ -36,11 +36,11 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="395dp"
+        android:layout_width="366dp"
         android:layout_height="76dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="32dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +124,7 @@
 
     <LinearLayout
         android:id="@+id/mood_desc_ll"
-        android:layout_width="match_parent"
+        android:layout_width="367dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -137,31 +137,31 @@
             android:id="@+id/mood_desc_tv_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="4dp"
             android:layout_weight="1"
             android:gravity="start"
             android:text="Very Bad"
-            android:textColor="#989898"
-            android:layout_margin="4dp"/>
+            android:textColor="#989898" />
 
         <TextView
             android:id="@+id/mood_desc_tv_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="4dp"
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="Good"
-            android:textColor="#989898"
-            android:layout_margin="4dp"/>
+            android:textColor="#989898" />
 
         <TextView
             android:id="@+id/mood_desc_tv_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="4dp"
             android:layout_weight="1"
             android:gravity="end"
             android:text="Very Good"
             android:textColor="#989898"
-            android:layout_margin="4dp"
 
             />
     </LinearLayout>
