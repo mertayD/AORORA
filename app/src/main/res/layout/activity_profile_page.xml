@@ -153,8 +153,8 @@
 
     <ImageButton
         android:id="@+id/jar_button_profile_page"
-        android:layout_width="60dp"
-        android:layout_height="70dp"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="16dp"
         android:background="#00000000"
@@ -166,8 +166,8 @@
 
     <ImageButton
         android:id="@+id/pollen_button_profile_page"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="64dp"
         android:background="#00000000"

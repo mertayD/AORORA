@@ -23,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/community_string"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
 
         <ImageButton
             android:id="@+id/social_tabs_button"
@@ -58,6 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/customRecyclerView"
+        android:foregroundGravity="center_vertical"
         android:layout_below="@+id/community_page_ll"
         android:layout_above="@+id/three_dots_left"
         android:layout_marginTop="8dp"
