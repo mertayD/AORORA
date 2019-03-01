@@ -146,7 +146,7 @@
         android:gravity="clip_vertical|center_horizontal"
         android:text='"While shy in nature this particular species becomes more active when around others"'
         android:textColor="#989898"
-        android:textSize="20sp"
+        android:textSize="7pt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_page_bf_name_tv" />
@@ -154,9 +154,9 @@
     <ImageButton
         android:id="@+id/jar_button_profile_page"
         android:layout_width="40dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="36dp"
         android:background="#00000000"
         android:gravity="end"
         android:scaleType="fitCenter"
@@ -166,9 +166,9 @@
 
     <ImageButton
         android:id="@+id/pollen_button_profile_page"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="40dp"
         android:background="#00000000"
         android:scaleType="fitCenter"
