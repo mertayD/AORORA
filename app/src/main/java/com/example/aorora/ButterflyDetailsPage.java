@@ -36,6 +36,7 @@ public class ButterflyDetailsPage extends AppCompatActivity implements View.OnCl
         community_button_bottombar.setOnClickListener(this);
         quest_button_bottombar.setOnClickListener(this);
         selectButton.setOnClickListener(this);
+        selectButterfly_ib.setOnClickListener(this);
     }
 
     @Override
@@ -62,7 +63,7 @@ public class ButterflyDetailsPage extends AppCompatActivity implements View.OnCl
             to_navigate = new Intent(bfDetailsPage, CommunityPage.class);
             startActivity(to_navigate);
         }
-        else if(view_id == selectButton.getId() && view_id == selectButterfly_ib.getId())
+        else if(view_id == selectButton.getId() || view_id == selectButterfly_ib.getId())
         {
             to_navigate = new Intent(bfDetailsPage, ProfilePage.class);
             startActivity(to_navigate);
