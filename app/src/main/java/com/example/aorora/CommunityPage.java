@@ -11,7 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 import com.example.aorora.R;
 import com.example.aorora.adapter.CustomAdapter;
@@ -36,11 +38,14 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
     ImageButton profile_button_bottombar;
     ImageButton community_button_bottombar;
     ImageButton quest_button_bottombar;
-    ImageButton friends_tab_button;
-    ImageButton social_tab_button;
-    ImageButton notifications_tab_button;
+    Button friends_tab_button;
+    Button social_tab_button;
+    Button notifications_tab_button;
     Context communityPage;
     GestureDetector gestureDetector;
+    ImageView friends_underline;
+    ImageView social_underline;
+    ImageView notifications_underline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +61,18 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
 
-        friends_tab_button =  (ImageButton) findViewById(R.id.friends_tabs_button);
-        social_tab_button = (ImageButton) findViewById(R.id.social_tabs_button);
-        notifications_tab_button = (ImageButton) findViewById(R.id.notifications_tabs_button);
+        friends_tab_button =  (Button) findViewById(R.id.friends_tabs_button);
+        social_tab_button = (Button) findViewById(R.id.social_tabs_button);
+        notifications_tab_button = (Button) findViewById(R.id.notifications_tabs_button);
 
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
         community_button_bottombar.setOnClickListener(this);
         quest_button_bottombar.setOnClickListener(this);
+
+        friends_underline = findViewById(R.id.underline_friends);
+        social_underline = findViewById(R.id.underline_social);
+        notifications_underline = findViewById(R.id.underline_notifications);
 
         gestureDetector = new GestureDetector(communityPage, CommunityPage.this);
 
@@ -74,9 +83,10 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
 
         friends_tab_button.setOnClickListener(new ImageButton.OnClickListener() {
             public void onClick(View v) {
-                friends_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.friends_underlined));
-                notifications_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.notifications_no_line));
-                social_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.social_no_line));
+
+                friends_underline.setVisibility(View.VISIBLE);
+                social_underline.setVisibility(View.INVISIBLE);
+                notifications_underline.setVisibility(View.INVISIBLE);
                 progressDoalog.setMessage("Friends Loading....");
                 progressDoalog.show();
 
@@ -104,9 +114,9 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
 
         social_tab_button.setOnClickListener(new ImageButton.OnClickListener() {
             public void onClick(View v) {
-                friends_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.friends_no_line));
-                notifications_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.notifications_no_line));
-                social_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.social_underlined));
+                friends_underline.setVisibility(View.INVISIBLE);
+                social_underline.setVisibility(View.VISIBLE);
+                notifications_underline.setVisibility(View.INVISIBLE);
                 progressDoalog.setMessage("Social Feed Loading....");
                 progressDoalog.show();
 
@@ -133,9 +143,9 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
         notifications_tab_button.setOnClickListener(new ImageButton.OnClickListener() {
             public void onClick(View v) {
 
-                friends_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.friends_no_line));
-                notifications_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.not_underlined));
-                social_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.social_no_line));
+                friends_underline.setVisibility(View.INVISIBLE);
+                social_underline.setVisibility(View.INVISIBLE);
+                notifications_underline.setVisibility(View.VISIBLE);
 
                 progressDoalog.setMessage("Notifications Loading....");
                 progressDoalog.show();
