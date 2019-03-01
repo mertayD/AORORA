@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/survey_question_tv"
-        android:layout_width="370dp"
+        android:layout_width="317dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="68dp"
