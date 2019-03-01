@@ -105,7 +105,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
             }
         });
 
-        new CountDownTimer(1500, 100) {
+        new CountDownTimer(10000, 100) {
 
             public void onTick(long millisUntilFinished) {
 
