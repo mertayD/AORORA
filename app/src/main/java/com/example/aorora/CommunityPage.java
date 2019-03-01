@@ -74,6 +74,9 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
 
         friends_tab_button.setOnClickListener(new ImageButton.OnClickListener() {
             public void onClick(View v) {
+                friends_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.friends_underlined));
+                notifications_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.notifications_no_line));
+                social_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.social_no_line));
                 progressDoalog.setMessage("Friends Loading....");
                 progressDoalog.show();
 
@@ -101,7 +104,9 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
 
         social_tab_button.setOnClickListener(new ImageButton.OnClickListener() {
             public void onClick(View v) {
-
+                friends_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.friends_no_line));
+                notifications_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.notifications_no_line));
+                social_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.social_underlined));
                 progressDoalog.setMessage("Social Feed Loading....");
                 progressDoalog.show();
 
@@ -127,6 +132,10 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
 
         notifications_tab_button.setOnClickListener(new ImageButton.OnClickListener() {
             public void onClick(View v) {
+
+                friends_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.friends_no_line));
+                notifications_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.not_underlined));
+                social_tab_button.setImageDrawable(getResources().getDrawable(R.drawable.social_no_line));
 
                 progressDoalog.setMessage("Notifications Loading....");
                 progressDoalog.show();

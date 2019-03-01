@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 surveyPage = new Intent(context, SurveyPage.class);
                 startActivity(surveyPage);
+
             }
         });
 

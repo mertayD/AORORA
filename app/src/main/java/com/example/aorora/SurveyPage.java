@@ -192,6 +192,7 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
         {
             Intent home_page = new Intent(surveyPage, HomeScreen.class);
             startActivity(home_page);
+            overridePendingTransition(R.anim.blink_reverse,R.anim.blink);
         }
 
 

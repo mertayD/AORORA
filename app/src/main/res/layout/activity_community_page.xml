@@ -11,8 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Community"
-        android:textSize="30sp"
+        android:textSize="9pt"
         android:textColor="#FFFFFF"
+        android:layout_margin="4dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/community_string"
         />
@@ -31,7 +32,7 @@
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
-            android:src="@drawable/social_tabs_button"
+            android:src="@drawable/social_no_line"
             />
 
         <ImageButton
@@ -50,7 +51,7 @@
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
-            android:src="@drawable/notifications_tabs_button"
+            android:src="@drawable/notifications_no_line"
             />
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
