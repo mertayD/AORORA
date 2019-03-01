@@ -55,26 +55,28 @@
             android:src="@drawable/notifications_no_line"
             />
     </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/customRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/customRecyclerView"
-        android:foregroundGravity="center_vertical"
         android:layout_below="@+id/community_page_ll"
         android:layout_above="@+id/three_dots_left"
         android:layout_marginTop="8dp"
-        android:background="#00000000">
+        android:background="#00000000"
+        android:foregroundGravity="center_vertical">
 
     </android.support.v7.widget.RecyclerView>
 
     <ImageView
 
         android:id="@+id/three_dots_left"
-        android:layout_width="63dp"
+        android:layout_width="43dp"
         android:layout_height="12dp"
         android:layout_above="@+id/community_page_bottom_menu_bar"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/dots_left" />
     <include
         android:id="@+id/community_page_bottom_menu_bar"
