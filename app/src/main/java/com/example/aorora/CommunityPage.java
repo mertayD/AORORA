@@ -77,8 +77,6 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
         gestureDetector = new GestureDetector(communityPage, CommunityPage.this);
 
 
-
-
         /*Create handle for the RetrofitInstance interface*/
 
         friends_tab_button.setOnClickListener(new ImageButton.OnClickListener() {
@@ -110,7 +108,6 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
             }
         });
 
-        friends_tab_button.performClick();
 
         social_tab_button.setOnClickListener(new ImageButton.OnClickListener() {
             public void onClick(View v) {
@@ -169,6 +166,17 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
                 });
             }
         });
+
+        if(getIntent().hasExtra("notification"))
+        {
+            notifications_tab_button.performClick();
+
+        }
+        else
+        {
+            friends_tab_button.performClick();
+
+        }
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/

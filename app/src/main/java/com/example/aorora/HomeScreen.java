@@ -9,17 +9,23 @@ import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.annotation.DrawableRes;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Random;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -38,6 +44,9 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     Boolean isButtonsPoppedUp;
     Animation notification_anim;
     Vibrator myVibrate;
+    public LayoutInflater layoutInflater;
+    public View speck1;
+    ConstraintLayout speck_holder_cl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +65,44 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         notification_tv = (TextView) findViewById(R.id.notification_body_homescreen);
         myVibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
+        layoutInflater = LayoutInflater.from(homeScreen);
+        speck1 = layoutInflater.inflate(R.layout.speck_notification, null);
+
+        speck_holder_cl = (ConstraintLayout) findViewById(R.id.speck_holder_cl);
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
         community_button_bottombar.setOnClickListener(this);
         quest_button_bottombar.setOnClickListener(this);
         quest_button.setOnClickListener(this);
         notification_tv.setOnClickListener(this);
+        speck1.setOnClickListener(this);
         notification_tv.setVisibility(View.INVISIBLE);
+
+
+        // Constraints to inflate random specks on layout
+
+        new CountDownTimer(32000, 100) {
+            ConstraintSet constraints = new ConstraintSet();
+            public void onTick(long millisUntilFinished) {
+
+                if(millisUntilFinished < 30000 && millisUntilFinished > 29900){
+                    speck_holder_cl.addView(speck1, 0);
+                    final int random = new Random().nextInt(701) + 100;
+                    constraints.clone(speck_holder_cl);
+                    constraints.connect(speck1.getId(), ConstraintSet.LEFT, speck_holder_cl.getId(), ConstraintSet.LEFT, random);
+                    constraints.connect(speck1.getId(), ConstraintSet.BOTTOM, speck_holder_cl.getId(), ConstraintSet.BOTTOM, 800);
+                    constraints.applyTo(speck_holder_cl);
+                }
+
+
+            }
+
+            public void onFinish() {
+
+            }
+        }.start();
+
+
 
         notification_anim = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.blink_reverse);
@@ -199,6 +239,12 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         else if(view_id == home_button_bottombar.getId())
         {
             //to_navigate = new Intent(homeScreen, homeScreen);
+        }
+        else if (view_id == speck1.getId())
+        {
+            to_navigate = new Intent(homeScreen, CommunityPage.class);
+            to_navigate.putExtra("notification", true);
+            startActivity(to_navigate);
         }
 
     }
