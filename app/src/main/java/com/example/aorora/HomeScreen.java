@@ -157,15 +157,14 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
             public void onFinish() {
                 notification_tv.startAnimation(notification_anim);
 
-                if(!page_left)
-                {
+                if(!page_left) {
                     ring.start();
-                }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-                } else {
-                    //deprecated in API 26
-                    myVibrate.vibrate(500);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        //deprecated in API 26
+                        myVibrate.vibrate(500);
+                    }
                 }
 
             }
@@ -175,6 +174,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     @Override
     public boolean onFling (MotionEvent motionEvent1, MotionEvent motionEvent2, float X, float Y)
     {
+        page_left = true;
         if (motionEvent1.getX() - motionEvent2.getX() > 50) {
             Intent profilePage = new Intent(homeScreen, ProfilePage.class);
             startActivity(profilePage);
