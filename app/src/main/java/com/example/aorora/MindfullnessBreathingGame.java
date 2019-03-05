@@ -39,6 +39,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
     Animation shrink;
     Vibrator myVibrate;
     boolean isRun;
+    boolean clickable;
     Context mindfullness_breathing_game;
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -48,6 +49,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
 
         // checks if inside the run because as soon as it finishes run it goes to cancel
         isRun = false;
+        clickable = true;
         mindfullness_breathing_game = this;
 
         exit_button = (ImageButton) findViewById(R.id.exit_button_breathing);
@@ -83,20 +85,25 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
             }
         };
 
+
         inhale_button.setOnTouchListener(new View.OnTouchListener() {
+            Timer myTimer= new Timer(3000,100);
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN && clickable) {
                     butterfly_image.startAnimation(enlarge);
                     handler.postDelayed(mLongPressed, 3000);
-
+                    myTimer.start();
                     return true;
                 }
-                if((event.getAction() == MotionEvent.ACTION_UP)) {
+                if((event.getAction() == MotionEvent.ACTION_UP) && clickable) {
                     handler.removeCallbacks(mLongPressed);
                     Log.d("VERBOSE", "run: INSIDE CANCEL");
                     if(!isRun){
+                        remaining_sec.setText("3 Seconds");
                         butterfly_image.clearAnimation();
+                        myTimer.cancel();
                     }
                     return false;
                 }
@@ -105,26 +112,29 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         });
 
         shrink.setAnimationListener(new Animation.AnimationListener() {
+            int count = Character.getNumericValue(remaining_breaths.getText().charAt(0));
             @Override
             public void onAnimationStart(Animation animation) {
                 Log.d("VERBOSE", "run: INSIDE 2nd ANIM");
+                count = count -1;
+                remaining_breaths.setText(count + " Breaths");
+                clickable = false;
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                int count = Character.getNumericValue(remaining_breaths.getText().charAt(0));
                 if(count == 1)
                 {
                     exit_button.performClick();
                 }
                 else
                 {
-                    count = count -1;
-                    remaining_breaths.setText(count + " Breaths");
                     remaining_sec.setText("3 Seconds");
                 }
                 isRun = false;
+                inhale_button.setClickable(true);
+                clickable = true;
             }
 
             @Override
@@ -140,6 +150,30 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
             }
         });
 
+    }
+
+    class Timer extends CountDownTimer{
+
+        public Timer(long ms, long countdownInterval)
+        {
+            super(ms,countdownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+            if(millisUntilFinished < 2000 ){
+                remaining_sec.setText("2 Seconds");
+            }
+            if(millisUntilFinished < 1000 ){
+                remaining_sec.setText("1 Seconds");
+            }
+
+        }
+        @Override
+        public void onFinish() {
+            remaining_sec.setText("0 Seconds");
+        }
     }
 
 }
