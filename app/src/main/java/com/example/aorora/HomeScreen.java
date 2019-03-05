@@ -222,6 +222,10 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     public void onClick(View v) {
         int view_id = v.getId();
         Intent to_navigate;
+        if(ring.isPlaying()) {
+            ring.stop();
+        }
+
         if(view_id == profile_button_bottombar.getId())
         {
             to_navigate = new Intent(homeScreen, ProfilePage.class);
@@ -250,7 +254,6 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         else if(view_id == notification_tv.getId())
         {
             to_navigate = new Intent(homeScreen, MindfullnessBreathing.class);
-            ring.stop();
             startActivity(to_navigate);
         }
 
