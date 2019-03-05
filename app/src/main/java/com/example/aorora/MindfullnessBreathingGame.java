@@ -90,25 +90,6 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     butterfly_image.startAnimation(enlarge);
                     handler.postDelayed(mLongPressed, 3000);
 
-                    new CountDownTimer(3000, 100) {
-                        ConstraintSet constraints = new ConstraintSet();
-                        public void onTick(long millisUntilFinished) {
-
-                            if(millisUntilFinished < 2000 ){
-                                remaining_sec.setText("2 Seconds");
-                            }
-                            if(millisUntilFinished < 1000 ){
-                                remaining_sec.setText("1 Seconds");
-                            }
-
-
-                        }
-
-                        public void onFinish() {
-                            remaining_sec.setText("0 Seconds");
-
-                        }
-                    }.start();
                     return true;
                 }
                 if((event.getAction() == MotionEvent.ACTION_MOVE)||(event.getAction() == MotionEvent.ACTION_UP)) {
