@@ -48,6 +48,8 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     public View speck1;
     ConstraintLayout speck_holder_cl;
     MediaPlayer ring;
+    MediaPlayer spec_alert;
+    boolean page_left;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,28 +80,28 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         speck1.setOnClickListener(this);
         notification_tv.setVisibility(View.INVISIBLE);
         ring = MediaPlayer.create(homeScreen,R.raw.notify_2);
+        spec_alert = MediaPlayer.create(homeScreen,R.raw.notify_wav);
 
-
+        //tpo stop music
+        page_left = false;
         // Constraints to inflate random specks on layout
 
-        new CountDownTimer(32000, 100) {
+        new CountDownTimer(7000, 100) {
             ConstraintSet constraints = new ConstraintSet();
             public void onTick(long millisUntilFinished) {
-
-                if(millisUntilFinished < 3000 && millisUntilFinished > 2900){
-                    speck_holder_cl.addView(speck1, 0);
-                    final int random = new Random().nextInt(701) + 100;
-                    constraints.clone(speck_holder_cl);
-                    constraints.connect(speck1.getId(), ConstraintSet.LEFT, speck_holder_cl.getId(), ConstraintSet.LEFT, random);
-                    constraints.connect(speck1.getId(), ConstraintSet.BOTTOM, speck_holder_cl.getId(), ConstraintSet.BOTTOM, 800);
-                    constraints.applyTo(speck_holder_cl);
-                }
-
 
             }
 
             public void onFinish() {
-
+                speck_holder_cl.addView(speck1, 0);
+                final int random = new Random().nextInt(701) + 100;
+                constraints.clone(speck_holder_cl);
+                constraints.connect(speck1.getId(), ConstraintSet.LEFT, speck_holder_cl.getId(), ConstraintSet.LEFT, random);
+                constraints.connect(speck1.getId(), ConstraintSet.BOTTOM, speck_holder_cl.getId(), ConstraintSet.BOTTOM, 800);
+                constraints.applyTo(speck_holder_cl);
+                if(!page_left) {
+                    spec_alert.start();
+                }
             }
         }.start();
 
@@ -155,7 +157,10 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
             public void onFinish() {
                 notification_tv.startAnimation(notification_anim);
 
-                ring.start();
+                if(!page_left)
+                {
+                    ring.start();
+                }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
                 } else {
@@ -225,6 +230,11 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         if(ring.isPlaying()) {
             ring.stop();
         }
+        if(spec_alert.isPlaying())
+        {
+            spec_alert.stop();
+        }
+        page_left = true;
 
         if(view_id == profile_button_bottombar.getId())
         {
