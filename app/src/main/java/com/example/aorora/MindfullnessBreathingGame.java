@@ -124,7 +124,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                if(count == 1)
+                if(count == 0)
                 {
                     exit_button.performClick();
                 }
