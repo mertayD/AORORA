@@ -231,7 +231,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
             to_navigate = new Intent(homeScreen, CommunityPage.class);
             startActivity(to_navigate);
         }
-        else if(view_id == quest_button_bottombar.getId() || view_id == quest_button.getId() || view_id == notification_tv.getId())
+        else if(view_id == quest_button_bottombar.getId() || view_id == quest_button.getId())
         {
             to_navigate = new Intent(homeScreen, MindfullnessSelection.class);
             startActivity(to_navigate);
@@ -244,6 +244,11 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         {
             to_navigate = new Intent(homeScreen, CommunityPage.class);
             to_navigate.putExtra("notification", true);
+            startActivity(to_navigate);
+        }
+        else if(view_id == notification_tv.getId())
+        {
+            to_navigate = new Intent(homeScreen, MindfullnessBreathing.class);
             startActivity(to_navigate);
         }
 
