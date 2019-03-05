@@ -58,11 +58,6 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
 
         myVibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-        MediaPlayer ring= MediaPlayer.create(mindfullness_breathing_game,R.raw.native_american_music);
-        ring.setLooping(true);
-        ring.start();
-
-
         remaining_sec.setText("3 Seconds");
         if(getIntent().hasExtra("TimerValue"))
         {
