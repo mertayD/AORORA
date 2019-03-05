@@ -3,6 +3,7 @@ package com.example.aorora;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -56,6 +57,11 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         remaining_sec = (TextView) findViewById(R.id.remaining_time_breathing_tv);
 
         myVibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        MediaPlayer ring= MediaPlayer.create(mindfullness_breathing_game,R.raw.native_american_music);
+        ring.setLooping(true);
+        ring.start();
+
 
         remaining_sec.setText("3 Seconds");
         if(getIntent().hasExtra("TimerValue"))
