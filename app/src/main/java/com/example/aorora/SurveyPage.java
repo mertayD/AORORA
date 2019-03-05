@@ -35,7 +35,7 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
     ImageButton  yellow_mood_button;
     ImageButton green_mood_button;
     TextView survey_question_tv;
-    String[] questions = {"How is your mood today?","How are you feeling today?","Are you upset?","Are you happy?","How did you start your day?","Do tou feel tired?"};
+    String[] questions = {"How is your mood today?","How is your health today?","How tired do you feel today?","How satisfied do you feel about today?","How energetic did you feel today?","How tense did you feel today?" };
     final int questions_array_size = 6;
     int question_order_count;
 
