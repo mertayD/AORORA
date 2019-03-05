@@ -87,9 +87,15 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         }
         else if(view_id == play_button.getId())
         {
+            boolean two_digit = false;
             timerCount = String.valueOf(time_selection_spinner.getSelectedItem());
             to_navigate = new Intent(mindfullnessBreathing, MindfullnessBreathingGame.class);
             to_navigate.putExtra("TimerValue", timerCount);
+            if(Integer.parseInt(timerCount) > 9)
+            {
+                two_digit = true;
+            }
+            to_navigate.putExtra("two_digit", two_digit);
             startActivity(to_navigate);
         }
     }

@@ -47,7 +47,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     public LayoutInflater layoutInflater;
     public View speck1;
     ConstraintLayout speck_holder_cl;
-
+    MediaPlayer ring;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +77,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         notification_tv.setOnClickListener(this);
         speck1.setOnClickListener(this);
         notification_tv.setVisibility(View.INVISIBLE);
+        ring = MediaPlayer.create(homeScreen,R.raw.notify_2);
 
 
         // Constraints to inflate random specks on layout
@@ -85,7 +86,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
             ConstraintSet constraints = new ConstraintSet();
             public void onTick(long millisUntilFinished) {
 
-                if(millisUntilFinished < 30000 && millisUntilFinished > 29900){
+                if(millisUntilFinished < 3000 && millisUntilFinished > 2900){
                     speck_holder_cl.addView(speck1, 0);
                     final int random = new Random().nextInt(701) + 100;
                     constraints.clone(speck_holder_cl);
@@ -153,7 +154,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
 
             public void onFinish() {
                 notification_tv.startAnimation(notification_anim);
-                MediaPlayer ring= MediaPlayer.create(homeScreen,R.raw.notify_2);
+
                 ring.start();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
@@ -249,6 +250,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         else if(view_id == notification_tv.getId())
         {
             to_navigate = new Intent(homeScreen, MindfullnessBreathing.class);
+            ring.stop();
             startActivity(to_navigate);
         }
 

@@ -40,6 +40,8 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
     Vibrator myVibrate;
     boolean isRun;
     boolean clickable;
+    boolean isTwoDigit;
+    static int count;
     Context mindfullness_breathing_game;
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -66,6 +68,10 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
             String text = getIntent().getStringExtra("TimerValue");
             remaining_breaths.setText(text + " Breaths");
         }
+        if(getIntent().hasExtra("two_digit"))
+        {
+            isTwoDigit = getIntent().getBooleanExtra("two_digit", false);
+        }
         enlarge = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.myanimation);
         shrink = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.shrink_to_original);
@@ -82,6 +88,21 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     //deprecated in API 26
                     myVibrate.vibrate(500);
                 }
+
+                String temp = remaining_breaths.getText().toString();
+                String counted = "";
+                int index = 0;
+                while (index<2)
+                {
+                    char current = temp.charAt(index);
+                    if(current != ' ') {
+                        counted = counted + current;
+                    }
+                    index++;
+                }
+                count = Integer.parseInt(counted);
+                count = count -1;
+                remaining_breaths.setText(count + " Breaths");
             }
         };
 
@@ -112,12 +133,10 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         });
 
         shrink.setAnimationListener(new Animation.AnimationListener() {
-            int count = Character.getNumericValue(remaining_breaths.getText().charAt(0));
+
             @Override
             public void onAnimationStart(Animation animation) {
                 Log.d("VERBOSE", "run: INSIDE 2nd ANIM");
-                count = count -1;
-                remaining_breaths.setText(count + " Breaths");
                 clickable = false;
             }
 
@@ -133,7 +152,6 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     remaining_sec.setText("3 Seconds");
                 }
                 isRun = false;
-                inhale_button.setClickable(true);
                 clickable = true;
             }
 
