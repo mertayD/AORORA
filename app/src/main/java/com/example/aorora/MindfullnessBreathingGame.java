@@ -92,7 +92,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
 
                     return true;
                 }
-                if((event.getAction() == MotionEvent.ACTION_MOVE)||(event.getAction() == MotionEvent.ACTION_UP)) {
+                if((event.getAction() == MotionEvent.ACTION_UP)) {
                     handler.removeCallbacks(mLongPressed);
                     Log.d("VERBOSE", "run: INSIDE CANCEL");
                     if(!isRun){
