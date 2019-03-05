@@ -3,7 +3,12 @@ package com.example.aorora;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +23,8 @@ import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Random;
+
 import static java.sql.Types.INTEGER;
 
 public class MindfullnessBreathingGame extends AppCompatActivity {
@@ -29,6 +36,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
     TextView remaining_sec;
     Animation enlarge;
     Animation shrink;
+    Vibrator myVibrate;
     boolean isRun;
     Context mindfullness_breathing_game;
     @SuppressLint("ClickableViewAccessibility")
@@ -47,6 +55,8 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         remaining_breaths = (TextView) findViewById(R.id.breath_count_tv);
         remaining_sec = (TextView) findViewById(R.id.remaining_time_breathing_tv);
 
+        myVibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
         remaining_sec.setText("3 Seconds");
         if(getIntent().hasExtra("TimerValue"))
         {
@@ -63,6 +73,12 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 Log.d("VERBOSE", "run: INSIDE RUN ");
                 butterfly_image.startAnimation(shrink);
                 isRun = true;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    //deprecated in API 26
+                    myVibrate.vibrate(500);
+                }
             }
         };
 
@@ -72,6 +88,26 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     butterfly_image.startAnimation(enlarge);
                     handler.postDelayed(mLongPressed, 3000);
+
+                    new CountDownTimer(3000, 100) {
+                        ConstraintSet constraints = new ConstraintSet();
+                        public void onTick(long millisUntilFinished) {
+
+                            if(millisUntilFinished < 2000 ){
+                                remaining_sec.setText("2 Seconds");
+                            }
+                            if(millisUntilFinished < 1000 ){
+                                remaining_sec.setText("1 Seconds");
+                            }
+
+
+                        }
+
+                        public void onFinish() {
+                            remaining_sec.setText("0 Seconds");
+
+                        }
+                    }.start();
                     return true;
                 }
                 if((event.getAction() == MotionEvent.ACTION_MOVE)||(event.getAction() == MotionEvent.ACTION_UP)) {
@@ -104,6 +140,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 {
                     count = count -1;
                     remaining_breaths.setText(count + " Breaths");
+                    remaining_sec.setText("3 Seconds");
                 }
                 isRun = false;
             }
