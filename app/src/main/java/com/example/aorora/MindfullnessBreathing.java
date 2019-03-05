@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.example.aorora.ClickListener.SpinnerActivity;
@@ -25,7 +28,8 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
     ImageButton profile_button_bottombar;
     ImageButton community_button_bottombar;
     ImageButton quest_button_bottombar;
-
+    ImageView alpha_channel_iv;
+    Animation infinite_blink;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +41,7 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
         play_button = (ImageButton) findViewById(R.id.play_button_breathing);
+        alpha_channel_iv = (ImageView) findViewById(R.id.alpha_channel_breathing_icon);
 
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
@@ -44,6 +49,9 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         quest_button_bottombar.setOnClickListener(this);
         play_button.setOnClickListener(this);
 
+        infinite_blink = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.infinite_blink);
+        alpha_channel_iv.startAnimation(infinite_blink);
         time_selection_spinner = findViewById(R.id.spinner_breathing_time_selection);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.breathing_menu_selection, R.layout.simple_spinner_tv);
@@ -82,6 +90,7 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
             timerCount = String.valueOf(time_selection_spinner.getSelectedItem());
             to_navigate = new Intent(mindfullnessBreathing, MindfullnessBreathingGame.class);
             to_navigate.putExtra("TimerValue", timerCount);
+            startActivity(to_navigate);
         }
     }
 }
