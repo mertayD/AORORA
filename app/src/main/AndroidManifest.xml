@@ -10,9 +10,14 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MindfullnessBreathingGame"></activity>
-        <activity android:name=".mindfullnessBreathingGame" />
+        android:theme="@style/AppTheme"
+        android:largeHeap="true"
+        android:hardwareAccelerated="false"
+        >
+        <activity android:name=".MindfullnessMeditation"></activity>
+        <activity android:name=".MindfullnessFeatherSelection" />
+        <activity android:name=".MindfullnessMeditationGame" />
+        <activity android:name=".MindfullnessBreathingGame" />
         <activity android:name=".MindfullnessBreathing" />
         <activity android:name=".ButterflyDetailsPage" />
         <activity android:name=".ButterflyCollectionPage" />

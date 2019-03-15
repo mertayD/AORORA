@@ -14,12 +14,12 @@ import android.widget.Spinner;
 
 import com.example.aorora.ClickListener.SpinnerActivity;
 
-public class MindfullnessBreathing extends AppCompatActivity implements View.OnClickListener {
+public class MindfullnessMeditation extends AppCompatActivity implements View.OnClickListener {
 
-    Spinner time_selection_spinner;
+    Spinner duration_selection_spinner;
     ImageButton play_button;
-    String timerCount;
-    Context mindfullnessBreathing;
+    String duration_string;
+    Context mindfulnessMeditation;
     ImageButton home_button_bottombar;
     ImageButton profile_button_bottombar;
     ImageButton community_button_bottombar;
@@ -29,18 +29,19 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
     ImageButton exit_button;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mindfullness_breathing);
-        mindfullnessBreathing = this;
+        setContentView(R.layout.activity_mindfullness_meditation);
+
+        mindfulnessMeditation = this;
 
         home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
         play_button = (ImageButton) findViewById(R.id.play_button_meditation);
-        alpha_channel_iv = (ImageView) findViewById(R.id.alpha_channel_breathing_icon);
-        exit_button = (ImageButton) findViewById(R.id.exit_button_breathing);
+        alpha_channel_iv = (ImageView) findViewById(R.id.alpha_channel_meditation_icon);
+        exit_button = (ImageButton) findViewById(R.id.exit_button_meditation);
 
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
@@ -52,14 +53,12 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         infinite_blink = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.infinite_blink);
         alpha_channel_iv.startAnimation(infinite_blink);
-        time_selection_spinner = findViewById(R.id.spinner_breathing_time_selection);
+        duration_selection_spinner = findViewById(R.id.spinner_meditation_time_selection);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.breathing_menu_selection, R.layout.simple_spinner_tv);
+                R.array.meditation_menu_selection, R.layout.simple_spinner_tv);
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
-        time_selection_spinner.setAdapter(adapter);
-        time_selection_spinner.setOnItemSelectedListener(new SpinnerActivity());
-
-
+        duration_selection_spinner.setAdapter(adapter);
+        duration_selection_spinner.setOnItemSelectedListener(new SpinnerActivity());
     }
 
     @Override
@@ -68,39 +67,48 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         Intent to_navigate;
         if(view_id == profile_button_bottombar.getId())
         {
-            to_navigate = new Intent(mindfullnessBreathing, ProfilePage.class );
+            to_navigate = new Intent(mindfulnessMeditation, ProfilePage.class );
             startActivity(to_navigate);
         }
         else if(view_id == quest_button_bottombar.getId())
         {
-            to_navigate = new Intent(mindfullnessBreathing, MindfullnessSelection.class);
+            to_navigate = new Intent(mindfulnessMeditation, MindfullnessSelection.class);
         }
         else if(view_id == home_button_bottombar.getId())
         {
-            to_navigate = new Intent(mindfullnessBreathing, HomeScreen.class);
+            to_navigate = new Intent(mindfulnessMeditation, HomeScreen.class);
             startActivity(to_navigate);
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            to_navigate = new Intent(mindfullnessBreathing, CommunityPage.class);
+            to_navigate = new Intent(mindfulnessMeditation, CommunityPage.class);
             startActivity(to_navigate);
         }
         else if(view_id == play_button.getId())
         {
             boolean two_digit = false;
-            timerCount = String.valueOf(time_selection_spinner.getSelectedItem());
-            to_navigate = new Intent(mindfullnessBreathing, MindfullnessBreathingGame.class);
-            to_navigate.putExtra("TimerValue", timerCount);
-            if(Integer.parseInt(timerCount) > 9)
+            int duration_int = 0;
+            duration_string = String.valueOf(duration_selection_spinner.getSelectedItem());
+            if(duration_string.equals("Short"))
             {
-                two_digit = true;
+                duration_int = 1;
             }
-            to_navigate.putExtra("two_digit", two_digit);
+            else if(duration_string.equals("Medium"))
+            {
+                duration_int = 2;
+            }
+            else
+            {
+                duration_int = 3;
+            }
+            to_navigate = new Intent(mindfulnessMeditation, MindfullnessFeatherSelection.class);
+
+            to_navigate.putExtra("Duration", duration_int);
             startActivity(to_navigate);
         }
         else if(view_id == exit_button.getId())
         {
-            to_navigate = new Intent(mindfullnessBreathing, MindfullnessSelection.class);
+            to_navigate = new Intent(mindfulnessMeditation, MindfullnessSelection.class);
             startActivity(to_navigate);
         }
     }
