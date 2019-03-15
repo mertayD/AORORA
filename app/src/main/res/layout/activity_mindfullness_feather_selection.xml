@@ -42,7 +42,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/green_butterfly_button" />
+            app:srcCompat="@drawable/green_feather_reversed" />
 
         <TextView
             android:id="@+id/textView7"
@@ -62,10 +62,10 @@
         android:id="@+id/linearLayout6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="92dp"
         android:layout_marginEnd="104dp"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6">
 
@@ -79,7 +79,7 @@
             app:layout_constraintHorizontal_bias="0.54"
             app:layout_constraintStart_toEndOf="@+id/green_feather_button"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/butterfly_logo" />
+            app:srcCompat="@drawable/whiteish_feather" />
 
         <TextView
             android:id="@+id/textView8"
@@ -99,10 +99,10 @@
         android:id="@+id/linearLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="68dp"
-        android:orientation="vertical"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="92dp"
         android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6">
 
@@ -114,7 +114,7 @@
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toStartOf="@+id/blue_feather_button"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/purple_butterfly_image" />
+            app:srcCompat="@drawable/purple_feather_reversed" />
 
         <TextView
             android:id="@+id/textView9"
@@ -150,7 +150,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/blue_butterfly_image" />
+            app:srcCompat="@drawable/blue_feather" />
 
         <TextView
             android:id="@+id/textView10"
