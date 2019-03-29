@@ -1,4 +1,4 @@
-package com.example.aorora.ActionDetection;
+package com.example.aorora;
 
 import android.app.IntentService;
 import android.content.Intent;

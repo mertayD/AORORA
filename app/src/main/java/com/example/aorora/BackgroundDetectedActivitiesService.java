@@ -1,4 +1,4 @@
-package com.example.aorora.ActionDetection;
+package com.example.aorora;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.location.ActivityRecognitionClient;
