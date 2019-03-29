@@ -17,6 +17,7 @@ public class MindfullnessSelection extends AppCompatActivity implements View.OnC
     ImageButton quest_button_bottombar;
     ImageButton mindfullness_breathing;
     ImageButton mindfullness_meditation;
+    ImageButton mindfullness_walking;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +30,7 @@ public class MindfullnessSelection extends AppCompatActivity implements View.OnC
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
         mindfullness_breathing = (ImageButton) findViewById(R.id.mindfulness_breathing_app);
         mindfullness_meditation = (ImageButton) findViewById(R.id.mindfullness_meditation_button);
+        mindfullness_walking = (ImageButton) findViewById(R.id.mindfullness_walking_button);
 
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
@@ -36,8 +38,7 @@ public class MindfullnessSelection extends AppCompatActivity implements View.OnC
         quest_button_bottombar.setOnClickListener(this);
         mindfullness_breathing.setOnClickListener(this);
         mindfullness_meditation.setOnClickListener(this);
-
-
+        mindfullness_walking.setOnClickListener(this);
     }
 
 
@@ -68,6 +69,11 @@ public class MindfullnessSelection extends AppCompatActivity implements View.OnC
         else if(view_id == mindfullness_meditation.getId())
         {
             to_navigate = new Intent(mindfullnessSelection, MindfullnessMeditation.class);
+            startActivity(to_navigate);
+        }
+        else if(view_id == mindfullness_walking.getId())
+        {
+            to_navigate = new Intent(mindfullnessSelection, MindfullnessWalkingGame.class);
             startActivity(to_navigate);
         }
     }

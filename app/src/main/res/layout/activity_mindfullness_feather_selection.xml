@@ -25,18 +25,18 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="230dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/green_feather_button"
-            android:layout_width="102dp"
-            android:layout_height="144dp"
+            android:layout_width="81dp"
+            android:layout_height="127dp"
             android:background="#00000000"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -52,7 +52,7 @@
             android:gravity="center_horizontal"
             android:text="Mountain \n Solid"
             android:textColor="#FFFFFF"
-            android:textSize="8pt"
+            android:textSize="6pt"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/green_feather_button"
             tools:layout_editor_absoluteX="39dp" />
@@ -71,8 +71,8 @@
 
         <ImageButton
             android:id="@+id/whiteish_feather_button"
-            android:layout_width="102dp"
-            android:layout_height="144dp"
+            android:layout_width="81dp"
+            android:layout_height="127dp"
             android:background="#00000000"
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toStartOf="@+id/purple_feather_button"
@@ -89,7 +89,7 @@
             android:gravity="center_horizontal"
             android:text="Wind \n Free"
             android:textColor="#989898"
-            android:textSize="8pt"
+            android:textSize="6pt"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/whiteish_feather_button"
             tools:layout_editor_absoluteX="120dp" />
@@ -108,8 +108,8 @@
 
         <ImageButton
             android:id="@+id/purple_feather_button"
-            android:layout_width="102dp"
-            android:layout_height="144dp"
+            android:layout_width="81dp"
+            android:layout_height="127dp"
             android:background="#00000000"
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toStartOf="@+id/blue_feather_button"
@@ -124,7 +124,7 @@
             android:gravity="center_horizontal"
             android:text="Flower \n Fresh"
             android:textColor="#989898"
-            android:textSize="8pt"
+            android:textSize="6pt"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/purple_feather_button"
             tools:layout_editor_absoluteX="215dp" />
@@ -143,8 +143,8 @@
 
         <ImageButton
             android:id="@+id/blue_feather_button"
-            android:layout_width="102dp"
-            android:layout_height="144dp"
+            android:layout_width="81dp"
+            android:layout_height="127dp"
             android:background="#00000000"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -160,7 +160,7 @@
             android:gravity="center_horizontal"
             android:text="Water \n Reflect"
             android:textColor="#989898"
-            android:textSize="8pt"
+            android:textSize="6pt"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/blue_feather_button"
             tools:layout_editor_absoluteX="315dp" />
@@ -186,13 +186,12 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="140dp"
         android:gravity="center_horizontal"
         android:text="Press to select feather \n and continue"
         android:textColor="#989898"
         android:textSize="8pt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
