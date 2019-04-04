@@ -41,7 +41,6 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
                 }
             }
         };
-
         startTracking();
     }
     private void handleUserActivity(int type, int confidence) {
@@ -84,11 +83,12 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
         }
 
         Log.e("ACTION_DETECTION", "User activity: " + label + ", Confidence: " + confidence);
-        Toast.makeText(this,"Activity" + label +  ", Confidence: " + confidence,Toast.LENGTH_SHORT ).show();
-
         if (confidence > 70) {
             Toast.makeText(this,"Activity" + label +  ", Confidence: " + confidence,Toast.LENGTH_SHORT ).show();
 
+            if(label == "WALKING" || label == "RUNNING")
+            {
+            }
         }
     }
 
@@ -108,7 +108,6 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
     }
 
     private void startTracking() {
-        Log.e("ACTION_DETECTION", "INSIDE");
         Intent intent1 = new Intent( MindfullnessWalkingGame.this, BackgroundDetectedActivitiesService.class);
         startService(intent1);
     }
