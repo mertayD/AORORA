@@ -8,26 +8,48 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.location.DetectedActivity;
+import com.plattysoft.leonids.Particle;
+import com.plattysoft.leonids.ParticleSystem;
 
 
 public class MindfullnessWalkingGame extends AppCompatActivity {
 
     BroadcastReceiver broadcastReceiver;
     Button update;
+    ImageButton exit;
+    ParticleSystem myParticle;
+    View emitter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mindfullness_walking_game);
         update = findViewById(R.id.update);
+        exit = (ImageButton) findViewById(R.id.mindfullness_walking_exit_button);
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stopTracking();
+            }
+        });
+        emitter = (View) findViewById(R.id.emiter_top);
+        myParticle = new ParticleSystem(MindfullnessWalkingGame.this, 100, R.drawable.speck, 80000)
+                .setAcceleration(0.00013f, 90)
+                .setSpeedByComponentsRange(0f, 0f, 0.05f, 0.1f)
+                .setFadeOut(200, new AccelerateInterpolator());
+
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startTracking();
+                myParticle.emitWithGravity(emitter, Gravity.BOTTOM, 1);
             }
         });
 
@@ -86,6 +108,7 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
         if (confidence > 70) {
             Toast.makeText(this,"Activity" + label +  ", Confidence: " + confidence,Toast.LENGTH_SHORT ).show();
 
+
             if(label == "WALKING" || label == "RUNNING")
             {
             }
@@ -95,7 +118,6 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver,
                 new IntentFilter("activity_intent"));
     }
@@ -115,6 +137,7 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
     private void stopTracking() {
         Intent intent = new Intent(MindfullnessWalkingGame.this, BackgroundDetectedActivitiesService.class);
         stopService(intent);
+        myParticle.stopEmitting();
     }
 
 }
