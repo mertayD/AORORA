@@ -17,9 +17,8 @@
         <item>10</item>
     </string-array>
     <string-array name="meditation_menu_selection">
-        <item>Short</item>
-        <item>Medium</item>
-        <item>Long</item>
+        <item>Beginner</item>
+        <item>Intermediate</item>
     </string-array>
 
 </resources>

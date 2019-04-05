@@ -1,7 +1,10 @@
 package com.example.aorora;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -10,6 +13,7 @@ import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.constraint.ConstraintSet;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +34,7 @@ import static java.sql.Types.INTEGER;
 
 public class MindfullnessBreathingGame extends AppCompatActivity {
 
-    ImageButton exit_button;
+    static ImageButton exit_button;
     ImageView inhale_button;
     ImageView butterfly_image;
     TextView remaining_breaths;
@@ -42,6 +46,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
     boolean clickable;
     boolean isTwoDigit;
     static int count;
+    static boolean cont;
     Context mindfullness_breathing_game;
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -52,6 +57,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         // checks if inside the run because as soon as it finishes run it goes to cancel
         isRun = false;
         clickable = true;
+        cont = false;
         mindfullness_breathing_game = this;
 
         exit_button = (ImageButton) findViewById(R.id.exit_button_breathing);
@@ -61,16 +67,24 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         remaining_sec = (TextView) findViewById(R.id.remaining_time_breathing_tv);
 
         myVibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        exit_button.setVisibility(View.INVISIBLE);
 
         remaining_sec.setText("3 Seconds");
         if(getIntent().hasExtra("TimerValue"))
         {
-            String text = getIntent().getStringExtra("TimerValue");
+            int text = getIntent().getIntExtra("TimerValue", 1);
+            if(text == 1)
+            {
+                text = 3;
+            }
+            else if( text == 2)
+            {
+                text = 15;
+            }
+            else{
+                text = 20;
+            }
             remaining_breaths.setText(text + " Breaths");
-        }
-        if(getIntent().hasExtra("two_digit"))
-        {
-            isTwoDigit = getIntent().getBooleanExtra("two_digit", false);
         }
         enlarge = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.myanimation);
@@ -101,7 +115,14 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     index++;
                 }
                 count = Integer.parseInt(counted);
-                count = count -1;
+                if(cont)
+                {
+                    count = count + 1;
+                }
+                else
+                {
+                    count = count -1;
+                }
                 remaining_breaths.setText(count + " Breaths");
             }
         };
@@ -145,11 +166,12 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
 
                 if(count == 0)
                 {
-                    exit_button.performClick();
-                }
+                    DialogFragment newFragment = new BreathDialog();
+                    newFragment.show(getSupportFragmentManager(), "CONTINUE");                }
                 else
                 {
                     remaining_sec.setText("3 Seconds");
+                    myVibrate.vibrate(500);
                 }
                 isRun = false;
                 clickable = true;
@@ -194,4 +216,25 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         }
     }
 
+    public static class BreathDialog extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Congratulations! You have finished the Mindfullness Breathing! Would you like to Continue?")
+                    .setPositiveButton("CONTINUE", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            exit_button.setVisibility(View.VISIBLE);
+                            cont = true;
+                        }
+                    })
+                    .setNegativeButton("EXIT", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            exit_button.performClick();
+                        }
+                    });
+
+            return builder.create();
+        }
+    }
 }
