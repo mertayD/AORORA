@@ -54,7 +54,7 @@ public class BackgroundDetectedActivitiesService extends Service {
 
     public void requestActivityUpdatesButtonHandler() {
         Task<Void> task = mActivityRecognitionClient.requestActivityUpdates(
-                30000,
+                10000,
                 mPendingIntent);
 
         task.addOnSuccessListener(new OnSuccessListener<Void>() {
