@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.example.aorora.ClickListener.SpinnerActivity;
@@ -54,27 +55,27 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(View v) {
                 timerCount = 1;
-                short_button.setBackgroundColor(getResources().getColor(R.color.colorWhite));
-                medium_button.setBackgroundColor(getResources().getColor(R.color.customGray));
-                long_button.setBackgroundColor(getResources().getColor(R.color.customGray));
+                short_button.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                medium_button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                long_button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             }
         });
         medium_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 timerCount = 2;
-                short_button.setBackgroundColor(getResources().getColor(R.color.customGray));
-                medium_button.setBackgroundColor(getResources().getColor(R.color.colorWhite));
-                long_button.setBackgroundColor(getResources().getColor(R.color.customGray));
+                short_button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                medium_button.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                long_button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             }
         });
         long_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 timerCount = 3;
-                short_button.setBackgroundColor(getResources().getColor(R.color.customGray));
-                medium_button.setBackgroundColor(getResources().getColor(R.color.customGray));
-                long_button.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                short_button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                medium_button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                long_button.setBackgroundColor(getResources().getColor(R.color.colorGreen));
             }
         });
 

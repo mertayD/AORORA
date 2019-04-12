@@ -35,8 +35,8 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
     ImageButton  yellow_mood_button;
     ImageButton green_mood_button;
     TextView survey_question_tv;
-    String[] questions = {"How is your mood today?","How is your health today?","How tired do you feel today?","How satisfied do you feel about today?","How energetic did you feel today?","How tense did you feel today?" };
-    final int questions_array_size = 6;
+    String[] questions = {"How is your mood today?","How is your health today?"};
+    final int questions_array_size = 2;
     int question_order_count;
 
     @Override
@@ -190,9 +190,40 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
         }
         else
         {
-            Intent home_page = new Intent(surveyPage, HomeScreen.class);
-            startActivity(home_page);
-            overridePendingTransition(R.anim.blink_reverse,R.anim.blink);
+            Intent navigated_from = getIntent();
+            Intent to_navigate;
+            int mindfullness = 0;
+            if(navigated_from.hasExtra("NavigatedFrom"))
+            {
+                mindfullness = navigated_from.getIntExtra("NavigatedFrom", 0);
+            }
+
+            if(mindfullness == 1 || mindfullness == -1)
+            {
+                to_navigate = new Intent(surveyPage, MindfullnessBreathing.class);
+                startActivity(to_navigate);
+            }
+            else if(mindfullness == 2 || mindfullness == -2)
+            {
+                to_navigate = new Intent(surveyPage, MindfullnessMeditation.class);
+                startActivity(to_navigate);
+            }
+            else if(mindfullness == 3)
+            {
+                to_navigate = new Intent(surveyPage, MindfullnessSelection.class);
+                startActivity(to_navigate);
+            }
+            else if(mindfullness == -3)
+            {
+                to_navigate = new Intent(surveyPage, MindfullnessWalkingGame.class);
+                startActivity(to_navigate);
+            }
+            else{
+                to_navigate = new Intent(surveyPage, HomeScreen.class);
+                startActivity(to_navigate);
+                overridePendingTransition(R.anim.blink_reverse,R.anim.blink);
+            }
+
         }
 
 

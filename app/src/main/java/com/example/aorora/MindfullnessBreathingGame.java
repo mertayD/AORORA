@@ -17,6 +17,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -185,7 +186,9 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         exit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent to_navigate = new Intent(mindfullness_breathing_game, MindfullnessBreathing.class);
+
+                Intent to_navigate = new Intent(mindfullness_breathing_game, SurveyPage.class);
+                to_navigate.putExtra("NavigatedFrom", 1);
                 startActivity(to_navigate);
             }
         });
@@ -218,17 +221,20 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
 
     public static class BreathDialog extends DialogFragment {
         @Override
+        //TODO fix pressing outside dialog
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the Builder class for convenient dialog construction
+            //Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Congratulations! You have finished the Mindfullness Breathing! Would you like to Continue?")
-                    .setPositiveButton("CONTINUE", new DialogInterface.OnClickListener() {
+            LayoutInflater inflater = requireActivity().getLayoutInflater();
+            builder.setView(inflater.inflate(R.layout.custom_dialog_breathing,null))
+                    .setTitle("Congratulations!")
+                    .setPositiveButton(R.string.Continue, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             exit_button.setVisibility(View.VISIBLE);
                             cont = true;
                         }
                     })
-                    .setNegativeButton("EXIT", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.Exit, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             exit_button.performClick();
                         }

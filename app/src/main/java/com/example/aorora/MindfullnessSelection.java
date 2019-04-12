@@ -46,6 +46,8 @@ public class MindfullnessSelection extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         int view_id = v.getId();
         Intent to_navigate;
+        boolean to_survey = false;
+        int mindfullness_id = 0;
         if(view_id == profile_button_bottombar.getId())
         {
             to_navigate = new Intent(mindfullnessSelection, ProfilePage.class );
@@ -63,17 +65,23 @@ public class MindfullnessSelection extends AppCompatActivity implements View.OnC
         }
         else if(view_id == mindfullness_breathing.getId())
         {
-            to_navigate = new Intent(mindfullnessSelection, MindfullnessBreathing.class);
-            startActivity(to_navigate);
+            to_survey = true;
+            mindfullness_id = -1;
         }
         else if(view_id == mindfullness_meditation.getId())
         {
-            to_navigate = new Intent(mindfullnessSelection, MindfullnessMeditation.class);
-            startActivity(to_navigate);
+            to_survey = true;
+            mindfullness_id = -2;
         }
         else if(view_id == mindfullness_walking.getId())
         {
-            to_navigate = new Intent(mindfullnessSelection, MindfullnessWalkingGame.class);
+            to_survey = true;
+            mindfullness_id = -3;
+        }
+        if(to_survey)
+        {
+            to_navigate = new Intent(mindfullnessSelection, SurveyPage.class);
+            to_navigate.putExtra("NavigatedFrom", mindfullness_id);
             startActivity(to_navigate);
         }
     }

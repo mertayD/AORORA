@@ -2,6 +2,7 @@ package com.example.aorora;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +28,6 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
     ImageView alpha_channel_iv;
     Animation infinite_blink;
     ImageButton exit_button;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
@@ -49,6 +49,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         quest_button_bottombar.setOnClickListener(this);
         play_button.setOnClickListener(this);
         exit_button.setOnClickListener(this);
+
 
         infinite_blink = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.infinite_blink);

@@ -2,6 +2,7 @@ package com.example.aorora;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public class MindfullnessMeditationGame extends AppCompatActivity implements Vie
     Boolean animate;
     Context meditationGame;
     ImageButton exit_button;
+    MediaPlayer feather_sound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +41,16 @@ public class MindfullnessMeditationGame extends AppCompatActivity implements Vie
         exit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent to_navigate = new Intent(meditationGame, SurveyPage.class);
+                to_navigate.putExtra("NavigatedFrom", 2);
+                startActivity(to_navigate);
+                if(feather_sound.isPlaying())
+                {
+                    feather_sound.stop();
+                }
             }
         });
+
         hold_button.setOnTouchListener(this);
         grow_shrink = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.infinite_grow_shrink);
         meditationGame = this;
@@ -69,18 +78,26 @@ public class MindfullnessMeditationGame extends AppCompatActivity implements Vie
             featherSelected = getIntent().getIntExtra("Feather", 1);
             if(featherSelected == 1 )
             {
+                feather_sound = MediaPlayer.create(MindfullnessMeditationGame.this,R.raw.feather2);
+
                 feather.setImageResource(R.drawable.green_feather);
             }
             else if(featherSelected == 2)
             {
+                feather_sound = MediaPlayer.create(MindfullnessMeditationGame.this,R.raw.feather1);
+
                 feather.setImageResource(R.drawable.purple_feather);
             }
             else if(featherSelected == 3)
             {
+                feather_sound = MediaPlayer.create(MindfullnessMeditationGame.this,R.raw.feather4);
+
                 feather.setImageResource(R.drawable.whiteish_feather);
             }
             else if(featherSelected == 4)
             {
+                feather_sound = MediaPlayer.create(MindfullnessMeditationGame.this,R.raw.feather3);
+
                 feather.setImageResource(R.drawable.blue_feather);
             }
         }
@@ -97,6 +114,7 @@ public class MindfullnessMeditationGame extends AppCompatActivity implements Vie
             timer = new Timer(timerValue, 1000);
             timer.start();
             feather.startAnimation(grow_shrink);
+            feather_sound.start();
             return true;
         }
         if((event.getAction() == MotionEvent.ACTION_UP) ) {
@@ -104,6 +122,7 @@ public class MindfullnessMeditationGame extends AppCompatActivity implements Vie
             hold_button.setImageResource(R.drawable.mindfullness_meditation_button);
             timerValue = timer.onPause();
             feather.clearAnimation();
+            feather_sound.pause();
             return false;
         }
         return false;
@@ -137,8 +156,10 @@ public class MindfullnessMeditationGame extends AppCompatActivity implements Vie
 
         @Override
         public void onFinish() {
-            Intent to_navigate = new Intent(meditationGame, MindfullnessSelection.class);
+            Intent to_navigate = new Intent(meditationGame, SurveyPage.class);
+            to_navigate.putExtra("NavigatedFrom", 2);
             startActivity(to_navigate);
+            feather_sound.stop();
         }
 
         public long onPause()
