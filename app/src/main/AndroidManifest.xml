@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.aorora"
-    >
+    package="com.example.aorora">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -15,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MindfullnessWalkingGame"></activity>
+        <activity android:name=".BackendTest"></activity>
+        <activity android:name=".MindfullnessWalkingGame" />
         <activity android:name=".MindfullnessMeditation" />
         <activity android:name=".MindfullnessFeatherSelection" />
         <activity android:name=".MindfullnessMeditationGame" />
@@ -39,9 +39,7 @@
         <service
             android:name=".DetectedActivitiesIntentService"
             android:exported="false" />
-
-        <service android:name=".BackgroundDetectedActivitiesService"></service>
-
+        <service android:name=".BackgroundDetectedActivitiesService" />
     </application>
 
 </manifest>

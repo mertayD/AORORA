@@ -33,6 +33,7 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
     TextView butterfly_name_tv;
     TextView butterfly_description_tv;
     Context profilePage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,7 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         jar_button.setOnClickListener(this);
         butterfly_selection_button.setOnClickListener(this);
         back_button.setOnClickListener(this);
+        settings_button.setOnClickListener(this);
         gestureDetector = new GestureDetector(profilePage, ProfilePage.this);
 
 
@@ -95,6 +97,11 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         else if(view_id == back_button.getId())
         {
             to_navigate = new Intent(profilePage, HomeScreen.class);
+            startActivity(to_navigate);
+        }
+        else if(view_id == settings_button.getId())
+        {
+            to_navigate = new Intent(profilePage, BackendTest.class);
             startActivity(to_navigate);
         }
     }
