@@ -9,6 +9,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static int user_points;
     Button  login_button;
     Intent surveyPage;
     Context context;
@@ -16,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        user_points = 0;
         login_button = findViewById(R.id.login_button);
         context = this;
 

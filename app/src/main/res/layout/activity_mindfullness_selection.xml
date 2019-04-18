@@ -19,47 +19,88 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/orange_butterfly_image" />
 
-    <ImageButton
-        android:id="@+id/mindfullness_walking_button"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="60dp"
-        android:background="#00000000"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/mindfullness_meditation_button"
+        app:layout_constraintBottom_toTopOf="@+id/ll_m2_button"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/location_button" />
+        android:gravity="center"
+        >
+        <ImageButton
+            android:id="@+id/mindfullness_walking_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/location_button"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Minfullness Walking"
+            android:textColor="@color/customGray"/>
+    </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/mindfulness_breathing_app"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="60dp"
-        android:background="#00000000"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/mindfullness_meditation_button"
+        app:layout_constraintBottom_toTopOf="@+id/ll_m2_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:srcCompat="@drawable/breath_button" />
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+        <ImageButton
+            android:id="@+id/mindfulness_breathing_app"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/breath_button" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Minfullness Breathing"
+            android:textColor="@color/customGray"/>
+    </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/mindfullness_meditation_button"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="104dp"
-        android:background="#00000000"
-        android:scaleType="fitCenter"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:id="@+id/ll_m2_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/menu_button_filled" />
+        >
+        <ImageButton
+            android:id="@+id/mindfullness_meditation_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/menu_button_filled" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Minfullness Meditation"
+            android:textColor="@color/customGray"
+            />
+
+
+    </LinearLayout>
 
     <include
         android:id="@+id/bf_detail_page_bottom_bar"

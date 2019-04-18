@@ -35,9 +35,12 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
     ImageButton  yellow_mood_button;
     ImageButton green_mood_button;
     TextView survey_question_tv;
+    ImageButton exitButton;
     String[] questions = {"How is your mood today?","How is your health today?"};
     final int questions_array_size = 2;
     int question_order_count;
+    Intent navigatedFrom;
+    Boolean exitVisible;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -55,6 +58,7 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
         survey_question_tv.setText(questions[question_order_count]);
         surveyPage = this;
         mood_desc_ll = findViewById(R.id.mood_desc_ll);
+        exitButton = (ImageButton) findViewById(R.id.exit_button_survey);
 
         mood_desc_ll.setVisibility(View.INVISIBLE);
         survey_question_tv.setVisibility(View.INVISIBLE);
@@ -63,6 +67,19 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
         orange_mood_button.setVisibility(View.INVISIBLE);
         yellow_mood_button.setVisibility(View.INVISIBLE);
         green_mood_button.setVisibility(View.INVISIBLE);
+
+        exitVisible = false;
+
+        navigatedFrom = getIntent();
+        if(navigatedFrom.hasExtra("NavigatedFrom"))
+        {
+            int from = navigatedFrom.getIntExtra("NavigatedFrom", 0);
+            if(from == -1 || from == -2 || from == -3)
+            {
+                exitButton.setVisibility(View.VISIBLE);
+                exitVisible = false;
+            }
+        }
 
         //Delay for survey buttons
         new CountDownTimer(1500, 100) {
@@ -156,7 +173,11 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
         int result = 0;
         //v_id is the id of the view that is passed as a parameter
         int v_id = v.getId();
-
+        if(exitVisible)
+        {
+            exitButton.setVisibility(View.INVISIBLE);
+            exitVisible = false;
+        }
         if(v_id == red_mood_button.getId())
         {
             red_mood_button.setVisibility(View.INVISIBLE);

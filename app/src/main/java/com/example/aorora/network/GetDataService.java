@@ -16,4 +16,6 @@ public interface GetDataService {
 
     @GET("/butterfly/?format=json")
     Call<List<Butterfly>> getButterflyInfo();
+
+
 }

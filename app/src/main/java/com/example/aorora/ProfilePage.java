@@ -54,6 +54,7 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         butterfly_description_tv = (TextView) findViewById(R.id.profile_page_bf_desc_tv);
         profilePage = this;
 
+        user_score_tv.setText("" + MainActivity.user_points);
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
         community_button_bottombar.setOnClickListener(this);

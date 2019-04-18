@@ -49,6 +49,11 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
     static int count;
     static boolean cont;
     Context mindfullness_breathing_game;
+    MediaPlayer breathing_music;
+    String inhale_text = "Press and hold as \n you breath in";
+    String exhale_text = "Exhale as butterfly shrinks \n and leave the button";
+    TextView desc_tv;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         cont = false;
         mindfullness_breathing_game = this;
 
+        desc_tv = (TextView) findViewById(R.id.desc_to_breathinggame_tv);
         exit_button = (ImageButton) findViewById(R.id.exit_button_breathing);
         inhale_button = (ImageView) findViewById(R.id.breathing_inhale_button);
         butterfly_image = (ImageView) findViewById(R.id.butterfly_image_breathinggame);
@@ -68,7 +74,9 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         remaining_sec = (TextView) findViewById(R.id.remaining_time_breathing_tv);
 
         myVibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        exit_button.setVisibility(View.INVISIBLE);
+
+        breathing_music = MediaPlayer.create(MindfullnessBreathingGame.this,R.raw.feather1);
+        breathing_music.start();
 
         remaining_sec.setText("3 Seconds");
         if(getIntent().hasExtra("TimerValue"))
@@ -76,13 +84,16 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
             int text = getIntent().getIntExtra("TimerValue", 1);
             if(text == 1)
             {
+                MainActivity.user_points += 5;
                 text = 3;
             }
             else if( text == 2)
             {
+                MainActivity.user_points += 10;
                 text = 15;
             }
             else{
+                MainActivity.user_points += 15;
                 text = 20;
             }
             remaining_breaths.setText(text + " Breaths");
@@ -118,6 +129,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 count = Integer.parseInt(counted);
                 if(cont)
                 {
+                    MainActivity.user_points += 1;
                     count = count + 1;
                 }
                 else
@@ -171,6 +183,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     newFragment.show(getSupportFragmentManager(), "CONTINUE");                }
                 else
                 {
+                    desc_tv.setText("" + inhale_text);
                     remaining_sec.setText("3 Seconds");
                     myVibrate.vibrate(500);
                 }
@@ -187,8 +200,16 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if(!cont && count > 0)
+                {
+                    MainActivity.user_points -= count;
+                }
                 Intent to_navigate = new Intent(mindfullness_breathing_game, SurveyPage.class);
                 to_navigate.putExtra("NavigatedFrom", 1);
+                if(breathing_music.isPlaying())
+                {
+                    breathing_music.stop();
+                }
                 startActivity(to_navigate);
             }
         });
@@ -216,6 +237,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         @Override
         public void onFinish() {
             remaining_sec.setText("0 Seconds");
+            desc_tv.setText("" + exhale_text);
         }
     }
 
@@ -230,7 +252,6 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     .setTitle("Congratulations!")
                     .setPositiveButton(R.string.Continue, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            exit_button.setVisibility(View.VISIBLE);
                             cont = true;
                         }
                     })

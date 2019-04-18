@@ -38,6 +38,9 @@ public class MindfullnessMeditationGame extends AppCompatActivity implements Vie
         hold_button = (ImageButton) findViewById(R.id.meditation_hold_button);
         exit_button = (ImageButton) findViewById(R.id.exit_button_meditation_game);
 
+        //USER POINTS
+        MainActivity.user_points += 5;
+
         exit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
