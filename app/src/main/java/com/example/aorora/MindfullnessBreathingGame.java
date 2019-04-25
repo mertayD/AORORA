@@ -53,7 +53,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
     String inhale_text = "Press and hold as \n you breath in";
     String exhale_text = "Exhale as butterfly shrinks \n and leave the button";
     TextView desc_tv;
-
+    int possible_points;
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +65,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         clickable = true;
         cont = false;
         mindfullness_breathing_game = this;
+        possible_points = 0;
 
         desc_tv = (TextView) findViewById(R.id.desc_to_breathinggame_tv);
         exit_button = (ImageButton) findViewById(R.id.exit_button_breathing);
@@ -75,7 +76,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
 
         myVibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-        breathing_music = MediaPlayer.create(MindfullnessBreathingGame.this,R.raw.feather1);
+        breathing_music = MediaPlayer.create(MindfullnessBreathingGame.this,R.raw.readingbreathing1);
         breathing_music.start();
 
         remaining_sec.setText("3 Seconds");
@@ -84,16 +85,16 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
             int text = getIntent().getIntExtra("TimerValue", 1);
             if(text == 1)
             {
-                MainActivity.user_points += 5;
+                possible_points = 5;
                 text = 3;
             }
             else if( text == 2)
             {
-                MainActivity.user_points += 10;
+                possible_points = 10;
                 text = 15;
             }
             else{
-                MainActivity.user_points += 15;
+                possible_points = 15;
                 text = 20;
             }
             remaining_breaths.setText(text + " Breaths");
@@ -202,8 +203,9 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
 
                 if(!cont && count > 0)
                 {
-                    MainActivity.user_points -= count;
+                    possible_points = 0;
                 }
+                MainActivity.user_points += possible_points;
                 Intent to_navigate = new Intent(mindfullness_breathing_game, SurveyPage.class);
                 to_navigate.putExtra("NavigatedFrom", 1);
                 if(breathing_music.isPlaying())

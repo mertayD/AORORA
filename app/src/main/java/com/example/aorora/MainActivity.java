@@ -10,6 +10,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     public static int user_points;
+    public static int user_butterfly = 0;
     Button  login_button;
     Intent surveyPage;
     Context context;

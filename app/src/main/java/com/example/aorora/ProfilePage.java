@@ -65,6 +65,29 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         settings_button.setOnClickListener(this);
         gestureDetector = new GestureDetector(profilePage, ProfilePage.this);
 
+        switch (MainActivity.user_butterfly){
+            case 0:
+                butterfly_selection_button.setImageResource(R.drawable.orange_butterfly_image);
+                break;
+            case 1:
+                butterfly_selection_button.setImageResource(R.drawable.blue_butterfly_image);
+                break;
+            case 2:
+                butterfly_selection_button.setImageResource(R.drawable.red_butterfly_image);
+                break;
+            case 3:
+                butterfly_selection_button.setImageResource(R.drawable.green_butterfly_image);
+                break;
+            case 4:
+                butterfly_selection_button.setImageResource(R.drawable.yellow_butterfly_image);
+                break;
+            case 5:
+                butterfly_selection_button.setImageResource(R.drawable.purple_butterfly_image);
+                break;
+            default:
+                butterfly_selection_button.setImageResource(R.drawable.orange_butterfly_image);
+                break;
+        }
 
     }
 

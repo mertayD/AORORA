@@ -86,6 +86,7 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         play_button.setOnClickListener(this);
         exit_button.setOnClickListener(this);
 
+        medium_button.performClick();
         infinite_blink = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.infinite_blink);
         alpha_channel_iv.startAnimation(infinite_blink);

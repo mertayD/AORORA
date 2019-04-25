@@ -84,6 +84,7 @@ public class ButterflyCollectionPage extends AppCompatActivity implements View.O
             @Override
             public void onItemClick(View v, int position) {
                 Intent details = new Intent(butterflyCollection, ButterflyDetailsPage.class);
+                details.putExtra("ButterflyId", position);
                 startActivity(details);
             }
         });

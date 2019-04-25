@@ -8,7 +8,7 @@
     tools:context=".MindfullnessSelection">
 
     <ImageView
-        android:id="@+id/user_butterfly_imageView"
+        android:id="@+id/user_butterfly_imageView_mindfullness"
         android:layout_width="255dp"
         android:layout_height="234dp"
         android:layout_marginStart="8dp"
@@ -39,11 +39,12 @@
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/location_button"
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Minfullness Walking"
-            android:textColor="@color/customGray"/>
+            android:text="Walking"
+            android:textColor="@color/customGray" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,11 +66,12 @@
             android:background="#00000000"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/breath_button" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Minfullness Breathing"
-            android:textColor="@color/customGray"/>
+            android:text="Breathing"
+            android:textColor="@color/customGray" />
     </LinearLayout>
 
     <LinearLayout
@@ -85,19 +87,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         >
+
         <ImageButton
             android:id="@+id/mindfullness_meditation_button"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="#00000000"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/menu_button_filled" />
+            app:srcCompat="@drawable/mindfullness_meditation_icon" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Minfullness Meditation"
-            android:textColor="@color/customGray"
-            />
+            android:text="Meditation"
+            android:textColor="@color/customGray" />
 
 
     </LinearLayout>
@@ -121,6 +124,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.50121653" />
+
+    <TextView
+        android:id="@+id/mindfullnes_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Mindfullness"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

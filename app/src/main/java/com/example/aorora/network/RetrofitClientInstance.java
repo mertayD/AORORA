@@ -7,7 +7,8 @@ public class RetrofitClientInstance {
 
     private static Retrofit retrofit;
     //"https://jsonplaceholder.typicode.com";
-    private static final String BASE_URL = "https://aroraserver.com";
+    //"https://aroraserver.com"
+    private static final String BASE_URL = "https://jsonplaceholder.typicode.com";
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {

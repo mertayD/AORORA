@@ -17,8 +17,8 @@
 
         <ImageButton
             android:id="@+id/back_button_butterflyc_page"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginTop="11dp"
             android:layout_weight="1"
             android:src="@drawable/back_button"
@@ -26,21 +26,38 @@
             android:scaleType="fitCenter"
             />
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="10"
+            android:orientation="vertical"
             android:gravity="center"
-            android:text="Collection"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
+            >
 
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Collection"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="6/6"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                />
+        </LinearLayout>
+
 
         <ImageButton
             android:id="@+id/settings_button_profile_page"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginTop="11dp"
             android:layout_weight="1"
             android:background="#00000000"

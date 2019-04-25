@@ -77,7 +77,7 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
             if(from == -1 || from == -2 || from == -3)
             {
                 exitButton.setVisibility(View.VISIBLE);
-                exitVisible = false;
+                exitVisible = true;
             }
         }
 

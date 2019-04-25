@@ -21,6 +21,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +51,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     MediaPlayer ring;
     MediaPlayer spec_alert;
     boolean page_left;
+    ImageView profile_butterfly;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,30 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         ar_game_button = (ImageButton) findViewById(R.id.ar_game_button);
         quest_button = (ImageButton) findViewById(R.id.quest_button);
         pop_up_twobuttons_button = findViewById(R.id.pop_up_buttons_button);
+        profile_butterfly = (ImageView) findViewById(R.id.user_butterfly_imageView);
+        switch (MainActivity.user_butterfly){
+            case 0:
+                profile_butterfly.setImageResource(R.drawable.orange_butterfly_image);
+                break;
+            case 1:
+                profile_butterfly.setImageResource(R.drawable.blue_butterfly_image);
+                break;
+            case 2:
+                profile_butterfly.setImageResource(R.drawable.red_butterfly_image);
+                break;
+            case 3:
+                profile_butterfly.setImageResource(R.drawable.green_butterfly_image);
+                break;
+            case 4:
+                profile_butterfly.setImageResource(R.drawable.yellow_butterfly_image);
+                break;
+            case 5:
+                profile_butterfly.setImageResource(R.drawable.purple_butterfly_image);
+                break;
+            default:
+                profile_butterfly.setImageResource(R.drawable.orange_butterfly_image);
+                break;
+        }
         gestureDetector = new GestureDetector(homeScreen, HomeScreen.this);
         notification_tv = (TextView) findViewById(R.id.notification_body_homescreen);
         myVibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);

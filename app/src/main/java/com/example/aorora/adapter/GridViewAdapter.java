@@ -3,6 +3,7 @@ package com.example.aorora.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,8 +55,32 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
 
     @Override
     public void onBindViewHolder(@NonNull final GridViewAdapter.GridViewHolder customViewHolder, final int position) {
-        customViewHolder.userName.setText(dataList.get(position).getTitle().substring(1,7));
-        customViewHolder.coverImage.setImageResource(R.drawable.orange_butterfly_image);
+        customViewHolder.userName.setText(dataList.get(position).getTitle().substring(1,4));
+        Log.e("POSITION", "" + position);
+        switch (position){
+            case 0:
+                customViewHolder.coverImage.setImageResource(R.drawable.orange_butterfly_image);
+                break;
+            case 1:
+                customViewHolder.coverImage.setImageResource(R.drawable.blue_butterfly_image);
+                break;
+            case 2:
+                customViewHolder.coverImage.setImageResource(R.drawable.red_butterfly_image);
+                break;
+            case 3:
+                customViewHolder.coverImage.setImageResource(R.drawable.green_butterfly_image);
+                break;
+            case 4:
+                customViewHolder.coverImage.setImageResource(R.drawable.yellow_butterfly_image);
+                break;
+            case 5:
+                customViewHolder.coverImage.setImageResource(R.drawable.purple_butterfly_image);
+                break;
+             default:
+                 customViewHolder.coverImage.setImageResource(R.drawable.orange_butterfly_image);
+                 break;
+        }
+
         customViewHolder.coverImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +92,6 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
 
     @Override
     public int getItemCount() {
-        return 20;
+        return 6;
     }
 }

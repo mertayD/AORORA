@@ -28,6 +28,7 @@ public class MindfullnessMeditationGame extends AppCompatActivity implements Vie
     Context meditationGame;
     ImageButton exit_button;
     MediaPlayer feather_sound;
+    int possible_points;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +40,15 @@ public class MindfullnessMeditationGame extends AppCompatActivity implements Vie
         exit_button = (ImageButton) findViewById(R.id.exit_button_meditation_game);
 
         //USER POINTS
-        MainActivity.user_points += 5;
+        possible_points = 5;
 
         exit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(timerValue > 0){
+                    possible_points = 0;
+                }
+                MainActivity.user_points += possible_points;
                 Intent to_navigate = new Intent(meditationGame, SurveyPage.class);
                 to_navigate.putExtra("NavigatedFrom", 2);
                 startActivity(to_navigate);
@@ -51,6 +56,7 @@ public class MindfullnessMeditationGame extends AppCompatActivity implements Vie
                 {
                     feather_sound.stop();
                 }
+
             }
         });
 

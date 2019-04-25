@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MindfullnessSelection extends AppCompatActivity implements View.OnClickListener {
@@ -18,6 +19,7 @@ public class MindfullnessSelection extends AppCompatActivity implements View.OnC
     ImageButton mindfullness_breathing;
     ImageButton mindfullness_meditation;
     ImageButton mindfullness_walking;
+    ImageView butterfly_view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,31 @@ public class MindfullnessSelection extends AppCompatActivity implements View.OnC
         mindfullness_breathing = (ImageButton) findViewById(R.id.mindfulness_breathing_app);
         mindfullness_meditation = (ImageButton) findViewById(R.id.mindfullness_meditation_button);
         mindfullness_walking = (ImageButton) findViewById(R.id.mindfullness_walking_button);
+        butterfly_view = (ImageView) findViewById(R.id.user_butterfly_imageView_mindfullness);
+
+        switch (MainActivity.user_butterfly){
+            case 0:
+                butterfly_view.setImageResource(R.drawable.orange_butterfly_image);
+                break;
+            case 1:
+                butterfly_view.setImageResource(R.drawable.blue_butterfly_image);
+                break;
+            case 2:
+                butterfly_view.setImageResource(R.drawable.red_butterfly_image);
+                break;
+            case 3:
+                butterfly_view.setImageResource(R.drawable.green_butterfly_image);
+                break;
+            case 4:
+                butterfly_view.setImageResource(R.drawable.yellow_butterfly_image);
+                break;
+            case 5:
+                butterfly_view.setImageResource(R.drawable.purple_butterfly_image);
+                break;
+            default:
+                butterfly_view.setImageResource(R.drawable.orange_butterfly_image);
+                break;
+        }
 
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
