@@ -9,6 +9,32 @@
     tools:context=".HomeScreen"
     android:id="@+id/speck_holder_cl">
 
+    <TextView
+        android:id="@+id/minimized_quick_view_pollens_count__home_screen_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="75 Pollens"
+        android:textColor="@color/colorPollen"
+        android:textSize="8pt"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/popup_quick_access"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/include_popup_quick_access_menu"
+        layout="@layout/quick_access_menu"
+        android:layout_width="353dp"
+        android:layout_height="109dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/user_butterfly_imageView"
         android:layout_width="255dp"
@@ -51,7 +77,7 @@
         android:id="@+id/include"
         layout="@layout/bottom_menu_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="19dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
@@ -60,35 +86,62 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
-        android:id="@+id/ar_game_button"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="60dp"
-        android:background="#00000000"
-        android:scaleType="fitCenter"
-        android:visibility="invisible"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ar_game_button_ll"
         app:layout_constraintBottom_toTopOf="@+id/pop_up_buttons_button"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ar_button" />
-
-    <ImageButton
-        android:id="@+id/quest_button"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:orientation="vertical"
         android:layout_marginBottom="60dp"
-        android:background="#00000000"
-        android:scaleType="fitCenter"
-        android:visibility="invisible"
+        android:gravity="center">
+        <ImageButton
+            android:id="@+id/ar_game_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ar_button"/>
+        <TextView
+            android:id="@+id/label_ar_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AR Game"
+            android:layout_marginTop="4dp"
+            android:visibility="invisible"
+            android:textColor="@color/customGray"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/quest_button_ll"
         app:layout_constraintBottom_toTopOf="@+id/pop_up_buttons_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:srcCompat="@drawable/quest_button" />
+        android:orientation="vertical"
+        android:layout_marginBottom="60dp"
+        android:gravity="center">
+        <ImageButton
+            android:id="@+id/quest_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/quest_button" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quest"
+            android:layout_marginTop="4dp"
+            android:visibility="invisible"
+            android:id="@+id/label_quest_button"
+            android:textColor="@color/customGray"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/notification_body_homescreen"
@@ -104,7 +157,7 @@
         android:textSize="6pt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
+        android:visibility="invisible"
         />
 
 
@@ -126,5 +179,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.50121653" />
+
+    <ImageButton
+        android:id="@+id/popup_quick_access"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/grey_circle_walking"
+        tools:layout_editor_absoluteX="8dp"
+        android:background="#00000000"
+        android:scaleType="fitCenter"/>
 
 </android.support.constraint.ConstraintLayout>

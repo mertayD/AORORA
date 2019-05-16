@@ -39,39 +39,33 @@ public class ButterflyDetailsPage extends AppCompatActivity implements View.OnCl
         selectButton.setOnClickListener(this);
         selectButterfly_ib.setOnClickListener(this);
         Intent intent = getIntent();
-        switch (position){
-            case 0:
-                selectButterfly_ib.setImageResource(R.drawable.orange_butterfly_image);
-                MainActivity.user_butterfly = 0;
-                break;
-            case 1:
-                selectButterfly_ib.setImageResource(R.drawable.blue_butterfly_image);
-                MainActivity.user_butterfly = 1;
-                break;
-            case 2:
-                selectButterfly_ib.setImageResource(R.drawable.red_butterfly_image);
-                MainActivity.user_butterfly = 2;
-                break;
-            case 3:
-                selectButterfly_ib.setImageResource(R.drawable.green_butterfly_image);
-                MainActivity.user_butterfly = 3;
-                break;
-            case 4:
-                selectButterfly_ib.setImageResource(R.drawable.yellow_butterfly_image);
-                MainActivity.user_butterfly = 4;
-                break;
-            case 5:
-                selectButterfly_ib.setImageResource(R.drawable.purple_butterfly_image);
-                MainActivity.user_butterfly = 5;
-                break;
-            default:
-                selectButterfly_ib.setImageResource(R.drawable.orange_butterfly_image);
-                MainActivity.user_butterfly = 0;
-                break;
-        }
         if(intent.hasExtra("ButterflyId"))
         {
             position = intent.getIntExtra("ButterflyId",0);
+        }
+
+        switch (position){
+            case 0:
+                selectButterfly_ib.setImageResource(R.drawable.orange_butterfly_image);
+                break;
+            case 1:
+                selectButterfly_ib.setImageResource(R.drawable.blue_butterfly_image);
+                break;
+            case 2:
+                selectButterfly_ib.setImageResource(R.drawable.red_butterfly_image);
+                break;
+            case 3:
+                selectButterfly_ib.setImageResource(R.drawable.green_butterfly_image);
+                break;
+            case 4:
+                selectButterfly_ib.setImageResource(R.drawable.yellow_butterfly_image);
+                break;
+            case 5:
+                selectButterfly_ib.setImageResource(R.drawable.purple_butterfly_image);
+                break;
+            default:
+                selectButterfly_ib.setImageResource(R.drawable.orange_butterfly_image);
+                break;
         }
     }
 

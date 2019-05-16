@@ -12,7 +12,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.constraint.ConstraintSet;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,18 +19,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextClock;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.Random;
-
-import static java.sql.Types.INTEGER;
 
 public class MindfullnessBreathingGame extends AppCompatActivity {
 
@@ -68,7 +60,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         possible_points = 0;
 
         desc_tv = (TextView) findViewById(R.id.desc_to_breathinggame_tv);
-        exit_button = (ImageButton) findViewById(R.id.exit_button_breathing);
+        exit_button = (ImageButton) findViewById(R.id.exit_button_walking);
         inhale_button = (ImageView) findViewById(R.id.breathing_inhale_button);
         butterfly_image = (ImageView) findViewById(R.id.butterfly_image_breathinggame);
         remaining_breaths = (TextView) findViewById(R.id.breath_count_tv);
@@ -206,8 +198,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     possible_points = 0;
                 }
                 MainActivity.user_points += possible_points;
-                Intent to_navigate = new Intent(mindfullness_breathing_game, SurveyPage.class);
-                to_navigate.putExtra("NavigatedFrom", 1);
+                Intent to_navigate = new Intent(mindfullness_breathing_game, MindfullnessBreathing.class);
                 if(breathing_music.isPlaying())
                 {
                     breathing_music.stop();

@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="25dp" >
+    android:layout_margin="15dp" >
 
     <ImageView
         android:id="@+id/cover_image_friends"

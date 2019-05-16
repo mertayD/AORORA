@@ -7,14 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-
-import com.example.aorora.ClickListener.SpinnerActivity;
 
 public class MindfullnessBreathing extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,9 +38,9 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
-        play_button = (ImageButton) findViewById(R.id.play_button_meditation);
+        play_button = (ImageButton) findViewById(R.id.play_button_walking);
         alpha_channel_iv = (ImageView) findViewById(R.id.alpha_channel_breathing_icon);
-        exit_button = (ImageButton) findViewById(R.id.exit_button_breathing);
+        exit_button = (ImageButton) findViewById(R.id.exit_button_walking);
 
         short_button = (Button) findViewById(R.id.button_short_breathing);
         medium_button = (Button) findViewById(R.id.button_medium_breathing);
@@ -120,6 +115,7 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         {
             to_navigate = new Intent(mindfullnessBreathing, MindfullnessBreathingGame.class);
             to_navigate.putExtra("TimerValue", timerCount);
+            //to_navigate.putExtra("NavigatedFrom", -1);
             startActivity(to_navigate);
         }
         else if(view_id == exit_button.getId())

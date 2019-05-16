@@ -14,7 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BackendTest"></activity>
+        <activity android:name=".PollenStoreDailyQuestPage"></activity>
+        <activity android:name=".PollenShopPage" />
+        <activity android:name=".DailyQuestPage" />
+        <activity android:name=".MindfullnessWalking" />
+        <activity android:name=".BackendTest" />
         <activity android:name=".MindfullnessWalkingGame" />
         <activity android:name=".MindfullnessMeditation" />
         <activity android:name=".MindfullnessFeatherSelection" />

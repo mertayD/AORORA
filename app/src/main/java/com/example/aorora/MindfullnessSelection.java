@@ -30,6 +30,7 @@ public class MindfullnessSelection extends AppCompatActivity implements View.OnC
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
+        quest_button_bottombar.setImageResource(R.drawable.quest_button_filled);
         mindfullness_breathing = (ImageButton) findViewById(R.id.mindfulness_breathing_app);
         mindfullness_meditation = (ImageButton) findViewById(R.id.mindfullness_meditation_button);
         mindfullness_walking = (ImageButton) findViewById(R.id.mindfullness_walking_button);
@@ -92,23 +93,17 @@ public class MindfullnessSelection extends AppCompatActivity implements View.OnC
         }
         else if(view_id == mindfullness_breathing.getId())
         {
-            to_survey = true;
-            mindfullness_id = -1;
+            to_navigate = new Intent(mindfullnessSelection, MindfullnessBreathing.class);
+            startActivity(to_navigate);
         }
         else if(view_id == mindfullness_meditation.getId())
         {
-            to_survey = true;
-            mindfullness_id = -2;
+            to_navigate = new Intent(mindfullnessSelection, MindfullnessMeditation.class);
+            startActivity(to_navigate);
         }
         else if(view_id == mindfullness_walking.getId())
         {
-            to_survey = true;
-            mindfullness_id = -3;
-        }
-        if(to_survey)
-        {
-            to_navigate = new Intent(mindfullnessSelection, SurveyPage.class);
-            to_navigate.putExtra("NavigatedFrom", mindfullness_id);
+            to_navigate = new Intent(mindfullnessSelection, MindfullnessWalking.class);
             startActivity(to_navigate);
         }
     }

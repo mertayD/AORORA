@@ -1,5 +1,6 @@
 package com.example.aorora;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
@@ -42,6 +43,8 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     ImageButton quest_button;
     ImageButton pop_up_twobuttons_button;
     TextView notification_tv;
+    TextView label_ar_game_button;
+    TextView label_quest_button;
     Boolean isButtonsPoppedUp;
     Animation notification_anim;
     Vibrator myVibrate;
@@ -52,13 +55,18 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     MediaPlayer spec_alert;
     boolean page_left;
     ImageView profile_butterfly;
+    ImageButton popup_quick_access;
+    public View quick_menu;
+    boolean is_menu_inflated;
+    TextView minimized_quick_view_pollens_count_tv;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         homeScreen = this;
         isButtonsPoppedUp = false;
         home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);
+        home_button_bottombar.setImageResource(R.drawable.home_button_filled);
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
@@ -66,6 +74,48 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         quest_button = (ImageButton) findViewById(R.id.quest_button);
         pop_up_twobuttons_button = findViewById(R.id.pop_up_buttons_button);
         profile_butterfly = (ImageView) findViewById(R.id.user_butterfly_imageView);
+        label_ar_game_button = (TextView) findViewById(R.id.label_ar_button);
+        label_quest_button = (TextView) findViewById(R.id.label_quest_button);
+        popup_quick_access = (ImageButton) findViewById(R.id.popup_quick_access);
+        speck_holder_cl = (ConstraintLayout) findViewById(R.id.speck_holder_cl);
+        quick_menu = (LinearLayout) findViewById(R.id.include_popup_quick_access_menu);
+        minimized_quick_view_pollens_count_tv = (TextView) findViewById(R.id.minimized_quick_view_pollens_count__home_screen_tv);
+        is_menu_inflated = false;
+        quick_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent to_navigate = new Intent(homeScreen, PollenStoreDailyQuestPage.class);
+                startActivity(to_navigate);
+            }
+        });
+        popup_quick_access.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(is_menu_inflated)
+                {
+                    minimized_quick_view_pollens_count_tv.setVisibility(View.VISIBLE);
+                    quick_menu.setVisibility(View.INVISIBLE);
+                    is_menu_inflated = false;
+
+                }
+                else
+                {
+                    minimized_quick_view_pollens_count_tv.setVisibility(View.INVISIBLE);
+                    quick_menu.setVisibility(View.VISIBLE);
+                    is_menu_inflated = true;
+                }
+                /*
+                ConstraintSet constraints = new ConstraintSet();
+                LayoutInflater inflater =  LayoutInflater.from(homeScreen);
+                quick_menu = inflater.inflate(R.layout.quick_access_menu, null);
+                constraints.clone(speck_holder_cl);
+                constraints.connect(quick_menu.getId(), ConstraintSet.LEFT, speck_holder_cl.getId(), ConstraintSet.LEFT, 600);
+                constraints.connect(quick_menu.getId(), ConstraintSet.BOTTOM, speck_holder_cl.getId(), ConstraintSet.BOTTOM, 1000);
+                constraints.applyTo(speck_holder_cl);
+                */
+
+            }
+        });
         switch (MainActivity.user_butterfly){
             case 0:
                 profile_butterfly.setImageResource(R.drawable.orange_butterfly_image);
@@ -96,7 +146,6 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         layoutInflater = LayoutInflater.from(homeScreen);
         speck1 = layoutInflater.inflate(R.layout.speck_notification, null);
 
-        speck_holder_cl = (ConstraintLayout) findViewById(R.id.speck_holder_cl);
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
         community_button_bottombar.setOnClickListener(this);
@@ -108,31 +157,30 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         ring = MediaPlayer.create(homeScreen,R.raw.notify_2);
         spec_alert = MediaPlayer.create(homeScreen,R.raw.notify_wav);
 
-        //tpo stop music
+        //to stop music
         page_left = false;
+
         // Constraints to inflate random specks on layout
 
+        /*
         new CountDownTimer(7000, 100) {
             ConstraintSet constraints = new ConstraintSet();
             public void onTick(long millisUntilFinished) {
 
             }
-
             public void onFinish() {
                 speck_holder_cl.addView(speck1, 0);
                 final int random = new Random().nextInt(701) + 100;
                 constraints.clone(speck_holder_cl);
                 constraints.connect(speck1.getId(), ConstraintSet.LEFT, speck_holder_cl.getId(), ConstraintSet.LEFT, random);
-                constraints.connect(speck1.getId(), ConstraintSet.BOTTOM, speck_holder_cl.getId(), ConstraintSet.BOTTOM, 800);
+                constraints.connect(speck1.getId(), ConstraintSet.BOTTOM, speck_holder_cl.getId(), ConstraintSet.BOTTOM, 1000);
                 constraints.applyTo(speck_holder_cl);
                 if(!page_left) {
                     spec_alert.start();
                 }
             }
         }.start();
-
-
-
+*/
         notification_anim = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.blink_reverse);
 
@@ -159,6 +207,8 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
                     pop_up_twobuttons_button.setImageDrawable(getResources().getDrawable(R.drawable.menu_button_unfilled));
                     quest_button.setVisibility(View.VISIBLE);
                     ar_game_button.setVisibility(View.VISIBLE);
+                    label_ar_game_button.setVisibility(View.VISIBLE);
+                    label_quest_button.setVisibility(View.VISIBLE);
                     isButtonsPoppedUp = true;
                     ar_game_button.setClickable(TRUE);
                     quest_button.setClickable(TRUE);
@@ -167,6 +217,8 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
                     pop_up_twobuttons_button.setImageDrawable(getResources().getDrawable(R.drawable.menu_button_filled));
                     quest_button.setVisibility(View.INVISIBLE);
                     ar_game_button.setVisibility(View.INVISIBLE);
+                    label_ar_game_button.setVisibility(View.INVISIBLE);
+                    label_quest_button.setVisibility(View.INVISIBLE);
                     isButtonsPoppedUp = false;
                     ar_game_button.setClickable(FALSE);
                     quest_button.setClickable(FALSE);
@@ -174,6 +226,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
             }
         });
 
+        /*
         new CountDownTimer(10000, 100) {
 
             public void onTick(long millisUntilFinished) {
@@ -195,6 +248,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
 
             }
         }.start();
+        */
 
     }
     @Override
@@ -274,7 +328,11 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         }
         else if(view_id == quest_button_bottombar.getId() || view_id == quest_button.getId())
         {
+            /*
             to_navigate = new Intent(homeScreen, MindfullnessSelection.class);
+            startActivity(to_navigate);
+            */
+            to_navigate = new Intent(homeScreen, DailyQuestPage.class);
             startActivity(to_navigate);
         }
         else if(view_id == home_button_bottombar.getId())
@@ -289,8 +347,16 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         }
         else if(view_id == notification_tv.getId())
         {
+
             to_navigate = new Intent(homeScreen, MindfullnessBreathing.class);
             startActivity(to_navigate);
+        }
+        else if(view_id == ar_game_button.getId())
+        {
+            to_navigate = new Intent(homeScreen, DailyQuestPage.class);
+            startActivity(to_navigate);
+            //Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.NAUVRLab.ARProduct");
+            //startActivity(launchIntent);
         }
 
     }

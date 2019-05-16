@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -24,7 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SurveyPage extends AppCompatActivity implements View.OnClickListener {
+public class SurveyPage extends AppCompatActivity implements OnClickListener {
     LinearLayout mood_desc_ll;
     Context surveyPage;
     Animation move_to_animation;
@@ -41,7 +42,7 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
     int question_order_count;
     Intent navigatedFrom;
     Boolean exitVisible;
-
+    int from;
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +74,7 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
         navigatedFrom = getIntent();
         if(navigatedFrom.hasExtra("NavigatedFrom"))
         {
-            int from = navigatedFrom.getIntExtra("NavigatedFrom", 0);
+            from = navigatedFrom.getIntExtra("NavigatedFrom", 0);
             if(from == -1 || from == -2 || from == -3)
             {
                 exitButton.setVisibility(View.VISIBLE);
@@ -109,6 +110,26 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
         orange_mood_button.setOnClickListener(this);
         yellow_mood_button.setOnClickListener(this);
         green_mood_button.setOnClickListener(this);
+        exitButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent to_navigate;
+                switch (from){
+                    case -1:
+                        to_navigate = new Intent(surveyPage, MindfullnessBreathing.class);
+                        startActivity(to_navigate);
+                        break;
+                    case -2:
+                        to_navigate = new Intent(surveyPage, MindfullnessMeditation.class);
+                        startActivity(to_navigate);
+                         break;
+                    case -3:
+                        to_navigate = new Intent(surveyPage, MindfullnessWalking.class);
+                        startActivity(to_navigate);
+                        break;
+                }
+            }
+        });
 
         move_to_animation =
                 AnimationUtils.loadAnimation(getApplicationContext(),
@@ -217,27 +238,38 @@ public class SurveyPage extends AppCompatActivity implements View.OnClickListene
             if(navigated_from.hasExtra("NavigatedFrom"))
             {
                 mindfullness = navigated_from.getIntExtra("NavigatedFrom", 0);
-            }
-
-            if(mindfullness == 1 || mindfullness == -1)
-            {
-                to_navigate = new Intent(surveyPage, MindfullnessBreathing.class);
-                startActivity(to_navigate);
-            }
-            else if(mindfullness == 2 || mindfullness == -2)
-            {
-                to_navigate = new Intent(surveyPage, MindfullnessMeditation.class);
-                startActivity(to_navigate);
-            }
-            else if(mindfullness == 3)
-            {
-                to_navigate = new Intent(surveyPage, MindfullnessSelection.class);
-                startActivity(to_navigate);
-            }
-            else if(mindfullness == -3)
-            {
-                to_navigate = new Intent(surveyPage, MindfullnessWalkingGame.class);
-                startActivity(to_navigate);
+                if(mindfullness == -1)
+                {
+                    int timer = navigated_from.getIntExtra("TimerValue", 1);
+                    to_navigate = new Intent(surveyPage, MindfullnessBreathingGame.class);
+                    to_navigate.putExtra("TimerValue", timer);
+                    startActivity(to_navigate);
+                }
+                else if(mindfullness == 1)
+                {
+                    to_navigate = new Intent(surveyPage, MindfullnessBreathing.class);
+                    startActivity(to_navigate);
+                }
+                else if(mindfullness == -2 )
+                {
+                    to_navigate = new Intent(surveyPage, MindfullnessFeatherSelection.class);
+                    startActivity(to_navigate);
+                }
+                else if(mindfullness == 2)
+                {
+                    to_navigate = new Intent(surveyPage, MindfullnessMeditation.class);
+                    startActivity(to_navigate);
+                }
+                else if(mindfullness == -3)
+                {
+                    to_navigate = new Intent(surveyPage, MindfullnessWalkingGame.class);
+                    startActivity(to_navigate);
+                }
+                else if(mindfullness == 3)
+                {
+                    to_navigate = new Intent(surveyPage, MindfullnessWalking.class);
+                    startActivity(to_navigate);
+                }
             }
             else{
                 to_navigate = new Intent(surveyPage, HomeScreen.class);

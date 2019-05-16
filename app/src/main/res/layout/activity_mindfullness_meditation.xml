@@ -81,7 +81,7 @@
         app:srcCompat="@drawable/mindfullness_meditation_button" />
 
     <ImageButton
-        android:id="@+id/play_button_meditation"
+        android:id="@+id/play_button_walking"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
@@ -106,7 +106,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/play_button_meditation" />
+        app:layout_constraintTop_toBottomOf="@+id/play_button_walking" />
 
     <TextView
         android:id="@+id/description_breathing_tv"

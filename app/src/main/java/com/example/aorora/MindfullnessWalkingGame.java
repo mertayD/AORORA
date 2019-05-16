@@ -62,9 +62,8 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent to_navigate = new Intent(MindfullnessWalkingGame.this, SurveyPage.class);
+                Intent to_navigate = new Intent(MindfullnessWalkingGame.this, MindfullnessWalking.class);
                 MainActivity.user_points += count;
-                to_navigate.putExtra("NavigatedFrom", 3);
                 startActivity(to_navigate);
                 stopTracking();
             }

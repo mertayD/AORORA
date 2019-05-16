@@ -49,8 +49,7 @@ public class MindfullnessMeditationGame extends AppCompatActivity implements Vie
                     possible_points = 0;
                 }
                 MainActivity.user_points += possible_points;
-                Intent to_navigate = new Intent(meditationGame, SurveyPage.class);
-                to_navigate.putExtra("NavigatedFrom", 2);
+                Intent to_navigate = new Intent(meditationGame, MindfullnessMeditation.class);
                 startActivity(to_navigate);
                 if(feather_sound.isPlaying())
                 {

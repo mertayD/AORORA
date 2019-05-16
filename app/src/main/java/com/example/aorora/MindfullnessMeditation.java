@@ -2,7 +2,6 @@ package com.example.aorora;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.aorora.ClickListener.SpinnerActivity;
 
@@ -39,7 +39,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
-        play_button = (ImageButton) findViewById(R.id.play_button_meditation);
+        play_button = (ImageButton) findViewById(R.id.play_button_walking);
         alpha_channel_iv = (ImageView) findViewById(R.id.alpha_channel_meditation_icon);
         exit_button = (ImageButton) findViewById(R.id.exit_button_meditation);
 
@@ -103,7 +103,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
                 duration_int = 3;
             }
             to_navigate = new Intent(mindfulnessMeditation, MindfullnessFeatherSelection.class);
-
+            //to_navigate.putExtra("NavigatedFrom", -2);
             to_navigate.putExtra("Duration", duration_int);
             startActivity(to_navigate);
         }

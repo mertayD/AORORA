@@ -25,7 +25,6 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
     ImageButton quest_button_bottombar;
     ImageButton butterfly_selection_button;
     ImageButton jar_button;
-    ImageButton back_button;
     ImageButton settings_button;
     ImageButton pollen_button;
     TextView user_name_tv;
@@ -41,12 +40,12 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
 
         home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
+        profile_button_bottombar.setImageResource(R.drawable.profile_filled_button);
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
         butterfly_selection_button = (ImageButton) findViewById(R.id.profile_butterfly_button);
         jar_button = (ImageButton) findViewById(R.id.jar_button_profile_page);
         pollen_button = (ImageButton) findViewById(R.id.pollen_button_profile_page);
-        back_button = (ImageButton) findViewById(R.id.back_button_profile_page);
         settings_button = (ImageButton) findViewById(R.id.settings_button_profile_page);
         user_name_tv = (TextView) findViewById(R.id.profile_user_name_tv);
         user_score_tv = (TextView) findViewById(R.id.profile_user_score);
@@ -61,8 +60,8 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         quest_button_bottombar.setOnClickListener(this);
         jar_button.setOnClickListener(this);
         butterfly_selection_button.setOnClickListener(this);
-        back_button.setOnClickListener(this);
         settings_button.setOnClickListener(this);
+        pollen_button.setOnClickListener(this);
         gestureDetector = new GestureDetector(profilePage, ProfilePage.this);
 
         switch (MainActivity.user_butterfly){
@@ -118,14 +117,14 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
             startActivity(to_navigate);
 
         }
-        else if(view_id == back_button.getId())
-        {
-            to_navigate = new Intent(profilePage, HomeScreen.class);
-            startActivity(to_navigate);
-        }
         else if(view_id == settings_button.getId())
         {
             to_navigate = new Intent(profilePage, BackendTest.class);
+            startActivity(to_navigate);
+        }
+        else if(view_id == pollen_button.getId())
+        {
+            to_navigate = new Intent(profilePage, PollenShopPage.class);
             startActivity(to_navigate);
         }
     }
