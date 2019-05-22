@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:padding="10dp"
     android:orientation="vertical">
     <RelativeLayout
@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:text="Pollen Cluster"
             android:textColor="@color/colorWhite"
-            android:textSize="9pt"
+            android:textSize="8pt"
             android:textStyle="bold"
             android:layout_marginBottom="4dp"
             />
@@ -34,12 +34,13 @@
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@id/pollen_shop_item_image"
             android:text="This cluster of pollen can be used to atttact more butterflies to your area for 30 minutes"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/customGray"
             android:textSize="7pt" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:id="@+id/pollen_shop_item_price"
             android:layout_below="@id/pollen_shop_item_desc_tv"
             android:text="300 Pollen"
             android:textColor="@color/colorPollen"

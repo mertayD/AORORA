@@ -124,7 +124,8 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         }
         else if(view_id == pollen_button.getId())
         {
-            to_navigate = new Intent(profilePage, PollenShopPage.class);
+            to_navigate = new Intent(profilePage, PollenStoreDailyQuestPage.class);
+            to_navigate.putExtra("NavigatedFrom", 2);
             startActivity(to_navigate);
         }
     }

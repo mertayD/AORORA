@@ -4,12 +4,13 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#B3989898"
-    android:padding="6dp"
+    android:background="#63989898"
+    android:gravity="center"
+    android:padding="5dp"
     >
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         >
         <TextView
@@ -19,7 +20,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="0dp"
             android:layout_marginRight="32dp"
-            android:layout_toLeftOf="@id/current_plln_amount_title_quick_access"
+            android:layout_centerHorizontal="true"
             android:layout_weight="2"
             android:text="JohnnyBaby21"
             android:textColor="@color/colorWhite"
@@ -29,6 +30,7 @@
             android:id="@+id/current_plln_amount_title_quick_access"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:text="Current Amount"
             android:textColor="@color/colorWhite"
@@ -48,7 +50,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="61dp">
+        android:layout_height="wrap_content">
 
         <include
             android:id="@+id/quick_access_block_1"
@@ -61,7 +63,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:src="@drawable/vertical_divider_bar" />
 
         <include
@@ -75,7 +77,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:src="@drawable/vertical_divider_bar" />
 
         <include

@@ -17,13 +17,11 @@ public class PollenShopPage extends AppCompatActivity implements View.OnClickLis
     ImageButton profile_button_bottombar;
     ImageButton community_button_bottombar;
     ImageButton quest_button_bottombar;
-    RecyclerView pollen_recycler;
     Context pollenShopPage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pollen_shop_page);
-        pollen_recycler = (RecyclerView) findViewById(R.id.pollenRecyclerView);
         pollenShopPage = this;
 
         home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);

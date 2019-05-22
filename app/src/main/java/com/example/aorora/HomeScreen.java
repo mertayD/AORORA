@@ -55,10 +55,9 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     MediaPlayer spec_alert;
     boolean page_left;
     ImageView profile_butterfly;
-    ImageButton popup_quick_access;
+    View popup_quick_access;
     public View quick_menu;
     boolean is_menu_inflated;
-    TextView minimized_quick_view_pollens_count_tv;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -76,31 +75,34 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         profile_butterfly = (ImageView) findViewById(R.id.user_butterfly_imageView);
         label_ar_game_button = (TextView) findViewById(R.id.label_ar_button);
         label_quest_button = (TextView) findViewById(R.id.label_quest_button);
-        popup_quick_access = (ImageButton) findViewById(R.id.popup_quick_access);
+        popup_quick_access = (LinearLayout) findViewById(R.id.popup_quick_access);
         speck_holder_cl = (ConstraintLayout) findViewById(R.id.speck_holder_cl);
         quick_menu = (LinearLayout) findViewById(R.id.include_popup_quick_access_menu);
-        minimized_quick_view_pollens_count_tv = (TextView) findViewById(R.id.minimized_quick_view_pollens_count__home_screen_tv);
         is_menu_inflated = false;
         quick_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent to_navigate = new Intent(homeScreen, PollenStoreDailyQuestPage.class);
+                to_navigate.putExtra("NavigatedFrom", 1);
                 startActivity(to_navigate);
             }
         });
         popup_quick_access.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ImageView popup_quick_acces_image = (ImageView) popup_quick_access.findViewById(R.id.pollen_score_layout_imageview);
                 if(is_menu_inflated)
                 {
-                    minimized_quick_view_pollens_count_tv.setVisibility(View.VISIBLE);
+                    popup_quick_access.findViewById(R.id.pollen_score_layout_tv).setVisibility(View.VISIBLE);
+                    popup_quick_acces_image.setImageResource(R.drawable.half_pollen);
                     quick_menu.setVisibility(View.INVISIBLE);
                     is_menu_inflated = false;
 
                 }
                 else
                 {
-                    minimized_quick_view_pollens_count_tv.setVisibility(View.INVISIBLE);
+                    popup_quick_access.findViewById(R.id.pollen_score_layout_tv).setVisibility(View.INVISIBLE);
+                    popup_quick_acces_image.setImageResource(R.drawable.pollen);
                     quick_menu.setVisibility(View.VISIBLE);
                     is_menu_inflated = true;
                 }
@@ -328,12 +330,10 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         }
         else if(view_id == quest_button_bottombar.getId() || view_id == quest_button.getId())
         {
-            /*
+
             to_navigate = new Intent(homeScreen, MindfullnessSelection.class);
             startActivity(to_navigate);
-            */
-            to_navigate = new Intent(homeScreen, DailyQuestPage.class);
-            startActivity(to_navigate);
+
         }
         else if(view_id == home_button_bottombar.getId())
         {

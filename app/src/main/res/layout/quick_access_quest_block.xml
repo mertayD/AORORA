@@ -20,32 +20,32 @@
         android:padding="3dp"
         >
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:src="@drawable/daily_quest_dot_filled"
             android:layout_weight="1"
             />
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:src="@drawable/daily_quest_dot_filled"
             android:layout_weight="1"
             />
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:src="@drawable/daily_quest_dot_filled"
             android:layout_weight="1"
             />
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:src="@drawable/daily_quest_dot_filled"
             android:layout_weight="1"
             />
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:src="@drawable/daily_quest_dot_filled"
             android:layout_weight="1"
             />

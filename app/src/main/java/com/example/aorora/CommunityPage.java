@@ -51,10 +51,9 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
     TextView community_page_title_tv;
     LinearLayout tabs_ll;
     LinearLayout bar_ll;
-    ImageButton popup_menu_button;
+    LinearLayout popup_menu_button;
     boolean is_menu_popped;
     public View popup_menu;
-    TextView minimized_quick_view_pollens_count_tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +72,7 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
 
         popup_menu = (View) findViewById(R.id.include_popup_quick_access_menu_community_page);
-        popup_menu_button = (ImageButton) findViewById(R.id.popup_quick_access_community_page);
-        minimized_quick_view_pollens_count_tv = (TextView) findViewById(R.id.minimized_quick_view_pollens_count_tv);
+        popup_menu_button = (LinearLayout) findViewById(R.id.popup_quick_access_community_page);
 
         popup_menu_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +102,8 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
         popup_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent to_navigate = new Intent(communityPage, DailyQuestPage.class);
+                Intent to_navigate = new Intent(communityPage, PollenStoreDailyQuestPage.class);
+                to_navigate.putExtra("NavigatedFrom", 1);
                 startActivity(to_navigate);
             }
         });
@@ -301,9 +300,11 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
     public void toggle(boolean toggle)
     {
         int visibility = 0;
+        ImageView popup_quick_acces_image = (ImageView) popup_menu_button.findViewById(R.id.pollen_score_layout_imageview);
         if(toggle)
         {
             visibility = View.VISIBLE;
+            popup_quick_acces_image.setImageResource(R.drawable.half_pollen);
             popup_menu.setVisibility(View.INVISIBLE);
             is_menu_popped = false;
 
@@ -311,10 +312,11 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
         else
         {
             visibility = View.INVISIBLE;
+            popup_quick_acces_image.setImageResource(R.drawable.pollen);
             popup_menu.setVisibility(View.VISIBLE);
             is_menu_popped = true;
         }
-        minimized_quick_view_pollens_count_tv.setVisibility(visibility);
+        popup_menu_button.findViewById(R.id.pollen_score_layout_tv).setVisibility(visibility);
         community_page_title_tv.setVisibility(visibility);
         tabs_ll.setVisibility(visibility);
         bar_ll.setVisibility(visibility);

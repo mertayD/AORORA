@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aorora.model.Butterfly;
+import com.example.aorora.network.GetDataService;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import retrofit2.Response;
 public class BackendTest extends AppCompatActivity {
 
     Button makeCall;
+    Button post;
     TextView output;
 
     @Override
@@ -26,6 +28,7 @@ public class BackendTest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_backend_test);
 
+        post = (Button) findViewById(R.id.button2);
         makeCall = (Button) findViewById(R.id.backend_make_call_button);
         output = (TextView) findViewById(R.id.data_output_backend);
 
@@ -46,6 +49,27 @@ public class BackendTest extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<List<com.example.aorora.model.Butterfly>> call, Throwable t) {
                         Toast.makeText(BackendTest.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                com.example.aorora.model.Butterfly butterfly = new Butterfly(123,1,"");
+                com.example.aorora.network.GetDataService service = com.example.aorora.network.RetrofitClientInstance.getRetrofitInstance().create(com.example.aorora.network.GetDataService.class);
+                Call<Butterfly> call = service.createButterfly(butterfly);
+                call.enqueue(new Callback<Butterfly>() {
+                    @Override
+                    public void onResponse(Call<Butterfly> call, Response<Butterfly> response) {
+                        Toast.makeText(BackendTest.this, "Butterfly CREATED!!!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Butterfly> call, Throwable t) {
+                        Toast.makeText(BackendTest.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }
@@ -72,4 +96,19 @@ public class BackendTest extends AppCompatActivity {
                         Toast.makeText(BackendTest.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
                 });
+ */
+
+/*
+User user = new User(123, "John Doe");
+Call<User> call = apiService.createuser(user);
+call.enqueue(new Callback<User>() {
+  @Override
+  public void onResponse(Call<User> call, Response<User> response) {
+
+  }
+
+  @Override
+  public void onFailure(Call<User> call, Throwable t) {
+
+  }
  */
