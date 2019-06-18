@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,7 +31,7 @@ import retrofit2.Response;
 
 import static java.lang.Boolean.TRUE;
 
-public class CommunityPage extends AppCompatActivity implements GestureDetector.OnGestureListener, View.OnClickListener {
+public class CommunityPage extends AppCompatActivity implements View.OnClickListener {
 
     private com.example.aorora.adapter.CustomAdapter linearAdapter;
     private com.example.aorora.adapter.GridViewAdapter gridAdapter;
@@ -60,7 +61,7 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community_page);
 
-
+        recyclerView = findViewById(R.id.customRecyclerView);
         communityPage = this;
         is_menu_popped = false;
         progressDoalog = new ProgressDialog(communityPage);
@@ -80,6 +81,7 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
                 toggle(is_menu_popped);
             }
         });
+
         friends_tab_button =  (Button) findViewById(R.id.friends_tabs_button);
         social_tab_button = (Button) findViewById(R.id.social_tabs_button);
         notifications_tab_button = (Button) findViewById(R.id.notifications_tabs_button);
@@ -97,7 +99,9 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
         social_underline = findViewById(R.id.underline_social);
         notifications_underline = findViewById(R.id.underline_notifications);
 
-        gestureDetector = new GestureDetector(communityPage, CommunityPage.this);
+        gestureDetector = new GestureDetector(this, new MyGestureListener());
+
+        recyclerView.setOnTouchListener(touchListener);
 
         popup_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,13 +129,13 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
                 call.enqueue(new Callback<List<RetroPhoto>>() {
 
                     @Override
-                    public void onResponse(Call<List<com.example.aorora.model.RetroPhoto>> call, Response<List<RetroPhoto>> response) {
+                    public void onResponse(Call<List<RetroPhoto>> call, Response<List<RetroPhoto>> response) {
                         progressDoalog.dismiss();
                         generateDataListGrid(response.body());
                     }
 
                     @Override
-                    public void onFailure(Call<List<com.example.aorora.model.RetroPhoto>> call, Throwable t) {
+                    public void onFailure(Call<List<RetroPhoto>> call, Throwable t) {
                         progressDoalog.dismiss();
                         Toast.makeText(CommunityPage.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
@@ -210,9 +214,20 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
         }
     }
 
+    View.OnTouchListener touchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            // pass the events to the gesture detector
+            // a return value of true means the detector is handling it
+            // a return value of false means the detector didn't
+            // recognize the event
+            return gestureDetector.onTouchEvent(event);
+
+        }
+    };
+
     /*Method to generate List of data using RecyclerView with custom adapter*/
     private void generateDataListLinear(List<com.example.aorora.model.RetroPhoto> photoList) {
-        recyclerView = findViewById(R.id.customRecyclerView);
         linearAdapter = new com.example.aorora.adapter.CustomAdapter(this,photoList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CommunityPage.this);
         recyclerView.setLayoutManager(layoutManager);
@@ -220,60 +235,15 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
     }
 
     private void generateDataListGrid(List<com.example.aorora.model.RetroPhoto> photoList) {
-        recyclerView = findViewById(R.id.customRecyclerView);
         gridAdapter = new com.example.aorora.adapter.GridViewAdapter(this, photoList, new OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                // do something in future
+                Log.e("ItemClicked", "Item Clicked at Position " + position);
             }
         });
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(gridAdapter);
-    }
-
-    @Override
-    public boolean onDown(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onFling (MotionEvent motionEvent1, MotionEvent motionEvent2, float X, float Y)
-    {
-        if (motionEvent1.getX() - motionEvent2.getX() > 50) {
-            Intent homePage = new Intent(communityPage, HomeScreen.class);
-            startActivity(homePage);
-            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-            return true;
-        }
-        else {
-            return true;
-        }
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent motionEvent) {
-        return gestureDetector.onTouchEvent(motionEvent);
     }
 
     @Override
@@ -320,5 +290,26 @@ public class CommunityPage extends AppCompatActivity implements GestureDetector.
         community_page_title_tv.setVisibility(visibility);
         tabs_ll.setVisibility(visibility);
         bar_ll.setVisibility(visibility);
+    }
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2,
+                               float velocityX, float velocityY) {
+            if (event1 != null && event2 != null) {
+                if (event1.getX() - event2.getX() > 150) {
+                    Intent homePage = new Intent(communityPage, ProfilePage.class);
+                    startActivity(homePage);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    return true;
+                } else {
+                    return true;
+                }
+            }
+            else {
+                Log.e("Event is NULL", "NULL");
+            }
+            return false;
+        }
     }
 }

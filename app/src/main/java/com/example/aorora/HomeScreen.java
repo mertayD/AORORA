@@ -241,7 +241,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
                 if(!page_left) {
                     ring.start();
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                        myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEfect.DEFAULT_AMPLITUDE));
                     } else {
                         //deprecated in API 26
                         myVibrate.vibrate(500);
@@ -257,14 +257,14 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     public boolean onFling (MotionEvent motionEvent1, MotionEvent motionEvent2, float X, float Y)
     {
         page_left = true;
-        if (motionEvent1.getX() - motionEvent2.getX() > 50) {
-            Intent profilePage = new Intent(homeScreen, ProfilePage.class);
+        if (motionEvent1.getX() - motionEvent2.getX() > 150) {
+            Intent profilePage = new Intent(homeScreen, MindfullnessSelection.class);
             startActivity(profilePage);
             overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             return true;
         }
-        if (motionEvent2.getX() - motionEvent1.getX() > 50) {
-            Intent mindfullness = new Intent(homeScreen, CommunityPage.class);
+        if (motionEvent2.getX() - motionEvent1.getX() > 150) {
+            Intent mindfullness = new Intent(homeScreen, ProfilePage.class);
             startActivity(mindfullness);
             overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             return true;

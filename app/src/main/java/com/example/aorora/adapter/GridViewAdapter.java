@@ -57,6 +57,7 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
     public void onBindViewHolder(@NonNull final GridViewAdapter.GridViewHolder customViewHolder, final int position) {
         customViewHolder.userName.setText(dataList.get(position).getTitle().substring(1,4));
         Log.e("POSITION", "" + position);
+        /*
         switch (position){
             case 0:
                 customViewHolder.coverImage.setImageResource(R.drawable.orange_butterfly_image);
@@ -80,7 +81,7 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
                  customViewHolder.coverImage.setImageResource(R.drawable.orange_butterfly_image);
                  break;
         }
-
+        */
         customViewHolder.coverImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

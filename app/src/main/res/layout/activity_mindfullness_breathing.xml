@@ -35,45 +35,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="318dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_time_selection_breathing"
+        android:layout_width="371dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.13">
-
-        <Button
-            android:id="@+id/button_short_breathing"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="#6DC49E"
-            android:text="SHORT \n 5" />
-
-        <Button
-            android:id="@+id/button_medium_breathing"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            android:background="#6DC49E"
-            android:text="Medium \n 10" />
-
-        <Button
-            android:id="@+id/button_long_breathing"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            android:background="#6DC49E"
-            android:text=" long \n 15" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <ImageView
         android:id="@+id/imageView_meditation_mindfullness"
@@ -91,21 +62,21 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:background="#00000000"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:srcCompat="@drawable/play_button" />
 
     <TextView
         android:id="@+id/start_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="Start"
         android:textColor="#FFFFFF"
         android:textSize="10pt"
@@ -113,22 +84,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/play_button_walking" />
-
-    <TextView
-        android:id="@+id/description_breathing_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center_horizontal"
-        android:text="Breath and tap to the rythm of the \n butterfly expanding and contracting"
-        android:textColor="#989898"
-        android:textSize="7pt"
-        app:layout_constraintBottom_toTopOf="@+id/include"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/start_text_view" />
 
     <include
         android:id="@+id/include"
@@ -160,13 +115,13 @@
         android:layout_width="wrap_content"
         android:layout_height="26dp"
         android:layout_marginTop="8dp"
-        android:text="Click to select breath count"
+        android:text="Scroll to select breath count"
         android:textColor="#989898"
         android:textSize="7pt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_time_selection_breathing" />
 
     <ImageButton
         android:id="@+id/exit_button_walking"

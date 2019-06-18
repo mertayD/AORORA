@@ -5,6 +5,11 @@
     <string name="already_have_an_account">Already have an account? <font fgcolor='#01C6DB'>Login</font></string>
     <string name="Exit"> <font fgcolor='#01C6DB'> Exit </font></string>
     <string name="Continue"> <font fgcolor='#6DC49E'> Continue </font></string>
+    <string name="PollensEarned">
+        <font fgcolor='#FFFFFF'> You have earned </font>
+        <font fgcolor='#FFD200'>999</font>
+        <font fgcolor='#FFFFFF'> Pollens </font>
+    </string>
 
     <string-array name="breathing_menu_selection">
         <item>1</item>

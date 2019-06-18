@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="45dp"
+    android:layout_marginRight="45dp"
+    >
+
+    <ImageView
+        android:id="@+id/cover_image_feather"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter"
+        android:src="@drawable/orange_butterfly_image"
+        tools:srcCompat="@drawable/orange_butterfly_image" />
+
+    <TextView
+        android:id="@+id/feather_name_tv"
+        style="@style/Base.Animation.AppCompat.DropDownUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:text="FancyNancy33"
+        android:textColor="#989898"
+        android:textSize="8pt"
+        android:layout_gravity="center"
+        />
+
+</LinearLayout>

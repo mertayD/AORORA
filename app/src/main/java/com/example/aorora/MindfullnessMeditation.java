@@ -2,8 +2,15 @@ package com.example.aorora;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,10 +21,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.aorora.ClickListener.SpinnerActivity;
+import com.example.aorora.adapter.HorizontalAdapter;
+import com.example.aorora.adapter.HorizontalTimeAdapter;
+import com.example.aorora.interfaces.OnItemClickListener;
+import com.example.aorora.model.RetroPhoto;
+
+import org.w3c.dom.Text;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class MindfullnessMeditation extends AppCompatActivity implements View.OnClickListener {
 
-    Spinner duration_selection_spinner;
     ImageButton play_button;
     String duration_string;
     Context mindfulnessMeditation;
@@ -28,6 +43,11 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
     ImageView alpha_channel_iv;
     Animation infinite_blink;
     ImageButton exit_button;
+    RecyclerView recyclerView;
+    RecyclerView recyclerViewTime;
+    com.example.aorora.adapter.HorizontalAdapter horizontalAdapter;
+    com.example.aorora.adapter.HorizontalTimeAdapter horizontalTimeAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
@@ -43,6 +63,8 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         alpha_channel_iv = (ImageView) findViewById(R.id.alpha_channel_meditation_icon);
         exit_button = (ImageButton) findViewById(R.id.exit_button_meditation);
 
+        recyclerViewTime = findViewById(R.id.recyclerViewTime);
+        recyclerView = findViewById(R.id.horizontal_recycler_view_meditation);
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
         community_button_bottombar.setOnClickListener(this);
@@ -50,18 +72,115 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         play_button.setOnClickListener(this);
         exit_button.setOnClickListener(this);
 
-
+        generateDataListHorizontal();
+        List<String> data = Arrays.asList("", "3 minutes", "5 minutes","");
+        generateTimeDataList(data);
         infinite_blink = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.infinite_blink);
         alpha_channel_iv.startAnimation(infinite_blink);
-        duration_selection_spinner = findViewById(R.id.spinner_meditation_time_selection);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.meditation_menu_selection, R.layout.simple_spinner_tv);
-        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
-        duration_selection_spinner.setAdapter(adapter);
-        duration_selection_spinner.setOnItemSelectedListener(new SpinnerActivity());
+        recyclerView.smoothScrollToPosition(3);
+        recyclerViewTime.smoothScrollToPosition(3);
+
     }
 
+    private void generateDataListHorizontal() {
+        horizontalAdapter = new com.example.aorora.adapter.HorizontalAdapter(this, new OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+            }
+        });
+
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(recyclerView);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MindfullnessMeditation.this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(horizontalAdapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                selectMiddleItem();
+            }
+        });
+    }
+    private void generateTimeDataList(List<String> data)
+    {
+        horizontalTimeAdapter = new com.example.aorora.adapter.HorizontalTimeAdapter(MindfullnessMeditation.this, data);
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(recyclerViewTime);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MindfullnessMeditation.this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewTime.setLayoutManager(layoutManager);
+        recyclerViewTime.setAdapter(horizontalTimeAdapter);
+        recyclerViewTime.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                selectTimeMiddleItem();
+            }
+        });
+    }
+    public void selectMiddleItem()
+    {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        int firstVisibleIndex = layoutManager.findFirstVisibleItemPosition();
+        int lastVisibleIndex = layoutManager.findLastVisibleItemPosition();
+        TextView text_view;
+        for(int visibleIndex = firstVisibleIndex; visibleIndex < lastVisibleIndex; visibleIndex++)
+        {
+            HorizontalAdapter.HorizontalViewHolder viewHolder = (HorizontalAdapter.HorizontalViewHolder) recyclerView.findViewHolderForAdapterPosition(visibleIndex);
+
+            if(viewHolder != null)
+            {
+                text_view = viewHolder.itemView.findViewById(R.id.feather_name_tv);
+
+                text_view.setTextColor(getResources().getColor(R.color.customGray));
+                int[] location = new int[2];
+                viewHolder.itemView.getLocationOnScreen(location);
+                int x = location[0];
+                double halfWidth = viewHolder.itemView.getWidth() * .5;
+                double rightSide = x + halfWidth;
+                double leftSide = x - halfWidth;
+                //double halfScreen = recyclerView.getWidth() * .5;
+                double halfScreen = 400;
+                boolean isInMiddle =  leftSide < halfScreen && halfScreen < rightSide;
+                if(isInMiddle)
+                {
+                    text_view.setTextColor(getResources().getColor(R.color.colorWhite));
+                }
+            }
+        }
+    }
+    public void selectTimeMiddleItem()
+    {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerViewTime.getLayoutManager();
+        int firstVisibleIndex = layoutManager.findFirstVisibleItemPosition();
+        int lastVisibleIndex = layoutManager.findLastVisibleItemPosition();
+        TextView text_view;
+        for(int visibleIndex = firstVisibleIndex; visibleIndex < lastVisibleIndex; visibleIndex++)
+        {
+            HorizontalTimeAdapter.HorizontalTimeViewHolder viewHolder = (HorizontalTimeAdapter.HorizontalTimeViewHolder) recyclerViewTime.findViewHolderForAdapterPosition(visibleIndex);
+
+            if(viewHolder != null)
+            {
+                text_view = viewHolder.itemView.findViewById(R.id.minute_horizontal_tv);
+                text_view.setTextColor(getResources().getColor(R.color.customGray));
+                int[] location = new int[2];
+                viewHolder.itemView.getLocationOnScreen(location);
+                int x = location[0];
+                double halfWidth = viewHolder.itemView.getWidth() * .5;
+                double rightSide = x + halfWidth;
+                double leftSide = x - halfWidth;
+                //double halfScreen = recyclerViewTime.getWidth() * .5;
+                double halfScreen = 400;
+                boolean isInMiddle =  leftSide < halfScreen && halfScreen < rightSide;
+                if(isInMiddle)
+                {
+                    text_view.setTextColor(getResources().getColor(R.color.colorWhite));
+                }
+            }
+
+        }
+    }
     @Override
     public void onClick(View v) {
         int view_id = v.getId();
@@ -87,9 +206,9 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         }
         else if(view_id == play_button.getId())
         {
-            boolean two_digit = false;
+            /*boolean two_digit = false;
             int duration_int = 0;
-            duration_string = String.valueOf(duration_selection_spinner.getSelectedItem());
+            //duration_string = String.valueOf(duration_selection_spinner.getSelectedItem());
             if(duration_string.equals("Short"))
             {
                 duration_int = 1;
@@ -102,9 +221,10 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
             {
                 duration_int = 3;
             }
+            */
             to_navigate = new Intent(mindfulnessMeditation, MindfullnessFeatherSelection.class);
             //to_navigate.putExtra("NavigatedFrom", -2);
-            to_navigate.putExtra("Duration", duration_int);
+            //to_navigate.putExtra("Duration", duration_int);
             startActivity(to_navigate);
         }
         else if(view_id == exit_button.getId())

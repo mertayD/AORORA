@@ -14,7 +14,19 @@ import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aorora.model.Butterfly;
+import com.example.aorora.model.UserAuth;
+import com.example.aorora.model.UserInteraction;
+import com.example.aorora.network.GetDataService;
+import com.example.aorora.network.RetrofitClientInstance;
+
 import org.w3c.dom.Text;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProfilePage extends AppCompatActivity implements View.OnClickListener, GestureDetector.OnGestureListener {
 
@@ -119,8 +131,10 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         }
         else if(view_id == settings_button.getId())
         {
-            to_navigate = new Intent(profilePage, BackendTest.class);
-            startActivity(to_navigate);
+            sendOutLike(1,2);
+            //getButterfly();
+            //to_navigate = new Intent(profilePage, EndOfMindfulnessGamePage.class);
+            //startActivity(to_navigate);
         }
         else if(view_id == pollen_button.getId())
         {
@@ -134,12 +148,20 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
     public boolean onFling (MotionEvent motionEvent1, MotionEvent motionEvent2, float X, float Y)
     {
         Intent to_navigate;
-        if (motionEvent2.getX() - motionEvent1.getX() > 50) {
-            to_navigate = new Intent(profilePage, HomeScreen.class);
+        if (motionEvent2.getX() - motionEvent1.getX() > 150) {
+            to_navigate = new Intent(profilePage, CommunityPage.class);
             startActivity(to_navigate);
             overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             return true;
-        } else {
+        }
+        else if (motionEvent1.getX() - motionEvent2.getX() > 150)
+        {
+            to_navigate = new Intent(profilePage, HomeScreen.class);
+            startActivity(to_navigate);
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+            return true;
+        }
+        else {
             return true;
         }
     }
@@ -174,4 +196,59 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
 
     }
 
+    public void sendOutLike(int user_id_1, int user_id_2)
+    {
+        int user_sender_id = 2;
+        int user_receiver_id = 3;
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+
+        Call<UserInteraction> call = service.userInteract(user_sender_id,user_receiver_id, 1, "LIKE 2 to 3");
+        call.enqueue(new Callback<UserInteraction>() {
+
+            @Override
+            public void onResponse(Call<UserInteraction>call, Response<UserInteraction> response) {
+
+                if(response.isSuccess())
+                {
+                    UserInteraction user_interaction = response.body();
+                    Toast.makeText(ProfilePage.this, "USER INTERACTION ID: " + user_interaction.getUser_interaction_id(), Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(ProfilePage.this, "NOT SUCCESFULL" , Toast.LENGTH_SHORT).show();
+                }
+                //Toast.makeText(ProfilePage.this, "FAILED " + response.code(), Toast.LENGTH_SHORT).show();
+                //surveyPage = new Intent(context, SurveyPage.class);
+                //startActivity(surveyPage);
+            }
+
+            @Override
+            public void onFailure(Call<UserInteraction> call, Throwable t) {
+                Toast.makeText(ProfilePage.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public void getButterfly()
+    {
+        com.example.aorora.network.GetDataService service = com.example.aorora.network.RetrofitClientInstance.getRetrofitInstance().create(com.example.aorora.network.GetDataService.class);
+
+        Call<List<Butterfly>> call = service.getButterflyInfo();
+        call.enqueue(new Callback<List<Butterfly>>() {
+
+            @Override
+            public void onResponse(Call<List<com.example.aorora.model.Butterfly>> call, Response<List<Butterfly>> response) {
+                Toast.makeText(ProfilePage.this, "Butterfly ID: " + response.body().get(0).getButterflyId(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<List<com.example.aorora.model.Butterfly>> call, Throwable t) {
+                Toast.makeText(ProfilePage.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public void createUserButterfly()
+    {
+
+    }
 }

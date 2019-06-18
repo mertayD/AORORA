@@ -2,14 +2,26 @@ package com.example.aorora;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.aorora.adapter.HorizontalTimeAdapter;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class MindfullnessBreathing extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,10 +35,8 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
     ImageView alpha_channel_iv;
     Animation infinite_blink;
     ImageButton exit_button;
-    Button short_button;
-    Button medium_button;
-    Button long_button;
-
+    RecyclerView time_selection_recyler_view;
+    com.example.aorora.adapter.HorizontalTimeAdapter horizontalTimeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +51,13 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         play_button = (ImageButton) findViewById(R.id.play_button_walking);
         alpha_channel_iv = (ImageView) findViewById(R.id.alpha_channel_breathing_icon);
         exit_button = (ImageButton) findViewById(R.id.exit_button_walking);
+        time_selection_recyler_view = (RecyclerView) findViewById(R.id.recycler_view_time_selection_breathing);
 
-        short_button = (Button) findViewById(R.id.button_short_breathing);
-        medium_button = (Button) findViewById(R.id.button_medium_breathing);
-        long_button = (Button) findViewById(R.id.button_long_breathing);
 
+        List<String> data = Arrays.asList("", "5 Breathes", "10 Breathes","15 Breathes","");
+        generateTimeDataList(data);
+        time_selection_recyler_view.smoothScrollToPosition(3);
+        /*
         short_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +86,7 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
             }
         });
 
+*/
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
         community_button_bottombar.setOnClickListener(this);
@@ -81,13 +94,61 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         play_button.setOnClickListener(this);
         exit_button.setOnClickListener(this);
 
-        medium_button.performClick();
         infinite_blink = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.infinite_blink);
         alpha_channel_iv.startAnimation(infinite_blink);
 
     }
+    private void generateTimeDataList(List<String> data)
+    {
+        horizontalTimeAdapter = new com.example.aorora.adapter.HorizontalTimeAdapter(MindfullnessBreathing.this, data);
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(time_selection_recyler_view);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MindfullnessBreathing.this, LinearLayoutManager.HORIZONTAL, false);
+        time_selection_recyler_view.setLayoutManager(layoutManager);
+        time_selection_recyler_view.setAdapter(horizontalTimeAdapter);
+        time_selection_recyler_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                selectTimeMiddleItem();
+            }
+        });
+    }
+    public void selectTimeMiddleItem()
+    {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) time_selection_recyler_view.getLayoutManager();
+        int firstVisibleIndex = layoutManager.findFirstVisibleItemPosition();
+        int lastVisibleIndex = layoutManager.findLastVisibleItemPosition();
+        TextView text_view;
+        for(int visibleIndex = firstVisibleIndex; visibleIndex < lastVisibleIndex; visibleIndex++)
+        {
+            HorizontalTimeAdapter.HorizontalTimeViewHolder viewHolder = (HorizontalTimeAdapter.HorizontalTimeViewHolder) time_selection_recyler_view.findViewHolderForAdapterPosition(visibleIndex);
 
+            if(viewHolder != null)
+            {
+                text_view = viewHolder.itemView.findViewById(R.id.minute_horizontal_tv);
+                text_view.setTextColor(getResources().getColor(R.color.customGray));
+                int[] location = new int[2];
+                viewHolder.itemView.getLocationOnScreen(location);
+                int x = location[0];
+                double halfWidth = viewHolder.itemView.getWidth() * .5;
+                double rightSide = x + halfWidth;
+                double leftSide = x - halfWidth;
+                double halfScreen = 400;
+                boolean isInMiddle =  leftSide < halfScreen && halfScreen < rightSide;
+
+                if(isInMiddle)
+                {
+                    Log.e("Left Side", "" + leftSide);
+                    Log.e("Right Side", "" + rightSide);
+                    Log.e("Middle", "" + halfScreen);
+                    timerCount = viewHolder.getAdapterPosition();
+                    text_view.setTextColor(getResources().getColor(R.color.colorWhite));
+                }
+            }
+        }
+    }
     @Override
     public void onClick(View v) {
         int view_id = v.getId();

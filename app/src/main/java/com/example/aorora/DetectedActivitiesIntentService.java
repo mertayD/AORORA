@@ -10,7 +10,8 @@ import com.google.android.gms.location.DetectedActivity;
 
 import java.util.ArrayList;
 
-public class DetectedActivitiesIntentService extends IntentService {
+public class
+DetectedActivitiesIntentService extends IntentService {
     protected static final String TAG = DetectedActivitiesIntentService.class.getSimpleName();
 
     public DetectedActivitiesIntentService() {

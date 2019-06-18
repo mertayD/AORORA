@@ -7,6 +7,20 @@
     tools:context=".MindfullnessBreathingGame"
     android:background="@drawable/background">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/river"
+        app:lottie_autoPlay="true"
+        />
 
     <ImageButton
         android:id="@+id/exit_button_walking"
@@ -24,11 +38,11 @@
         android:id="@+id/breath_count_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="140dp"
         android:text="BreathCount"
         android:textColor="#FFFFFF"
-        android:textSize="8pt"
+        android:textSize="10pt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exit_button_walking" />
 
@@ -37,6 +51,7 @@
         android:layout_width="255dp"
         android:layout_height="234dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="88dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,8 +64,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:text="Remaning Time"
-        android:textColor="#989898"
+        android:textColor="@color/colorWhite"
         android:textSize="9pt"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +79,7 @@
         android:layout_marginTop="36dp"
         android:gravity="center_horizontal"
         android:text="Press and hold as \n you breath in"
-        android:textColor="#989898"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,6 +98,16 @@
         app:layout_constraintTop_toBottomOf="@+id/desc_to_breathinggame_tv"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/breathing_button" />
+    <include
+        android:id="@+id/breathing_game_pollen_layout"
+        layout="@layout/pollen_score_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 
 </android.support.constraint.ConstraintLayout>
