@@ -1,5 +1,7 @@
 package com.example.aorora;
 
+import android.Manifest;
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import com.example.aorora.model.RetroPhoto;
 import com.example.aorora.model.UserAuth;
 import com.example.aorora.model.UserInfo;
 import com.example.aorora.network.GetDataService;
+import com.example.aorora.network.NetworkCalls;
 import com.example.aorora.network.RetrofitClientInstance;
 
 import java.io.IOException;
@@ -95,7 +98,9 @@ public class MainActivity extends AppCompatActivity {
                 if(response.isSuccess())
                 {
                     UserAuth user = (UserAuth) response.body();
-                    getUserInfo(user.getUser_id());
+                    NetworkCalls.getUserInfo(user.getUser_id(), MainActivity.this);
+                    surveyPage = new Intent(context, SurveyPage.class);
+                    startActivity(surveyPage);
                 }
                 else
                 {
@@ -133,33 +138,6 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
         return true;
-    }
-
-    private void getUserInfo(int user_id)
-    {
-        Call<UserInfo> call = service.getUserInfo(user_id);
-        call.enqueue(new Callback<UserInfo>() {
-            @Override
-            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
-                if(response.isSuccess())
-                //response.body().getUsername()
-                {
-                    user_info = response.body();
-                    Toast.makeText(MainActivity.this, "User Info Gathered", Toast.LENGTH_SHORT).show();
-                    surveyPage = new Intent(context, SurveyPage.class);
-                    startActivity(surveyPage);
-                }
-                else
-                {
-                    Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserInfo> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 }

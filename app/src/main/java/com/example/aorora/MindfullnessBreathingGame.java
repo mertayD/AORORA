@@ -68,6 +68,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
     boolean is_button_still_clicked;
     boolean performed_click;
     final Timer myTimer= new Timer(3000,100);
+    int initial_game_count;
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,15 +112,18 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
             int text = getIntent().getIntExtra("TimerValue", 1);
             if(text == 1)
             {
+                initial_game_count = text;
                 possible_points = 5;
                 text = 2;
             }
             else if( text == 2)
             {
+                initial_game_count = text;
                 possible_points = 10;
                 text = 10;
             }
             else{
+                initial_game_count = text;
                 possible_points = 15;
                 text = 15;
             }
@@ -221,7 +225,14 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 {
                     //DialogFragment newFragment = new BreathDialog();
                     //newFragment.show(getSupportFragmentManager(), "CONTINUE");
-                    ShowPopup();
+                    int user_points = MainActivity.user_info.getUser_pollen();
+                    Log.e("USER POINTS ", user_points + " ");
+                    user_points += possible_points;
+                    NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), user_points, MindfullnessBreathingGame.this);
+                    NetworkCalls.getUserInfo(MainActivity.user_info.getUser_id(), MindfullnessBreathingGame.this);
+                    Intent to_navigate = new Intent(mindfullness_breathing_game, ReceiptPage.class);
+                    to_navigate.putExtra("GAME", initial_game_count);
+                    startActivity(to_navigate);
                 }
                 else
                 {
@@ -247,10 +258,6 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 {
                     possible_points = 0;
                 }
-                int user_points = MainActivity.user_info.getUser_pollen();
-                Log.e("USER POINTS ", user_points + " ");
-                user_points += possible_points;
-                NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), user_points, MindfullnessBreathingGame.this);
                 Intent to_navigate = new Intent(mindfullness_breathing_game, MindfullnessBreathing.class);
                 if(breathing_music.isPlaying())
                 {
@@ -298,9 +305,9 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         }
     }
 
+    /*
     public static class BreathDialog extends DialogFragment {
         @Override
-        //TODO fix pressing outside dialog
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             //Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -321,6 +328,8 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
             return builder.create();
         }
     }
+
+
     public void ShowPopup() {
         if(breathing_music.isPlaying())
         {
@@ -380,4 +389,5 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         myDialog.setCanceledOnTouchOutside(false);
         myDialog.show();
     }
+    */
 }

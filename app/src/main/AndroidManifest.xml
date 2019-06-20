@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EndOfMindfulnessGamePage"></activity>
+        <activity android:name=".ReceiptPage"></activity>
+        <activity android:name=".EndOfMindfulnessGamePage" />
         <activity android:name=".PollenStoreDailyQuestPage" />
         <activity android:name=".PollenShopPage" />
         <activity android:name=".DailyQuestPage" />

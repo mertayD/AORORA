@@ -1,9 +1,12 @@
 package com.example.aorora.network;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
 import com.example.aorora.CommunityPage;
+import com.example.aorora.MainActivity;
+import com.example.aorora.SurveyPage;
 import com.example.aorora.model.UserInfo;
 
 import retrofit2.Call;
@@ -60,6 +63,30 @@ public class NetworkCalls {
 
             @Override
             public void onFailure(Call call, Throwable t) {
+                Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public static void getUserInfo(int user_id, final Context context)
+    {
+        Call<UserInfo> call = service.getUserInfo(user_id);
+        call.enqueue(new Callback<UserInfo>() {
+            @Override
+            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                if(response.isSuccess())
+                //response.body().getUsername()
+                {
+                    user_info = response.body();
+                    Toast.makeText(context, "User Info Gathered", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserInfo> call, Throwable t) {
                 Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
