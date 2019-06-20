@@ -3,58 +3,56 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15dp"
+    android:padding="5dp"
     android:orientation="vertical"
-    android:background="@drawable/background">
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#00000000">
+        >
 
         <ImageView
             android:id="@+id/coverImage"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="11dp"
             android:scaleType="fitCenter" />
 
         <TextView
-            android:id="@+id/user_sent_notification_tv"
+            android:id="@+id/user_name_notification_tv"
             style="@style/Base.Animation.AppCompat.DropDownUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@+id/coverImage"
+            android:layout_marginTop="7dp"
             android:lines="1"
             android:text="FancyNancy33"
             android:textColor="#FFFFFF"
-            android:textSize="5pt" />
+            android:textSize="6pt" />
 
         <TextView
             android:id="@+id/notification_content_tv"
             style="@style/Base.Animation.AppCompat.DropDownUp"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
-            android:layout_toRightOf="@id/user_sent_notification_tv"
+            android:layout_toRightOf="@id/user_name_notification_tv"
             android:layout_marginLeft="4dp"
+            android:layout_marginTop="7dp"
             android:lines="2"
             android:text="Notifications will pop up here"
             android:textColor="@color/customGray"
-            android:textSize="5pt" />
+            android:textSize="6pt" />
 
         <TextView
-            android:id="@+id/time_published"
+            android:id="@+id/time_published_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/notification_content_tv"
+            android:layout_below="@id/coverImage"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="2dp"
-            android:layout_toRightOf="@id/coverImage"
             android:text="12m"
             android:textColor="@color/customGray"
             android:textSize="4pt" />
@@ -64,30 +62,30 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_below="@id/notification_content_tv"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="-8dp"
-            android:layout_toRightOf="@id/time_published"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/time_published_tv"
             android:background="#00000000"
             android:text="Comment"
             android:textColor="@color/customGray"
-            android:textSize="4pt" />
+            android:textSize="6pt" />
 
         <Button
             android:id="@+id/try_exercise_button"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_below="@id/notification_content_tv"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="-8dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/comment_button"
             android:background="#00000000"
             android:text="Try Exercise!"
             android:textColor="@color/customGray"
-            android:textSize="4pt" />
+            android:textSize="6pt" />
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="11dp"

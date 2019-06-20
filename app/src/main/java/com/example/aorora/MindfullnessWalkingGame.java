@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aorora.network.NetworkCalls;
 import com.google.android.gms.location.DetectedActivity;
 import com.plattysoft.leonids.Particle;
 import com.plattysoft.leonids.ParticleSystem;
@@ -63,7 +64,9 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent to_navigate = new Intent(MindfullnessWalkingGame.this, MindfullnessWalking.class);
-                MainActivity.user_points += count;
+                int user_points = MainActivity.user_info.getUser_pollen();
+                user_points += count;
+                NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), user_points, MindfullnessWalkingGame.this);
                 startActivity(to_navigate);
                 stopTracking();
             }

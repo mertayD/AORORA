@@ -118,7 +118,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
 
             }
         });
-        switch (MainActivity.user_butterfly){
+        switch (MainActivity.user_info.getUser_current_butterfly() - 1){
             case 0:
                 profile_butterfly.setImageResource(R.drawable.orange_butterfly_image);
                 break;

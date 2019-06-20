@@ -1,8 +1,11 @@
 package com.example.aorora.network;
 
 import com.example.aorora.model.Butterfly;
+import com.example.aorora.model.Quest;
+import com.example.aorora.model.QuestReport;
 import com.example.aorora.model.RetroPhoto;
 import com.example.aorora.model.UserAuth;
+import com.example.aorora.model.UserIdReturn;
 import com.example.aorora.model.UserInfo;
 import com.example.aorora.model.UserInteraction;
 
@@ -14,6 +17,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface GetDataService {
@@ -24,8 +28,6 @@ public interface GetDataService {
     @GET("/butterflies?format=json")
     Call<List<Butterfly>> getButterflyInfo();
 
-    @GET("/userinfo/{user_id}?format=json")
-    Call<List<UserInfo>> getUserInfo(@Path("user_id") Long user_id);
 
     @POST("/butterflies")
     Call<Butterfly> createButterfly(@Field("butterfly_id") Integer butterfly_id,
@@ -33,6 +35,8 @@ public interface GetDataService {
 
     @POST("/userbutterfly")
     Call<Butterfly> createButterfly(@Body Butterfly user);
+
+    // WORKS
 
     @POST("/api-token-auth")
     @FormUrlEncoded
@@ -44,4 +48,24 @@ public interface GetDataService {
                                        @Field("receiver_user_id") Integer receiver,
                                        @Field("user_interaction_type_id") Integer interaction_type_id,
                                        @Field("user_interaction_content") String content);
+
+    @GET("/questreports")
+    Call<List<QuestReport>> getAllQuestsInCommunity();
+
+    @GET("/quest/{quest_id}")
+    Call<Quest> getQuestInfo(@Path("quest_id") Integer quest_id);
+
+    @GET("/userinfo/{user_id}")
+    Call<UserInfo> getUserInfo(@Path("user_id") Integer user_id);
+
+    @PUT("/userinfo/{user_id}")
+    @FormUrlEncoded
+    Call<UserIdReturn> updateUserCurrentButterfly(@Path("user_id") Integer user_id,
+                                    @Field("user_current_butterfly") Integer user_current_butterfly);
+
+    @PUT("/userinfo/{user_id}")
+    @FormUrlEncoded
+    Call<UserIdReturn> updateUserPollen(@Path("user_id") Integer user_id,
+                                        @Field("user_pollen") Integer user_pollen);
+
 }

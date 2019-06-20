@@ -3,6 +3,7 @@ package com.example.aorora;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -21,9 +22,14 @@ import android.widget.Toast;
 import com.example.aorora.R;
 import com.example.aorora.adapter.CustomAdapter;
 import com.example.aorora.interfaces.OnItemClickListener;
+import com.example.aorora.model.Quest;
+import com.example.aorora.model.QuestReport;
 import com.example.aorora.model.RetroPhoto;
+import com.example.aorora.model.UserInfo;
 import com.example.aorora.network.GetDataService;
 import com.example.aorora.network.RetrofitClientInstance;
+
+import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,6 +61,9 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     LinearLayout popup_menu_button;
     boolean is_menu_popped;
     public View popup_menu;
+    GetDataService service;
+    //TEMPORARY VARIABLE
+    public HolderCommunityPage holder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +74,8 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         communityPage = this;
         is_menu_popped = false;
         progressDoalog = new ProgressDialog(communityPage);
-
+        service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        holder = new HolderCommunityPage();
         home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
@@ -123,8 +133,6 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                 progressDoalog.setMessage("Friends Loading....");
                 progressDoalog.show();
 
-                com.example.aorora.network.GetDataService service = com.example.aorora.network.RetrofitClientInstance.getRetrofitInstance().create(com.example.aorora.network.GetDataService.class);
-
                 Call<List<RetroPhoto>> call = service.getAllPhotos();
                 call.enqueue(new Callback<List<RetroPhoto>>() {
 
@@ -143,16 +151,14 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
             }
         });
 
-
         social_tab_button.setOnClickListener(new ImageButton.OnClickListener() {
             public void onClick(View v) {
+                /*
                 friends_underline.setVisibility(View.INVISIBLE);
                 social_underline.setVisibility(View.VISIBLE);
                 notifications_underline.setVisibility(View.INVISIBLE);
                 progressDoalog.setMessage("Social Feed Loading....");
                 progressDoalog.show();
-
-                com.example.aorora.network.GetDataService service = com.example.aorora.network.RetrofitClientInstance.getRetrofitInstance().create(com.example.aorora.network.GetDataService.class);
 
                 Call<List<RetroPhoto>> call = service.getAllPhotos();
                 call.enqueue(new Callback<List<RetroPhoto>>() {
@@ -160,7 +166,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onResponse(Call<List<com.example.aorora.model.RetroPhoto>> call, Response<List<RetroPhoto>> response) {
                         progressDoalog.dismiss();
-                        generateDataListLinear(response.body());
+                        //generateDataListLinear(response.body());
                     }
 
                     @Override
@@ -169,6 +175,9 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                         Toast.makeText(CommunityPage.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
                 });
+                */
+                Log.e("HOLDER VALUE ", holder.getUsername() + "  " + holder.getUser_butterfly_id());
+
             }
         });
 
@@ -182,23 +191,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                 progressDoalog.setMessage("Notifications Loading....");
                 progressDoalog.show();
 
-                com.example.aorora.network.GetDataService service = com.example.aorora.network.RetrofitClientInstance.getRetrofitInstance().create(com.example.aorora.network.GetDataService.class);
-
-                Call<List<RetroPhoto>> call = service.getAllPhotos();
-                call.enqueue(new Callback<List<RetroPhoto>>() {
-
-                    @Override
-                    public void onResponse(Call<List<com.example.aorora.model.RetroPhoto>> call, Response<List<RetroPhoto>> response) {
-                        progressDoalog.dismiss();
-                        generateDataListLinear(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<com.example.aorora.model.RetroPhoto>> call, Throwable t) {
-                        progressDoalog.dismiss();
-                        Toast.makeText(CommunityPage.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                setNotifications();
             }
         });
 
@@ -209,8 +202,8 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         }
         else
         {
-            friends_tab_button.performClick();
-
+            //friends_tab_button.performClick();
+            notifications_tab_button.performClick();
         }
     }
 
@@ -227,8 +220,12 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     };
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataListLinear(List<com.example.aorora.model.RetroPhoto> photoList) {
-        linearAdapter = new com.example.aorora.adapter.CustomAdapter(this,photoList);
+    private void generateDataListLinear(List<QuestReport> questList,
+                                        List<Integer> quest_type_ids,
+                                        List<String> usernames,
+                                        List<Integer> user_butterfly_types)
+    {
+        linearAdapter = new com.example.aorora.adapter.CustomAdapter(this,questList,quest_type_ids,usernames, user_butterfly_types, getResources().getStringArray(R.array.mindfulness_description));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CommunityPage.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(linearAdapter);
@@ -312,4 +309,105 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
             return false;
         }
     }
+
+    public void setNotifications()
+    {
+        Call<List<QuestReport>> call = service.getAllQuestsInCommunity();
+        call.enqueue(new Callback<List<QuestReport>>() {
+
+            @Override
+            public void onResponse(Call<List<QuestReport>> call, Response<List<QuestReport>> response) {
+                if(response.isSuccess())
+                {
+                    progressDoalog.dismiss();
+                    int quest_type;
+                    String user_name;
+                    int user_butterfly_type_id;
+                    final List<QuestReport> questReportList = response.body();
+
+                    for (int i = 0; i < questReportList.size(); i++)
+                    {
+                        getQuestType(questReportList.get(i).getQuest_id());
+
+                        getUserInfo(questReportList.get(i).getUser_id());
+
+                    }
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            List<Integer> quest_type_ids = holder.getQuest_type();
+                            List<String> usernames = holder.getUsername();
+                            List<Integer> user_butterfly_types = holder.getUser_butterfly_id();
+
+                            generateDataListLinear(questReportList, quest_type_ids, usernames, user_butterfly_types);                        }
+                    }, 500);
+
+                }
+                else
+                {
+                    Toast.makeText(CommunityPage.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<QuestReport>> call, Throwable t) {
+                progressDoalog.dismiss();
+                Toast.makeText(CommunityPage.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public void getQuestType(int quest_id) {
+
+        Call<Quest> call = service.getQuestInfo(quest_id);
+        call.enqueue(new Callback<Quest>() {
+            @Override
+            public void onResponse(Call<Quest>call, Response<Quest> response) {
+                if(response.isSuccess())
+                {
+                    holder.setQuest_type(response.body().getQuest_type_id());
+                }
+                else
+                {
+                    Toast.makeText(CommunityPage.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Quest> call, Throwable t) {
+                Toast.makeText(CommunityPage.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void getUserInfo(int user_id) {
+
+        Call<UserInfo> call = service.getUserInfo(user_id);
+        call.enqueue(new Callback<UserInfo>() {
+            @Override
+            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                if(response.isSuccess())
+                //response.body().getUsername()
+                {
+
+                    String u_name = response.body().getUsername();
+                    int u_b_id = response.body().getUser_current_butterfly();
+
+                    holder.setUsername("_username_");
+                    holder.setUser_butterfly_id(u_b_id);
+                }
+                else
+                {
+                    Toast.makeText(CommunityPage.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserInfo> call, Throwable t) {
+                Toast.makeText(CommunityPage.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

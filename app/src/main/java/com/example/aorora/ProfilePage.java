@@ -65,7 +65,7 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         butterfly_description_tv = (TextView) findViewById(R.id.profile_page_bf_desc_tv);
         profilePage = this;
 
-        user_score_tv.setText("" + MainActivity.user_points);
+        user_score_tv.setText("" + MainActivity.user_info.getUser_pollen());
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
         community_button_bottombar.setOnClickListener(this);
@@ -76,7 +76,7 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         pollen_button.setOnClickListener(this);
         gestureDetector = new GestureDetector(profilePage, ProfilePage.this);
 
-        switch (MainActivity.user_butterfly){
+        switch ( MainActivity.user_info.getUser_current_butterfly()){
             case 0:
                 butterfly_selection_button.setImageResource(R.drawable.orange_butterfly_image);
                 break;

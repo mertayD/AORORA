@@ -15,6 +15,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.aorora.network.NetworkCalls;
+
 public class MindfullnessMeditationGame extends AppCompatActivity implements View.OnTouchListener {
 
     ImageView feather;
@@ -48,7 +50,9 @@ public class MindfullnessMeditationGame extends AppCompatActivity implements Vie
                 if(timerValue > 0){
                     possible_points = 0;
                 }
-                MainActivity.user_points += possible_points;
+                int user_points = MainActivity.user_info.getUser_pollen();
+                user_points += possible_points;
+                NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), user_points, MindfullnessMeditationGame.this);
                 Intent to_navigate = new Intent(meditationGame, MindfullnessMeditation.class);
                 startActivity(to_navigate);
                 if(feather_sound.isPlaying())

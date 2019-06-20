@@ -44,7 +44,7 @@ public class MindfullnessSelection extends AppCompatActivity implements View.OnC
         mindfulness_selection_view = findViewById(R.id.mindfulness_selection_view);
         gestureDetector = new GestureDetector(mindfullnessSelection, MindfullnessSelection.this);
         mindfulness_selection_view.setOnTouchListener(touchListener);
-        switch (MainActivity.user_butterfly){
+        switch (MainActivity.user_info.getUser_current_butterfly()){
             case 0:
                 butterfly_view.setImageResource(R.drawable.orange_butterfly_image);
                 break;
@@ -156,7 +156,7 @@ public class MindfullnessSelection extends AppCompatActivity implements View.OnC
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if (e2.getX() - e1.getX() > 50) {
+        if (e2.getX() - e1.getX() > 150) {
             Intent homePage = new Intent(mindfullnessSelection, HomeScreen.class);
             startActivity(homePage);
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

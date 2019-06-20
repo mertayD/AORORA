@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.aorora.model.RetroPhoto;
 import com.example.aorora.model.UserAuth;
+import com.example.aorora.model.UserInfo;
 import com.example.aorora.network.GetDataService;
 import com.example.aorora.network.RetrofitClientInstance;
 
@@ -24,8 +25,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static int user_points;
-    public static int user_butterfly = 0;
+    public static UserInfo user_info;
+
     Button  login_button;
     Intent surveyPage;
     Context context;
@@ -33,16 +34,19 @@ public class MainActivity extends AppCompatActivity {
     EditText password_et;
     boolean is_first_time_username_et;
     boolean is_first_time_password_et;
+    GetDataService service;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        user_points = 0;
         login_button = findViewById(R.id.login_button);
         username_et = findViewById(R.id.login_email_et);
         password_et = findViewById(R.id.login_password_et);
         is_first_time_password_et = true;
         is_first_time_username_et = true;
+        service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+
         context = this;
 
         username_et.setOnClickListener(new View.OnClickListener() {
@@ -83,8 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void login(String username, String password)
     {
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-
         Call<UserAuth> call = service.login(username,password);
         call.enqueue(new Callback<UserAuth>() {
 
@@ -93,9 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 if(response.isSuccess())
                 {
                     UserAuth user = (UserAuth) response.body();
-                    Toast.makeText(MainActivity.this, "USER ID: " + user.getUser_id(), Toast.LENGTH_SHORT).show();
-                    surveyPage = new Intent(context, SurveyPage.class);
-                    startActivity(surveyPage);
+                    getUserInfo(user.getUser_id());
                 }
                 else
                 {
@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("VERBOSE1", "" + t.getCause());
                     Log.e("VERBOSE2", "" + t.getMessage());
                     Log.e("VERBOSE3", "" + t.toString());
-
 
                     // logging probably not necessary
                 }
@@ -136,5 +135,31 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    private void getUserInfo(int user_id)
+    {
+        Call<UserInfo> call = service.getUserInfo(user_id);
+        call.enqueue(new Callback<UserInfo>() {
+            @Override
+            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                if(response.isSuccess())
+                //response.body().getUsername()
+                {
+                    user_info = response.body();
+                    Toast.makeText(MainActivity.this, "User Info Gathered", Toast.LENGTH_SHORT).show();
+                    surveyPage = new Intent(context, SurveyPage.class);
+                    startActivity(surveyPage);
+                }
+                else
+                {
+                    Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserInfo> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }

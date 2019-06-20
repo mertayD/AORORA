@@ -4,10 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.example.aorora.network.NetworkCalls;
+
+import static com.example.aorora.MainActivity.user_info;
 
 public class ButterflyDetailsPage extends AppCompatActivity implements View.OnClickListener {
 
@@ -95,31 +100,32 @@ public class ButterflyDetailsPage extends AppCompatActivity implements View.OnCl
         }
         else if(view_id == selectButton.getId() || view_id == selectButterfly_ib.getId())
         {
-
+            int user_butterfly;
             switch (position){
                 case 0:
-                    MainActivity.user_butterfly = 0;
+                    user_butterfly = 0;
                     break;
                 case 1:
-                    MainActivity.user_butterfly = 1;
+                    user_butterfly = 1;
                     break;
                 case 2:
-                    MainActivity.user_butterfly = 2;
+                    user_butterfly = 2;
                     break;
                 case 3:
-                    MainActivity.user_butterfly = 3;
+                    user_butterfly = 3;
                     break;
                 case 4:
-                    MainActivity.user_butterfly = 4;
+                    user_butterfly = 4;
                     break;
                 case 5:
-                    MainActivity.user_butterfly = 5;
+                    user_butterfly = 5;
                     break;
                 default:
-                    MainActivity.user_butterfly = 0;
+                    user_butterfly = 0;
                     break;
             }
 
+            NetworkCalls.updateUserCurrentButterfly(user_info.getUser_id(), user_butterfly, this);
             to_navigate = new Intent(bfDetailsPage, ProfilePage.class);
             startActivity(to_navigate);
         }

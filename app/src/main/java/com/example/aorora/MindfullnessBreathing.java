@@ -140,9 +140,6 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
 
                 if(isInMiddle)
                 {
-                    Log.e("Left Side", "" + leftSide);
-                    Log.e("Right Side", "" + rightSide);
-                    Log.e("Middle", "" + halfScreen);
                     timerCount = viewHolder.getAdapterPosition();
                     text_view.setTextColor(getResources().getColor(R.color.colorWhite));
                 }

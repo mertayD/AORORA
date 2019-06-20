@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.aorora.network.NetworkCalls;
 import com.plattysoft.leonids.ParticleSystem;
 
 public class MindfullnessBreathingGame extends AppCompatActivity {
@@ -78,7 +79,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         clickable = true;
         cont = false;
         mindfullness_breathing_game = this;
-        possible_points = 0;
+        possible_points = 100;
         is_button_still_clicked = false;
         performed_click = false;
 
@@ -155,7 +156,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 count = Integer.parseInt(counted);
                 if(cont)
                 {
-                    MainActivity.user_points += 1;
+                    //MainActivity.user_points += 1;
                     count = count + 1;
                 }
                 else
@@ -246,7 +247,10 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 {
                     possible_points = 0;
                 }
-                MainActivity.user_points += possible_points;
+                int user_points = MainActivity.user_info.getUser_pollen();
+                Log.e("USER POINTS ", user_points + " ");
+                user_points += possible_points;
+                NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), user_points, MindfullnessBreathingGame.this);
                 Intent to_navigate = new Intent(mindfullness_breathing_game, MindfullnessBreathing.class);
                 if(breathing_music.isPlaying())
                 {
