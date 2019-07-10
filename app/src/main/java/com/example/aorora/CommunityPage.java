@@ -31,6 +31,7 @@ import com.example.aorora.network.GetDataService;
 import com.example.aorora.network.RetrofitClientInstance;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -346,6 +347,10 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                             List<Integer> quest_type_ids = holder.getQuest_type();
                             List<String> usernames = holder.getUsername();
                             List<Integer> user_butterfly_types = holder.getUser_butterfly_id();
+
+                            Collections.reverse(quest_type_ids);
+                            Collections.reverse(usernames);
+                            Collections.reverse(user_butterfly_types);
 
                             generateDataListLinear(questReportList, quest_type_ids, usernames, user_butterfly_types);
                         }
