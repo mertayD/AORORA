@@ -13,15 +13,18 @@ import android.widget.TextView;
 import com.example.aorora.R;
 import com.example.aorora.interfaces.OnItemClickListener;
 import com.example.aorora.model.RetroPhoto;
+import com.example.aorora.model.UserInfo;
 
 import java.util.List;
 
+import static java.lang.Math.min;
+
 public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridViewHolder> {
-    private List<RetroPhoto> dataList;
+    private List<UserInfo> dataList;
     private Context context;
     private OnItemClickListener onItemClickListener;
 
-    public GridViewAdapter(Context context, List<RetroPhoto> dataList, OnItemClickListener clickListener){
+    public GridViewAdapter(Context context, List<UserInfo> dataList, OnItemClickListener clickListener){
         this.context = context;
         this.dataList = dataList;
         onItemClickListener = clickListener;
@@ -55,10 +58,9 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
 
     @Override
     public void onBindViewHolder(@NonNull final GridViewAdapter.GridViewHolder customViewHolder, final int position) {
-        customViewHolder.userName.setText(dataList.get(position).getTitle().substring(1,4));
-        Log.e("POSITION", "" + position);
-        /*
-        switch (position){
+        customViewHolder.userName.setText(dataList.get(position).getUser_name());
+        int user_butterfly = dataList.get(position).getUser_current_butterfly();
+        switch (user_butterfly){
             case 0:
                 customViewHolder.coverImage.setImageResource(R.drawable.orange_butterfly_image);
                 break;
@@ -81,7 +83,6 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
                  customViewHolder.coverImage.setImageResource(R.drawable.orange_butterfly_image);
                  break;
         }
-        */
         customViewHolder.coverImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +94,6 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
 
     @Override
     public int getItemCount() {
-        return 6;
+        return min(dataList.size(),20);
     }
 }

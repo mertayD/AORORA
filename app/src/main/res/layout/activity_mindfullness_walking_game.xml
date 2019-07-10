@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MindfullnessWalkingGame"
-    android:background="@drawable/background">
+    android:background="@drawable/walking_background"
+    android:id="@+id/walking_game_background">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view_walking"
+        android:layout_width="match_parent"
+        android:layout_height="445dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/stage_1" />
     <View
         android:id="@+id/emiter_top"
         android:layout_width="409dp"
@@ -16,18 +32,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/butterfly_minfullness_walking"
-        android:layout_width="375dp"
-        android:layout_height="342dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="120dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.357"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/butterfly_breathing" />
 
     <ImageButton
         android:id="@+id/mindfullness_walking_exit_button"
@@ -41,33 +45,30 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/exit_button_breathing" />
 
+    <ImageView
+        android:id="@+id/loading_walking_image_view"
+        android:layout_width="93dp"
+        android:layout_height="103dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/animation_view_walking"
+        app:srcCompat="@drawable/walking_loading_zero" />
+
     <TextView
-        android:id="@+id/walking_count_tv"
+        android:id="@+id/hint_text_walking_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="0"
-        android:textColor="@color/customGray"
-        android:textSize="9pt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.12"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/butterfly_minfullness_walking"
-        app:layout_constraintVertical_bias="0.071" />
+        android:text="Hint: Keep walking to \n grow your flower"
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="104dp"
-        android:layout_height="77dp"
-        android:layout_marginBottom="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/butterfly_minfullness_walking"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/point_frame" />
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="10pt"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/animation_view_walking"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>

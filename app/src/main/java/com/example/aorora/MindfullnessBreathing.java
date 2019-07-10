@@ -3,6 +3,7 @@ package com.example.aorora;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,7 +38,6 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
     ImageButton exit_button;
     RecyclerView time_selection_recyler_view;
     com.example.aorora.adapter.HorizontalTimeAdapter horizontalTimeAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +54,7 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         time_selection_recyler_view = (RecyclerView) findViewById(R.id.recycler_view_time_selection_breathing);
 
 
-        List<String> data = Arrays.asList("", "5 Breathes", "10 Breathes","15 Breathes","");
+        List<String> data = Arrays.asList("", "5 Breaths", "10 Breaths","15 Breaths","");
         generateTimeDataList(data);
         time_selection_recyler_view.smoothScrollToPosition(3);
         /*

@@ -1,6 +1,10 @@
 package com.example.aorora.network;
 
 import com.example.aorora.model.Butterfly;
+import com.example.aorora.model.DailyTask;
+import com.example.aorora.model.DailyTaskReturn;
+import com.example.aorora.model.MoodReportIdReturn;
+import com.example.aorora.model.QuesrtReportCreateReturn;
 import com.example.aorora.model.Quest;
 import com.example.aorora.model.QuestReport;
 import com.example.aorora.model.RetroPhoto;
@@ -36,6 +40,13 @@ public interface GetDataService {
     @POST("/userbutterfly")
     Call<Butterfly> createButterfly(@Body Butterfly user);
 
+
+    @POST("/moodreport")
+    @FormUrlEncoded
+    Call<MoodReportIdReturn> createMoodReport(@Field("user_id") Integer user_id,
+                                              @Field("q1_response") Integer q1_response,
+                                              @Field("q1_response") Integer q2_response);
+
     // WORKS
 
     @POST("/api-token-auth")
@@ -67,5 +78,31 @@ public interface GetDataService {
     @FormUrlEncoded
     Call<UserIdReturn> updateUserPollen(@Path("user_id") Integer user_id,
                                         @Field("user_pollen") Integer user_pollen);
+    @GET("/userinfos")
+    Call<List<UserInfo>> getCommunity();
 
+    @GET("/dailytask/{user_id}")
+    Call<DailyTask> getDailyTask(@Path("user_id") Integer user_id);
+
+    @PUT("/dailytask/{user_id}")
+    @FormUrlEncoded
+    Call<DailyTaskReturn> updateDailyTaskM1(@Path("user_id") Integer user_id,
+                                            @Field("daily_task_user_id") Integer daily_task_user_id,
+                                            @Field("daily_task_m1_achieved") Integer daily_task_m1_achieved);
+
+    @PUT("/dailytask/{user_id}")
+    @FormUrlEncoded
+    Call<DailyTaskReturn> updateDailyTaskM2(@Path("user_id") Integer user_id,
+                           @Field("daily_task_user_id") Integer daily_task_user_id,
+                           @Field("daily_task_m2_achieved") Integer daily_task_m2_achieved);
+
+    @PUT("/dailytask/{user_id}")
+    @FormUrlEncoded
+    Call<DailyTaskReturn> updateDailyTaskM3(@Path("user_id") Integer user_id,
+                           @Field("daily_task_user_id") Integer daily_task_user_id,
+                           @Field("daily_task_m3_achieved") Integer daily_task_m3_achieved);
+    @POST("/questreport")
+    @FormUrlEncoded
+    Call<QuesrtReportCreateReturn> createQuestReport(@Field("quest_id") Integer quest_id,
+                                                     @Field("user_id") Integer user_id);
 }

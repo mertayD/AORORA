@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.aorora.model.DailyTask;
 import com.example.aorora.model.RetroPhoto;
 import com.example.aorora.model.UserAuth;
 import com.example.aorora.model.UserInfo;
@@ -29,6 +30,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     public static UserInfo user_info;
+    public static DailyTask daily_task;
 
     Button  login_button;
     Intent surveyPage;
@@ -98,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 if(response.isSuccess())
                 {
                     UserAuth user = (UserAuth) response.body();
+                    NetworkCalls.getDailyTaskOfUser(user.getUser_id(),MainActivity.this);
                     NetworkCalls.getUserInfo(user.getUser_id(), MainActivity.this);
                     surveyPage = new Intent(context, SurveyPage.class);
                     startActivity(surveyPage);
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<UserAuth> call, Throwable t) {
                 if (t instanceof IOException)
                 {
-                    Toast.makeText(MainActivity.this, "this is an actual network failure :( inform the user and possibly retry", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "this is an actual network failure :( inform the user and possibly retry", Toast.LENGTH_SHORT).show();
                     Log.e("VERBOSE1", "" + t.getCause());
                     Log.e("VERBOSE2", "" + t.getMessage());
                     Log.e("VERBOSE3", "" + t.toString());
@@ -121,8 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     // logging probably not necessary
                 }
                 else {
-                    Toast.makeText(MainActivity.this, "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
-                    // todo log to some central bug tracking service
+                    //Toast.makeText(MainActivity.this, "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
                 }
                 //Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }

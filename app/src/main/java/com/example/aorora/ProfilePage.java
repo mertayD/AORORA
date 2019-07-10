@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aorora.model.Butterfly;
+import com.example.aorora.model.DailyTask;
 import com.example.aorora.model.UserAuth;
 import com.example.aorora.model.UserInteraction;
 import com.example.aorora.network.GetDataService;
@@ -131,7 +132,9 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         }
         else if(view_id == settings_button.getId())
         {
-            sendOutLike(1,2);
+            //to_navigate = new Intent(profilePage, MindfulnessMeditationGame_R.class);
+            //startActivity(to_navigate);
+            //sendOutLike(1,2);
             //getButterfly();
             //to_navigate = new Intent(profilePage, EndOfMindfulnessGamePage.class);
             //startActivity(to_navigate);
@@ -229,6 +232,7 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
             }
         });
     }
+
     public void getButterfly()
     {
         com.example.aorora.network.GetDataService service = com.example.aorora.network.RetrofitClientInstance.getRetrofitInstance().create(com.example.aorora.network.GetDataService.class);

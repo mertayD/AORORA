@@ -1,10 +1,13 @@
 package com.example.aorora;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.CountDownTimer;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,11 +23,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.aorora.network.NetworkCalls;
 import com.google.android.gms.location.DetectedActivity;
 import com.plattysoft.leonids.Particle;
 import com.plattysoft.leonids.ParticleSystem;
 import com.plattysoft.leonids.modifiers.AlphaModifier;
+
+import static com.example.aorora.MainActivity.user_info;
 
 
 public class MindfullnessWalkingGame extends AppCompatActivity {
@@ -35,38 +41,65 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
     View emitter;
     Context walking;
     int count;
+    int stage_counter;
     TextView count_tv;
-    Boolean check_first_drop;
     Animation flap;
-    ImageView butterfly;
+    ImageView walking_loading;
     AlphaModifier myAlpha;
+    Animation pulse;
+    LottieAnimationView animationView;
+    TextView hint_walking;
+    Context mindfulness_walking;
+    ConstraintLayout walking_game_layout;
+    int game_theme;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mindfullness_walking_game);
+
         exit = (ImageButton) findViewById(R.id.mindfullness_walking_exit_button);
         emitter = (View) findViewById(R.id.emiter_top);
-        count_tv = (TextView) findViewById(R.id.walking_count_tv);
-        butterfly = (ImageView) findViewById(R.id.butterfly_minfullness_walking);
+        walking_game_layout = findViewById(R.id.walking_game_background);
 
         myAlpha = new AlphaModifier(1000, 10, 0, 8000, new AccelerateInterpolator());
+        mindfulness_walking = this;
 
+        hint_walking = findViewById(R.id.hint_text_walking_game);
         flap = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.butterfly_flap);
         flap.setRepeatCount(4);
-        check_first_drop = true;
+
         walking = this;
         count = 0;
+        stage_counter = 0;
+        animationView = findViewById(R.id.animation_view_walking);
 
+        walking_loading = findViewById(R.id.loading_walking_image_view);
+        pulse = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.tap_me_animation);
 
+        if(this.getIntent().hasExtra("Game Theme"))
+        {
+            game_theme = this.getIntent().getIntExtra("Game Theme", 1);
+            if(game_theme == 1)
+            {
+                walking_game_layout.setBackgroundResource(R.drawable.blue_mountain_background);
+            }
+            else if(game_theme == 2)
+            {
+                walking_game_layout.setBackgroundResource(R.drawable.green_mountain_background);
+            }
+            else
+            {
+                walking_game_layout.setBackgroundResource(R.drawable.orange_mountain_background);
+            }
+        }
 
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent to_navigate = new Intent(MindfullnessWalkingGame.this, MindfullnessWalking.class);
-                int user_points = MainActivity.user_info.getUser_pollen();
-                user_points += count;
-                NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), user_points, MindfullnessWalkingGame.this);
                 startActivity(to_navigate);
                 stopTracking();
             }
@@ -83,7 +116,27 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
             }
         };
         startTracking();
+
+        walking_loading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent to_navigate = new Intent(mindfulness_walking, ReceiptPage.class);
+                to_navigate.putExtra("NavigatedFrom", 3);
+                to_navigate.putExtra("Game Theme", game_theme);
+                stopTracking();
+                startActivity(to_navigate);
+                int user_points = MainActivity.user_info.getUser_pollen();
+                user_points += count;
+                NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), user_points, MindfullnessWalkingGame.this);
+                NetworkCalls.updateDailyTaskM3(user_info.getUser_id(), 1, walking);
+                NetworkCalls.createQuestReport(3, user_info.getUser_id(),mindfulness_walking);
+            }
+        });
+
+        walking_loading.setClickable(false);
+
     }
+
     private void handleUserActivity(int type, int confidence) {
 
         String label = "";
@@ -124,6 +177,7 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
         }
 
         Log.e("ACTION_DETECTION", "User activity: " + label + ", Confidence: " + confidence);
+
         MindfullnessWalkingGame.Timer myTimer= new MindfullnessWalkingGame.Timer(10000,1000);
 
         if (confidence > 70) {
@@ -131,6 +185,70 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
             //label == "WALKING" || label == "RUNNING" || label == "ON_FOOT"
             if(label == "WALKING" || label == "RUNNING" || label == "ON_FOOT")
             {
+                String title = "TITLE";
+                String body;
+                String subject = "Mindfulness Walking";
+                Notification notify = null;
+                NotificationManager notif=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
+                hint_walking.setVisibility(View.INVISIBLE);
+                if(stage_counter == 0)
+                {
+                    body = "You just took your first step to grow your flower";
+                    notify=new Notification.Builder
+                            (getApplicationContext()).setContentTitle(title).setContentText(body).
+                            setContentTitle(subject).setSmallIcon(R.drawable.walking_loading_25).build();
+                    notify.flags |= Notification.FLAG_AUTO_CANCEL;
+                    notif.notify(0, notify);
+                    animationView.setAnimation(R.raw.stage_1);
+                    animationView.playAnimation();
+                    walking_loading.setImageResource(R.drawable.walking_loading_25);
+                }
+                else if(stage_counter == 5)
+                {
+                    body = "Your flower reached the stage 2! Keep walking";
+                    notify=new Notification.Builder
+                            (getApplicationContext()).setContentTitle(title).setContentText(body).
+                            setContentTitle(subject).setSmallIcon(R.drawable.walking_loading_50).build();
+                    animationView.setAnimation(R.raw.stage_2);
+                    animationView.playAnimation();
+                    walking_loading.setImageResource(R.drawable.walking_loading_50);
+                }
+                else if(stage_counter == 10)
+                {
+                    body = "Your flower reached the stage 2! Keep walking";
+                    notify=new Notification.Builder
+                            (getApplicationContext()).setContentTitle(title).setContentText(body).
+                            setContentTitle(subject).setSmallIcon(R.drawable.walking_loading_75).build();
+                    animationView.setAnimation(R.raw.stage_3);
+                    animationView.playAnimation();
+                    walking_loading.setImageResource(R.drawable.walking_loading_75);
+                }
+                else if(stage_counter == 15)
+                {
+                    animationView.setAnimation(R.raw.stage_4);
+                    animationView.playAnimation();
+                    walking_loading.setImageResource(R.drawable.walking_loading_100);
+                    new CountDownTimer(3000,100) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            walking_loading.setClickable(true);
+                            walking_loading.setImageResource(R.drawable.walking_loading_finish);
+                        }
+                    }.start();
+                }
+
+                //stage counter is how you understand how many times service requested and this requests go off every
+                // 10 seconds so you can approximate how far they have walked.
+
+                stage_counter++ ;
+
+                /*
                 butterfly.startAnimation(flap);
                 if(myParticle != null)
                 {
@@ -143,11 +261,13 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
                         .addModifier(myAlpha);
                 myParticle.emitWithGravity(emitter, Gravity.BOTTOM, 1);
                 myTimer.start();
+                */
             }
             else
             {
+                hint_walking.setVisibility(View.VISIBLE);
+                walking_loading.startAnimation(pulse);
                 myTimer.cancel();
-                check_first_drop = true;
             }
         }
     }
@@ -176,10 +296,8 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
         if(myParticle != null )
         {
             myParticle.stopEmitting();
-
         }
     }
-
     class Timer extends CountDownTimer {
         /**
          * @param millisInFuture    The number of millis in the future from the call
@@ -195,9 +313,8 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
         @Override
         public void onTick(long millisUntilFinished) {
             count += 1;
-            if(check_first_drop && millisUntilFinished < 5000) {
+            if(millisUntilFinished < 5000) {
                 count_tv.setText("" + count);
-                check_first_drop =false;
             }
             else
             {
@@ -207,7 +324,6 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
 
         @Override
         public void onFinish() {
-            myParticle.stopEmitting();
         }
 
     }

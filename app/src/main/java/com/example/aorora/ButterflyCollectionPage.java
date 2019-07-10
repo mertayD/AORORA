@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import com.example.aorora.adapter.GridViewAdapter;
 
 import com.example.aorora.interfaces.OnItemClickListener;
 import com.example.aorora.model.RetroPhoto;
+import com.example.aorora.model.UserInfo;
 
 import java.util.List;
 
@@ -58,19 +60,24 @@ public class ButterflyCollectionPage extends AppCompatActivity implements View.O
 
         com.example.aorora.network.GetDataService service = com.example.aorora.network.RetrofitClientInstance.getRetrofitInstance().create(com.example.aorora.network.GetDataService.class);
 
-        Call<List<RetroPhoto>> call = service.getAllPhotos();
-        call.enqueue(new Callback<List<RetroPhoto>>() {
-
+        Call<List<UserInfo>> call = service.getCommunity();
+        call.enqueue(new Callback<List<UserInfo>>() {
             @Override
-            public void onResponse(Call<List<com.example.aorora.model.RetroPhoto>> call, Response<List<RetroPhoto>> response) {
-                progressDoalog.dismiss();
-                generateDataListGrid(response.body());
+            public void onResponse(Call<List<UserInfo>> call, Response<List<UserInfo>> response) {
+                if(response.isSuccess())//response.body().getUsername()
+                {
+                    List<UserInfo> users = response.body();
+                    generateDataListGrid(users);
+                }
+                else
+                {
+                    Toast.makeText(butterflyCollection, "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
             }
-
             @Override
-            public void onFailure(Call<List<com.example.aorora.model.RetroPhoto>> call, Throwable t) {
-                progressDoalog.dismiss();
+            public void onFailure(Call<List<UserInfo>> call, Throwable t) {
                 Toast.makeText(butterflyCollection, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                Log.e("ERROR CAUSE", "" + t.getMessage() +  " Cause  " + t.getCause());
             }
         });
 
@@ -78,9 +85,9 @@ public class ButterflyCollectionPage extends AppCompatActivity implements View.O
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataListGrid(List<com.example.aorora.model.RetroPhoto> photoList) {
+    private void generateDataListGrid(List<UserInfo> community) {
         recyclerView = findViewById(R.id.customRecyclerView);
-        adapter = new com.example.aorora.adapter.GridViewAdapter(butterflyCollection, photoList, new OnItemClickListener() {
+        adapter = new com.example.aorora.adapter.GridViewAdapter(butterflyCollection, community, new OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 Intent details = new Intent(butterflyCollection, ButterflyDetailsPage.class);

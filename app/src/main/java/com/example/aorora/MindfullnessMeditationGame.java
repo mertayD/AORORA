@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.example.aorora.network.NetworkCalls;
 
+import static com.example.aorora.MainActivity.user_info;
+
 public class MindfullnessMeditationGame extends AppCompatActivity implements View.OnTouchListener {
 
     ImageView feather;
@@ -50,9 +52,9 @@ public class MindfullnessMeditationGame extends AppCompatActivity implements Vie
                 if(timerValue > 0){
                     possible_points = 0;
                 }
-                int user_points = MainActivity.user_info.getUser_pollen();
+                int user_points = user_info.getUser_pollen();
                 user_points += possible_points;
-                NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), user_points, MindfullnessMeditationGame.this);
+                NetworkCalls.updateUserCurrentPoints(user_info.getUser_id(), user_points, MindfullnessMeditationGame.this);
                 Intent to_navigate = new Intent(meditationGame, MindfullnessMeditation.class);
                 startActivity(to_navigate);
                 if(feather_sound.isPlaying())
@@ -172,6 +174,9 @@ public class MindfullnessMeditationGame extends AppCompatActivity implements Vie
             to_navigate.putExtra("NavigatedFrom", 2);
             startActivity(to_navigate);
             feather_sound.stop();
+            NetworkCalls.updateDailyTaskM2(user_info.getUser_id(), 1, meditationGame);
+            NetworkCalls.createQuestReport(2, user_info.getUser_id(),meditationGame);
+
         }
 
         public long onPause()

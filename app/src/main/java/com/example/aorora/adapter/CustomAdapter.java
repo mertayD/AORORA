@@ -19,6 +19,8 @@ import com.example.aorora.model.RetroPhoto;
 
 import java.util.List;
 
+import static java.lang.Math.min;
+
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
 
     private List<QuestReport> dataList;
@@ -27,6 +29,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     List<String> usernames;
     List<Integer> user_butterfly_types;
     String[] accomplishment_description;
+
     public CustomAdapter(Context context,List<QuestReport> dataList,
                          List<Integer> quest_type_ids,
                          List<String> usernames,
@@ -70,9 +73,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
         String desc = accomplishment_description[quest_type_ids.get(position)-1];
-        holder.txtTitle.setText(desc );
+        holder.txtTitle.setText(desc);
         holder.username_tv.setText(usernames.get(position));
-        int butterfly_id = user_butterfly_types.get(position) - 1;
+        int butterfly_id = user_butterfly_types.get(position);
         Log.e("Butterfly ID : " , " " + butterfly_id);
         switch (butterfly_id){
             case 0:
@@ -101,6 +104,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
     @Override
     public int getItemCount() {
-        return dataList.size();
+
+        return min(dataList.size(),20);
     }
 }

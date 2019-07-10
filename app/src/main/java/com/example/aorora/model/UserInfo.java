@@ -27,8 +27,8 @@ public class UserInfo {
     private Integer user_pollen;
     @SerializedName("user_points")
     private Integer user_points;
-    @SerializedName("username")
-    private String username;
+    @SerializedName("user_name")
+    private String user_name;
     @SerializedName("email")
     private String email;
     @SerializedName("password")
@@ -47,7 +47,7 @@ public class UserInfo {
                     Integer user_pollen,
                     Integer user_points,
                     String username,
-                    String email,
+                    String user_name, String email,
                     String password) {
         this.user_info_id = user_info_id;
         this.user_name_of_strength = user_name_of_strength;
@@ -61,9 +61,17 @@ public class UserInfo {
         this.user_current_butterfly = user_current_butterfly;
         this.user_pollen = user_pollen;
         this.user_points = user_points;
-        this.username = username;
+        this.user_name = user_name;
         this.email = email;
         this.password = password;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
     public Integer getUser_info_id() {
@@ -160,14 +168,6 @@ public class UserInfo {
 
     public void setUser_points(Integer user_points) {
         this.user_points = user_points;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getEmail() {

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.aorora.R;
 import com.example.aorora.adapter.CustomAdapter;
+import com.example.aorora.adapter.GridViewAdapter;
 import com.example.aorora.interfaces.OnItemClickListener;
 import com.example.aorora.model.Quest;
 import com.example.aorora.model.QuestReport;
@@ -133,19 +134,24 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                 progressDoalog.setMessage("Friends Loading....");
                 progressDoalog.show();
 
-                Call<List<RetroPhoto>> call = service.getAllPhotos();
-                call.enqueue(new Callback<List<RetroPhoto>>() {
-
+                Call<List<UserInfo>> call = service.getCommunity();
+                call.enqueue(new Callback<List<UserInfo>>() {
                     @Override
-                    public void onResponse(Call<List<RetroPhoto>> call, Response<List<RetroPhoto>> response) {
-                        progressDoalog.dismiss();
-                        generateDataListGrid(response.body());
+                    public void onResponse(Call<List<UserInfo>> call, Response<List<UserInfo>> response) {
+                        if(response.isSuccess())//response.body().getUsername()
+                            {
+                                List<UserInfo> users = response.body();
+                                generateDataListGrid(users);
+                            }
+                            else
+                            {
+                                Toast.makeText(communityPage, "Something went wrong", Toast.LENGTH_SHORT).show();
+                            }
                     }
-
                     @Override
-                    public void onFailure(Call<List<RetroPhoto>> call, Throwable t) {
-                        progressDoalog.dismiss();
-                        Toast.makeText(CommunityPage.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    public void onFailure(Call<List<UserInfo>> call, Throwable t) {
+                        Toast.makeText(communityPage, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                        Log.e("ERROR CAUSE", "" + t.getMessage() +  " Cause  " + t.getCause());
                     }
                 });
             }
@@ -231,8 +237,8 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         recyclerView.setAdapter(linearAdapter);
     }
 
-    private void generateDataListGrid(List<com.example.aorora.model.RetroPhoto> photoList) {
-        gridAdapter = new com.example.aorora.adapter.GridViewAdapter(this, photoList, new OnItemClickListener() {
+    private void generateDataListGrid(List<UserInfo> community) {
+        gridAdapter = new GridViewAdapter(this, community, new OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 Log.e("ItemClicked", "Item Clicked at Position " + position);
@@ -327,11 +333,12 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
 
                     for (int i = 0; i < questReportList.size(); i++)
                     {
-                        getQuestType(questReportList.get(i).getQuest_id());
+                        holder.setQuest_type(questReportList.get(i).getQuest_type_id());
 
                         getUserInfo(questReportList.get(i).getUser_id());
 
                     }
+
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -340,8 +347,9 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                             List<String> usernames = holder.getUsername();
                             List<Integer> user_butterfly_types = holder.getUser_butterfly_id();
 
-                            generateDataListLinear(questReportList, quest_type_ids, usernames, user_butterfly_types);                        }
-                    }, 500);
+                            generateDataListLinear(questReportList, quest_type_ids, usernames, user_butterfly_types);
+                        }
+                    },500);
 
                 }
                 else
@@ -357,29 +365,6 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
             }
         });
     }
-    public void getQuestType(int quest_id) {
-
-        Call<Quest> call = service.getQuestInfo(quest_id);
-        call.enqueue(new Callback<Quest>() {
-            @Override
-            public void onResponse(Call<Quest>call, Response<Quest> response) {
-                if(response.isSuccess())
-                {
-                    holder.setQuest_type(response.body().getQuest_type_id());
-                }
-                else
-                {
-                    Toast.makeText(CommunityPage.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<Quest> call, Throwable t) {
-                Toast.makeText(CommunityPage.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     public void getUserInfo(int user_id) {
 
@@ -390,11 +375,14 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                 if(response.isSuccess())
                 //response.body().getUsername()
                 {
-
-                    String u_name = response.body().getUsername();
+                    String u_name = response.body().getUser_name();
+                    if(u_name == null)
+                    {
+                        Toast.makeText(CommunityPage.this, "User Name is not available", Toast.LENGTH_SHORT).show();
+                    }
                     int u_b_id = response.body().getUser_current_butterfly();
 
-                    holder.setUsername("_username_");
+                    holder.setUsername(u_name);
                     holder.setUser_butterfly_id(u_b_id);
                 }
                 else
@@ -409,5 +397,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
             }
         });
     }
+
+
 
 }

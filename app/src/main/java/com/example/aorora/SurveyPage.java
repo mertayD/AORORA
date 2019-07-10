@@ -25,6 +25,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aorora.network.NetworkCalls;
+
 public class SurveyPage extends AppCompatActivity implements OnClickListener {
     LinearLayout mood_desc_ll;
     Context surveyPage;
@@ -191,9 +193,12 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
     @Override
     public void onClick(View v) {
         // result will be considered on a scale of 1-5
+        int q1_response = 0;
+        int q2_response = 0;
         int result = 0;
         //v_id is the id of the view that is passed as a parameter
         int v_id = v.getId();
+
         if(exitVisible)
         {
             exitButton.setVisibility(View.INVISIBLE);
@@ -225,13 +230,25 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
             result = 5;
         }
 
+        if(question_order_count == 0)
+        {
+            q1_response = result;
+        }
+        else
+        {
+            q2_response = result;
+        }
+
         question_order_count++;
+
         if(question_order_count < questions_array_size) {
             survey_question_tv.startAnimation(move_to_animation);
 
         }
         else
         {
+            NetworkCalls.createMoodReport(MainActivity.user_info.getUser_id(), q1_response,q2_response, surveyPage);
+
             Intent navigated_from = getIntent();
             Intent to_navigate;
             int mindfullness = 0;

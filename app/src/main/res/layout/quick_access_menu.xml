@@ -37,6 +37,7 @@
             android:textSize="7pt" />
 
         <TextView
+            android:id="@+id/pop_up_pollen_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/current_plln_amount_title_quick_access"

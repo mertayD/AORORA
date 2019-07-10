@@ -25,9 +25,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lines="1"
+        android:layout_marginTop="4dp"
         android:text="FancyNancy33"
         android:textColor="#989898"
-        android:textSize="8pt"
+        android:textSize="7pt"
         android:layout_gravity="center"
         />
 

@@ -1,27 +1,24 @@
 package com.example.aorora.adapter;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+        import android.content.Context;
+        import android.support.annotation.NonNull;
+        import android.support.v7.widget.RecyclerView;
+        import android.util.Log;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.ImageView;
+        import android.widget.TextView;
 
-import com.example.aorora.R;
-import com.example.aorora.interfaces.OnItemClickListener;
-import com.example.aorora.model.RetroPhoto;
+        import com.example.aorora.R;
+        import com.example.aorora.interfaces.OnItemClickListener;
 
-import java.util.List;
-
-public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.HorizontalViewHolder> {
+public class HorizontalMountainAdapter extends RecyclerView.Adapter<HorizontalMountainAdapter.HorizontalViewHolder> {
 
     private Context context;
     private OnItemClickListener onItemClickListener;
 
-    public HorizontalAdapter(Context context, OnItemClickListener listener){
+    public HorizontalMountainAdapter(Context context, OnItemClickListener listener){
         this.context = context;
         onItemClickListener = listener;
     }
@@ -44,7 +41,7 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.Ho
     public HorizontalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.custom_horizontal_rv_item, parent, false);
-        return new HorizontalAdapter.HorizontalViewHolder(view);
+        return new HorizontalMountainAdapter.HorizontalViewHolder(view);
     }
 
     @Override
@@ -54,25 +51,21 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.Ho
         horizontalViewHolder.coverImage.setAlpha(0.3f);
         switch (position){
             case 1:
-                horizontalViewHolder.coverImage.setImageResource(R.drawable.wind_icon);
-                horizontalViewHolder.txtTitle.setText("Wind");
+                horizontalViewHolder.coverImage.setImageResource(R.drawable.blue_mountain);
+                horizontalViewHolder.txtTitle.setText("Evening");
                 break;
             case 2:
-                horizontalViewHolder.coverImage.setImageResource(R.drawable.water_icon);
-                horizontalViewHolder.txtTitle.setText("Water");
+                horizontalViewHolder.coverImage.setImageResource(R.drawable.green_mountain);
+                horizontalViewHolder.txtTitle.setText("Afternoon");
                 break;
             case 3:
-                horizontalViewHolder.coverImage.setImageResource(R.drawable.flower_icon);
-                horizontalViewHolder.txtTitle.setText("Flower");
+                horizontalViewHolder.coverImage.setImageResource(R.drawable.orange_mountain);
+                horizontalViewHolder.txtTitle.setText("Morning");
                 break;
-            case 4:
-                horizontalViewHolder.coverImage.setImageResource(R.drawable.mountain_icon);
-                horizontalViewHolder.txtTitle.setText("Mountain");
+            default:
+                horizontalViewHolder.coverImage.setVisibility(View.INVISIBLE);
+                horizontalViewHolder.txtTitle.setText("");
                 break;
-             default:
-                 horizontalViewHolder.coverImage.setVisibility(View.INVISIBLE);
-                 horizontalViewHolder.txtTitle.setText("");
-                 break;
         }
 
         if(horizontalViewHolder.coverImage != null)
@@ -88,7 +81,7 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.Ho
 
     @Override
     public int getItemCount() {
-        return 6;
+        return 5;
     }
 
 }

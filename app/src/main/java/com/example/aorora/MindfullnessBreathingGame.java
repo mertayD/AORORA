@@ -34,6 +34,8 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.aorora.network.NetworkCalls;
 import com.plattysoft.leonids.ParticleSystem;
 
+import static com.example.aorora.MainActivity.user_info;
+
 public class MindfullnessBreathingGame extends AppCompatActivity {
 
     static ImageButton exit_button;
@@ -116,12 +118,14 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 possible_points = 5;
                 text = 2;
             }
+
             else if( text == 2)
             {
                 initial_game_count = text;
                 possible_points = 10;
                 text = 10;
             }
+
             else{
                 initial_game_count = text;
                 possible_points = 15;
@@ -225,12 +229,20 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 {
                     //DialogFragment newFragment = new BreathDialog();
                     //newFragment.show(getSupportFragmentManager(), "CONTINUE");
+                    if(breathing_music.isPlaying())
+                    {
+                        breathing_music.stop();
+                    }
                     int user_points = MainActivity.user_info.getUser_pollen();
                     Log.e("USER POINTS ", user_points + " ");
                     user_points += possible_points;
                     NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), user_points, MindfullnessBreathingGame.this);
                     NetworkCalls.getUserInfo(MainActivity.user_info.getUser_id(), MindfullnessBreathingGame.this);
                     Intent to_navigate = new Intent(mindfullness_breathing_game, ReceiptPage.class);
+                    to_navigate.putExtra("NavigatedFrom", 1);
+                    NetworkCalls.updateDailyTaskM1(user_info.getUser_id(), 1, mindfullness_breathing_game);
+                    NetworkCalls.createQuestReport(1, user_info.getUser_id(),mindfullness_breathing_game);
+
                     to_navigate.putExtra("GAME", initial_game_count);
                     startActivity(to_navigate);
                 }
@@ -266,6 +278,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 startActivity(to_navigate);
             }
         });
+        /*
         myDialog.setContentView(R.layout.custom_dialog_breathing);
         pop_up_exit = (Button) myDialog.findViewById(R.id.button_exercise_select);
         pop_up_exit.setOnClickListener(new View.OnClickListener() {
@@ -274,6 +287,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 exit_button.performClick();
             }
         });
+       */
 
     }
 

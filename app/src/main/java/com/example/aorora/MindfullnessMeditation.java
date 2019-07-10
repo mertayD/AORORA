@@ -45,6 +45,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
     ImageButton exit_button;
     RecyclerView recyclerView;
     RecyclerView recyclerViewTime;
+    int game_theme;
     com.example.aorora.adapter.HorizontalAdapter horizontalAdapter;
     com.example.aorora.adapter.HorizontalTimeAdapter horizontalTimeAdapter;
 
@@ -54,7 +55,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_mindfullness_meditation);
 
         mindfulnessMeditation = this;
-
+        game_theme = 0;
         home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
@@ -143,9 +144,14 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
                 //double halfScreen = recyclerView.getWidth() * .5;
                 double halfScreen = 400;
                 boolean isInMiddle =  leftSide < halfScreen && halfScreen < rightSide;
+                text_view.setVisibility(View.INVISIBLE);
+                viewHolder.itemView.findViewById(R.id.cover_image_feather).setAlpha(0.3f);
                 if(isInMiddle)
                 {
+                    game_theme = viewHolder.getAdapterPosition();
                     text_view.setTextColor(getResources().getColor(R.color.colorWhite));
+                    text_view.setVisibility(View.VISIBLE);
+                    viewHolder.itemView.findViewById(R.id.cover_image_feather).setAlpha(1f);
                 }
             }
         }
@@ -222,7 +228,8 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
                 duration_int = 3;
             }
             */
-            to_navigate = new Intent(mindfulnessMeditation, MindfullnessFeatherSelection.class);
+            to_navigate = new Intent(mindfulnessMeditation, MindfulnessMeditationGame_R.class);
+            to_navigate.putExtra("Theme",game_theme);
             //to_navigate.putExtra("NavigatedFrom", -2);
             //to_navigate.putExtra("Duration", duration_int);
             startActivity(to_navigate);

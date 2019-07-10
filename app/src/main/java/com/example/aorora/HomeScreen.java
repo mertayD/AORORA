@@ -58,10 +58,12 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     View popup_quick_access;
     public View quick_menu;
     boolean is_menu_inflated;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
         homeScreen = this;
         isButtonsPoppedUp = false;
         home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);
@@ -79,6 +81,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         speck_holder_cl = (ConstraintLayout) findViewById(R.id.speck_holder_cl);
         quick_menu = (LinearLayout) findViewById(R.id.include_popup_quick_access_menu);
         is_menu_inflated = false;
+
         quick_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +107,14 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
                     popup_quick_access.findViewById(R.id.pollen_score_layout_tv).setVisibility(View.INVISIBLE);
                     popup_quick_acces_image.setImageResource(R.drawable.pollen);
                     quick_menu.setVisibility(View.VISIBLE);
+                    /*
+                    View block1 = quick_menu.findViewById(R.id.quick_access_block_1);
+                    TextView tv1 = block1.findViewById(R.id.text_view_description_quest_block);
+                    tv1.setText("Mindfulness Breathing");
+                    block1
+                    View block2 = quick_menu.findViewById(R.id.quick_access_block_1);
+                    View block3 = quick_menu.findViewById(R.id.quick_access_block_1);
+                    */
                     is_menu_inflated = true;
                 }
                 /*
@@ -118,7 +129,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
 
             }
         });
-        switch (MainActivity.user_info.getUser_current_butterfly() - 1){
+        switch (MainActivity.user_info.getUser_current_butterfly()){
             case 0:
                 profile_butterfly.setImageResource(R.drawable.orange_butterfly_image);
                 break;

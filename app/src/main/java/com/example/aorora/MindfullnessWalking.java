@@ -2,13 +2,23 @@ package com.example.aorora;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.aorora.adapter.HorizontalAdapter;
+import com.example.aorora.adapter.HorizontalMountainAdapter;
+import com.example.aorora.interfaces.OnItemClickListener;
 
 public class MindfullnessWalking extends AppCompatActivity implements View.OnClickListener {
 
@@ -26,17 +36,9 @@ public class MindfullnessWalking extends AppCompatActivity implements View.OnCli
     Context mindfullnessWalking;
     ImageButton exit_button;
     ImageView alphaChannelImage;
-    //1 is pink
-    int lm_color = 1;
-    //2 is blue
-    int l_color = 2;
-    //3 is green
-    int c_color = 3;
-    //4 is orange
-    int r_color = 4;
-    //5 is grey
-    int rm_color = 5;
-
+    RecyclerView recyclerView;
+    HorizontalMountainAdapter horizontalAdapter;
+    int game_theme;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +46,7 @@ public class MindfullnessWalking extends AppCompatActivity implements View.OnCli
 
         mindfullnessWalking = this;
 
-        left_most_button= findViewById(R.id.left_most_circle_buttom);
-        left_button = findViewById(R.id.left_circle_button);
-        center = findViewById(R.id.elipse_center_button);
-        right_button = findViewById(R.id.right_circle_button);
-        right_most_button = findViewById(R.id.right_most_circle_button);
+        recyclerView = findViewById(R.id.horizontal_recycler_view_walking);
         play = (ImageButton) findViewById(R.id.play_button_walking);
         exit_button = (ImageButton) findViewById(R.id.exit_button_walking);
         alphaChannelImage = (ImageView) findViewById(R.id.alpha_channel_walking_icon);
@@ -65,17 +63,34 @@ public class MindfullnessWalking extends AppCompatActivity implements View.OnCli
 
         exit_button.setOnClickListener(this);
         play.setOnClickListener(this);
-        left_most_button.setOnClickListener(this);
-        left_button.setOnClickListener(this);
-        center.setOnClickListener(this);
-        right_button.setOnClickListener(this);
-        right_most_button.setOnClickListener(this);
+        generateDataListHorizontal();
+        recyclerView.smoothScrollToPosition(3);
 
         infinite_blink = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.infinite_blink);
         alphaChannelImage.startAnimation(infinite_blink);
     }
 
+    private void generateDataListHorizontal() {
+        horizontalAdapter = new HorizontalMountainAdapter(this, new OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+            }
+        });
+
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(recyclerView);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mindfullnessWalking, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(horizontalAdapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                selectMiddleItem();
+            }
+        });
+    }
     @Override
     public void onClick(View v) {
         int view_id = v.getId();
@@ -105,99 +120,45 @@ public class MindfullnessWalking extends AppCompatActivity implements View.OnCli
             to_navigate = new Intent(mindfullnessWalking, MindfullnessSelection.class);
             startActivity(to_navigate);
         }
-        else if (view_id == left_most_button.getId())
-        {
-            temp = lm_color;
-            lm_color = c_color;
-            c_color = temp;
-            recolor(center,c_color,true);
-            recolor(left_most_button,lm_color,false);
-        }
-        else if(view_id == left_button.getId())
-        {
-            temp = l_color;
-            l_color = c_color;
-            c_color = temp;
-            recolor(center,c_color,true);
-            recolor(left_button,l_color,false);
-        }
-        else if(view_id ==right_button.getId())
-        {
-            temp = r_color;
-            r_color = c_color;
-            c_color = temp;
-            recolor(center,c_color,true);
-            recolor(right_button,r_color,false);
-        }
-        else if(view_id == right_most_button.getId())
-        {
-            temp = rm_color;
-            rm_color = c_color;
-            c_color = temp;
-            recolor(center,c_color,true);
-            recolor(right_most_button,rm_color,false);
-        }
         else if(view_id == play.getId())
         {
             Intent intent = new Intent(MindfullnessWalking.this, MindfullnessWalkingGame.class);
-            //intent.putExtra("NavigatedFrom", -3);
+            intent.putExtra("Game Theme", game_theme);
             startActivity(intent);
         }
     }
 
-    public void recolor(ImageButton v, int color, boolean center)
-    {
-        switch (color){
-            case 1:
-                if(center)
-                {
-                    v.setImageResource(R.drawable.pink_elipse_walking);
+
+    public void selectMiddleItem() {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        int firstVisibleIndex = layoutManager.findFirstVisibleItemPosition();
+        int lastVisibleIndex = layoutManager.findLastVisibleItemPosition();
+        TextView text_view;
+        for (int visibleIndex = firstVisibleIndex; visibleIndex < lastVisibleIndex; visibleIndex++) {
+            HorizontalMountainAdapter.HorizontalViewHolder viewHolder = (HorizontalMountainAdapter.HorizontalViewHolder) recyclerView.findViewHolderForAdapterPosition(visibleIndex);
+
+            if (viewHolder != null) {
+                text_view = viewHolder.itemView.findViewById(R.id.feather_name_tv);
+
+                text_view.setTextColor(getResources().getColor(R.color.customGray));
+                int[] location = new int[2];
+                viewHolder.itemView.getLocationOnScreen(location);
+                int x = location[0];
+                double halfWidth = viewHolder.itemView.getWidth() * .5;
+                double rightSide = x + halfWidth;
+                double leftSide = x - halfWidth;
+                //double halfScreen = recyclerView.getWidth() * .5;
+                double halfScreen = 400;
+                boolean isInMiddle = leftSide < halfScreen && halfScreen < rightSide;
+                text_view.setVisibility(View.INVISIBLE);
+                viewHolder.itemView.findViewById(R.id.cover_image_feather).setAlpha(0.3f);
+                if (isInMiddle) {
+                    game_theme = viewHolder.getAdapterPosition();
+                    text_view.setTextColor(getResources().getColor(R.color.colorWhite));
+                    text_view.setVisibility(View.VISIBLE);
+                    viewHolder.itemView.findViewById(R.id.cover_image_feather).setAlpha(1f);
                 }
-                else
-                {
-                    v.setImageResource(R.drawable.pink_circle_walking);
-                }
-                break;
-            case 2:
-                if(center)
-                {
-                    v.setImageResource(R.drawable.blue_elipse_walking);
-                }
-                else
-                {
-                    v.setImageResource(R.drawable.blue_circle_walking);
-                }
-                break;
-            case 3:
-                if(center)
-                {
-                    v.setImageResource(R.drawable.green_elipse_walking);
-                }
-                else
-                {
-                    v.setImageResource(R.drawable.green_circle_walking);
-                }
-                break;
-            case 4:
-                if(center)
-                {
-                    v.setImageResource(R.drawable.orange_elipse_walking);
-                }
-                else
-                {
-                    v.setImageResource(R.drawable.orange_circle_walking);
-                }
-                break;
-            case 5:
-                if(center)
-                {
-                    v.setImageResource(R.drawable.grey_circle_walking);
-                }
-                else
-                {
-                    v.setImageResource(R.drawable.grey_circle_walking);
-                }
-                break;
+            }
         }
     }
 }
