@@ -50,12 +50,10 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     ImageButton community_button_bottombar;
     ImageButton quest_button_bottombar;
     Button friends_tab_button;
-    Button social_tab_button;
     Button notifications_tab_button;
     Context communityPage;
     GestureDetector gestureDetector;
     ImageView friends_underline;
-    ImageView social_underline;
     ImageView notifications_underline;
     TextView community_page_title_tv;
     LinearLayout tabs_ll;
@@ -95,7 +93,6 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         });
 
         friends_tab_button =  (Button) findViewById(R.id.friends_tabs_button);
-        social_tab_button = (Button) findViewById(R.id.social_tabs_button);
         notifications_tab_button = (Button) findViewById(R.id.notifications_tabs_button);
 
         community_page_title_tv = (TextView) findViewById(R.id.community_string_tv);
@@ -108,7 +105,6 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         quest_button_bottombar.setOnClickListener(this);
 
         friends_underline = findViewById(R.id.underline_friends);
-        social_underline = findViewById(R.id.underline_social);
         notifications_underline = findViewById(R.id.underline_notifications);
 
         gestureDetector = new GestureDetector(this, new MyGestureListener());
@@ -130,7 +126,6 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
             public void onClick(View v) {
 
                 friends_underline.setVisibility(View.VISIBLE);
-                social_underline.setVisibility(View.INVISIBLE);
                 notifications_underline.setVisibility(View.INVISIBLE);
                 progressDoalog.setMessage("Friends Loading....");
                 progressDoalog.show();
@@ -158,41 +153,10 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        social_tab_button.setOnClickListener(new ImageButton.OnClickListener() {
-            public void onClick(View v) {
-                /*
-                friends_underline.setVisibility(View.INVISIBLE);
-                social_underline.setVisibility(View.VISIBLE);
-                notifications_underline.setVisibility(View.INVISIBLE);
-                progressDoalog.setMessage("Social Feed Loading....");
-                progressDoalog.show();
-
-                Call<List<RetroPhoto>> call = service.getAllPhotos();
-                call.enqueue(new Callback<List<RetroPhoto>>() {
-
-                    @Override
-                    public void onResponse(Call<List<com.example.aorora.model.RetroPhoto>> call, Response<List<RetroPhoto>> response) {
-                        progressDoalog.dismiss();
-                        //generateDataListLinear(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<com.example.aorora.model.RetroPhoto>> call, Throwable t) {
-                        progressDoalog.dismiss();
-                        Toast.makeText(CommunityPage.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                */
-                Log.e("HOLDER VALUE ", holder.getUsername() + "  " + holder.getUser_butterfly_id());
-
-            }
-        });
-
         notifications_tab_button.setOnClickListener(new ImageButton.OnClickListener() {
             public void onClick(View v) {
 
                 friends_underline.setVisibility(View.INVISIBLE);
-                social_underline.setVisibility(View.INVISIBLE);
                 notifications_underline.setVisibility(View.VISIBLE);
 
                 progressDoalog.setMessage("Notifications Loading....");
