@@ -292,7 +292,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                 {
                     progressDoalog.dismiss();
                     int quest_type;
-                    String user_name;
+                    final String user_name;
                     int user_butterfly_type_id;
                     final List<QuestReport> questReportList = response.body();
 
@@ -301,7 +301,6 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                         holder.setQuest_type(questReportList.get(i).getQuest_type_id());
 
                         getUserInfo(questReportList.get(i).getUser_id());
-
                     }
 
                     final Handler handler = new Handler();
@@ -312,6 +311,8 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                             List<String> usernames = holder.getUsername();
                             List<Integer> user_butterfly_types = holder.getUser_butterfly_id();
 
+                            Log.e("List Size", "" + usernames.size());
+                            Log.e("Report List", "" + questReportList.size());
                             Collections.reverse(quest_type_ids);
                             Collections.reverse(usernames);
                             Collections.reverse(user_butterfly_types);
@@ -347,8 +348,10 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                     String u_name = response.body().getUser_name();
                     if(u_name == null)
                     {
+                        Log.e("NULLLLLLL", " USERNAME IS NOT AVAILABLE" );
                         Toast.makeText(CommunityPage.this, "User Name is not available", Toast.LENGTH_SHORT).show();
                     }
+                    Log.e("USERNAMES!!!!!!!!!!!!!", " " + u_name);
                     int u_b_id = response.body().getUser_current_butterfly();
 
                     holder.setUsername(u_name);
