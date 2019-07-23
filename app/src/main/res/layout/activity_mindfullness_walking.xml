@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="31dp"
         android:layout_marginTop="60dp"
-        android:text="Mindfullness Walking"
+        android:text="Mindfulness Walking"
         android:textColor="#FFFFFF"
         android:textSize="10pt"
         android:textStyle="bold"

@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="46dp"
         android:gravity="center_horizontal"
-        android:text="Focus on meditation audio \n to regain your calm"
+        android:text="Focus on the meditation audio \n to regain your calm"
         android:textColor="#989898"
         android:textSize="7pt"
         app:layout_constraintEnd_toEndOf="parent"

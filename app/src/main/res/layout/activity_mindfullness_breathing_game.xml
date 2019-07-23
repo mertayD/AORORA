@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:gravity="center_horizontal"
-        android:text="Press and hold as \n you breath in"
+        android:text="Press and hold as \n you breathe in"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
