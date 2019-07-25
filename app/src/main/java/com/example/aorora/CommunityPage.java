@@ -283,6 +283,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
 
     public void setNotifications()
     {
+        holder = new HolderCommunityPage();
         Call<List<QuestReport>> call = service.getAllQuestsInCommunity();
         call.enqueue(new Callback<List<QuestReport>>() {
 
@@ -296,7 +297,8 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                     int user_butterfly_type_id;
                     final List<QuestReport> questReportList = response.body();
 
-                    for (int i = 0; i < questReportList.size(); i++)
+                    //reverses through the report list to get the top 20 easier
+                    for (int i = questReportList.size()-1; i >= 0; i--)
                     {
                         holder.setQuest_type(questReportList.get(i).getQuest_type_id());
 
@@ -313,9 +315,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
 
                             Log.e("List Size", "" + usernames.size());
                             Log.e("Report List", "" + questReportList.size());
-                            Collections.reverse(quest_type_ids);
-                            Collections.reverse(usernames);
-                            Collections.reverse(user_butterfly_types);
+
 
                             generateDataListLinear(questReportList, quest_type_ids, usernames, user_butterfly_types);
                         }
