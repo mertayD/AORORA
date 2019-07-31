@@ -130,26 +130,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                 progressDoalog.setMessage("Friends Loading....");
                 progressDoalog.show();
 
-                Call<List<UserInfo>> call = service.getCommunity();
-                call.enqueue(new Callback<List<UserInfo>>() {
-                    @Override
-                    public void onResponse(Call<List<UserInfo>> call, Response<List<UserInfo>> response) {
-                        if(response.isSuccess())//response.body().getUsername()
-                            {
-                                List<UserInfo> users = response.body();
-                                generateDataListGrid(users);
-                            }
-                            else
-                            {
-                                Toast.makeText(communityPage, "Something went wrong", Toast.LENGTH_SHORT).show();
-                            }
-                    }
-                    @Override
-                    public void onFailure(Call<List<UserInfo>> call, Throwable t) {
-                        Toast.makeText(communityPage, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-                        Log.e("ERROR CAUSE", "" + t.getMessage() +  " Cause  " + t.getCause());
-                    }
-                });
+                setFriends();
             }
         });
 
@@ -279,6 +260,39 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
             }
             return false;
         }
+    }
+
+    public void setFriends()
+    {
+
+         Call<List<UserInfo>> call = null;
+         try
+         {
+            call = service.getCommunity();
+         }
+         catch(Exception e)
+        {
+
+         }
+        call.enqueue(new Callback<List<UserInfo>>() {
+            @Override
+            public void onResponse(Call<List<UserInfo>> call, Response<List<UserInfo>> response) {
+                if(response.isSuccess())//response.body().getUsername()
+                {
+                    List<UserInfo> users = response.body();
+                    generateDataListGrid(users);
+                }
+                else
+                {
+                    Toast.makeText(communityPage, "Something went wrong with response.", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<UserInfo>> call, Throwable t) {
+                Toast.makeText(communityPage, "Something went wrong with Friends, please try later!", Toast.LENGTH_SHORT).show();
+                Log.e("ERROR CAUSE", "" + t.getMessage() +  " Cause  " + t.getCause());
+            }
+        });
     }
 
     public void setNotifications()
