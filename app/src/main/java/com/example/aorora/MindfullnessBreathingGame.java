@@ -54,7 +54,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
     Context mindfullness_breathing_game;
     MediaPlayer breathing_music;
     String inhale_text = "Press and hold as \n you breath in";
-    String exhale_text = "Let go of the button and exhale \n as the butterfly flaps its wings";
+    String exhale_text = "Let go of the button and exhale \n and leave the button";
     TextView desc_tv;
     Dialog myDialog;
     TextView score_tv;

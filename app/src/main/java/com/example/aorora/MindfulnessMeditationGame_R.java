@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.app.Dialog;
 
 import com.example.aorora.network.NetworkCalls;
 
@@ -33,6 +34,8 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
 
     ImageButton pause;
     ImageButton pause_ring;
+
+    Dialog myDialog
 
     Animation wrong_parts;
     Animation last_right_part;
@@ -65,6 +68,14 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mindfulness_meditation_game__r);
 
+        myDialog.setContentView(R.layout.custom_dialog_breathing);
+        pop_up_exit = (Button) myDialog.findViewById(R.id.button_exercise_select);
+        pop_up_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exit_button.performClick();
+            }
+        });
         is_first_cycle = false;
         is_second_cycle = false;
         is_third_cycle = false;
