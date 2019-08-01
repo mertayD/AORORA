@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="550dp"
+    android:layout_height="600dp"
     android:orientation="vertical"
     android:background="@drawable/quest_recipt_panel"
     android:gravity="center_horizontal"
@@ -28,23 +28,17 @@
     <ImageView
         android:id="@+id/pollen_icon_receipt"
         android:layout_width="202dp"
-        android:layout_height="166dp"
+        android:layout_height="292dp"
         android:background="#00000000"
         android:scaleType="fitCenter"
         android:src="@drawable/meditation_tutorial" />
-    <TextView
-        android:layout_marginTop="7dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorWhite"
-        android:text="tap to collect"
-        />
+
 
     <TextView
-        android:id="@+id/pollens_earned_receipt_tv"
+        android:id="@+id/meditation_directions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/PollensEarned"
+        android:text="Instruction placeholder string"
         android:textSize="9pt"
         android:layout_marginTop="30dp"
         />
@@ -55,10 +49,11 @@
         android:src="@drawable/quest_recipt_divider_line"
         />
     <Button
+        android:id="@+id/continue_button"
         android:layout_width="170dp"
         android:layout_height="30dp"
         android:layout_marginTop="30dp"
-        android:text="Repeat Exercise"
+        android:text="continue"
         android:textColor="@color/colorWhite"
         android:background="@drawable/quest_recipt_button_box"/>
 
