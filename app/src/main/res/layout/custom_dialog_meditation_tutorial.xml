@@ -1,34 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="600dp"
-    android:orientation="vertical"
-    android:background="@drawable/quest_recipt_panel"
-    android:gravity="center_horizontal"
-    >
+    android:layout_height="wrap_content"
+    android:background="@drawable/quest_receipt_panel"
+    android:gravity="center_horizontal|fill_vertical"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="174dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="75dp"
         android:gravity="center"
         android:text="How to play"
         android:textColor="@color/colorWhite"
         android:textSize="12pt" />
-    <ImageView
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:src="@drawable/quest_recipt_divider_line"
-        />
 
 
     <ImageView
         android:id="@+id/pollen_icon_receipt"
         android:layout_width="202dp"
-        android:layout_height="292dp"
+        android:layout_height="321dp"
         android:background="#00000000"
         android:scaleType="fitCenter"
         android:src="@drawable/meditation_tutorial" />
@@ -38,23 +30,20 @@
         android:id="@+id/meditation_directions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Instruction placeholder string"
-        android:textSize="9pt"
         android:layout_marginTop="30dp"
-        />
-    <ImageView
-        android:layout_width="300dp"
-        android:layout_marginTop="6dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/quest_recipt_divider_line"
-        />
+        android:text="@string/meditation_tutorial_text"
+        android:textAlignment="center"
+        android:textColor="#313131"
+        android:textSize="9pt" />
+
     <Button
         android:id="@+id/continue_button"
         android:layout_width="170dp"
-        android:layout_height="30dp"
+        android:layout_height="28dp"
         android:layout_marginTop="30dp"
+        android:background="@color/common_google_signin_btn_text_light_pressed"
+        android:backgroundTint="#000000"
         android:text="continue"
-        android:textColor="@color/colorWhite"
-        android:background="@drawable/quest_recipt_button_box"/>
+        android:textColor="@color/colorWhite" />
 
 </LinearLayout>
