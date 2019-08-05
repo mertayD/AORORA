@@ -55,6 +55,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     GestureDetector gestureDetector;
     ImageView friends_underline;
     ImageView notifications_underline;
+    ImageView community_like_button;
     TextView community_page_title_tv;
     LinearLayout tabs_ll;
     LinearLayout bar_ll;
@@ -80,6 +81,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
         community_button_bottombar.setImageResource(R.drawable.community_button_filled);
+        community_like_button = findViewById(R.id.like_button);
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
 
         popup_menu = (View) findViewById(R.id.include_popup_quick_access_menu_community_page);
@@ -213,6 +215,11 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         {
             to_navigate = new Intent(communityPage, HomeScreen.class);
             startActivity(to_navigate);
+        }
+        else if(view_id == community_like_button.getId())
+        {
+            //happens when the user clicks the like button
+            toggleLike( );
         }
     }
 
@@ -368,6 +375,8 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                     Log.e("USERNAMES!!!!!!!!!!!!!", " " + u_name);
                     int u_b_id = response.body().getUser_current_butterfly();
 
+
+
                     holder.setUsername(u_name);
                     holder.setUser_butterfly_id(u_b_id);
                 }
@@ -385,5 +394,15 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     }
 
 
+    /**
+     * When the user likes someone else's automated post that they finished
+     * an activity, the button will fill in and the server will record the like.
+     *
+     * PROGRESS----
+     */
+    private void toggleLike( )
+    {
+      // if(community_like_button.get)
+    }
 
 }
