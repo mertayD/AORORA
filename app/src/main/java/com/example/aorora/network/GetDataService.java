@@ -32,6 +32,8 @@ public interface GetDataService {
     @GET("/butterflies?format=json")
     Call<List<Butterfly>> getButterflyInfo();
 
+    //@POST("/")-------------------------------for butterfly likes----------------------------------
+
 
     @POST("/butterflies")
     Call<Butterfly> createButterfly(@Field("butterfly_id") Integer butterfly_id,

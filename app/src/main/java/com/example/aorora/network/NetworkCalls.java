@@ -9,6 +9,7 @@ import com.example.aorora.CommunityPage;
 import com.example.aorora.MainActivity;
 import com.example.aorora.ProfilePage;
 import com.example.aorora.SurveyPage;
+import com.example.aorora.model.ButterflyLike;
 import com.example.aorora.model.DailyTask;
 import com.example.aorora.model.DailyTaskReturn;
 import com.example.aorora.model.MoodReportIdReturn;
@@ -51,6 +52,7 @@ public class NetworkCalls {
             }
         });
     }
+
     public static void updateUserCurrentPoints(int user_id, int user_pollen, final Context context) {
 
         Call call = service.updateUserPollen(user_id, user_pollen);
@@ -205,6 +207,18 @@ public class NetworkCalls {
                 Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /**
+     * To be used for when the user hits the like button on a notification
+     * @param user_id
+     * @param quest_id
+     * @param context
+     */
+    public static void createLike(int user_id, int quest_id, final Context context)
+    {
+
+        //Call<ButterflyLike> call = service.createLike(user_id, quest_id);
     }
 
     //public static void updateLike(int )
