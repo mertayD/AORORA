@@ -40,6 +40,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static java.lang.Boolean.TRUE;
+import static java.lang.Math.min;
 
 public class CommunityPage extends AppCompatActivity implements View.OnClickListener {
 
@@ -404,18 +405,38 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
      *
      * PROGRESS----
      * backend should be set up
+     * trying to figure out how to determine if the user has already liked a post
      */
-    private void toggleLike( int myViewId )
+    private void toggleLike( final int myViewId )
     {
-        int myUserId;
-        Call<ButterflyLike> call = service.getAllLikes();
+        final int myUserId = MainActivity.user_info.getUser_id();
+        Call<List<ButterflyLike>> call = service.getAllLikes();
         call.enqueue(new Callback<List<ButterflyLike>>()
                      {
                          @Override
                          public void onResponse(Call<List<ButterflyLike>> call, Response<List<ButterflyLike>> response)
                          {
+                             boolean isLiked = false;
+                             final List<ButterflyLike> likeList = response.body();
+
                              if( response.isSuccess() )
                              {
+                                 for( ButterflyLike curLike : likeList)
+                                 {
+                                     //Check to see if user id and the quest report id are found together
+                                     if( !isLiked && ( (curLike.getUser_id() == myUserId) && (true/*curLike.get*/) ))
+                                     {
+                                         isLiked = true;
+                                         //findViewById(myViewId).
+                                     }
+                                 }
+
+
+                                /* //Checks the entire list to see if the user has already liked the notification
+                                for(int curLike = 0; curLike < min(likeList.size(), 20); curLike++)
+                                {
+                                    if( !isLiked && ( myUserId == likeList. ))
+                                }*/
                                  progressDoalog.dismiss();
                              }
                          }

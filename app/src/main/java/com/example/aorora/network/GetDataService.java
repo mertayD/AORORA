@@ -41,7 +41,7 @@ public interface GetDataService {
                                    @Field("quest_report_id") Integer quest_report_id);
 
     @GET("/butterflylike")
-    Call<ButterflyLike> getAllLikes();
+    Call<List<ButterflyLike>> getAllLikes();
 
 
     @POST("/butterflies")

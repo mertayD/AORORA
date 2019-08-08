@@ -20,8 +20,8 @@ public class ButterflyLike {
     private String like_created_at;
 
 
-    public ButterflyLike(Integer butteefly_like_id, Integer butterfly_id, Integer user_id, String like_created_at) {
-        this.butterfly_like_id = butteefly_like_id;
+    public ButterflyLike(Integer butterfly_like_id, Integer butterfly_id, Integer user_id, String like_created_at) {
+        this.butterfly_like_id = butterfly_like_id;
         this.butterfly_id = butterfly_id;
         this.user_id = user_id;
         this.like_created_at = like_created_at;
