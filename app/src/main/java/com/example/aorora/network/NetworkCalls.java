@@ -9,6 +9,7 @@ import com.example.aorora.CommunityPage;
 import com.example.aorora.MainActivity;
 import com.example.aorora.ProfilePage;
 import com.example.aorora.SurveyPage;
+import com.example.aorora.model.Butterfly;
 import com.example.aorora.model.ButterflyLike;
 import com.example.aorora.model.DailyTask;
 import com.example.aorora.model.DailyTaskReturn;
@@ -215,10 +216,22 @@ public class NetworkCalls {
      * @param quest_id
      * @param context
      */
-    public static void createLike(int user_id, int quest_id, final Context context)
+    public static void createLike( int butterfly_id, int user_id, int quest_id, final Context context)
     {
 
-        //Call<ButterflyLike> call = service.createLike(user_id, quest_id);
+        Call<ButterflyLike> call = service.createLike(butterfly_id, user_id, quest_id);
+    }
+
+    /**
+     * To be used for when the user hits the like button on a notification
+     * @param user_id
+     * @param quest_id
+     * @param context
+     */
+    public static void getLike( int butterfly_id, int user_id, int quest_id, final Context context)
+    {
+
+        Call<ButterflyLike> call = service.createLike(butterfly_id, user_id, quest_id);
     }
 
     //public static void updateLike(int )

@@ -23,6 +23,8 @@ import com.example.aorora.R;
 import com.example.aorora.adapter.CustomAdapter;
 import com.example.aorora.adapter.GridViewAdapter;
 import com.example.aorora.interfaces.OnItemClickListener;
+import com.example.aorora.model.Butterfly;
+import com.example.aorora.model.ButterflyLike;
 import com.example.aorora.model.Quest;
 import com.example.aorora.model.QuestReport;
 import com.example.aorora.model.RetroPhoto;
@@ -219,7 +221,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         else if(view_id == community_like_button.getId())
         {
             //happens when the user clicks the like button
-            toggleLike( );
+            toggleLike( view_id);
         }
     }
 
@@ -247,7 +249,9 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         tabs_ll.setVisibility(visibility);
         bar_ll.setVisibility(visibility);
     }
-    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener
+    {
 
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2,
@@ -357,7 +361,8 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    public void getUserInfo(int user_id) {
+    public void getUserInfo(int user_id)
+    {
 
         Call<UserInfo> call = service.getUserInfo(user_id);
         call.enqueue(new Callback<UserInfo>() {
@@ -393,16 +398,37 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         });
     }
 
-
     /**
      * When the user likes someone else's automated post that they finished
      * an activity, the button will fill in and the server will record the like.
      *
      * PROGRESS----
+     * backend should be set up
      */
-    private void toggleLike( )
+    private void toggleLike( int myViewId )
     {
-      // if(community_like_button.get)
+        int myUserId;
+        Call<ButterflyLike> call = service.getAllLikes();
+        call.enqueue(new Callback<List<ButterflyLike>>()
+                     {
+                         @Override
+                         public void onResponse(Call<List<ButterflyLike>> call, Response<List<ButterflyLike>> response)
+                         {
+                             if( response.isSuccess() )
+                             {
+                                 progressDoalog.dismiss();
+                             }
+                         }
+
+                         @Override
+                         public void onFailure(Call<List<ButterflyLike>> call, Throwable t)
+                         {
+                             progressDoalog.dismiss();
+                         }
+                     }
+        );
+
+      // if(call.contains()
     }
 
 }
