@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.aorora.R;
 import com.example.aorora.adapter.CustomAdapter;
 import com.example.aorora.adapter.GridViewAdapter;
+import com.example.aorora.interfaces.OnClickListener;
 import com.example.aorora.interfaces.OnItemClickListener;
 import com.example.aorora.model.Butterfly;
 import com.example.aorora.model.ButterflyLike;
@@ -182,7 +183,16 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                                         List<String> usernames,
                                         List<Integer> user_butterfly_types)
     {
-        linearAdapter = new com.example.aorora.adapter.CustomAdapter(this,questList,quest_type_ids,usernames, user_butterfly_types, getResources().getStringArray(R.array.mindfulness_description));
+
+        linearAdapter = new com.example.aorora.adapter.CustomAdapter(this, questList, quest_type_ids, usernames, user_butterfly_types,
+                                                                     getResources().getStringArray(R.array.mindfulness_description), new OnClickListener()
+                                                                    {
+                                                                        @Override
+                                                                        public void onClick(View v, int position)
+                                                                        {
+
+                                                                        }
+                                                                    });
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CommunityPage.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(linearAdapter);
@@ -219,11 +229,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
             to_navigate = new Intent(communityPage, HomeScreen.class);
             startActivity(to_navigate);
         }
-        else if(view_id == community_like_button.getId())
-        {
-            //happens when the user clicks the like button
-            toggleLike( view_id);
-        }
+
     }
 
     public void toggle(boolean toggle)
@@ -291,6 +297,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
             public void onResponse(Call<List<UserInfo>> call, Response<List<UserInfo>> response) {
                 if(response.isSuccess())//response.body().getUsername()
                 {
+                    progressDoalog.dismiss();
                     List<UserInfo> users = response.body();
                     generateDataListGrid(users);
                 }
@@ -424,19 +431,13 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                                  for( ButterflyLike curLike : likeList)
                                  {
                                      //Check to see if user id and the quest report id are found together
-                                     if( !isLiked && ( (curLike.getUser_id() == myUserId) && (true/*curLike.get*/) ))
+                                     if( !isLiked && ( (curLike.getUser_id() == myUserId) && () ))
                                      {
                                          isLiked = true;
                                          //findViewById(myViewId).
                                      }
                                  }
 
-
-                                /* //Checks the entire list to see if the user has already liked the notification
-                                for(int curLike = 0; curLike < min(likeList.size(), 20); curLike++)
-                                {
-                                    if( !isLiked && ( myUserId == likeList. ))
-                                }*/
                                  progressDoalog.dismiss();
                              }
                          }
@@ -445,6 +446,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                          public void onFailure(Call<List<ButterflyLike>> call, Throwable t)
                          {
                              progressDoalog.dismiss();
+                             Toast.makeText(CommunityPage.this, "There was a problem with retrieving the likes", Toast.LENGTH_SHORT).show();
                          }
                      }
         );

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.aorora.MainActivity;
 import com.example.aorora.R;
 import com.example.aorora.model.QuestReport;
+import com.example.aorora.interfaces.OnClickListener;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 import com.example.aorora.R;
@@ -29,18 +30,23 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     List<String> usernames;
     List<Integer> user_butterfly_types;
     String[] accomplishment_description;
+    //Need to determine which button was pressed inside the specific RecyclerView
+    private OnClickListener myClickListener;
 
     public CustomAdapter(Context context,List<QuestReport> dataList,
                          List<Integer> quest_type_ids,
                          List<String> usernames,
                          List<Integer> user_butterfly_types,
-                         String[] accomplishment_description){
+                         String[] accomplishment_description,
+                         OnClickListener clickListener
+                         ){
         this.context = context;
         this.dataList = dataList;
         this.quest_type_ids = quest_type_ids;
         this.usernames = usernames;
         this.user_butterfly_types = user_butterfly_types;
         this.accomplishment_description = accomplishment_description;
+        myClickListener = clickListener;
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
@@ -67,6 +73,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.custom_comments_row, parent, false);
+        //Was shown on stack exchange, will figure out why its not working
+        CustomViewHolder = holder = new CustomViewHolder( view, new CustomViewHolder.OnClickListener)
         return new CustomViewHolder(view);
     }
 
