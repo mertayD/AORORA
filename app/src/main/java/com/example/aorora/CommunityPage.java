@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.example.aorora.R;
 import com.example.aorora.adapter.CustomAdapter;
 import com.example.aorora.adapter.GridViewAdapter;
-import com.example.aorora.interfaces.OnClickListener;
+import com.example.aorora.interfaces.OnLikeListener;
 import com.example.aorora.interfaces.OnItemClickListener;
 import com.example.aorora.model.Butterfly;
 import com.example.aorora.model.ButterflyLike;
@@ -69,6 +69,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     GetDataService service;
     //TEMPORARY VARIABLE
     public HolderCommunityPage holder;
+    OnItemClickListener mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,18 +185,19 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                                         List<Integer> user_butterfly_types)
     {
 
-        linearAdapter = new com.example.aorora.adapter.CustomAdapter(this, questList, quest_type_ids, usernames, user_butterfly_types,
-                                                                     getResources().getStringArray(R.array.mindfulness_description), new OnClickListener()
-                                                                    {
-                                                                        @Override
-                                                                        public void onClick(View v, int position)
-                                                                        {
-
-                                                                        }
-                                                                    });
+        linearAdapter = new CustomAdapter(this, questList, quest_type_ids, usernames, user_butterfly_types,
+                                                                     getResources().getStringArray(R.array.mindfulness_description) );
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CommunityPage.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(linearAdapter);
+
+        linearAdapter.setOnItemClickListener(new CustomAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(int position ) {
+                Log.e("ItemClicked", "Item Clicked at Position " + position);
+            }
+        });
+
     }
 
     private void generateDataListGrid(List<UserInfo> community) {
@@ -431,10 +433,10 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                                  for( ButterflyLike curLike : likeList)
                                  {
                                      //Check to see if user id and the quest report id are found together
-                                     if( !isLiked && ( (curLike.getUser_id() == myUserId) && () ))
+                                     if( !isLiked && ( (curLike.getUser_id() == myUserId) && (findViewById(myViewId).) ))
                                      {
                                          isLiked = true;
-                                         //findViewById(myViewId).
+                                        findViewById(myViewId);
                                      }
                                  }
 

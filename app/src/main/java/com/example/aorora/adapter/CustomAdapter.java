@@ -7,15 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.aorora.MainActivity;
 import com.example.aorora.R;
+import com.example.aorora.interfaces.OnItemClickListener;
 import com.example.aorora.model.QuestReport;
-import com.example.aorora.interfaces.OnClickListener;
+import com.example.aorora.interfaces.OnLikeListener;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
-import com.example.aorora.R;
 import com.example.aorora.model.RetroPhoto;
 
 import java.util.List;
@@ -31,14 +32,24 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     List<Integer> user_butterfly_types;
     String[] accomplishment_description;
     //Need to determine which button was pressed inside the specific RecyclerView
-    private OnClickListener myClickListener;
+    private OnItemClickListener myLikeListener;
+
+
+    public interface OnItemClickListener
+    {
+        void onItemClick(int position );
+    }
+
+    public void setOnItemClickListener( OnItemClickListener listener)
+    {
+        myLikeListener = listener;
+    }
 
     public CustomAdapter(Context context,List<QuestReport> dataList,
                          List<Integer> quest_type_ids,
                          List<String> usernames,
                          List<Integer> user_butterfly_types,
-                         String[] accomplishment_description,
-                         OnClickListener clickListener
+                         String[] accomplishment_description
                          ){
         this.context = context;
         this.dataList = dataList;
@@ -46,26 +57,39 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         this.usernames = usernames;
         this.user_butterfly_types = user_butterfly_types;
         this.accomplishment_description = accomplishment_description;
-        myClickListener = clickListener;
     }
 
-    class CustomViewHolder extends RecyclerView.ViewHolder {
-
-        public final View mView;
-
+    public static class CustomViewHolder extends RecyclerView.ViewHolder {
         TextView txtTitle;
-        private TextView username_tv;
-        private TextView time_published;
-        private ImageView coverImage;
+        TextView username_tv;
+        TextView time_published;
+        ImageView coverImage;
+        ImageView like_button;
+        //RelativeLayout rv_rel_layout_like_button;
 
-        CustomViewHolder(View itemView) {
+        public CustomViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
-            mView = itemView;
 
-            txtTitle = mView.findViewById(R.id.notification_content_tv);
-            username_tv = mView.findViewById(R.id.user_name_notification_tv);
-            time_published = mView.findViewById(R.id.time_published_tv);
-            coverImage = mView.findViewById(R.id.coverImage);
+            txtTitle = itemView.findViewById(R.id.notification_content_tv);
+            username_tv = itemView.findViewById(R.id.user_name_notification_tv);
+            time_published = itemView.findViewById(R.id.time_published_tv);
+            coverImage = itemView.findViewById(R.id.coverImage);
+            like_button = itemView.findViewById(R.id.like_button);
+
+            like_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null)
+                    {
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION)
+                        {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
         }
     }
 
@@ -74,8 +98,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.custom_comments_row, parent, false);
         //Was shown on stack exchange, will figure out why its not working
-        CustomViewHolder = holder = new CustomViewHolder( view, new CustomViewHolder.OnClickListener)
-        return new CustomViewHolder(view);
+        CustomViewHolder holder = new CustomViewHolder( view, myLikeListener);
+        return holder;
     }
 
     @Override
