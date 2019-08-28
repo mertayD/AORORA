@@ -40,7 +40,7 @@ public interface GetDataService {
                                    @Field("user_id") Integer user_id,
                                    @Field("quest_report_id") Integer quest_report_id);
 
-    @GET("/butterflylike")
+    @GET("/butterflylikes")
     Call<List<ButterflyLike>> getAllLikes();
 
 

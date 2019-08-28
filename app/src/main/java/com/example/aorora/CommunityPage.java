@@ -194,7 +194,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         linearAdapter.setOnItemClickListener(new CustomAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(int position ) {
-                Log.e("ItemClicked", "Item Clicked at Position " + position);
+                toggleLike( position );
             }
         });
 
@@ -418,29 +418,47 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
      */
     private void toggleLike( final int myViewId )
     {
+
+
         final int myUserId = MainActivity.user_info.getUser_id();
-        Call<List<ButterflyLike>> call = service.getAllLikes();
-        call.enqueue(new Callback<List<ButterflyLike>>()
+        Call<List<ButterflyLike>> myCall = service.getAllLikes();
+        myCall.enqueue(new Callback<List<ButterflyLike>>()
                      {
                          @Override
                          public void onResponse(Call<List<ButterflyLike>> call, Response<List<ButterflyLike>> response)
                          {
+                             Toast.makeText(CommunityPage.this, "Something went right with enqueue", Toast.LENGTH_SHORT).show();
+                             ImageView myLikeButton = findViewById(myViewId);
                              boolean isLiked = false;
-                             final List<ButterflyLike> likeList = response.body();
+
 
                              if( response.isSuccess() )
                              {
+                                 final List<ButterflyLike> likeList = response.body();
+
                                  for( ButterflyLike curLike : likeList)
                                  {
                                      //Check to see if user id and the quest report id are found together
-                                     if( !isLiked && ( (curLike.getUser_id() == myUserId) && (findViewById(myViewId).) ))
+                                     if( !isLiked && ( (curLike.getUser_id() == myUserId) ))
                                      {
+                                         Toast.makeText(CommunityPage.this, "Do the like stuff", Toast.LENGTH_SHORT).show();
                                          isLiked = true;
-                                        findViewById(myViewId);
+                                         
+                                        // myLikeButton.setImageResource(R.drawable.heart_filled);
+                                     }
+                                     else
+                                     {
+                                         Toast.makeText(CommunityPage.this, "Do the dislike stuff", Toast.LENGTH_SHORT).show();
+                                         isLiked = false;
+                                         //myLikeButton.setImageResource(R.drawable.heart_unfilled);
                                      }
                                  }
 
                                  progressDoalog.dismiss();
+                             }
+                             else
+                             {
+                                 Toast.makeText(CommunityPage.this, "There was a problem with enqueue", Toast.LENGTH_SHORT).show();
                              }
                          }
 
@@ -452,8 +470,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                          }
                      }
         );
-
-      // if(call.contains()
+       // Toast.makeText(CommunityPage.this, "There was a problem with enqueue", Toast.LENGTH_SHORT).show();
     }
 
 }
