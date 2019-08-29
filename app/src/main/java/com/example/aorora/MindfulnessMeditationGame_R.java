@@ -2,6 +2,8 @@ package com.example.aorora;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
@@ -9,6 +11,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,6 +21,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.app.AlertDialog;
+import android.app.Dialog;
 
 import com.example.aorora.network.NetworkCalls;
 
@@ -33,6 +38,7 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
 
     ImageButton pause;
     ImageButton pause_ring;
+    //Button cont_button;
 
     Animation wrong_parts;
     Animation last_right_part;
@@ -63,16 +69,17 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_mindfulness_meditation_game__r);
+
+       tutorialPopUp();
+
 
         is_first_cycle = false;
         is_second_cycle = false;
         is_third_cycle = false;
         is_forth_cycle = false;
 
-        // Change the number of ms to adjust it to length of meditation sound.
-        myTimer = new Timer(64000, 1000);
-        myTimer.start();
 
         expand = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.meditation_expand_anim);
@@ -385,4 +392,31 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
         }
         */
     }
+
+    /**Tutorial pop-up that overlays the game's view*/
+    public void tutorialPopUp()
+    {
+        final AlertDialog myDialog = new AlertDialog.Builder(this).create();
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        //This allows us to use custom views instead of the basic AlertDialog
+        View dialogView = LayoutInflater.from(this)
+                .inflate(R.layout.custom_dialog_meditation_tutorial, null);
+
+        Button cont_button = dialogView.findViewById(R.id.continue_button);
+        cont_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Change the number of ms to adjust it to length of meditation sound.
+                myTimer = new Timer(64000, 1000);
+                myTimer.start();
+                myDialog.dismiss();
+            }
+        });
+
+        myDialog.setView(dialogView);
+        myDialog.show();
+    }
+
+
+
 }

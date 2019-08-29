@@ -1,6 +1,7 @@
 package com.example.aorora.network;
 
 import com.example.aorora.model.Butterfly;
+import com.example.aorora.model.ButterflyLike;
 import com.example.aorora.model.DailyTask;
 import com.example.aorora.model.DailyTaskReturn;
 import com.example.aorora.model.MoodReportIdReturn;
@@ -31,6 +32,16 @@ public interface GetDataService {
 
     @GET("/butterflies?format=json")
     Call<List<Butterfly>> getButterflyInfo();
+
+    @POST("/butterflylike")
+    @FormUrlEncoded
+    Call<ButterflyLike> createLike(//@Path("")//-----not sure if needed, we will find out
+                                   @Field("butterfly_id") Integer butterfly_id,
+                                   @Field("user_id") Integer user_id,
+                                   @Field("quest_report_id") Integer quest_report_id);
+
+    @GET("/butterflylikes")
+    Call<List<ButterflyLike>> getAllLikes();
 
 
     @POST("/butterflies")

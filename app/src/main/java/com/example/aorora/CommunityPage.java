@@ -22,7 +22,10 @@ import android.widget.Toast;
 import com.example.aorora.R;
 import com.example.aorora.adapter.CustomAdapter;
 import com.example.aorora.adapter.GridViewAdapter;
+import com.example.aorora.interfaces.OnLikeListener;
 import com.example.aorora.interfaces.OnItemClickListener;
+import com.example.aorora.model.Butterfly;
+import com.example.aorora.model.ButterflyLike;
 import com.example.aorora.model.Quest;
 import com.example.aorora.model.QuestReport;
 import com.example.aorora.model.RetroPhoto;
@@ -38,6 +41,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static java.lang.Boolean.TRUE;
+import static java.lang.Math.min;
 
 public class CommunityPage extends AppCompatActivity implements View.OnClickListener {
 
@@ -55,6 +59,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     GestureDetector gestureDetector;
     ImageView friends_underline;
     ImageView notifications_underline;
+    ImageView community_like_button;
     TextView community_page_title_tv;
     LinearLayout tabs_ll;
     LinearLayout bar_ll;
@@ -64,6 +69,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     GetDataService service;
     //TEMPORARY VARIABLE
     public HolderCommunityPage holder;
+    OnItemClickListener mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +86,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
         community_button_bottombar.setImageResource(R.drawable.community_button_filled);
+        community_like_button = findViewById(R.id.like_button);
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
 
         popup_menu = (View) findViewById(R.id.include_popup_quick_access_menu_community_page);
@@ -130,26 +137,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                 progressDoalog.setMessage("Friends Loading....");
                 progressDoalog.show();
 
-                Call<List<UserInfo>> call = service.getCommunity();
-                call.enqueue(new Callback<List<UserInfo>>() {
-                    @Override
-                    public void onResponse(Call<List<UserInfo>> call, Response<List<UserInfo>> response) {
-                        if(response.isSuccess())//response.body().getUsername()
-                            {
-                                List<UserInfo> users = response.body();
-                                generateDataListGrid(users);
-                            }
-                            else
-                            {
-                                Toast.makeText(communityPage, "Something went wrong", Toast.LENGTH_SHORT).show();
-                            }
-                    }
-                    @Override
-                    public void onFailure(Call<List<UserInfo>> call, Throwable t) {
-                        Toast.makeText(communityPage, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-                        Log.e("ERROR CAUSE", "" + t.getMessage() +  " Cause  " + t.getCause());
-                    }
-                });
+                setFriends();
             }
         });
 
@@ -196,10 +184,20 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                                         List<String> usernames,
                                         List<Integer> user_butterfly_types)
     {
-        linearAdapter = new com.example.aorora.adapter.CustomAdapter(this,questList,quest_type_ids,usernames, user_butterfly_types, getResources().getStringArray(R.array.mindfulness_description));
+
+        linearAdapter = new CustomAdapter(this, questList, quest_type_ids, usernames, user_butterfly_types,
+                                                                     getResources().getStringArray(R.array.mindfulness_description) );
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CommunityPage.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(linearAdapter);
+
+        linearAdapter.setOnItemClickListener(new CustomAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(int position ) {
+                toggleLike( position );
+            }
+        });
+
     }
 
     private void generateDataListGrid(List<UserInfo> community) {
@@ -233,6 +231,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
             to_navigate = new Intent(communityPage, HomeScreen.class);
             startActivity(to_navigate);
         }
+
     }
 
     public void toggle(boolean toggle)
@@ -259,7 +258,9 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         tabs_ll.setVisibility(visibility);
         bar_ll.setVisibility(visibility);
     }
-    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener
+    {
 
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2,
@@ -279,6 +280,40 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
             }
             return false;
         }
+    }
+
+    public void setFriends()
+    {
+
+         Call<List<UserInfo>> call = null;
+         try
+         {
+            call = service.getCommunity();
+         }
+         catch(Exception e)
+        {
+
+         }
+        call.enqueue(new Callback<List<UserInfo>>() {
+            @Override
+            public void onResponse(Call<List<UserInfo>> call, Response<List<UserInfo>> response) {
+                if(response.isSuccess())//response.body().getUsername()
+                {
+                    progressDoalog.dismiss();
+                    List<UserInfo> users = response.body();
+                    generateDataListGrid(users);
+                }
+                else
+                {
+                    Toast.makeText(communityPage, "Something went wrong with response.", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<UserInfo>> call, Throwable t) {
+                Toast.makeText(communityPage, "Something went wrong with Friends, please try later!", Toast.LENGTH_SHORT).show();
+                Log.e("ERROR CAUSE", "" + t.getMessage() +  " Cause  " + t.getCause());
+            }
+        });
     }
 
     public void setNotifications()
@@ -336,7 +371,8 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    public void getUserInfo(int user_id) {
+    public void getUserInfo(int user_id)
+    {
 
         Call<UserInfo> call = service.getUserInfo(user_id);
         call.enqueue(new Callback<UserInfo>() {
@@ -354,6 +390,8 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                     Log.e("USERNAMES!!!!!!!!!!!!!", " " + u_name);
                     int u_b_id = response.body().getUser_current_butterfly();
 
+
+
                     holder.setUsername(u_name);
                     holder.setUser_butterfly_id(u_b_id);
                 }
@@ -370,6 +408,69 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         });
     }
 
+    /**
+     * When the user likes someone else's automated post that they finished
+     * an activity, the button will fill in and the server will record the like.
+     *
+     * PROGRESS----
+     * backend should be set up
+     * trying to figure out how to determine if the user has already liked a post
+     */
+    private void toggleLike( final int myViewId )
+    {
 
+
+        final int myUserId = MainActivity.user_info.getUser_id();
+        Call<List<ButterflyLike>> myCall = service.getAllLikes();
+        myCall.enqueue(new Callback<List<ButterflyLike>>()
+                     {
+                         @Override
+                         public void onResponse(Call<List<ButterflyLike>> call, Response<List<ButterflyLike>> response)
+                         {
+                             Toast.makeText(CommunityPage.this, "Something went right with enqueue", Toast.LENGTH_SHORT).show();
+                             ImageView myLikeButton = findViewById(myViewId);
+                             boolean isLiked = false;
+
+
+                             if( response.isSuccess() )
+                             {
+                                 final List<ButterflyLike> likeList = response.body();
+
+                                 for( ButterflyLike curLike : likeList)
+                                 {
+                                     //Check to see if user id and the quest report id are found together
+                                     if( !isLiked && ( (curLike.getUser_id() == myUserId) ))
+                                     {
+                                         Toast.makeText(CommunityPage.this, "Do the like stuff", Toast.LENGTH_SHORT).show();
+                                         isLiked = true;
+                                         
+                                        // myLikeButton.setImageResource(R.drawable.heart_filled);
+                                     }
+                                     else
+                                     {
+                                         Toast.makeText(CommunityPage.this, "Do the dislike stuff", Toast.LENGTH_SHORT).show();
+                                         isLiked = false;
+                                         //myLikeButton.setImageResource(R.drawable.heart_unfilled);
+                                     }
+                                 }
+
+                                 progressDoalog.dismiss();
+                             }
+                             else
+                             {
+                                 Toast.makeText(CommunityPage.this, "There was a problem with enqueue", Toast.LENGTH_SHORT).show();
+                             }
+                         }
+
+                         @Override
+                         public void onFailure(Call<List<ButterflyLike>> call, Throwable t)
+                         {
+                             progressDoalog.dismiss();
+                             Toast.makeText(CommunityPage.this, "There was a problem with retrieving the likes", Toast.LENGTH_SHORT).show();
+                         }
+                     }
+        );
+       // Toast.makeText(CommunityPage.this, "There was a problem with enqueue", Toast.LENGTH_SHORT).show();
+    }
 
 }
