@@ -28,12 +28,12 @@ public class ButterflyLike {
     }
 
 
-    public Integer getButteefly_like_id() {
+    public Integer getButterfly_like_id() {
         return butterfly_like_id;
     }
 
-    public void setButteefly_like_id(Integer butteefly_like_id) {
-        this.butterfly_like_id = butteefly_like_id;
+    public void setButterfly_like_id(Integer butterfly_like_id) {
+        this.butterfly_like_id = butterfly_like_id;
     }
 
     public Integer getButterfly_id() {

@@ -185,18 +185,19 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                                         List<Integer> user_butterfly_types)
     {
 
-        linearAdapter = new CustomAdapter(this, questList, quest_type_ids, usernames, user_butterfly_types,
+        linearAdapter = new CustomAdapter( this, questList, quest_type_ids, usernames, user_butterfly_types,
                                                                      getResources().getStringArray(R.array.mindfulness_description) );
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CommunityPage.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(linearAdapter);
 
-        linearAdapter.setOnItemClickListener(new CustomAdapter.OnItemClickListener(){
+       /* linearAdapter.setOnItemClickListener(new CustomAdapter.OnItemClickListener(){
             @Override
-            public void onItemClick(int position ) {
+            public void onItemClick(int position )
+            {
                 toggleLike( position );
             }
-        });
+        });*/
 
     }
 
