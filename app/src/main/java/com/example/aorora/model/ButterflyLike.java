@@ -16,6 +16,8 @@ public class ButterflyLike {
     private Integer butterfly_id;
     @SerializedName("user_id")
     private Integer user_id;
+    @SerializedName("quest_report_id")
+    private Integer quest_report_id;
     @SerializedName("like_created_at")
     private String like_created_at;
 
@@ -51,6 +53,10 @@ public class ButterflyLike {
     public void setUser_id(Integer user_id) {
         this.user_id = user_id;
     }
+
+    public Integer getQuestReportId( ){ return this.quest_report_id; }
+
+    public void setQuestReportId( Integer quest_report_id){ this.quest_report_id = quest_report_id; }
 
     public String getLike_created_at() {
         return like_created_at;

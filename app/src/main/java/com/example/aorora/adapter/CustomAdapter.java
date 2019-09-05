@@ -50,11 +50,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         void onItemClick(int position );
     }
 
-    public void setOnItemClickListener( OnItemClickListener listener)
-    {
-        myLikeListener = listener;
-    }
-
     public CustomAdapter(Context context,List<QuestReport> dataList,
                          List<Integer> quest_type_ids,
                          List<String> usernames,
@@ -69,7 +64,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         this.accomplishment_description = accomplishment_description;
     }
 
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
+    public class CustomViewHolder extends RecyclerView.ViewHolder
+    {
         TextView txtTitle;
         TextView username_tv;
         TextView time_published;
@@ -77,7 +73,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         ImageView like_button;
         //RelativeLayout rv_rel_layout_like_button;
 
-        public CustomViewHolder(View itemView, final OnItemClickListener listener) {
+        public CustomViewHolder(View itemView, final OnItemClickListener listener)
+        {
             super(itemView);
 
             txtTitle = itemView.findViewById(R.id.notification_content_tv);
@@ -88,6 +85,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             myService = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         }
 
+        /**
+         * Purpose: Will like or un-like the notification the user has specified
+         * Algorithm: Takes in the user_id as well as the whole list of ButterflyLikes currently in the DB,
+         *            as well as the current amount of QuestReports in order to determine if there is a
+         *            server-side and client-side match of a like
+         * @param pos : not needed as of this moment, may remove
+         */
         void bindItem( int pos )
         {
             final int myUserId = MainActivity.user_info.getUser_id();
@@ -100,30 +104,40 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                                    boolean isLiked = false;
 
 
+                                   if( like_button.getDrawable().equals(R.drawable.heart_filled))
+                                   {
+                                       isLiked = true;
+                                   }
+
                                    if( response.isSuccess() )
                                    {
                                        final List<ButterflyLike> likeList = response.body();
 
                                        for( ButterflyLike curLike : likeList)
                                        {
-                                           //Check to see if user id and the quest report id are found together
-                                           if( !isLiked && ( (curLike.getUser_id() == myUserId)))
+                                           for( int questReportIter = 0; !isLiked && questReportIter < dataList.size(); questReportIter++)
                                            {
-                                               isLiked = true;
+                                               //Check to see if user id and the quest report id are found together
+                                               if( !isLiked && ( (curLike.getUser_id() == myUserId)))
+                                               {
+                                                   if( curLike.getQuestReportId() == dataList.get(questReportIter).getQuest_report_id())
+                                                   {
+                                                       isLiked = true;
+                                                       like_button.setImageResource(R.drawable.heart_filled);
+                                                   }
 
-                                               like_button.setImageResource(R.drawable.heart_filled);
-                                           }
-                                           else
-                                           {
-                                               isLiked = false;
-                                               like_button.setImageResource(R.drawable.heart_unfilled);
+
+                                               }
+                                               else
+                                               {
+                                                   isLiked = false;
+                                                   like_button.setImageResource(R.drawable.heart_unfilled);
+                                               }
                                            }
                                        }
 
                                    }
-                                   else
-                                   {
-                                   }
+
                                }
 
                                @Override
@@ -142,11 +156,16 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         CustomViewHolder holder = new CustomViewHolder( view, myLikeListener);
         return holder;
     }
-
+/*
     @Override
-    public void onBindViewHolder(CustomViewHolder holder, final int position) {
+    public void onBindViewHolder(CustomViewHolder holder, final int position, List<Object> payloads)
+    {
+
+    }
+*/
+    @Override
+    public void onBindViewHolder(final CustomViewHolder holder, final int position) {
         String desc = accomplishment_description[quest_type_ids.get(position)-1];
-        holder.bindItem( position );
         holder.txtTitle.setText(desc);
         holder.username_tv.setText(usernames.get(position));
         int butterfly_id = user_butterfly_types.get(position);
@@ -179,12 +198,15 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             public void onClick(View v) {
                 indexOfClickedItem = position;
                 notifyItemChanged( position );
+                holder.bindItem( position );
 
             }
         });
 
 
     }
+
+
 
     @Override
     public int getItemCount() {
