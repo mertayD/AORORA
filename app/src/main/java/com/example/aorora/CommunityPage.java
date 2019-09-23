@@ -68,7 +68,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     public View popup_menu;
     GetDataService service;
     //TEMPORARY VARIABLE
-    public HolderCommunityPage holder;
+    public HolderCommunityPage communityHolder;
     OnItemClickListener mListener;
 
     @Override
@@ -81,7 +81,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         is_menu_popped = false;
         progressDoalog = new ProgressDialog(communityPage);
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        holder = new HolderCommunityPage();
+        communityHolder = new HolderCommunityPage();
         home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
@@ -116,6 +116,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
 
         gestureDetector = new GestureDetector(this, new MyGestureListener());
 
+        recyclerView.setHasFixedSize(true);
         recyclerView.setOnTouchListener(touchListener);
 
         popup_menu.setOnClickListener(new View.OnClickListener() {
@@ -161,8 +162,8 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         }
         else
         {
-            //friends_tab_button.performClick();
-            notifications_tab_button.performClick();
+            friends_tab_button.performClick();
+            //notifications_tab_button.performClick();
         }
     }
 
@@ -187,7 +188,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
 
         linearAdapter = new CustomAdapter( this, questList, quest_type_ids, usernames, user_butterfly_types,
                                                                      getResources().getStringArray(R.array.mindfulness_description) );
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CommunityPage.this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(linearAdapter);
 
@@ -319,7 +320,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
 
     public void setNotifications()
     {
-        holder = new HolderCommunityPage();
+        communityHolder = new HolderCommunityPage();
         Call<List<QuestReport>> call = service.getAllQuestsInCommunity();
         call.enqueue(new Callback<List<QuestReport>>() {
 
@@ -336,7 +337,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                     //reverses through the report list to get the top 20 easier
                     for (int i = questReportList.size()-1; i >= 0; i--)
                     {
-                        holder.setQuest_type(questReportList.get(i).getQuest_type_id());
+                        communityHolder.setQuest_type(questReportList.get(i).getQuest_type_id());
 
                         getUserInfo(questReportList.get(i).getUser_id());
                     }
@@ -345,9 +346,9 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            List<Integer> quest_type_ids = holder.getQuest_type();
-                            List<String> usernames = holder.getUsername();
-                            List<Integer> user_butterfly_types = holder.getUser_butterfly_id();
+                            List<Integer> quest_type_ids = communityHolder.getQuest_type();
+                            List<String> usernames = communityHolder.getUsername();
+                            List<Integer> user_butterfly_types = communityHolder.getUser_butterfly_id();
 
                             Log.e("List Size", "" + usernames.size());
                             Log.e("Report List", "" + questReportList.size());
@@ -393,8 +394,8 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
 
 
 
-                    holder.setUsername(u_name);
-                    holder.setUser_butterfly_id(u_b_id);
+                    communityHolder.setUsername(u_name);
+                    communityHolder.setUser_butterfly_id(u_b_id);
                 }
                 else
                 {

@@ -85,9 +85,11 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         quick_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(HomeScreen.this, "Pollen Shop is underdevelopment", Toast.LENGTH_SHORT).show();
+               /* ---------------- Not working, underdevelopment --------------
                 Intent to_navigate = new Intent(homeScreen, PollenStoreDailyQuestPage.class);
                 to_navigate.putExtra("NavigatedFrom", 1);
-                startActivity(to_navigate);
+                startActivity(to_navigate);*/
             }
         });
         popup_quick_access.setOnClickListener(new View.OnClickListener() {

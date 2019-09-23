@@ -30,6 +30,8 @@ import static com.example.aorora.MainActivity.user_info;
 
 public class MindfulnessMeditationGame_R extends AppCompatActivity implements View.OnClickListener {
 
+    int gameDuration;
+
     ImageView outer_most_ring;
     ImageView outer_ring;
     ImageView inner_ring;
@@ -184,6 +186,11 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
                     arrow.setImageResource(R.drawable.purple_arrow);
                     break;
             }
+        }
+
+        if(meditation_game.hasExtra("Duration"))
+        {
+            gameDuration = meditation_game.getIntExtra("Duration", 1);
         }
 
         theme_music.start();
@@ -407,7 +414,7 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
         cont_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Change the number of ms to adjust it to length of meditation sound.
-                myTimer = new Timer(64000, 1000);
+                myTimer = new Timer(gameDuration, 1000);
                 myTimer.start();
                 myDialog.dismiss();
             }

@@ -41,6 +41,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
     ImageButton community_button_bottombar;
     ImageButton quest_button_bottombar;
     ImageView alpha_channel_iv;
+    TextView text_view;
     Animation infinite_blink;
     ImageButton exit_button;
     RecyclerView recyclerView;
@@ -161,7 +162,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerViewTime.getLayoutManager();
         int firstVisibleIndex = layoutManager.findFirstVisibleItemPosition();
         int lastVisibleIndex = layoutManager.findLastVisibleItemPosition();
-        TextView text_view;
+
         for(int visibleIndex = firstVisibleIndex; visibleIndex < lastVisibleIndex; visibleIndex++)
         {
             HorizontalTimeAdapter.HorizontalTimeViewHolder viewHolder = (HorizontalTimeAdapter.HorizontalTimeViewHolder) recyclerViewTime.findViewHolderForAdapterPosition(visibleIndex);
@@ -212,26 +213,22 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         }
         else if(view_id == play_button.getId())
         {
-            /*boolean two_digit = false;
+            boolean two_digit = false;
             int duration_int = 0;
-            //duration_string = String.valueOf(duration_selection_spinner.getSelectedItem());
-            if(duration_string.equals("Short"))
+            duration_string = String.valueOf(text_view.getText());
+            if(duration_string.equals("3 minutes"))
             {
-                duration_int = 1;
+                duration_int = 180000;
             }
-            else if(duration_string.equals("Medium"))
+            else if(duration_string.equals("5 minutes"))
             {
-                duration_int = 2;
+                duration_int = 300000;
             }
-            else
-            {
-                duration_int = 3;
-            }
-            */
+
             to_navigate = new Intent(mindfulnessMeditation, MindfulnessMeditationGame_R.class);
             to_navigate.putExtra("Theme",game_theme);
             //to_navigate.putExtra("NavigatedFrom", -2);
-            //to_navigate.putExtra("Duration", duration_int);
+            to_navigate.putExtra("Duration", duration_int);
             startActivity(to_navigate);
         }
         else if(view_id == exit_button.getId())

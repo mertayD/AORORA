@@ -132,6 +132,7 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         }
         else if(view_id == settings_button.getId())
         {
+            Toast.makeText(ProfilePage.this , "Settings is under development.", Toast.LENGTH_SHORT).show();
             //to_navigate = new Intent(profilePage, MindfulnessMeditationGame_R.class);
             //startActivity(to_navigate);
             //sendOutLike(1,2);
