@@ -138,12 +138,14 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
             //getButterfly();
             //to_navigate = new Intent(profilePage, EndOfMindfulnessGamePage.class);
             //startActivity(to_navigate);
+            Toast.makeText(ProfilePage.this, "Settings is under development", Toast.LENGTH_SHORT).show();
         }
         else if(view_id == pollen_button.getId())
         {
-            to_navigate = new Intent(profilePage, PollenStoreDailyQuestPage.class);
-            to_navigate.putExtra("NavigatedFrom", 2);
-            startActivity(to_navigate);
+           // to_navigate = new Intent(profilePage, PollenStoreDailyQuestPage.class);
+           // to_navigate.putExtra("NavigatedFrom", 2);
+            //startActivity(to_navigate);
+            Toast.makeText(ProfilePage.this, "Pollen page is under development", Toast.LENGTH_SHORT).show();
         }
     }
 

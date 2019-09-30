@@ -85,9 +85,11 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         quick_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent to_navigate = new Intent(homeScreen, PollenStoreDailyQuestPage.class);
+                /*Intent to_navigate = new Intent(homeScreen, PollenStoreDailyQuestPage.class);
                 to_navigate.putExtra("NavigatedFrom", 1);
-                startActivity(to_navigate);
+                startActivity(to_navigate);*/
+                //button not working right now
+                Toast.makeText(HomeScreen.this, "Pollen shop is under development", Toast.LENGTH_SHORT).show();
             }
         });
         popup_quick_access.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +99,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
                 if(is_menu_inflated)
                 {
                     popup_quick_access.findViewById(R.id.pollen_score_layout_tv).setVisibility(View.VISIBLE);
+
                     popup_quick_acces_image.setImageResource(R.drawable.half_pollen);
                     quick_menu.setVisibility(View.INVISIBLE);
                     is_menu_inflated = false;

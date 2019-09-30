@@ -47,6 +47,8 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
     boolean is_third_cycle;
     boolean is_forth_cycle;
 
+    int gameDuration;
+
     ConstraintLayout layout;
 
     Vibrator myVibrate;
@@ -177,6 +179,10 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
                     arrow.setImageResource(R.drawable.purple_arrow);
                     break;
             }
+        }
+        if(meditation_game.hasExtra("Duration"))
+        {
+            gameDuration = meditation_game.getIntExtra("Duration", 1);
         }
 
         theme_music.start();

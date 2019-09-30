@@ -48,6 +48,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
     int game_theme;
     com.example.aorora.adapter.HorizontalAdapter horizontalAdapter;
     com.example.aorora.adapter.HorizontalTimeAdapter horizontalTimeAdapter;
+    TextView text_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -161,7 +162,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerViewTime.getLayoutManager();
         int firstVisibleIndex = layoutManager.findFirstVisibleItemPosition();
         int lastVisibleIndex = layoutManager.findLastVisibleItemPosition();
-        TextView text_view;
+
         for(int visibleIndex = firstVisibleIndex; visibleIndex < lastVisibleIndex; visibleIndex++)
         {
             HorizontalTimeAdapter.HorizontalTimeViewHolder viewHolder = (HorizontalTimeAdapter.HorizontalTimeViewHolder) recyclerViewTime.findViewHolderForAdapterPosition(visibleIndex);
@@ -212,9 +213,9 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         }
         else if(view_id == play_button.getId())
         {
-            /*boolean two_digit = false;
+            boolean two_digit = false;
             int duration_int = 0;
-            //duration_string = String.valueOf(duration_selection_spinner.getSelectedItem());
+            duration_string = String.valueOf(text_view.getText());
             if(duration_string.equals("Short"))
             {
                 duration_int = 1;
@@ -227,7 +228,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
             {
                 duration_int = 3;
             }
-            */
+
             to_navigate = new Intent(mindfulnessMeditation, MindfulnessMeditationGame_R.class);
             to_navigate.putExtra("Theme",game_theme);
             //to_navigate.putExtra("NavigatedFrom", -2);
