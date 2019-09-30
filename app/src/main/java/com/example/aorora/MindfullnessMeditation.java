@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.aorora.ClickListener.SpinnerActivity;
 import com.example.aorora.adapter.HorizontalAdapter;
@@ -208,8 +209,9 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            to_navigate = new Intent(mindfulnessMeditation, CommunityPage.class);
-            startActivity(to_navigate);
+            Toast.makeText(MindfullnessMeditation.this, "Community page is under maintenance", Toast.LENGTH_SHORT).show();
+            //to_navigate = new Intent(mindfulnessMeditation, CommunityPage.class);
+            //startActivity(to_navigate);
         }
         else if(view_id == play_button.getId())
         {
@@ -217,10 +219,12 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
             int duration_int = 0;
             duration_string = String.valueOf(text_view.getText());
             if(duration_string.equals("Short"))
+            //duration_string = String.valueOf(duration_selection_spinner.getSelectedItem());
+            if(duration_string.equals("3 minutes"))
             {
                 duration_int = 1;
             }
-            else if(duration_string.equals("Medium"))
+            else if(duration_string.equals("5 minutes"))
             {
                 duration_int = 2;
             }
@@ -232,7 +236,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
             to_navigate = new Intent(mindfulnessMeditation, MindfulnessMeditationGame_R.class);
             to_navigate.putExtra("Theme",game_theme);
             //to_navigate.putExtra("NavigatedFrom", -2);
-            //to_navigate.putExtra("Duration", duration_int);
+            to_navigate.putExtra("Duration", duration_int);
             startActivity(to_navigate);
         }
         else if(view_id == exit_button.getId())

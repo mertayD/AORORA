@@ -116,7 +116,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
             {
                 initial_game_count = text;
                 possible_points = 5;
-                text = 2;
+                text = 5;
             }
 
             else if( text == 2)
