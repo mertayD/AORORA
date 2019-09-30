@@ -139,6 +139,9 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
             //getButterfly();
             //to_navigate = new Intent(profilePage, EndOfMindfulnessGamePage.class);
             //startActivity(to_navigate);
+
+            /* This toast was added to show that settings is under development and the settings
+            * button is unresponsive. */
             Toast.makeText(ProfilePage.this, "Settings is under development", Toast.LENGTH_SHORT).show();
         }
         else if(view_id == pollen_button.getId())
@@ -146,6 +149,10 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
            // to_navigate = new Intent(profilePage, PollenStoreDailyQuestPage.class);
            // to_navigate.putExtra("NavigatedFrom", 2);
             //startActivity(to_navigate);
+
+            /* This toast was added to show that navigation has been blocked to the pollen page.
+            * Navigation to this page has been blocked because of errors with the display in the
+            * pollen page. */
             Toast.makeText(ProfilePage.this, "Pollen page is under development", Toast.LENGTH_SHORT).show();
             Toast.makeText(ProfilePage.this, "Settings is under maintenance", Toast.LENGTH_SHORT).show();
         }
