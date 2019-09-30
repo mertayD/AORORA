@@ -139,12 +139,14 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
             //getButterfly();
             //to_navigate = new Intent(profilePage, EndOfMindfulnessGamePage.class);
             //startActivity(to_navigate);
+            Toast.makeText(ProfilePage.this, "Settings is under maintenance", Toast.LENGTH_SHORT).show();
         }
         else if(view_id == pollen_button.getId())
         {
-            to_navigate = new Intent(profilePage, PollenStoreDailyQuestPage.class);
-            to_navigate.putExtra("NavigatedFrom", 2);
-            startActivity(to_navigate);
+            Toast.makeText(ProfilePage.this, "Daily Quests are under maintenance.", Toast.LENGTH_SHORT).show();
+            //to_navigate = new Intent(profilePage, PollenStoreDailyQuestPage.class);
+            //to_navigate.putExtra("NavigatedFrom", 2);
+            //startActivity(to_navigate);
         }
     }
 
@@ -153,9 +155,10 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
     {
         Intent to_navigate;
         if (motionEvent2.getX() - motionEvent1.getX() > 150) {
-            to_navigate = new Intent(profilePage, CommunityPage.class);
-            startActivity(to_navigate);
-            overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+            Toast.makeText(ProfilePage.this, "Community page is under maintenance.", Toast.LENGTH_SHORT).show();
+            //to_navigate = new Intent(profilePage, CommunityPage.class);
+            //startActivity(to_navigate);
+            //overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             return true;
         }
         else if (motionEvent1.getX() - motionEvent2.getX() > 150)
