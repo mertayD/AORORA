@@ -88,7 +88,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
     private void generateDataListHorizontal() {
         horizontalAdapter = new com.example.aorora.adapter.HorizontalAdapter(this, new OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(View v, int position) {Log.e("ItemClicked", "Item Clicked at Position " + position);
             }
         });
 

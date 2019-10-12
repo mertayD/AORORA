@@ -44,17 +44,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     //Need to determine which button was pressed inside the specific RecyclerView
     private OnItemClickListener myLikeListener;
 
-
+/*
     public interface OnItemClickListener
     {
         void onItemClick(int position );
     }
-
+*/
     public CustomAdapter(Context context,List<QuestReport> dataList,
                          List<Integer> quest_type_ids,
                          List<String> usernames,
                          List<Integer> user_butterfly_types,
-                         String[] accomplishment_description
+                         String[] accomplishment_description,
+                         OnItemClickListener listener
                          ){
         this.context = context;
         this.dataList = dataList;
@@ -62,6 +63,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         this.usernames = usernames;
         this.user_butterfly_types = user_butterfly_types;
         this.accomplishment_description = accomplishment_description;
+        myLikeListener = listener;
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder
@@ -96,13 +98,16 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         {
             final int myUserId = MainActivity.user_info.getUser_id();
             Call<List<ButterflyLike>> myCall = myService.getAllLikes();
+
             myCall.enqueue(new Callback<List<ButterflyLike>>()
                            {
+
+                               int u_name, u_like;
                                @Override
                                public void onResponse(Call<List<ButterflyLike>> call, Response<List<ButterflyLike>> response)
                                {
                                    boolean isLiked = false;
-
+                                   int likeCount = 0;
 
                                    if( like_button.getDrawable().equals(R.drawable.heart_filled))
                                    {
@@ -112,6 +117,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                                    if( response.isSuccess() )
                                    {
                                        final List<ButterflyLike> likeList = response.body();
+
+                                       u_name = response.body().get(likeCount).getUser_id();
+
+                                       Log.e("USERNAME", " " + u_name);
 
                                        for( ButterflyLike curLike : likeList)
                                        {
@@ -147,6 +156,33 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                            }
             );
         }
+
+
+        /**
+         * Purpose: Will set the like status of the notification in question
+         * Algorithm:
+         * @param position : The index of the specific item that in the notification layout
+         */
+        void setLikeSatus( int position )
+        {
+            final int myUserId = MainActivity.user_info.getUser_id();
+            Call<List<ButterflyLike>> myCall = myService.getAllLikes();
+
+            myCall.enqueue(new Callback<List<ButterflyLike>>()
+            {
+                @Override
+                public void onResponse(Call<List<ButterflyLike>> call, Response<List<ButterflyLike>> response)
+                {
+
+                }
+
+                @Override
+                public void onFailure(Call<List<ButterflyLike>> call, Throwable t)
+                {
+
+                }
+            });
+        }
     }
 
     @Override
@@ -156,13 +192,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         CustomViewHolder holder = new CustomViewHolder( view, myLikeListener);
         return holder;
     }
-/*
-    @Override
-    public void onBindViewHolder(CustomViewHolder holder, final int position, List<Object> payloads)
-    {
 
-    }
-*/
     @Override
     public void onBindViewHolder(final CustomViewHolder holder, final int position) {
         String desc = accomplishment_description[quest_type_ids.get(position)-1];
@@ -196,9 +226,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         holder.like_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                indexOfClickedItem = position;
+                myLikeListener.onItemClick(v, position);
+                //Log.e("ItemClicked", "Item Clicked at Position " + position);
+                /*indexOfClickedItem = position;
                 notifyItemChanged( position );
-                holder.bindItem( position );
+                holder.bindItem( position );*/
 
             }
         });
@@ -212,6 +244,16 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public int getItemCount() {
 
         return min(dataList.size(),20);
+    }
+
+    /**
+     *
+     * @param position
+     * @return the quest report ID at the item's position
+     */
+    public int getItemQuestId( int position )
+    {
+        return dataList.get( dataList.size()-position-1 ).quest_report_id;
     }
 
     /**

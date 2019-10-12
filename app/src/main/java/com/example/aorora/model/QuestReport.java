@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class QuestReport {
     @SerializedName("quest_report_id")
-    private Integer quest_report_id;
+    public Integer quest_report_id;
 
     @SerializedName("quest_type_id")
     private Integer quest_type_id;
@@ -47,7 +47,7 @@ public class QuestReport {
     }
 
     public Integer getQuest_report_id() {
-        return quest_report_id;
+        return this.quest_report_id;
     }
 
     public void setQuest_report_id(Integer quest_report_id) {

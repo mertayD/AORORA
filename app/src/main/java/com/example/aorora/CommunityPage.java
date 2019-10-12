@@ -187,18 +187,19 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     {
 
         linearAdapter = new CustomAdapter( this, questList, quest_type_ids, usernames, user_butterfly_types,
-                                                                     getResources().getStringArray(R.array.mindfulness_description) );
+                                                                      getResources().getStringArray(R.array.mindfulness_description),
+                                                                        new OnItemClickListener() {
+                                                                            @Override
+                                                                            public void onItemClick(View v, int position) {
+                                                                                Log.e("ItemClicked", "Item Clicked at Position " + position);
+                                                                                toggleLike( position );
+                                                                            }
+                                                                        });
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(linearAdapter);
 
-       /* linearAdapter.setOnItemClickListener(new CustomAdapter.OnItemClickListener(){
-            @Override
-            public void onItemClick(int position )
-            {
-                toggleLike( position );
-            }
-        });*/
 
     }
 
@@ -418,7 +419,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
      * backend should be set up
      * trying to figure out how to determine if the user has already liked a post
      */
-    private void toggleLike( final int myViewId )
+    private void toggleLike( final int myPosition )
     {
 
 
@@ -430,31 +431,45 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                          public void onResponse(Call<List<ButterflyLike>> call, Response<List<ButterflyLike>> response)
                          {
                              Toast.makeText(CommunityPage.this, "Something went right with enqueue", Toast.LENGTH_SHORT).show();
-                             ImageView myLikeButton = findViewById(myViewId);
-                             boolean isLiked = false;
+                             ImageView myLikeButton = findViewById(myPosition);
+                             boolean isLiked = false, isFound = false;
 
 
                              if( response.isSuccess() )
                              {
                                  final List<ButterflyLike> likeList = response.body();
 
-                                 for( ButterflyLike curLike : likeList)
+                                 for( ButterflyLike curLike : likeList )
                                  {
-                                     //Check to see if user id and the quest report id are found together
-                                     if( !isLiked && ( (curLike.getUser_id() == myUserId) ))
+                                     Log.e("LIKE ID", " "+curLike.getUser_id());
+                                     Log.e("USER ID", " "+myUserId);
+                                     Log.e("Lquest ID", " "+curLike.getQuestReportId());
+                                     Log.e("Uquest ID", " "+linearAdapter.getItemQuestId(myPosition));
+
+                                     if( !isFound && ( (curLike.getUser_id()== myUserId) && (curLike.getQuestReportId() != linearAdapter.getItemQuestId(myPosition)) ) )
                                      {
-                                         Toast.makeText(CommunityPage.this, "Do the like stuff", Toast.LENGTH_SHORT).show();
-                                         isLiked = true;
+                                         //Check to see if user id and the quest report id are found together
                                          
-                                        // myLikeButton.setImageResource(R.drawable.heart_filled);
-                                     }
-                                     else
-                                     {
-                                         Toast.makeText(CommunityPage.this, "Do the dislike stuff", Toast.LENGTH_SHORT).show();
-                                         isLiked = false;
-                                         //myLikeButton.setImageResource(R.drawable.heart_unfilled);
                                      }
                                  }
+
+                                 if ( isLiked )
+                                 {
+                                     Log.e("LIKED", "Item " + myPosition + " is liked");
+                                     Toast.makeText(CommunityPage.this, "Do the like stuff", Toast.LENGTH_SHORT).show();
+                                     isLiked = true;
+                                     //linearAdapter.setLike( myPosition, isLiked );
+
+                                     // myLikeButton.setImageResource(R.drawable.heart_filled);
+                                 } else
+                                 {
+                                     Log.e("UNLIKED", "Item " + myPosition + " is unliked");
+                                     Toast.makeText(CommunityPage.this, "Do the dislike stuff", Toast.LENGTH_SHORT).show();
+                                     isLiked = false;
+                                     //linearAdapter.setLike( myPosition, isLiked );
+                                     //myLikeButton.setImageResource(R.drawable.heart_unfilled);
+                                 }
+
 
                                  progressDoalog.dismiss();
                              }
@@ -472,7 +487,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                          }
                      }
         );
-       // Toast.makeText(CommunityPage.this, "There was a problem with enqueue", Toast.LENGTH_SHORT).show();
+        Toast.makeText(CommunityPage.this, "There was a problem with enqueue", Toast.LENGTH_SHORT).show();
     }
 
 }
