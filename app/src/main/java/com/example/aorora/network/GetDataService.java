@@ -2,6 +2,7 @@ package com.example.aorora.network;
 
 import com.example.aorora.model.Butterfly;
 import com.example.aorora.model.ButterflyLike;
+import com.example.aorora.model.ButterflyLikeCreateReturn;
 import com.example.aorora.model.DailyTask;
 import com.example.aorora.model.DailyTaskReturn;
 import com.example.aorora.model.MoodReportIdReturn;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -35,10 +37,12 @@ public interface GetDataService {
 
     @POST("/butterflylike")
     @FormUrlEncoded
-    Call<ButterflyLike> createLike(//@Path("")//-----not sure if needed, we will find out
-                                   @Field("butterfly_id") Integer butterfly_id,
-                                   @Field("user_id") Integer user_id,
-                                   @Field("quest_report_id") Integer quest_report_id);
+    Call<ButterflyLikeCreateReturn> createLike(//@Path("")//-----not sure if needed, we will find out
+                                               @Field("user_id") Integer user_id,
+                                               @Field("quest_report_id") Integer quest_report_id);
+
+    @DELETE("/butterflylike/{butterfly_like_id}")
+    Call<ButterflyLikeCreateReturn> removeLike(@Path("butterfly_like_id") Integer butterfly_like_id);
 
     @GET("/butterflylikes")
     Call<List<ButterflyLike>> getAllLikes();

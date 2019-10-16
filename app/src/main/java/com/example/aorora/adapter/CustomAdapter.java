@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aorora.MainActivity;
+import com.example.aorora.CommunityPage;
 import com.example.aorora.R;
 import com.example.aorora.interfaces.OnItemClickListener;
 import com.example.aorora.model.ButterflyLike;
@@ -22,6 +23,7 @@ import com.squareup.picasso.Picasso;
 import com.example.aorora.model.RetroPhoto;
 import com.example.aorora.network.GetDataService;
 import com.example.aorora.network.RetrofitClientInstance;
+import com.example.aorora.network.NetworkCalls;
 
 import java.util.List;
 
@@ -29,6 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.aorora.MainActivity.user_info;
 import static java.lang.Math.min;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
@@ -158,31 +161,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         }
 
 
-        /**
-         * Purpose: Will set the like status of the notification in question
-         * Algorithm:
-         * @param position : The index of the specific item that in the notification layout
-         */
-        void setLikeSatus( int position )
-        {
-            final int myUserId = MainActivity.user_info.getUser_id();
-            Call<List<ButterflyLike>> myCall = myService.getAllLikes();
 
-            myCall.enqueue(new Callback<List<ButterflyLike>>()
-            {
-                @Override
-                public void onResponse(Call<List<ButterflyLike>> call, Response<List<ButterflyLike>> response)
-                {
-
-                }
-
-                @Override
-                public void onFailure(Call<List<ButterflyLike>> call, Throwable t)
-                {
-
-                }
-            });
-        }
     }
 
     @Override
@@ -249,11 +228,65 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     /**
      *
      * @param position
-     * @return the quest report ID at the item's position
+     * @return the quest report ID at the item's position.
      */
     public int getItemQuestId( int position )
     {
         return dataList.get( dataList.size()-position-1 ).quest_report_id;
+    }
+
+    /**
+     * Purpose: Will set the like status of the notification in question
+     * Algorithm:
+     * @param position : The index of the specific item that in the notification layout.
+     * @param status  : Tells us whether the specific notification needs a like (false)
+     *                  or needs to remove one (true).
+     */
+    public void setLikeStatus( int position, boolean status, int secondary_id )
+    {
+        final int myUserId = MainActivity.user_info.getUser_id();
+     /* Might not be needed to create and remove likes.
+        ---- Keeping it in just in case so I don't have to rewrite.
+
+        Call<List<ButterflyLike>> myCall = myService.getAllLikes();
+
+        myCall.enqueue(new Callback<List<ButterflyLike>>()
+        {
+            @Override
+            public void onResponse(Call<List<ButterflyLike>> call, Response<List<ButterflyLike>> response)
+            {
+
+            }
+
+            @Override
+            public void onFailure(Call<List<ButterflyLike>> call, Throwable t)
+            {
+
+            }
+        });
+
+      */
+
+     //if true, then remove like from DB and update notification at said position
+        //else, add like to DB and update notification at said location
+     if( !status )
+     {
+         NetworkCalls.createLike(myUserId, secondary_id);
+         Log.i("LIKE CREATED", " "+myUserId+", "+secondary_id);
+     }
+     else
+     {
+         if(secondary_id >= 0)
+         {
+             NetworkCalls.removeLike(secondary_id);
+             Log.i("LIKE REMOVED", "" + secondary_id);
+         }
+         else
+         {
+             Log.e("NO LIKE", " Like could not be removed (incorrect index)");
+         }
+     }
+
     }
 
     /**

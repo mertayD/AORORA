@@ -31,6 +31,7 @@ import com.example.aorora.model.QuestReport;
 import com.example.aorora.model.RetroPhoto;
 import com.example.aorora.model.UserInfo;
 import com.example.aorora.network.GetDataService;
+import com.example.aorora.network.NetworkCalls;
 import com.example.aorora.network.RetrofitClientInstance;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.aorora.MainActivity.user_info;
 import static java.lang.Boolean.TRUE;
 import static java.lang.Math.min;
 
@@ -433,6 +435,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                              Toast.makeText(CommunityPage.this, "Something went right with enqueue", Toast.LENGTH_SHORT).show();
                              ImageView myLikeButton = findViewById(myPosition);
                              boolean isLiked = false, isFound = false;
+                             int likePosition = -1;
 
 
                              if( response.isSuccess() )
@@ -446,27 +449,28 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                                      Log.e("Lquest ID", " "+curLike.getQuestReportId());
                                      Log.e("Uquest ID", " "+linearAdapter.getItemQuestId(myPosition));
 
-                                     if( !isFound && ( (curLike.getUser_id()== myUserId) && (curLike.getQuestReportId() != linearAdapter.getItemQuestId(myPosition)) ) )
+                                     if( !isLiked && ( (curLike.getUser_id()== myUserId) && (curLike.getQuestReportId() == linearAdapter.getItemQuestId(myPosition)) ) )
                                      {
                                          //Check to see if user id and the quest report id are found together
-                                         
+                                         Log.e("FOUND LIKE", " Found the butterfly like, will remove.");
+                                         isLiked = true;
+                                         likePosition = likeList.indexOf(curLike);
+                                         break;
                                      }
                                  }
 
-                                 if ( isLiked )
+                                 if ( !isLiked )
                                  {
-                                     Log.e("LIKED", "Item " + myPosition + " is liked");
+                                     Log.e("UNLIKED", "Item " + myPosition + " is unliked");
                                      Toast.makeText(CommunityPage.this, "Do the like stuff", Toast.LENGTH_SHORT).show();
-                                     isLiked = true;
-                                     //linearAdapter.setLike( myPosition, isLiked );
+                                     linearAdapter.setLikeStatus( myPosition, isLiked, linearAdapter.getItemQuestId(myPosition));
 
                                      // myLikeButton.setImageResource(R.drawable.heart_filled);
                                  } else
                                  {
-                                     Log.e("UNLIKED", "Item " + myPosition + " is unliked");
+                                     Log.e("LIKED", "Item " + myPosition + " is liked");
                                      Toast.makeText(CommunityPage.this, "Do the dislike stuff", Toast.LENGTH_SHORT).show();
-                                     isLiked = false;
-                                     //linearAdapter.setLike( myPosition, isLiked );
+                                     linearAdapter.setLikeStatus( myPosition, isLiked,likePosition);
                                      //myLikeButton.setImageResource(R.drawable.heart_unfilled);
                                  }
 

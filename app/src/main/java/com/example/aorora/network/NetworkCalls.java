@@ -11,6 +11,7 @@ import com.example.aorora.ProfilePage;
 import com.example.aorora.SurveyPage;
 import com.example.aorora.model.Butterfly;
 import com.example.aorora.model.ButterflyLike;
+import com.example.aorora.model.ButterflyLikeCreateReturn;
 import com.example.aorora.model.DailyTask;
 import com.example.aorora.model.DailyTaskReturn;
 import com.example.aorora.model.MoodReportIdReturn;
@@ -214,24 +215,32 @@ public class NetworkCalls {
      * To be used for when the user hits the like button on a notification
      * @param user_id
      * @param quest_id
-     * @param context
+     * //@param context
      */
-    public static void createLike( int butterfly_id, int user_id, int quest_id, final Context context)
+    public static void createLike( int user_id, int quest_id /*, final Context context*/)
     {
 
-        Call<ButterflyLike> call = service.createLike(butterfly_id, user_id, quest_id);
+        Call<ButterflyLikeCreateReturn> call = service.createLike( user_id, quest_id);
+        call.enqueue(new Callback<ButterflyLikeCreateReturn>() {
+            @Override
+            public void onResponse(Call<ButterflyLikeCreateReturn> call, Response<ButterflyLikeCreateReturn> response) {
+                //Toast.makeText(context, "Quest Report Created ID: " + response.body(), Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onFailure(Call<ButterflyLikeCreateReturn> call, Throwable t) {
+               // Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
      * To be used for when the user hits the like button on a notification
-     * @param user_id
-     * @param quest_id
-     * @param context
+     * @param butterfly_like_id
      */
-    public static void getLike( int butterfly_id, int user_id, int quest_id, final Context context)
+    public static void removeLike( int butterfly_like_id)
     {
-
-        Call<ButterflyLike> call = service.createLike(butterfly_id, user_id, quest_id);
+        Call<ButterflyLikeCreateReturn> call = service.removeLike( butterfly_like_id);
+        //Call<ButterflyLike> call = service.createLike(butterfly_id, user_id, quest_id);
     }
 
     //public static void updateLike(int )
