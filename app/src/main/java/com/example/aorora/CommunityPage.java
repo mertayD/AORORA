@@ -67,6 +67,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     LinearLayout bar_ll;
     LinearLayout popup_menu_button;
     boolean is_menu_popped;
+    boolean is_liked;
     public View popup_menu;
     GetDataService service;
     //TEMPORARY VARIABLE
@@ -190,11 +191,12 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
 
         linearAdapter = new CustomAdapter( this, questList, quest_type_ids, usernames, user_butterfly_types,
                                                                       getResources().getStringArray(R.array.mindfulness_description),
-                                                                        new OnItemClickListener() {
+                                                                        new OnLikeListener() {
                                                                             @Override
-                                                                            public void onItemClick(View v, int position) {
+                                                                            public boolean onLikeClick(View v, int position) {
                                                                                 Log.e("ItemClicked", "Item Clicked at Position " + position);
-                                                                                toggleLike( position );
+                                                                                return toggleLike( position );
+
                                                                             }
                                                                         });
 
@@ -418,10 +420,9 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
      * an activity, the button will fill in and the server will record the like.
      *
      * PROGRESS----
-     * backend should be set up
-     * trying to figure out how to determine if the user has already liked a post
+     * backend is set up, but un-liking is still not possible at the moment
      */
-    private void toggleLike( final int myPosition )
+    protected boolean toggleLike(final int myPosition)
     {
 
 
@@ -432,7 +433,6 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                          @Override
                          public void onResponse(Call<List<ButterflyLike>> call, Response<List<ButterflyLike>> response)
                          {
-                             Toast.makeText(CommunityPage.this, "Something went right with enqueue", Toast.LENGTH_SHORT).show();
                              ImageView myLikeButton = findViewById(myPosition);
                              boolean isLiked = false, isFound = false;
                              int likePosition = -1;
@@ -442,44 +442,33 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                              {
                                  final List<ButterflyLike> likeList = response.body();
 
-                                 for( ButterflyLike curLike : likeList )
+                                 for (ButterflyLike curLike : likeList)
                                  {
-                                     Log.e("LIKE ID", " "+curLike.getUser_id());
-                                     Log.e("USER ID", " "+myUserId);
-                                     Log.e("Lquest ID", " "+curLike.getQuestReportId());
-                                     Log.e("Uquest ID", " "+linearAdapter.getItemQuestId(myPosition));
-
-                                     if( !isLiked && ( (curLike.getUser_id()== myUserId) && (curLike.getQuestReportId() == linearAdapter.getItemQuestId(myPosition)) ) )
+                                     if (!isLiked && ((curLike.getUser_id() == myUserId) && (curLike.getQuestReportId() == linearAdapter.getItemQuestId(myPosition))))
                                      {
                                          //Check to see if user id and the quest report id are found together
-                                         Log.e("FOUND LIKE", " Found the butterfly like, will remove.");
+                                         Log.e("FOUND_L COM", " Found the butterfly like, will remove.");
                                          isLiked = true;
-                                         likePosition = likeList.indexOf(curLike);
+                                         likePosition = curLike.getButterfly_like_id();
                                          break;
                                      }
                                  }
 
-                                 if ( !isLiked )
+                                 if (!isLiked)
                                  {
-                                     Log.e("UNLIKED", "Item " + myPosition + " is unliked");
+                                     Log.e("COM UN", "Item " + myPosition + " is unliked");
                                      Toast.makeText(CommunityPage.this, "Do the like stuff", Toast.LENGTH_SHORT).show();
-                                     linearAdapter.setLikeStatus( myPosition, isLiked, linearAdapter.getItemQuestId(myPosition));
-
-                                     // myLikeButton.setImageResource(R.drawable.heart_filled);
+                                     linearAdapter.setLikeStatus(myPosition, isLiked, linearAdapter.getItemQuestId(myPosition));
+                                     setIsLiked(isLiked);
                                  } else
-                                 {
-                                     Log.e("LIKED", "Item " + myPosition + " is liked");
-                                     Toast.makeText(CommunityPage.this, "Do the dislike stuff", Toast.LENGTH_SHORT).show();
-                                     linearAdapter.setLikeStatus( myPosition, isLiked,likePosition);
-                                     //myLikeButton.setImageResource(R.drawable.heart_unfilled);
-                                 }
-
+                                     {
+                                         Log.e("COM L", "Item " + myPosition + " is liked");
+                                         Toast.makeText(CommunityPage.this, "Do the dislike stuff", Toast.LENGTH_SHORT).show();
+                                         linearAdapter.setLikeStatus(myPosition, isLiked, likePosition);
+                                         setIsLiked(isLiked);
+                                     }
 
                                  progressDoalog.dismiss();
-                             }
-                             else
-                             {
-                                 Toast.makeText(CommunityPage.this, "There was a problem with enqueue", Toast.LENGTH_SHORT).show();
                              }
                          }
 
@@ -491,7 +480,12 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                          }
                      }
         );
-        Toast.makeText(CommunityPage.this, "There was a problem with enqueue", Toast.LENGTH_SHORT).show();
+        return is_liked;
+    }
+
+    public void setIsLiked( boolean myStatus )
+    {
+        is_liked = myStatus;
     }
 
 }

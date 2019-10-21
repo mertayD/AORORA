@@ -37,12 +37,11 @@ public interface GetDataService {
 
     @POST("/butterflylike")
     @FormUrlEncoded
-    Call<ButterflyLikeCreateReturn> createLike(//@Path("")//-----not sure if needed, we will find out
-                                               @Field("user_id") Integer user_id,
+    Call<ButterflyLikeCreateReturn> createLike(@Field("user_id") Integer user_id,
                                                @Field("quest_report_id") Integer quest_report_id);
 
-    @DELETE("/butterflylike/{butterfly_like_id}")
-    Call<ButterflyLikeCreateReturn> removeLike(@Path("butterfly_like_id") Integer butterfly_like_id);
+    @DELETE("/butterflylike/{butterfly_like_id}/")
+    Call<Void> removeLike(@Path("butterfly_like_id") Integer butterfly_like_id);
 
     @GET("/butterflylikes")
     Call<List<ButterflyLike>> getAllLikes();

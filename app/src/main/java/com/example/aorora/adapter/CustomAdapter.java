@@ -15,6 +15,7 @@ import com.example.aorora.MainActivity;
 import com.example.aorora.CommunityPage;
 import com.example.aorora.R;
 import com.example.aorora.interfaces.OnItemClickListener;
+import com.example.aorora.interfaces.OnLikeListener;
 import com.example.aorora.model.ButterflyLike;
 import com.example.aorora.model.QuestReport;
 import com.example.aorora.interfaces.OnLikeListener;
@@ -37,6 +38,7 @@ import static java.lang.Math.min;
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
 
     private List<QuestReport> dataList;
+    protected boolean item_liked = false;
     private Context context;
     List<Integer> quest_type_ids;
     List<String> usernames;
@@ -45,7 +47,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     GetDataService myService;
     private int indexOfClickedItem = -1;
     //Need to determine which button was pressed inside the specific RecyclerView
-    private OnItemClickListener myLikeListener;
+    private OnLikeListener myLikeListener;
 
 /*
     public interface OnItemClickListener
@@ -58,7 +60,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                          List<String> usernames,
                          List<Integer> user_butterfly_types,
                          String[] accomplishment_description,
-                         OnItemClickListener listener
+                         OnLikeListener listener
                          ){
         this.context = context;
         this.dataList = dataList;
@@ -78,7 +80,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         ImageView like_button;
         //RelativeLayout rv_rel_layout_like_button;
 
-        public CustomViewHolder(View itemView, final OnItemClickListener listener)
+        public CustomViewHolder(View itemView, final OnLikeListener listener)
         {
             super(itemView);
 
@@ -97,59 +99,48 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
          *            server-side and client-side match of a like
          * @param pos : not needed as of this moment, may remove
          */
-        void bindItem( int pos )
+        boolean bindItem(final int pos )
         {
             final int myUserId = MainActivity.user_info.getUser_id();
+            final int questID =dataList.get(dataList.size() -(pos + 1)).getQuest_report_id();
             Call<List<ButterflyLike>> myCall = myService.getAllLikes();
-
             myCall.enqueue(new Callback<List<ButterflyLike>>()
                            {
-
-                               int u_name, u_like;
                                @Override
                                public void onResponse(Call<List<ButterflyLike>> call, Response<List<ButterflyLike>> response)
                                {
-                                   boolean isLiked = false;
-                                   int likeCount = 0;
+                                   boolean isLiked = false, isFound = false;
+                                   int likePosition = -1;
 
-                                   if( like_button.getDrawable().equals(R.drawable.heart_filled))
-                                   {
-                                       isLiked = true;
-                                   }
 
                                    if( response.isSuccess() )
                                    {
                                        final List<ButterflyLike> likeList = response.body();
 
-                                       u_name = response.body().get(likeCount).getUser_id();
-
-                                       Log.e("USERNAME", " " + u_name);
-
-                                       for( ButterflyLike curLike : likeList)
+                                       for (ButterflyLike curLike : likeList)
                                        {
-                                           for( int questReportIter = 0; !isLiked && questReportIter < dataList.size(); questReportIter++)
+                                           if (!isLiked && ((curLike.getUser_id() == myUserId) && (curLike.getQuestReportId() == questID)))
                                            {
                                                //Check to see if user id and the quest report id are found together
-                                               if( !isLiked && ( (curLike.getUser_id() == myUserId)))
-                                               {
-                                                   if( curLike.getQuestReportId() == dataList.get(questReportIter).getQuest_report_id())
-                                                   {
-                                                       isLiked = true;
-                                                       like_button.setImageResource(R.drawable.heart_filled);
-                                                   }
-
-
-                                               }
-                                               else
-                                               {
-                                                   isLiked = false;
-                                                   like_button.setImageResource(R.drawable.heart_unfilled);
-                                               }
+                                               Log.e("FOUND LIKE", " Found the butterfly like.");
+                                               isLiked = true;
+                                               break;
                                            }
                                        }
 
-                                   }
+                                       if (!isLiked)
+                                       {
+                                           Log.i("ADP UN", "Item " + pos + " is unliked");
+                                           like_button.setImageResource(R.drawable.heart_unfilled);
+                                           //myLikeButton.setImageResource(R.drawable.heart_unfilled);
+                                       } else
+                                       {
+                                           Log.i("ADP L", "Item " + pos + " is liked");
+                                           like_button.setImageResource(R.drawable.heart_filled);
+                                           // myLikeButton.setImageResource(R.drawable.heart_filled);
+                                       }
 
+                                   }
                                }
 
                                @Override
@@ -158,10 +149,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                                }
                            }
             );
+
+            return isLiked;
         }
-
-
-
     }
 
     @Override
@@ -176,9 +166,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public void onBindViewHolder(final CustomViewHolder holder, final int position) {
         String desc = accomplishment_description[quest_type_ids.get(position)-1];
         holder.txtTitle.setText(desc);
+        holder.bindItem( position );
+        Log.e("-----------BND ", " "+position);
+        
         holder.username_tv.setText(usernames.get(position));
         int butterfly_id = user_butterfly_types.get(position);
-        Log.e("Butterfly ID : " , " " + butterfly_id);
         switch (butterfly_id){
             case 0:
                 holder.coverImage.setImageResource(R.drawable.orange_butterfly_image);
@@ -203,13 +195,27 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                 break;
         }
         holder.like_button.setOnClickListener(new View.OnClickListener() {
+            boolean temp;
             @Override
-            public void onClick(View v) {
-                myLikeListener.onItemClick(v, position);
-                //Log.e("ItemClicked", "Item Clicked at Position " + position);
-                /*indexOfClickedItem = position;
+            public void onClick(View v)
+            {
+                toggleLike( position, holder);
                 notifyItemChanged( position );
-                holder.bindItem( position );*/
+                /*
+                if(temp)
+                {
+                    holder.like_button.setImageResource(R.drawable.heart_unfilled);
+                    holder.bindItem( position );
+                    Log.i("CLK UN", " "+position);
+                }
+                else
+                {
+                    holder.like_button.setImageResource(R.drawable.heart_filled);
+                    holder.bindItem( position );
+                    Log.i("CLK L", " "+position);
+                }
+                notifyItemMoved(position, position);
+                */
 
             }
         });
@@ -245,51 +251,92 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public void setLikeStatus( int position, boolean status, int secondary_id )
     {
         final int myUserId = MainActivity.user_info.getUser_id();
-     /* Might not be needed to create and remove likes.
-        ---- Keeping it in just in case so I don't have to rewrite.
 
-        Call<List<ButterflyLike>> myCall = myService.getAllLikes();
-
-        myCall.enqueue(new Callback<List<ButterflyLike>>()
-        {
-            @Override
-            public void onResponse(Call<List<ButterflyLike>> call, Response<List<ButterflyLike>> response)
-            {
-
-            }
-
-            @Override
-            public void onFailure(Call<List<ButterflyLike>> call, Throwable t)
-            {
-
-            }
-        });
-
-      */
-
-     //if true, then remove like from DB and update notification at said position
-        //else, add like to DB and update notification at said location
-     if( !status )
-     {
-         NetworkCalls.createLike(myUserId, secondary_id);
-         Log.i("LIKE CREATED", " "+myUserId+", "+secondary_id);
-     }
-     else
-     {
-         if(secondary_id >= 0)
+         //if true, then remove like from DB and update notification at said position
+            //else, add like to DB and update notification at said location
+         if( !status )
          {
-             NetworkCalls.removeLike(secondary_id);
-             Log.i("LIKE REMOVED", "" + secondary_id);
+             NetworkCalls.createLike(myUserId, secondary_id);
+             Log.i("ADP L CREATED", " "+myUserId+", "+secondary_id);
+
          }
          else
          {
-             Log.e("NO LIKE", " Like could not be removed (incorrect index)");
+             if(secondary_id >= 0)
+             {
+                 NetworkCalls.removeLike(secondary_id);
+                 Log.i("ADP L DEL", "" + secondary_id);
+             }
+             else
+             {
+                 Log.e("NO LIKE", " Like could not be removed (incorrect index)");
+             }
          }
-     }
-
     }
 
     /**
      * Potentially needs a getViewAtPosition()
      */
+    /**
+     * When the user likes someone else's automated post that they finished
+     * an activity, the button will fill in and the server will record the like.
+     *
+     * PROGRESS----
+     * backend is set up, but un-liking is still not possible at the moment
+     */
+    protected void toggleLike(final int myPosition, final CustomViewHolder myHolder)
+    {
+        final int myUserId = MainActivity.user_info.getUser_id();
+        final int questID =dataList.get(dataList.size() -(myPosition + 1)).getQuest_report_id();
+        Call<List<ButterflyLike>> myCall = myService.getAllLikes();
+        myCall.enqueue(new Callback<List<ButterflyLike>>()
+                       {
+                           @Override
+                           public void onResponse(Call<List<ButterflyLike>> call, Response<List<ButterflyLike>> response)
+                           {
+                               boolean isLiked = false, isFound = false;
+                               int likePosition = -1;
+
+
+                               if( response.isSuccess() )
+                               {
+                                   final List<ButterflyLike> likeList = response.body();
+
+                                   for (ButterflyLike curLike : likeList)
+                                   {
+                                       if (!isLiked && ((curLike.getUser_id() == myUserId) && (curLike.getQuestReportId() == questID)))
+                                       {
+                                           //Check to see if user id and the quest report id are found together
+                                           Log.e("FOUND LIKE", " Found the butterfly like.");
+                                           isLiked = true;
+                                           break;
+                                       }
+                                   }
+
+                                   if (!isLiked)
+                                   {
+                                       Log.i("TGL UN", "Item " + myPosition + " is unliked");
+                                       setLikeStatus(myPosition, isLiked, questID);
+                                       myHolder.like_button.setImageResource(R.drawable.heart_unfilled);
+                                       notifyItemChanged(myPosition);
+                                       //myLikeButton.setImageResource(R.drawable.heart_unfilled);
+                                   } else
+                                   {
+                                       Log.i("TGL L", "Item " + myPosition + " is liked");
+                                       setLikeStatus(myPosition, isLiked, myPosition);
+                                       myHolder.like_button.setImageResource(R.drawable.heart_filled);
+                                       notifyItemChanged(myPosition);
+                                       // myLikeButton.setImageResource(R.drawable.heart_filled);
+                                   }
+
+                               }
+                           }
+
+                           @Override
+                           public void onFailure(Call<List<ButterflyLike>> call, Throwable t)
+                           {
+                           }
+                       }
+        );
+    }
 }

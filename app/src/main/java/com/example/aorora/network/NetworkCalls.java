@@ -2,6 +2,7 @@ package com.example.aorora.network;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
@@ -237,10 +238,21 @@ public class NetworkCalls {
      * To be used for when the user hits the like button on a notification
      * @param butterfly_like_id
      */
-    public static void removeLike( int butterfly_like_id)
+    public static void removeLike(final int butterfly_like_id)
     {
-        Call<ButterflyLikeCreateReturn> call = service.removeLike( butterfly_like_id);
-        //Call<ButterflyLike> call = service.createLike(butterfly_id, user_id, quest_id);
+        Call<Void> call = service.removeLike( butterfly_like_id);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                //Toast.makeText(context, "Quest Report Created ID: " + response.body(), Toast.LENGTH_SHORT).show();
+                Log.i("LIKE REMOVED", "Like #"+butterfly_like_id);
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                // Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                Log.e("LIKE REMOVED", "Like #"+butterfly_like_id+" could not be removed.\n", t);
+            }
+        });
     }
 
     //public static void updateLike(int )
