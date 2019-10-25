@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.aorora.adapter.HorizontalAdapter;
 import com.example.aorora.adapter.HorizontalMountainAdapter;
@@ -112,8 +113,9 @@ public class MindfullnessWalking extends AppCompatActivity implements View.OnCli
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            to_navigate = new Intent(mindfullnessWalking, CommunityPage.class);
-            startActivity(to_navigate);
+            Toast.makeText(MindfullnessWalking.this, "Community page is under maintenance.", Toast.LENGTH_SHORT).show();
+            //to_navigate = new Intent(mindfullnessWalking, CommunityPage.class);
+            //startActivity(to_navigate);
         }
         else if(view_id == exit_button.getId())
         {

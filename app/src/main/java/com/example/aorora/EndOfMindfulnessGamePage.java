@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.plattysoft.leonids.ParticleSystem;
 
@@ -128,8 +129,9 @@ public class EndOfMindfulnessGamePage extends AppCompatActivity implements View.
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            to_navigate = new Intent(endOfMindfulnessGamePage, CommunityPage.class);
-            startActivity(to_navigate);
+            Toast.makeText(EndOfMindfulnessGamePage.this, "Community page is under maintenance.", Toast.LENGTH_SHORT).show();
+            //to_navigate = new Intent(endOfMindfullnessGamePage, CommunityPage.class);
+            //startActivity(to_navigate);
         }
     }
 }

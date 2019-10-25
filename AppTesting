@@ -1,0 +1,16 @@
+1) Meditation quest: If the chosen time is 5 minutes, the app will only run the feature for roughly 2 minutes and then 
+skip over to the "quest completed" page and will display the message "Something went wrong, please try again later."
+
+2) Meditation quest: If the chosen time is 3 minutes, the app will only run the feature for roughly 1 minute and then 
+skip over to the "quest completed" page and will display the message "Something went wrong, please try again later."
+
+3) Mindfulness Breathing: If 5 breaths is chosen, the app will only prompt the user to take 2 breaths. This is not an issue
+when 10 or 15 breaths are selected.
+
+4) Mindfulness Breathing: Repeatedly tapping on the button the user is supposed to hold on to as they breathe in will cause
+the audio to cut out.
+
+5) The settings (gear) button is unresponsive on all pages that it appears on.
+
+6) The app will not allow the user to "swipe" out of the community page, only letting the user access other pages of the app
+with the bottom row of buttons. This is not an issue on any other pages.

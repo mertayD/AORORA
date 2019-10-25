@@ -155,8 +155,9 @@ public class PollenStoreDailyQuestPage extends AppCompatActivity implements View
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            to_navigate = new Intent(pollenStoreDailyQuestPage, CommunityPage.class);
-            startActivity(to_navigate);
+            Toast.makeText(PollenStoreDailyQuestPage.this, "Community page is under maintenance.", Toast.LENGTH_SHORT).show();
+            //to_navigate = new Intent(pollenStoreDailyQuestPage, CommunityPage.class);
+            //startActivity(to_navigate);
         }
     }
 }

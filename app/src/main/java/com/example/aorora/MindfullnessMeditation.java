@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.aorora.ClickListener.SpinnerActivity;
 import com.example.aorora.adapter.HorizontalAdapter;
@@ -49,6 +50,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
     int game_theme;
     com.example.aorora.adapter.HorizontalAdapter horizontalAdapter;
     com.example.aorora.adapter.HorizontalTimeAdapter horizontalTimeAdapter;
+    TextView text_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -208,15 +210,16 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            to_navigate = new Intent(mindfulnessMeditation, CommunityPage.class);
-            startActivity(to_navigate);
+            Toast.makeText(MindfullnessMeditation.this, "Community page is under maintenance", Toast.LENGTH_SHORT).show();
+            //to_navigate = new Intent(mindfulnessMeditation, CommunityPage.class);
+            //startActivity(to_navigate);
         }
         else if(view_id == play_button.getId())
         {
             boolean two_digit = false;
             int duration_int = 0;
-            duration_string = String.valueOf(text_view.getText());
-            if(duration_string.equals("3 minutes"))
+            //duration_string = String.valueOf(duration_selection_spinner.getSelectedItem());
+            if(duration_string.equals("Short"))
             {
                 duration_int = 180000;
             }
@@ -224,7 +227,11 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
             {
                 duration_int = 300000;
             }
-
+            else
+            {
+                duration_int = 3;
+            }
+            */
             to_navigate = new Intent(mindfulnessMeditation, MindfulnessMeditationGame_R.class);
             to_navigate.putExtra("Theme",game_theme);
             //to_navigate.putExtra("NavigatedFrom", -2);

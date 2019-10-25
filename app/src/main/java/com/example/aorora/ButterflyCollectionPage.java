@@ -122,8 +122,9 @@ public class ButterflyCollectionPage extends AppCompatActivity implements View.O
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            to_navigate = new Intent(butterflyCollection, CommunityPage.class);
-            startActivity(to_navigate);
+            Toast.makeText(ButterflyCollectionPage.this, "Community page is under maintenance.", Toast.LENGTH_SHORT).show();
+            //to_navigate = new Intent(butterflyCollection, CommunityPage.class);
+            //startActivity(to_navigate);
         }
         else if(view_id == back_button.getId())
         {
