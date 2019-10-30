@@ -150,7 +150,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                            }
             );
 
-            return isLiked;
+            //Placeholder until I figure out what I need
+            return true;
         }
     }
 
