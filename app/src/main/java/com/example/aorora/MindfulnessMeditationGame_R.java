@@ -30,8 +30,6 @@ import static com.example.aorora.MainActivity.user_info;
 
 public class MindfulnessMeditationGame_R extends AppCompatActivity implements View.OnClickListener {
 
-    int gameDuration;
-
     ImageView outer_most_ring;
     ImageView outer_ring;
     ImageView inner_ring;

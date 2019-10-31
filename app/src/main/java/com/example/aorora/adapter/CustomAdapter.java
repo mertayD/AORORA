@@ -169,7 +169,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         holder.txtTitle.setText(desc);
         holder.bindItem( position );
         Log.e("-----------BND ", " "+position);
-        
         holder.username_tv.setText(usernames.get(position));
         int butterfly_id = user_butterfly_types.get(position);
         switch (butterfly_id){
@@ -220,8 +219,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
             }
         });
-
-
     }
 
 
@@ -233,7 +230,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     }
 
     /**
-     *
      * @param position
      * @return the quest report ID at the item's position.
      */
