@@ -221,19 +221,21 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         {
             boolean two_digit = false;
             int duration_int = 0;
-            //duration_string = String.valueOf(duration_selection_spinner.getSelectedItem());
+            duration_string = String.valueOf(text_view.getText());
             if(duration_string.equals("Short"))
-            {
-                duration_int = 180000;
-            }
-            else if(duration_string.equals("5 minutes"))
-            {
-                duration_int = 300000;
-            }
-            else
-            {
-                duration_int = 3;
-            }
+                //duration_string = String.valueOf(duration_selection_spinner.getSelectedItem());
+                if(duration_string.equals("3 minutes"))
+                {
+                    duration_int = 1;
+                }
+                else if(duration_string.equals("5 minutes"))
+                {
+                    duration_int = 2;
+                }
+                else
+                {
+                    duration_int = 3;
+                }
 
             to_navigate = new Intent(mindfulnessMeditation, MindfulnessMeditationGame_R.class);
             to_navigate.putExtra("Theme",game_theme);
