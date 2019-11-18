@@ -194,14 +194,16 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
                 hint_walking.setVisibility(View.INVISIBLE);
                 if(stage_counter == 0)
                 {
-                    body = "You just took your first step to grow your flower";
+                    body = "You just took your first step"; //to grow your flower"; ---Cheap fix because we still may have a flower, but as a desert one
                     notify=new Notification.Builder
                             (getApplicationContext()).setContentTitle(title).setContentText(body).
                             setContentTitle(subject).setSmallIcon(R.drawable.walking_loading_25).build();
                     notify.flags |= Notification.FLAG_AUTO_CANCEL;
                     notif.notify(0, notify);
-                    animationView.setAnimation(R.raw.stage_1);
-                    animationView.playAnimation();
+                    /* Commented out until we can get the animated version of the desert flower
+                        animationView.setAnimation(R.raw.stage_1);
+                        animationView.playAnimation();
+                    */
                     walking_loading.setImageResource(R.drawable.walking_loading_25);
                 }
                 else if(stage_counter == 5)
@@ -210,18 +212,22 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
                     notify=new Notification.Builder
                             (getApplicationContext()).setContentTitle(title).setContentText(body).
                             setContentTitle(subject).setSmallIcon(R.drawable.walking_loading_50).build();
-                    animationView.setAnimation(R.raw.stage_2);
-                    animationView.playAnimation();
+                    /* Commented out until we can get the animated version of the desert flower
+                        animationView.setAnimation(R.raw.stage_2);
+                        animationView.playAnimation();
+                    */
                     walking_loading.setImageResource(R.drawable.walking_loading_50);
                 }
                 else if(stage_counter == 10)
                 {
-                    body = "Your flower reached the stage 2! Keep walking";
+                    body = "Your flower reached the stage 3! Keep walking";
                     notify=new Notification.Builder
                             (getApplicationContext()).setContentTitle(title).setContentText(body).
                             setContentTitle(subject).setSmallIcon(R.drawable.walking_loading_75).build();
-                    animationView.setAnimation(R.raw.stage_3);
-                    animationView.playAnimation();
+                    /* Commented out until we can get the animated version of the desert flower
+                        animationView.setAnimation(R.raw.stage_3);
+                        animationView.playAnimation();
+                    */
                     walking_loading.setImageResource(R.drawable.walking_loading_75);
                 }
                 else if(stage_counter == 15)

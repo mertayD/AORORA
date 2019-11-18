@@ -99,8 +99,8 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         popup_quick_access.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-             /*   try {
+                /*
+                try {
                     if (buttonClick.isPlaying()) {
                         buttonClick.stop();
                         buttonClick.release();
@@ -109,7 +109,8 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
                 } catch(Exception e) { e.printStackTrace(); }
 
                 buttonClick = MediaPlayer.create(getBaseContext(), R.raw.button1);
-*/
+                */
+
                 ImageView popup_quick_acces_image = (ImageView) popup_quick_access.findViewById(R.id.pollen_score_layout_imageview);
                 if(is_menu_inflated)
                 {

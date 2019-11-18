@@ -7,13 +7,13 @@ public class HolderCommunityPage {
 
     public List<String> username;
     public List<Integer> user_butterfly_id;
-    public List<Integer> quest_type;
+    public List<Integer> interaction_type;
 
 
     public HolderCommunityPage() {
         this.username = new ArrayList<>();
         this.user_butterfly_id = new ArrayList<>();
-        this.quest_type = new ArrayList<>();
+        this.interaction_type = new ArrayList<>();
     }
 
     public List<String> getUsername() {
@@ -32,12 +32,12 @@ public class HolderCommunityPage {
         this.user_butterfly_id.add(user_butterfly_id);
     }
 
-    public List<Integer> getQuest_type() {
-        return quest_type;
+    public List<Integer> getInteraction_type() {
+        return interaction_type;
     }
 
-    public void setQuest_type(int quest_type) {
-        this.quest_type.add(quest_type);
+    public void setInteraction_type(int quest_type) {
+        this.interaction_type.add(quest_type);
     }
 
 }

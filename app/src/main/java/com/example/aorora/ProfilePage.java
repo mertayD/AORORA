@@ -224,7 +224,7 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
-        Call<UserInteraction> call = service.userInteract(user_sender_id,user_receiver_id, 1, "LIKE 2 to 3");
+        Call<UserInteraction> call = service.userInteract(user_sender_id,user_receiver_id, 1, -1,"LIKE 2 to 3");
         call.enqueue(new Callback<UserInteraction>() {
 
             @Override
