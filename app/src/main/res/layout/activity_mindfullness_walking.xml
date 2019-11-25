@@ -55,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/breathing_button" />
+        app:srcCompat="@drawable/mindfulness_meditation_button" />
 
     <ImageButton
         android:id="@+id/play_button_walking"
@@ -125,7 +125,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/breathing_button" />
+        app:srcCompat="@drawable/mindfulness_meditation_button" />
 
 
     <ImageButton

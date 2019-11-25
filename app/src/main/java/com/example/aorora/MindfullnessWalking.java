@@ -67,9 +67,9 @@ public class MindfullnessWalking extends AppCompatActivity implements View.OnCli
         generateDataListHorizontal();
         recyclerView.smoothScrollToPosition(3);
 
-        infinite_blink = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.infinite_blink);
-        alphaChannelImage.startAnimation(infinite_blink);
+        //infinite_blink = AnimationUtils.loadAnimation(getApplicationContext(),
+          //      R.anim.infinite_blink);
+        //alphaChannelImage.startAnimation(infinite_blink);
     }
 
     private void generateDataListHorizontal() {

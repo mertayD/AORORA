@@ -111,26 +111,32 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         remaining_sec.setText("3 Seconds");
         if(getIntent().hasExtra("TimerValue"))
         {
-            int text = getIntent().getIntExtra("TimerValue", 1);
+            //Changing default value from 1 to 2
+            int text = getIntent().getIntExtra("TimerValue", 2);
+           /*
+           Disabling 5 breath option for testing purposes
             if(text == 1)
             {
                 initial_game_count = text;
                 possible_points = 5;
                 text = 5;
             }
-
-            else if( text == 2)
+            */
+            if( text == 2)
             {
                 initial_game_count = text;
                 possible_points = 10;
                 text = 10;
             }
 
+            /*
+            Disabling 15 breath option for testing purposes
             else{
                 initial_game_count = text;
                 possible_points = 15;
                 text = 15;
             }
+            */
             remaining_breaths.setText(text + " Breaths");
         }
         enlarge = AnimationUtils.loadAnimation(getApplicationContext(),
