@@ -167,9 +167,8 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            Toast.makeText(MindfullnessBreathing.this, "Community page is under maintenance.", Toast.LENGTH_SHORT).show();
-            //to_navigate = new Intent(mindfullnessBreathing, CommunityPage.class);
-            //startActivity(to_navigate);
+            to_navigate = new Intent(mindfullnessBreathing, CommunityPage.class);
+            startActivity(to_navigate);
         }
         else if(view_id == play_button.getId())
         {
