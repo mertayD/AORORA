@@ -22,12 +22,17 @@ import android.widget.Toast;
 import com.example.aorora.R;
 import com.example.aorora.adapter.CustomAdapter;
 import com.example.aorora.adapter.GridViewAdapter;
+import com.example.aorora.interfaces.OnLikeListener;
 import com.example.aorora.interfaces.OnItemClickListener;
+import com.example.aorora.model.Butterfly;
+import com.example.aorora.model.ButterflyLike;
+import com.example.aorora.model.UserInteraction;
 import com.example.aorora.model.Quest;
 import com.example.aorora.model.QuestReport;
 import com.example.aorora.model.RetroPhoto;
 import com.example.aorora.model.UserInfo;
 import com.example.aorora.network.GetDataService;
+import com.example.aorora.network.NetworkCalls;
 import com.example.aorora.network.RetrofitClientInstance;
 
 import java.util.ArrayList;
@@ -37,7 +42,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.aorora.MainActivity.user_info;
 import static java.lang.Boolean.TRUE;
+import static java.lang.Math.min;
 
 public class CommunityPage extends AppCompatActivity implements View.OnClickListener {
 
@@ -55,15 +62,19 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     GestureDetector gestureDetector;
     ImageView friends_underline;
     ImageView notifications_underline;
+    ImageView community_like_button;
     TextView community_page_title_tv;
     LinearLayout tabs_ll;
     LinearLayout bar_ll;
     LinearLayout popup_menu_button;
     boolean is_menu_popped;
+    boolean is_liked;
     public View popup_menu;
     GetDataService service;
     //TEMPORARY VARIABLE
-    public HolderCommunityPage holder;
+    public HolderCommunityPage communityHolder;
+    OnItemClickListener mListener;
+    final int myUserId = MainActivity.user_info.getUser_id();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +86,12 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         is_menu_popped = false;
         progressDoalog = new ProgressDialog(communityPage);
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        holder = new HolderCommunityPage();
+        communityHolder = new HolderCommunityPage();
         home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
         community_button_bottombar.setImageResource(R.drawable.community_button_filled);
+        community_like_button = findViewById(R.id.like_button);
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
 
         popup_menu = (View) findViewById(R.id.include_popup_quick_access_menu_community_page);
@@ -109,6 +121,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
 
         gestureDetector = new GestureDetector(this, new MyGestureListener());
 
+        recyclerView.setHasFixedSize(true);
         recyclerView.setOnTouchListener(touchListener);
 
         popup_menu.setOnClickListener(new View.OnClickListener() {
@@ -130,26 +143,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                 progressDoalog.setMessage("Friends Loading....");
                 progressDoalog.show();
 
-                Call<List<UserInfo>> call = service.getCommunity();
-                call.enqueue(new Callback<List<UserInfo>>() {
-                    @Override
-                    public void onResponse(Call<List<UserInfo>> call, Response<List<UserInfo>> response) {
-                        if(response.isSuccess())//response.body().getUsername()
-                            {
-                                List<UserInfo> users = response.body();
-                                generateDataListGrid(users);
-                            }
-                            else
-                            {
-                                Toast.makeText(communityPage, "Something went wrong", Toast.LENGTH_SHORT).show();
-                            }
-                    }
-                    @Override
-                    public void onFailure(Call<List<UserInfo>> call, Throwable t) {
-                        Toast.makeText(communityPage, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-                        Log.e("ERROR CAUSE", "" + t.getMessage() +  " Cause  " + t.getCause());
-                    }
-                });
+                setFriends();
             }
         });
 
@@ -173,8 +167,8 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         }
         else
         {
-            //friends_tab_button.performClick();
-            notifications_tab_button.performClick();
+            friends_tab_button.performClick();
+            //notifications_tab_button.performClick();
         }
     }
 
@@ -191,15 +185,28 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     };
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataListLinear(List<QuestReport> questList,
+    private void generateDataListLinear(List<UserInteraction> questList,
                                         List<Integer> quest_type_ids,
                                         List<String> usernames,
                                         List<Integer> user_butterfly_types)
     {
-        linearAdapter = new com.example.aorora.adapter.CustomAdapter(this,questList,quest_type_ids,usernames, user_butterfly_types, getResources().getStringArray(R.array.mindfulness_description));
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CommunityPage.this);
+
+        linearAdapter = new CustomAdapter( this, questList, quest_type_ids, usernames, user_butterfly_types,
+                                                                      getResources().getStringArray(R.array.mindfulness_description),
+                                                                        new OnLikeListener() {
+                                                                            @Override
+                                                                            public boolean onLikeClick(View v, int position) {
+                                                                                Log.e("ItemClicked", "Item Clicked at Position " + position);
+                                                                                return toggleLike( position );
+
+                                                                            }
+                                                                        });
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(linearAdapter);
+
+
     }
 
     private void generateDataListGrid(List<UserInfo> community) {
@@ -233,6 +240,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
             to_navigate = new Intent(communityPage, HomeScreen.class);
             startActivity(to_navigate);
         }
+
     }
 
     public void toggle(boolean toggle)
@@ -259,7 +267,9 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         tabs_ll.setVisibility(visibility);
         bar_ll.setVisibility(visibility);
     }
-    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener
+    {
 
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2,
@@ -281,43 +291,79 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    public void setFriends()
+    {
+
+         Call<List<UserInfo>> call = null;
+         try
+         {
+            call = service.getCommunity();
+         }
+         catch(Exception e)
+        {
+
+         }
+        call.enqueue(new Callback<List<UserInfo>>() {
+            @Override
+            public void onResponse(Call<List<UserInfo>> call, Response<List<UserInfo>> response) {
+                if(response.isSuccess())//response.body().getUsername()
+                {
+                    progressDoalog.dismiss();
+                    List<UserInfo> users = response.body();
+                    generateDataListGrid(users);
+                }
+                else
+                {
+                    Toast.makeText(communityPage, "Something went wrong with response.", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<UserInfo>> call, Throwable t) {
+                Toast.makeText(communityPage, "Something went wrong with Friends, please try later!", Toast.LENGTH_SHORT).show();
+                Log.e("ERROR CAUSE", "" + t.getMessage() +  " Cause  " + t.getCause());
+            }
+        });
+    }
+
     public void setNotifications()
     {
-        holder = new HolderCommunityPage();
-        Call<List<QuestReport>> call = service.getAllQuestsInCommunity();
-        call.enqueue(new Callback<List<QuestReport>>() {
+        communityHolder = new HolderCommunityPage();
+        String querySet = String.valueOf(myUserId);
+
+        Call<List<UserInteraction>> call = service.getAllNotifications( querySet );
+        call.enqueue(new Callback<List<UserInteraction>>() {
 
             @Override
-            public void onResponse(Call<List<QuestReport>> call, Response<List<QuestReport>> response) {
+            public void onResponse(Call<List<UserInteraction>> call, Response<List<UserInteraction>> response) {
                 if(response.isSuccess())
                 {
                     progressDoalog.dismiss();
                     int quest_type;
                     final String user_name;
                     int user_butterfly_type_id;
-                    final List<QuestReport> questReportList = response.body();
+                    final List<UserInteraction> questReportList = response.body();
 
                     //reverses through the report list to get the top 20 easier
                     for (int i = questReportList.size()-1; i >= 0; i--)
                     {
-                        holder.setQuest_type(questReportList.get(i).getQuest_type_id());
+                        communityHolder.setInteraction_type(questReportList.get(i).getUser_interaction_type_id());
 
-                        getUserInfo(questReportList.get(i).getUser_id());
+                        getUserInfo(questReportList.get(i).getUser_initiator_id());
                     }
 
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            List<Integer> quest_type_ids = holder.getQuest_type();
-                            List<String> usernames = holder.getUsername();
-                            List<Integer> user_butterfly_types = holder.getUser_butterfly_id();
+                            List<Integer> interaction_type_ids = communityHolder.getInteraction_type();
+                            List<String> usernames = communityHolder.getUsername();
+                            List<Integer> user_butterfly_types = communityHolder.getUser_butterfly_id();
 
                             Log.e("List Size", "" + usernames.size());
                             Log.e("Report List", "" + questReportList.size());
 
 
-                            generateDataListLinear(questReportList, quest_type_ids, usernames, user_butterfly_types);
+                            generateDataListLinear(questReportList, interaction_type_ids, usernames, user_butterfly_types);
                         }
                     },500);
 
@@ -329,14 +375,15 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
             }
 
             @Override
-            public void onFailure(Call<List<QuestReport>> call, Throwable t) {
+            public void onFailure(Call<List<UserInteraction>> call, Throwable t) {
                 progressDoalog.dismiss();
                 Toast.makeText(CommunityPage.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void getUserInfo(int user_id) {
+    public void getUserInfo(int user_id)
+    {
 
         Call<UserInfo> call = service.getUserInfo(user_id);
         call.enqueue(new Callback<UserInfo>() {
@@ -354,8 +401,10 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                     Log.e("USERNAMES!!!!!!!!!!!!!", " " + u_name);
                     int u_b_id = response.body().getUser_current_butterfly();
 
-                    holder.setUsername(u_name);
-                    holder.setUser_butterfly_id(u_b_id);
+
+
+                    communityHolder.setUsername(u_name);
+                    communityHolder.setUser_butterfly_id(u_b_id);
                 }
                 else
                 {
@@ -370,6 +419,83 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         });
     }
 
+    /**
+     * When the user likes someone else's automated post that they finished
+     * an activity, the button will fill in and the server will record the like.
+     *
+     * PROGRESS----
+     * backend is set up, but un-liking is still not possible at the moment
+     */
 
+    protected boolean toggleLike(final int myPosition)
+    {
+
+        final int myUserId = MainActivity.user_info.getUser_id();
+        final int likeType = 3;
+        final int questID = linearAdapter.getItemQuestId(myPosition);
+        final int receiverID = linearAdapter.getReceiverId(myPosition);
+        final int userInteractionId = linearAdapter.getUserInteractionId(myPosition);
+        String querySet = myUserId+",7";
+
+        Call<List<UserInteraction>> myCall = service.getAllNotifications( querySet );
+        myCall.enqueue(new Callback<List<UserInteraction>>()
+                     {
+                         @Override
+                         public void onResponse(Call<List<UserInteraction>> call, Response<List<UserInteraction>> response)
+                         {
+                             ImageView myLikeButton = findViewById(myPosition);
+                             boolean isLiked = false, isFound = false;
+                             int likePosition = -1;
+
+
+                             if( response.isSuccess() )
+                             {
+                                 final List<UserInteraction> likeList = response.body();
+
+                                 for (UserInteraction curLike : likeList)
+                                 {
+                                     if (!isLiked && ((curLike.getUser_receiver_id() == myUserId) && (curLike.getQuest_record_id() == linearAdapter.getItemQuestId(myPosition))))
+                                     {
+                                         //Check to see if user id and the quest report id are found together
+                                         Log.e("FOUND_L COM", " Found the butterfly like, will remove.");
+                                         isLiked = true;
+                                         likePosition = curLike.getUser_interaction_id();
+                                         break;
+                                     }
+                                 }
+
+                                 if (!isLiked)
+                                 {
+                                     Log.e("COM UN", "Item " + myPosition + " is unliked");
+                                     Toast.makeText(CommunityPage.this, "Do the like stuff", Toast.LENGTH_SHORT).show();
+                                     linearAdapter.setLikeStatus(myPosition, isLiked, receiverID, likeType, questID);
+                                     setIsLiked(isLiked);
+                                 } else
+                                     {
+                                         Log.e("COM L", "Item " + myPosition + " is liked");
+                                         Toast.makeText(CommunityPage.this, "Do the dislike stuff", Toast.LENGTH_SHORT).show();
+                                         linearAdapter.setLikeStatus(myPosition, isLiked, receiverID, likeType, userInteractionId);
+                                         setIsLiked(isLiked);
+                                     }
+
+                                 progressDoalog.dismiss();
+                             }
+                         }
+
+                         @Override
+                         public void onFailure(Call<List<UserInteraction>> call, Throwable t)
+                         {
+                             progressDoalog.dismiss();
+                             Toast.makeText(CommunityPage.this, "There was a problem with retrieving the likes", Toast.LENGTH_SHORT).show();
+                         }
+                     }
+        );
+        return is_liked;
+    }
+
+    public void setIsLiked( boolean myStatus )
+    {
+        is_liked = myStatus;
+    }
 
 }

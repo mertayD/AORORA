@@ -60,13 +60,14 @@
         app:layout_constraintBottom_toTopOf="@+id/ll_m3_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline9">
+
         <ImageButton
             android:id="@+id/mindfullness_meditation_button"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="#00000000"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/mindfullness_meditation_icon" />
+            app:srcCompat="@drawable/mindfulness_meditation_icon" />
 
         <TextView
             android:layout_width="wrap_content"
