@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/mindfullness_meditation_button" />
+        app:srcCompat="@drawable/mindfulness_meditation_button" />
 
     <ImageButton
         android:id="@+id/play_button_walking"
@@ -85,15 +85,16 @@
 
     <ImageView
         android:id="@+id/alpha_channel_meditation_icon"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="24dp"
         android:alpha="0.5"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/mindfullness_meditation_button" />
+        app:srcCompat="@drawable/mindfulness_meditation_alpha" />
 
     <ImageButton
         android:id="@+id/exit_button_meditation"

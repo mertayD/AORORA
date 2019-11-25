@@ -84,6 +84,7 @@
             android:textSize="6pt" />
 
         <ImageView
+            android:id="@+id/like_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"

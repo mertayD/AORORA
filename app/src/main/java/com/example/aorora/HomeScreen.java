@@ -53,6 +53,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     ConstraintLayout speck_holder_cl;
     MediaPlayer ring;
     MediaPlayer spec_alert;
+    MediaPlayer buttonClick;
     boolean page_left;
     ImageView profile_butterfly;
     View popup_quick_access;
@@ -82,19 +83,34 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         quick_menu = (LinearLayout) findViewById(R.id.include_popup_quick_access_menu);
         is_menu_inflated = false;
 
+        //buttonClick = MediaPlayer.create(getBaseContext(), R.raw.button1);
+
+
         quick_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent to_navigate = new Intent(homeScreen, PollenStoreDailyQuestPage.class);
+                Toast.makeText(HomeScreen.this, "Pollen Shop is underdevelopment", Toast.LENGTH_SHORT).show();
+               /* ---------------- Not working, underdevelopment --------------
+                Intent to_navigate = new Intent(homeScreen, PollenStoreDailyQuestPage.class);
                 to_navigate.putExtra("NavigatedFrom", 1);
                 startActivity(to_navigate);*/
-                //button not working right now
-                Toast.makeText(HomeScreen.this, "Pollen shop is under development", Toast.LENGTH_SHORT).show();
             }
         });
         popup_quick_access.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
+                try {
+                    if (buttonClick.isPlaying()) {
+                        buttonClick.stop();
+                        buttonClick.release();
+                      buttonClick = MediaPlayer.create(getBaseContext(), R.raw.button1);
+                    } buttonClick.start();
+                } catch(Exception e) { e.printStackTrace(); }
+
+                buttonClick = MediaPlayer.create(getBaseContext(), R.raw.button1);
+                */
+
                 ImageView popup_quick_acces_image = (ImageView) popup_quick_access.findViewById(R.id.pollen_score_layout_imageview);
                 if(is_menu_inflated)
                 {
@@ -219,6 +235,8 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
 
         pop_up_twobuttons_button.setOnClickListener(new ImageButton.OnClickListener() {
             public void onClick(View v) {
+
+
                 if(!isButtonsPoppedUp) {
                     pop_up_twobuttons_button.setImageDrawable(getResources().getDrawable(R.drawable.menu_button_unfilled));
                     quest_button.setVisibility(View.VISIBLE);
@@ -339,9 +357,8 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            Toast.makeText(HomeScreen.this, "Community page is under maintenance.", Toast.LENGTH_SHORT).show();
-            //to_navigate = new Intent(homeScreen, CommunityPage.class);
-            //startActivity(to_navigate);
+            to_navigate = new Intent(homeScreen, CommunityPage.class);
+            startActivity(to_navigate);
         }
         else if(view_id == quest_button_bottombar.getId() || view_id == quest_button.getId())
         {

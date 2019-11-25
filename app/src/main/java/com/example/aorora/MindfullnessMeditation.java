@@ -2,6 +2,7 @@ package com.example.aorora;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,19 +43,24 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
     ImageButton community_button_bottombar;
     ImageButton quest_button_bottombar;
     ImageView alpha_channel_iv;
+    TextView text_view;
     Animation infinite_blink;
     ImageButton exit_button;
     RecyclerView recyclerView;
     RecyclerView recyclerViewTime;
     int game_theme;
+
+    MediaPlayer buttonClick;
+
     com.example.aorora.adapter.HorizontalAdapter horizontalAdapter;
     com.example.aorora.adapter.HorizontalTimeAdapter horizontalTimeAdapter;
-    TextView text_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mindfullness_meditation);
+
+        buttonClick = MediaPlayer.create(getBaseContext(), R.raw.button1);
 
         mindfulnessMeditation = this;
         game_theme = 0;
@@ -89,7 +95,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
     private void generateDataListHorizontal() {
         horizontalAdapter = new com.example.aorora.adapter.HorizontalAdapter(this, new OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(View v, int position) {Log.e("ItemClicked", "Item Clicked at Position " + position);
             }
         });
 
@@ -127,7 +133,6 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         int firstVisibleIndex = layoutManager.findFirstVisibleItemPosition();
         int lastVisibleIndex = layoutManager.findLastVisibleItemPosition();
-        TextView text_view;
         for(int visibleIndex = firstVisibleIndex; visibleIndex < lastVisibleIndex; visibleIndex++)
         {
             HorizontalAdapter.HorizontalViewHolder viewHolder = (HorizontalAdapter.HorizontalViewHolder) recyclerView.findViewHolderForAdapterPosition(visibleIndex);
@@ -209,9 +214,8 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            Toast.makeText(MindfullnessMeditation.this, "Community page is under maintenance", Toast.LENGTH_SHORT).show();
-            //to_navigate = new Intent(mindfulnessMeditation, CommunityPage.class);
-            //startActivity(to_navigate);
+            to_navigate = new Intent(mindfulnessMeditation, CommunityPage.class);
+            startActivity(to_navigate);
         }
         else if(view_id == play_button.getId())
         {
@@ -219,19 +223,19 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
             int duration_int = 0;
             duration_string = String.valueOf(text_view.getText());
             if(duration_string.equals("Short"))
-            //duration_string = String.valueOf(duration_selection_spinner.getSelectedItem());
-            if(duration_string.equals("3 minutes"))
-            {
-                duration_int = 1;
-            }
-            else if(duration_string.equals("5 minutes"))
-            {
-                duration_int = 2;
-            }
-            else
-            {
-                duration_int = 3;
-            }
+                //duration_string = String.valueOf(duration_selection_spinner.getSelectedItem());
+                if(duration_string.equals("3 minutes"))
+                {
+                    duration_int = 1;
+                }
+                else if(duration_string.equals("5 minutes"))
+                {
+                    duration_int = 2;
+                }
+                else
+                {
+                    duration_int = 3;
+                }
 
             to_navigate = new Intent(mindfulnessMeditation, MindfulnessMeditationGame_R.class);
             to_navigate.putExtra("Theme",game_theme);
