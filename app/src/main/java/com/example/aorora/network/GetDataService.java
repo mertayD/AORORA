@@ -6,6 +6,7 @@ import com.example.aorora.model.ButterflyLikeCreateReturn;
 import com.example.aorora.model.DailyTask;
 import com.example.aorora.model.DailyTaskReturn;
 import com.example.aorora.model.MoodReportIdReturn;
+import com.example.aorora.model.NotificationCreateReturn;
 import com.example.aorora.model.QuesrtReportCreateReturn;
 import com.example.aorora.model.Quest;
 import com.example.aorora.model.QuestReport;
@@ -37,13 +38,13 @@ public interface GetDataService {
     @GET("/butterflies?format=json")
     Call<List<Butterfly>> getButterflyInfo();
 
-    @POST("/userinteraction")
+    @POST("/notification")
     @FormUrlEncoded
-    Call<UserInteractionCreateReturn> createLike(@Field("initiator_user_id") Integer sender,
-                                                 @Field("receiver_user_id") Integer receiver,
-                                                 @Field("user_interaction_type_id") Integer interaction_type_id,
-                                                 @Field("quest_report_id") Integer quest_report_id,
-                                                 @Field("user_interaction_content") String content);
+    Call<NotificationCreateReturn> createLike(@Field("initiator_user_id") Integer sender,
+                                              @Field("receiver_user_id") Integer receiver,
+                                              @Field("user_interaction_type_id") Integer interaction_type_id,
+                                              @Field("quest_report_id") Integer quest_report_id,
+                                              @Field("user_interaction_content") String content);
 
     @DELETE("/butterflylike/{butterfly_like_id}/")
     Call<Void> removeLike(@Path("butterfly_like_id") Integer butterfly_like_id);
@@ -86,7 +87,7 @@ public interface GetDataService {
     //To get check for multiple variables on a single parameter, append __in to the end of your parameter
     //Check the github for the django-rest URL filter for more info:  https://github.com/miki725/django-url-filter
     @GET("/userinteraction/")//?receiver_user_id__in={user_id},7"
-    Call<List<UserInteraction>> getAllNotifications(@Query("receiver_user_id__in") String user_id);
+    Call<List<UserInteraction>> getAllNotifications(@Field("receiver_user_id") int receiver_user_id);
 
 
 
