@@ -16,6 +16,7 @@ import com.example.aorora.model.ButterflyLikeCreateReturn;
 import com.example.aorora.model.DailyTask;
 import com.example.aorora.model.DailyTaskReturn;
 import com.example.aorora.model.MoodReportIdReturn;
+import com.example.aorora.model.NotificationCreateReturn;
 import com.example.aorora.model.QuesrtReportCreateReturn;
 import com.example.aorora.model.UserInfo;
 import com.example.aorora.model.UserInteractionCreateReturn;
@@ -222,14 +223,14 @@ public class NetworkCalls {
     public static void createLike( int sender_id, int receiver_id , int interaction_type, int quest_report_id, String context)
     {
 
-        Call<UserInteractionCreateReturn> call = service.createLike( sender_id, receiver_id, interaction_type, quest_report_id, context);
-        call.enqueue(new Callback<UserInteractionCreateReturn>() {
+        Call<NotificationCreateReturn> call = service.createLike( sender_id, receiver_id, interaction_type, quest_report_id, context);
+        call.enqueue(new Callback<NotificationCreateReturn>() {
             @Override
-            public void onResponse(Call<UserInteractionCreateReturn> call, Response<UserInteractionCreateReturn> response) {
+            public void onResponse(Call<NotificationCreateReturn> call, Response<NotificationCreateReturn> response) {
                 //Toast.makeText(context, "Quest Report Created ID: " + response.body(), Toast.LENGTH_SHORT).show();
             }
             @Override
-            public void onFailure(Call<UserInteractionCreateReturn> call, Throwable t) {
+            public void onFailure(Call<NotificationCreateReturn> call, Throwable t) {
                // Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });

@@ -87,7 +87,7 @@ public interface GetDataService {
     //To get check for multiple variables on a single parameter, append __in to the end of your parameter
     //Check the github for the django-rest URL filter for more info:  https://github.com/miki725/django-url-filter
     @GET("/userinteraction/")//?receiver_user_id__in={user_id},7"
-    Call<List<UserInteraction>> getAllNotifications(@Field("receiver_user_id") int receiver_user_id);
+    Call<List<UserInteraction>> getAllNotifications(@Query("receiver_user_id") List<Integer> receiver_user_id);
 
 
 

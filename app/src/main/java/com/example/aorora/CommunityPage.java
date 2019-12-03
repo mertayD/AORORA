@@ -36,6 +36,7 @@ import com.example.aorora.network.NetworkCalls;
 import com.example.aorora.network.RetrofitClientInstance;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import retrofit2.Call;
@@ -328,9 +329,10 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     public void setNotifications()
     {
         communityHolder = new HolderCommunityPage();
-        int querySet =  myUserId;//String.valueOf(myUserId);
+        int querySet =  myUserId, baseCase = 7;//String.valueOf(myUserId);
 
-        Call<List<UserInteraction>> call = service.getAllNotifications( querySet );
+
+        Call<List<UserInteraction>> call = service.getAllNotifications( Arrays.asList(querySet, baseCase) );
         call.enqueue(new Callback<List<UserInteraction>>() {
 
             @Override
@@ -435,9 +437,9 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         final int questID = linearAdapter.getItemQuestId(myPosition);
         final int receiverID = linearAdapter.getReceiverId(myPosition);
         final int userInteractionId = linearAdapter.getUserInteractionId(myPosition);
-        String querySet = myUserId+",7";
+        int querySet = myUserId, baseCase = 7;
 
-        Call<List<UserInteraction>> myCall = service.getAllNotifications( myUserId );
+        Call<List<UserInteraction>> myCall = service.getAllNotifications( Arrays.asList(myUserId,baseCase ));
         myCall.enqueue(new Callback<List<UserInteraction>>()
                      {
                          @Override
