@@ -205,7 +205,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                         butterfly_image.clearAnimation();
                         myTimer.cancel();
                     }
-                    breathing_music.pause();
+                    //breathing_music.pause();
                     return false;
                 }
                 return false;

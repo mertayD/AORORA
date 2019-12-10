@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.LocalBroadcastManager;
@@ -52,6 +53,7 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
     Context mindfulness_walking;
     ConstraintLayout walking_game_layout;
     int game_theme;
+    MediaPlayer walking_music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +67,20 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
         myAlpha = new AlphaModifier(1000, 10, 0, 8000, new AccelerateInterpolator());
         mindfulness_walking = this;
 
+        walking_music = MediaPlayer.create(MindfullnessWalkingGame.this,R.raw.mindfulnesswalking);
 
         flap = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.butterfly_flap);
         flap.setRepeatCount(4);
+
+        if(!walking_music.isPlaying())
+        {
+            walking_music.start();
+        }
+
+        Toast.makeText(MindfullnessWalkingGame.this,
+                "Listen to the prompt as you walk slowly in a safe place\n" +
+                        "\n.", Toast.LENGTH_SHORT).show();
 
         walking = this;
         count = 0;
@@ -100,6 +112,10 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(walking_music.isPlaying())
+                {
+                    walking_music.stop();
+                }
                 Intent to_navigate = new Intent(MindfullnessWalkingGame.this, MindfullnessWalking.class);
                 startActivity(to_navigate);
                 stopTracking();
@@ -118,7 +134,7 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
         };
         startTracking();
 
-        walking_loading.setOnClickListener(new View.OnClickListener() {
+        /*walking_loading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent to_navigate = new Intent(mindfulness_walking, ReceiptPage.class);
@@ -132,9 +148,9 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
                 NetworkCalls.updateDailyTaskM3(user_info.getUser_id(), 1, walking);
                 NetworkCalls.createQuestReport(3, user_info.getUser_id(),mindfulness_walking);
             }
-        });
+        });*/
 
-        walking_loading.setClickable(false);
+//        walking_loading.setClickable(false);
 
     }
 /*
