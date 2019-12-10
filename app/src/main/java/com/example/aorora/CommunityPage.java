@@ -328,7 +328,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     public void setNotifications()
     {
         communityHolder = new HolderCommunityPage();
-        String querySet = String.valueOf(myUserId);
+        int querySet =  myUserId;//String.valueOf(myUserId);
 
         Call<List<UserInteraction>> call = service.getAllNotifications( querySet );
         call.enqueue(new Callback<List<UserInteraction>>() {
@@ -437,7 +437,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         final int userInteractionId = linearAdapter.getUserInteractionId(myPosition);
         String querySet = myUserId+",7";
 
-        Call<List<UserInteraction>> myCall = service.getAllNotifications( querySet );
+        Call<List<UserInteraction>> myCall = service.getAllNotifications( myUserId );
         myCall.enqueue(new Callback<List<UserInteraction>>()
                      {
                          @Override
