@@ -30,6 +30,8 @@ import static com.example.aorora.MainActivity.user_info;
 
 public class MindfulnessMeditationGame_R extends AppCompatActivity implements View.OnClickListener {
 
+    int gameDuration;
+
     ImageView outer_most_ring;
     ImageView outer_ring;
     ImageView inner_ring;
@@ -53,8 +55,6 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
     boolean is_third_cycle;
     boolean is_forth_cycle;
 
-    int gameDuration;
-
     ConstraintLayout layout;
 
     Vibrator myVibrate;
@@ -74,7 +74,7 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
 
         setContentView(R.layout.activity_mindfulness_meditation_game__r);
 
-       tutorialPopUp();
+        tutorialPopUp();
 
 
         is_first_cycle = false;
@@ -187,6 +187,7 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
                     break;
             }
         }
+
         if(meditation_game.hasExtra("Duration"))
         {
             gameDuration = meditation_game.getIntExtra("Duration", 1);
