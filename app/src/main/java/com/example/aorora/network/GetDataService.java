@@ -15,6 +15,7 @@ import com.example.aorora.model.UserAuth;
 import com.example.aorora.model.UserIdReturn;
 import com.example.aorora.model.UserInfo;
 import com.example.aorora.model.UserInteraction;
+import com.example.aorora.model.Notification;
 import com.example.aorora.model.UserInteractionCreateReturn;
 
 import java.util.List;
@@ -86,8 +87,8 @@ public interface GetDataService {
 
     //To get check for multiple variables on a single parameter, append __in to the end of your parameter
     //Check the github for the django-rest URL filter for more info:  https://github.com/miki725/django-url-filter
-    @GET("/userinteraction/")//?receiver_user_id__in={user_id},7"
-    Call<List<UserInteraction>> getAllNotifications(@Field("receiver_user_id") int receiver_user_id);
+    @GET("/notification/")//?receiver_user_id__in={user_id},7"
+    Call<List<Notification>> getAllNotifications(@Query("notification_user_id") List<Integer> receiver_user_id);
 
 
 

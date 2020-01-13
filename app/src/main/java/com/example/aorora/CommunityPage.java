@@ -1,5 +1,6 @@
 package com.example.aorora;
 
+import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +37,7 @@ import com.example.aorora.network.NetworkCalls;
 import com.example.aorora.network.RetrofitClientInstance;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import retrofit2.Call;
@@ -328,27 +330,28 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     public void setNotifications()
     {
         communityHolder = new HolderCommunityPage();
-        int querySet =  myUserId;//String.valueOf(myUserId);
+        int querySet =  myUserId, baseCase = 7;//String.valueOf(myUserId);
 
-        Call<List<UserInteraction>> call = service.getAllNotifications( querySet );
-        call.enqueue(new Callback<List<UserInteraction>>() {
+
+        Call<List<Notificaiton>> call = service.getAllNotifications( Arrays.asList(querySet, baseCase) );
+        call.enqueue(new Callback<List<Notification>>() {
 
             @Override
-            public void onResponse(Call<List<UserInteraction>> call, Response<List<UserInteraction>> response) {
+            public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {
                 if(response.isSuccess())
                 {
                     progressDoalog.dismiss();
                     int quest_type;
                     final String user_name;
                     int user_butterfly_type_id;
-                    final List<UserInteraction> questReportList = response.body();
+                    final List<Notification> questReportList = response.body();
 
                     //reverses through the report list to get the top 20 easier
                     for (int i = questReportList.size()-1; i >= 0; i--)
                     {
-                        communityHolder.setInteraction_type(questReportList.get(i).getUser_interaction_type_id());
+                        communityHolder.setInteraction_type(questReportList.get(i).getNotification_type_id());
 
-                        getUserInfo(questReportList.get(i).getUser_initiator_id());
+                        getUserInfo(questReportList.get(i).getNotificaiton_user_id());
                     }
 
                     final Handler handler = new Handler();
@@ -375,7 +378,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
             }
 
             @Override
-            public void onFailure(Call<List<UserInteraction>> call, Throwable t) {
+            public void onFailure(Call<List<Notification>> call, Throwable t) {
                 progressDoalog.dismiss();
                 Toast.makeText(CommunityPage.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
@@ -435,9 +438,9 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         final int questID = linearAdapter.getItemQuestId(myPosition);
         final int receiverID = linearAdapter.getReceiverId(myPosition);
         final int userInteractionId = linearAdapter.getUserInteractionId(myPosition);
-        String querySet = myUserId+",7";
+        int querySet = myUserId, baseCase = 7;
 
-        Call<List<UserInteraction>> myCall = service.getAllNotifications( myUserId );
+        Call<List<UserInteraction>> myCall = service.getAllNotifications( Arrays.asList(myUserId,baseCase ));
         myCall.enqueue(new Callback<List<UserInteraction>>()
                      {
                          @Override
