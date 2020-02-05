@@ -35,7 +35,7 @@ public class Notification
         this.user_notification_id = user_interaction_id;
     }
 
-    public void Notification_type_id(Integer user_interaction_type_id)
+    public void setNotification_type_id(Integer user_interaction_type_id)
     {
         this.user_notification_type_id = user_interaction_type_id;
     }

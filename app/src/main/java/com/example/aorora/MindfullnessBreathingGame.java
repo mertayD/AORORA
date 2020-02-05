@@ -189,10 +189,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     butterfly_image.startAnimation(enlarge);
                     handler.postDelayed(mLongPressed, 3000);
                     myTimer.start();
-                    if(!breathing_music.isPlaying())
-                    {
-                        breathing_music.start();
-                    }
+
                     is_button_still_clicked = true;
                     return true;
                 }
@@ -207,6 +204,11 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     }
                     //breathing_music.pause();
                     return false;
+                }
+
+                if(!breathing_music.isPlaying())
+                {
+                    breathing_music.start();
                 }
                 return false;
             }

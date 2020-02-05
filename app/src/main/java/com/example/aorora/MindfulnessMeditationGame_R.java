@@ -138,9 +138,9 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
             game_theme = meditation_game.getIntExtra("Theme", 1);
             switch(game_theme){
                 case 4:
-                    theme_music = MediaPlayer.create(MindfulnessMeditationGame_R.this,R.raw.feather2);
+                    theme_music = MediaPlayer.create(MindfulnessMeditationGame_R.this,R.raw.feather2export);
                     layout.setBackgroundResource(R.drawable.background_orange_ring);
-                    theme_image.setImageResource(R.drawable.mountain_feather);
+                    theme_image.setImageResource(R.drawable.orange_feather);
                     outer_most_ring.setImageResource(R.drawable.orange_ring_1);
                     outer_ring.setImageResource(R.drawable.orange_ring_2);
                     inner_ring.setImageResource(R.drawable.orange_ring_3);
@@ -150,7 +150,7 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
                     arrow.setImageResource(R.drawable.orange_arrow);
                     break;
                 case 1:
-                    theme_music = MediaPlayer.create(MindfulnessMeditationGame_R.this,R.raw.feather4);
+                    theme_music = MediaPlayer.create(MindfulnessMeditationGame_R.this,R.raw.feather4export);
                     layout.setBackgroundResource(R.drawable.background_white_ring);
                     theme_image.setImageResource(R.drawable.whiteish_feather);
                     outer_most_ring.setImageResource(R.drawable.white_ring_1);
@@ -162,7 +162,7 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
                     arrow.setImageResource(R.drawable.white_arrow);
                     break;
                 case 2:
-                    theme_music = MediaPlayer.create(MindfulnessMeditationGame_R.this,R.raw.feather3);
+                    theme_music = MediaPlayer.create(MindfulnessMeditationGame_R.this,R.raw.feather3export);
                     layout.setBackgroundResource(R.drawable.background_blue_ring);
                     theme_image.setImageResource(R.drawable.blue_feather);
                     outer_most_ring.setImageResource(R.drawable.blue_ring_1);
@@ -174,7 +174,7 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
                     arrow.setImageResource(R.drawable.blue_arrow);
                     break;
                 case 3:
-                    theme_music = MediaPlayer.create(MindfulnessMeditationGame_R.this,R.raw.feather1);
+                    theme_music = MediaPlayer.create(MindfulnessMeditationGame_R.this,R.raw.feather1export);
                     layout.setBackgroundResource(R.drawable.background_purple_ring);
                     theme_image.setImageResource(R.drawable.purple_feather);
                     outer_most_ring.setImageResource(R.drawable.purple_ring_1);

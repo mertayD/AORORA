@@ -214,6 +214,8 @@ public class NetworkCalls {
         });
     }
 
+    //public static void getNotificationTypeById
+
     /**
      * To be used for when the user hits the like button on a notification
      * @param sender_id
@@ -241,7 +243,7 @@ public class NetworkCalls {
      * @param user_interaction_id
      */
     public static void removeLike(final int user_interaction_id)
-    {
+    {/**
         Call<Void> call = service.removeLike( user_interaction_id);
         call.enqueue(new Callback<Void>() {
             @Override
@@ -254,7 +256,7 @@ public class NetworkCalls {
                 // Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                 Log.e("LIKE REMOVED", "Like #"+user_interaction_id+" could not be removed.\n", t);
             }
-        });
+        });*/
     }
 
     //public static void updateLike(int )
