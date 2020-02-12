@@ -183,7 +183,6 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         community_button_bottombar.setOnClickListener(this);
         quest_button_bottombar.setOnClickListener(this);
         quest_button.setOnClickListener(this);
-        ar_game_button.setOnClickListener(this);
         notification_tv.setOnClickListener(this);
         speck1.setOnClickListener(this);
         notification_tv.setVisibility(View.INVISIBLE);
@@ -369,7 +368,6 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
 
         }
         else if(view_id == home_button_bottombar.getId())
-
         {
             //to_navigate = new Intent(homeScreen, homeScreen);
         }
@@ -381,13 +379,16 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         }
         else if(view_id == notification_tv.getId())
         {
+
             to_navigate = new Intent(homeScreen, MindfullnessBreathing.class);
             startActivity(to_navigate);
         }
         else if(view_id == ar_game_button.getId())
         {
-            to_navigate = new Intent(homeScreen, AR_Main.class);
+            to_navigate = new Intent(homeScreen, DailyQuestPage.class);
             startActivity(to_navigate);
+            //Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.NAUVRLab.ARProduct");
+            //startActivity(launchIntent);
         }
 
     }
