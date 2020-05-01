@@ -54,8 +54,8 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         exit_button = (ImageButton) findViewById(R.id.exit_button_walking);
         time_selection_recyler_view = (RecyclerView) findViewById(R.id.recycler_view_time_selection_breathing);
 
-
-        List<String> data = Arrays.asList("", "5 Breaths", "10 Breaths","15 Breaths","");
+        //Removed "5 Breaths" and "15 Breaths" strings from array list for testing purposes
+        List<String> data = Arrays.asList("", "10 Breaths" ,"");
         generateTimeDataList(data);
         time_selection_recyler_view.smoothScrollToPosition(3);
         /*
@@ -141,7 +141,8 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
 
                 if(isInMiddle)
                 {
-                    timerCount = viewHolder.getAdapterPosition();
+                    //TODO Fix this, it is currently hardcoded
+                    timerCount = 10; //viewHolder.getAdapterPosition();
                     text_view.setTextColor(getResources().getColor(R.color.colorWhite));
                 }
             }

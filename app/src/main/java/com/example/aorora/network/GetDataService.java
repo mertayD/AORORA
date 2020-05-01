@@ -15,6 +15,7 @@ import com.example.aorora.model.UserAuth;
 import com.example.aorora.model.UserIdReturn;
 import com.example.aorora.model.UserInfo;
 import com.example.aorora.model.UserInteraction;
+import com.example.aorora.model.Notification;
 import com.example.aorora.model.UserInteractionCreateReturn;
 
 import java.util.List;
@@ -45,9 +46,10 @@ public interface GetDataService {
                                               @Field("user_interaction_type_id") Integer interaction_type_id,
                                               @Field("quest_report_id") Integer quest_report_id,
                                               @Field("user_interaction_content") String content);
-
+    /*
     @DELETE("/butterflylike/{butterfly_like_id}/")
     Call<Void> removeLike(@Path("butterfly_like_id") Integer butterfly_like_id);
+    */
 
     @GET("/butterflylikes")
     Call<List<ButterflyLike>> getAllLikes();
@@ -83,17 +85,21 @@ public interface GetDataService {
 
 
 
+    //Uses server side filtering to get the notifications for the specific user and public notifications
+    @GET("/userinteraction_get_notif/{receiver_user_id}")
+    Call<List<Notification>> getAllNotifications(@Path("receiver_user_id") Integer receiver_user_id);
 
-    //To get check for multiple variables on a single parameter, append __in to the end of your parameter
-    //Check the github for the django-rest URL filter for more info:  https://github.com/miki725/django-url-filter
-    @GET("/userinteraction/")//?receiver_user_id__in={user_id},7"
-    Call<List<UserInteraction>> getAllNotifications(@Field("receiver_user_id") int receiver_user_id);
+    //Retrieves the user interactions that are visible notifications (which are not likes)
+    @GET("/userinteraction_get_vis/{receiver_user_id}")
+    Call<List<Notification>> getVisibleNotifs(@Path("receiver_user_id") Integer receiver_user_id);
 
 
+    @GET("/notification/{notification_id}")
+    Call<Notification> getNotificationTypeById(@Path("notification_id") Integer notification_id);
 
     //A UserInteraction with a type of 3 is a like, but we only want the like that the user has done.
-    @GET("/userinteraction/?initiator_user_id={user_id}&user_interaction_type_id=3")
-    Call<List<UserInteraction>> getUserLikes(@Path("user_id") Integer user_id);
+    @GET("/userinteraction/{initiator_user_id}")
+    Call<List<Notification>> getUserLikes(@Path("initiator_user_id") Integer user_id);
 
     @GET("/questreports")
     Call<List<QuestReport>> getAllQuestsInCommunity();

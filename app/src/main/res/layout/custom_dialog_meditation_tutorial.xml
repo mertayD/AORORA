@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="@string/meditation_tutorial_text"
+        android:text="Press the button when \nthe ring around it appearst"
         android:textAlignment="center"
         android:textColor="#313131"
         android:textSize="9pt" />

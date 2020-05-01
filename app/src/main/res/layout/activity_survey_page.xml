@@ -53,10 +53,10 @@
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:background="#00000000"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/red_butterfly_button"
+            android:scaleType="fitCenter"/>
+            <!--app:srcCompat="@drawable/red_butterfly_button"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="543dp" />
+            tools:layout_editor_absoluteY="543dp"--> />
 
         <ImageButton
             android:id="@+id/darkorange_mood_button"
@@ -66,9 +66,9 @@
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/darkorange_butterfly_button"
             tools:layout_editor_absoluteX="92dp"
             tools:layout_editor_absoluteY="543dp" />
+        <!--app:srcCompat="@drawable/darkorange_butterfly_button"-->
 
         <ImageButton
             android:id="@+id/orange_mood_button"
@@ -78,9 +78,9 @@
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/orange_butterfly_button"
             tools:layout_editor_absoluteX="171dp"
             tools:layout_editor_absoluteY="543dp" />
+        <!--app:srcCompat="@drawable/orange_butterfly_button"-->
 
         <ImageButton
             android:id="@+id/yellow_mood_button"
@@ -90,9 +90,9 @@
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/yellow_butterflu_button"
             tools:layout_editor_absoluteX="246dp"
             tools:layout_editor_absoluteY="543dp" />
+        <!--app:srcCompat="@drawable/yellow_butterflu_button"-->
 
         <ImageButton
             android:id="@+id/green_mood_button"
@@ -102,9 +102,9 @@
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/green_butterfly_button"
             tools:layout_editor_absoluteX="327dp"
             tools:layout_editor_absoluteY="543dp" />
+        <!--app:srcCompat="@drawable/green_butterfly_button"-->
 
     </LinearLayout>
 
@@ -140,7 +140,7 @@
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:gravity="start"
-            android:text="Very Bad"
+            android:text="Pleasant"
             android:textColor="#989898" />
 
         <TextView
@@ -150,7 +150,7 @@
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Good"
+            android:text="Neither pleasant nor unpleasant"
             android:textColor="#989898" />
 
         <TextView
@@ -160,7 +160,51 @@
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:gravity="end"
-            android:text="Very Good"
+            android:text="Unpleasant"
+            android:textColor="#989898"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mood_desc_stress"
+        android:layout_width="311dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TextView
+            android:id="@+id/mood_desc_stress_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="Very calm"
+            android:textColor="#989898" />
+
+        <TextView
+            android:id="@+id/mood_desc_stress_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="Neither calm nor tense"
+            android:textColor="#989898" />
+
+        <TextView
+            android:id="@+id/mood_desc_stress_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="Tense"
             android:textColor="#989898"
 
             />

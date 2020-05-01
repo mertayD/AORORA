@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.LocalBroadcastManager;
@@ -52,6 +53,7 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
     Context mindfulness_walking;
     ConstraintLayout walking_game_layout;
     int game_theme;
+    MediaPlayer walking_music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,23 +67,34 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
         myAlpha = new AlphaModifier(1000, 10, 0, 8000, new AccelerateInterpolator());
         mindfulness_walking = this;
 
-        hint_walking = findViewById(R.id.hint_text_walking_game);
+        walking_music = MediaPlayer.create(MindfullnessWalkingGame.this,R.raw.mindfulnesswalking);
+
         flap = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.butterfly_flap);
         flap.setRepeatCount(4);
 
+        if(!walking_music.isPlaying())
+        {
+            walking_music.start();
+        }
+
+        Toast.makeText(MindfullnessWalkingGame.this,
+                "Listen to the prompt as you walk slowly in a safe place\n" +
+                        "\n.", Toast.LENGTH_SHORT).show();
+
         walking = this;
         count = 0;
         stage_counter = 0;
-        animationView = findViewById(R.id.animation_view_walking);
+        //animationView = findViewById(R.id.animation_view_walking);
 
-        walking_loading = findViewById(R.id.loading_walking_image_view);
-        pulse = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.tap_me_animation);
+        //walking_loading = findViewById(R.id.loading_walking_image_view);
+        //pulse = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.tap_me_animation);
+
 
         if(this.getIntent().hasExtra("Game Theme"))
         {
             game_theme = this.getIntent().getIntExtra("Game Theme", 1);
+            walking_game_layout.setBackgroundResource(R.drawable.orange_mountain_background);
             if(game_theme == 1)
             {
                 walking_game_layout.setBackgroundResource(R.drawable.blue_mountain_background);
@@ -99,6 +112,10 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(walking_music.isPlaying())
+                {
+                    walking_music.stop();
+                }
                 Intent to_navigate = new Intent(MindfullnessWalkingGame.this, MindfullnessWalking.class);
                 startActivity(to_navigate);
                 stopTracking();
@@ -111,13 +128,13 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
                 if (intent.getAction().equals("activity_intent")) {
                     int type = intent.getIntExtra("type", -1);
                     int confidence = intent.getIntExtra("confidence", 0);
-                    handleUserActivity(type, confidence);
+                    //handleUserActivity(type, confidence);
                 }
             }
         };
         startTracking();
 
-        walking_loading.setOnClickListener(new View.OnClickListener() {
+        /*walking_loading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent to_navigate = new Intent(mindfulness_walking, ReceiptPage.class);
@@ -131,12 +148,12 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
                 NetworkCalls.updateDailyTaskM3(user_info.getUser_id(), 1, walking);
                 NetworkCalls.createQuestReport(3, user_info.getUser_id(),mindfulness_walking);
             }
-        });
+        });*/
 
-        walking_loading.setClickable(false);
+//        walking_loading.setClickable(false);
 
     }
-
+/*
     private void handleUserActivity(int type, int confidence) {
 
         String label = "";
@@ -191,7 +208,9 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
                 Notification notify = null;
                 NotificationManager notif=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 
+                /* Removing growing flower animation
                 hint_walking.setVisibility(View.INVISIBLE);
+
                 if(stage_counter == 0)
                 {
                     body = "You just took your first step"; //to grow your flower"; ---Cheap fix because we still may have a flower, but as a desert one
@@ -203,7 +222,7 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
                     /* Commented out until we can get the animated version of the desert flower
                         animationView.setAnimation(R.raw.stage_1);
                         animationView.playAnimation();
-                    */
+
                     walking_loading.setImageResource(R.drawable.walking_loading_25);
                 }
                 else if(stage_counter == 5)
@@ -215,7 +234,7 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
                     /* Commented out until we can get the animated version of the desert flower
                         animationView.setAnimation(R.raw.stage_2);
                         animationView.playAnimation();
-                    */
+
                     walking_loading.setImageResource(R.drawable.walking_loading_50);
                 }
                 else if(stage_counter == 10)
@@ -227,7 +246,7 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
                     /* Commented out until we can get the animated version of the desert flower
                         animationView.setAnimation(R.raw.stage_3);
                         animationView.playAnimation();
-                    */
+
                     walking_loading.setImageResource(R.drawable.walking_loading_75);
                 }
                 else if(stage_counter == 15)
@@ -267,7 +286,7 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
                         .addModifier(myAlpha);
                 myParticle.emitWithGravity(emitter, Gravity.BOTTOM, 1);
                 myTimer.start();
-                */
+
             }
             else
             {
@@ -276,7 +295,7 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
                 myTimer.cancel();
             }
         }
-    }
+    }*/
 
     @Override
     protected void onResume() {

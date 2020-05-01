@@ -37,7 +37,8 @@ public class MindfullnessWalking extends AppCompatActivity implements View.OnCli
     Context mindfullnessWalking;
     ImageButton exit_button;
     ImageView alphaChannelImage;
-    RecyclerView recyclerView;
+    //Commenting out all instances of recyclerView to remove options for exercise
+    //RecyclerView recyclerView;
     HorizontalMountainAdapter horizontalAdapter;
     int game_theme;
     @Override
@@ -47,7 +48,7 @@ public class MindfullnessWalking extends AppCompatActivity implements View.OnCli
 
         mindfullnessWalking = this;
 
-        recyclerView = findViewById(R.id.horizontal_recycler_view_walking);
+        //recyclerView = findViewById(R.id.horizontal_recycler_view_walking);
         play = (ImageButton) findViewById(R.id.play_button_walking);
         exit_button = (ImageButton) findViewById(R.id.exit_button_walking);
         alphaChannelImage = (ImageView) findViewById(R.id.alpha_channel_walking_icon);
@@ -65,11 +66,11 @@ public class MindfullnessWalking extends AppCompatActivity implements View.OnCli
         exit_button.setOnClickListener(this);
         play.setOnClickListener(this);
         generateDataListHorizontal();
-        recyclerView.smoothScrollToPosition(3);
+        //recyclerView.smoothScrollToPosition(3);
 
-        infinite_blink = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.infinite_blink);
-        alphaChannelImage.startAnimation(infinite_blink);
+        //infinite_blink = AnimationUtils.loadAnimation(getApplicationContext(),
+          //      R.anim.infinite_blink);
+        //alphaChannelImage.startAnimation(infinite_blink);
     }
 
     private void generateDataListHorizontal() {
@@ -80,17 +81,17 @@ public class MindfullnessWalking extends AppCompatActivity implements View.OnCli
         });
 
         SnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(recyclerView);
+        //snapHelper.attachToRecyclerView(recyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mindfullnessWalking, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(horizontalAdapter);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        //recyclerView.setLayoutManager(layoutManager);
+        //recyclerView.setAdapter(horizontalAdapter);
+        /*recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 selectMiddleItem();
             }
-        });
+        });*/
     }
     @Override
     public void onClick(View v) {
@@ -130,7 +131,7 @@ public class MindfullnessWalking extends AppCompatActivity implements View.OnCli
     }
 
 
-    public void selectMiddleItem() {
+    /*public void selectMiddleItem() {
         LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         int firstVisibleIndex = layoutManager.findFirstVisibleItemPosition();
         int lastVisibleIndex = layoutManager.findLastVisibleItemPosition();
@@ -161,5 +162,5 @@ public class MindfullnessWalking extends AppCompatActivity implements View.OnCli
                 }
             }
         }
-    }
+    }*/
 }

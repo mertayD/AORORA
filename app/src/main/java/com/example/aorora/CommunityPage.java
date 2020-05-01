@@ -26,6 +26,7 @@ import com.example.aorora.interfaces.OnLikeListener;
 import com.example.aorora.interfaces.OnItemClickListener;
 import com.example.aorora.model.Butterfly;
 import com.example.aorora.model.ButterflyLike;
+import com.example.aorora.model.Notification;
 import com.example.aorora.model.UserInteraction;
 import com.example.aorora.model.Quest;
 import com.example.aorora.model.QuestReport;
@@ -36,6 +37,7 @@ import com.example.aorora.network.NetworkCalls;
 import com.example.aorora.network.RetrofitClientInstance;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import retrofit2.Call;
@@ -185,13 +187,13 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     };
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataListLinear(List<UserInteraction> questList,
+    private void generateDataListLinear(List<Notification> interactionList,
                                         List<Integer> quest_type_ids,
                                         List<String> usernames,
                                         List<Integer> user_butterfly_types)
     {
 
-        linearAdapter = new CustomAdapter( this, questList, quest_type_ids, usernames, user_butterfly_types,
+        linearAdapter = new CustomAdapter( this, interactionList, quest_type_ids, usernames, user_butterfly_types,
                                                                       getResources().getStringArray(R.array.mindfulness_description),
                                                                         new OnLikeListener() {
                                                                             @Override
@@ -328,27 +330,28 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
     public void setNotifications()
     {
         communityHolder = new HolderCommunityPage();
-        int querySet =  myUserId;//String.valueOf(myUserId);
+        int querySet =  myUserId, baseCase = 7;//String.valueOf(myUserId);
 
-        Call<List<UserInteraction>> call = service.getAllNotifications( querySet );
-        call.enqueue(new Callback<List<UserInteraction>>() {
+        //Gets all UserInteractions that are Notifications that the user receives
+        Call<List<Notification>> call = service.getVisibleNotifs( myUserId );
+        call.enqueue(new Callback<List<Notification>>() {
 
             @Override
-            public void onResponse(Call<List<UserInteraction>> call, Response<List<UserInteraction>> response) {
+            public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {
                 if(response.isSuccess())
                 {
                     progressDoalog.dismiss();
                     int quest_type;
                     final String user_name;
                     int user_butterfly_type_id;
-                    final List<UserInteraction> questReportList = response.body();
+                    final List<Notification> NotificationList = response.body();
 
-                    //reverses through the report list to get the top 20 easier
-                    for (int i = questReportList.size()-1; i >= 0; i--)
+                    //reverses through the notification list to get the top 20 easier
+                    for (int i = NotificationList.size()-1; i >= 0; i--)
                     {
-                        communityHolder.setInteraction_type(questReportList.get(i).getUser_interaction_type_id());
+                        communityHolder.setInteraction_type(NotificationList.get(i).getNotification_type_id());
 
-                        getUserInfo(questReportList.get(i).getUser_initiator_id());
+                        getUserInfo(NotificationList.get(i).getNotification_user_id());
                     }
 
                     final Handler handler = new Handler();
@@ -360,10 +363,10 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                             List<Integer> user_butterfly_types = communityHolder.getUser_butterfly_id();
 
                             Log.e("List Size", "" + usernames.size());
-                            Log.e("Report List", "" + questReportList.size());
+                            Log.e("Report List", "" + NotificationList.size());
 
 
-                            generateDataListLinear(questReportList, interaction_type_ids, usernames, user_butterfly_types);
+                            generateDataListLinear(NotificationList, interaction_type_ids, usernames, user_butterfly_types);
                         }
                     },500);
 
@@ -375,7 +378,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
             }
 
             @Override
-            public void onFailure(Call<List<UserInteraction>> call, Throwable t) {
+            public void onFailure(Call<List<Notification>> call, Throwable t) {
                 progressDoalog.dismiss();
                 Toast.makeText(CommunityPage.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
@@ -435,13 +438,13 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
         final int questID = linearAdapter.getItemQuestId(myPosition);
         final int receiverID = linearAdapter.getReceiverId(myPosition);
         final int userInteractionId = linearAdapter.getUserInteractionId(myPosition);
-        String querySet = myUserId+",7";
+        int querySet = myUserId, baseCase = 7;
 
-        Call<List<UserInteraction>> myCall = service.getAllNotifications( myUserId );
-        myCall.enqueue(new Callback<List<UserInteraction>>()
+        Call<List<Notification>> myCall = service.getAllNotifications( myUserId );
+        myCall.enqueue(new Callback<List<Notification>>()
                      {
                          @Override
-                         public void onResponse(Call<List<UserInteraction>> call, Response<List<UserInteraction>> response)
+                         public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response)
                          {
                              ImageView myLikeButton = findViewById(myPosition);
                              boolean isLiked = false, isFound = false;
@@ -450,18 +453,19 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
 
                              if( response.isSuccess() )
                              {
-                                 final List<UserInteraction> likeList = response.body();
+                                 final List<Notification> likeList = response.body();
 
-                                 for (UserInteraction curLike : likeList)
+                                 for (Notification curLike : likeList)
                                  {
-                                     if (!isLiked && ((curLike.getUser_receiver_id() == myUserId) && (curLike.getQuest_record_id() == linearAdapter.getItemQuestId(myPosition))))
+                                     /**
+                                     if (!isLiked && ((curLike.getQuest_record_id() == 3) && (curLike.getQuest_record_id() == linearAdapter.getItemQuestId(myPosition))))
                                      {
                                          //Check to see if user id and the quest report id are found together
                                          Log.e("FOUND_L COM", " Found the butterfly like, will remove.");
                                          isLiked = true;
                                          likePosition = curLike.getUser_interaction_id();
                                          break;
-                                     }
+                                     }*/
                                  }
 
                                  if (!isLiked)
@@ -483,7 +487,7 @@ public class CommunityPage extends AppCompatActivity implements View.OnClickList
                          }
 
                          @Override
-                         public void onFailure(Call<List<UserInteraction>> call, Throwable t)
+                         public void onFailure(Call<List<Notification>> call, Throwable t)
                          {
                              progressDoalog.dismiss();
                              Toast.makeText(CommunityPage.this, "There was a problem with retrieving the likes", Toast.LENGTH_SHORT).show();
