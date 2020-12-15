@@ -29,7 +29,7 @@ import com.example.aorora.network.NetworkCalls;
 import static com.example.aorora.MainActivity.user_info;
 
 public class MindfulnessMeditationGame_R extends AppCompatActivity implements View.OnClickListener {
-
+    //Class Member variable declaration
     int gameDuration;
 
     ImageView outer_most_ring;
@@ -75,8 +75,6 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
         setContentView(R.layout.activity_mindfulness_meditation_game__r);
 
         tutorialPopUp();
-
-
         is_first_cycle = false;
         is_second_cycle = false;
         is_third_cycle = false;

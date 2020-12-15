@@ -285,16 +285,19 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         */
 
     }
+    //Built in overriden onFLing method for swiping control between Activities
     @Override
     public boolean onFling (MotionEvent motionEvent1, MotionEvent motionEvent2, float X, float Y)
     {
         page_left = true;
+        //This checks if we swiped left on the homepage
         if (motionEvent1.getX() - motionEvent2.getX() > 150) {
             Intent profilePage = new Intent(homeScreen, MindfullnessSelection.class);
             startActivity(profilePage);
             overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             return true;
         }
+        //This checks if we swiped right on the homepage
         if (motionEvent2.getX() - motionEvent1.getX() > 150) {
             Intent mindfullness = new Intent(homeScreen, ProfilePage.class);
             startActivity(mindfullness);
@@ -379,7 +382,6 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         }
         else if(view_id == notification_tv.getId())
         {
-
             to_navigate = new Intent(homeScreen, MindfullnessBreathing.class);
             startActivity(to_navigate);
         }

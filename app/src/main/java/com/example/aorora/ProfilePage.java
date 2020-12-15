@@ -66,7 +66,8 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         butterfly_description_tv = (TextView) findViewById(R.id.profile_page_bf_desc_tv);
         profilePage = this;
 
-        user_score_tv.setText("" + MainActivity.user_info.getUser_pollen());
+        //User tv at the top of the page. Pollen is accessed from the backend User Table.
+        user_score_tv.setText("BigMoves" + MainActivity.user_info.getUser_pollen());
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
         community_button_bottombar.setOnClickListener(this);
@@ -132,6 +133,8 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         }
         else if(view_id == settings_button.getId())
         {
+            /* This toast was added to show that settings is under development and the settings
+             * button is unresponsive. */
             Toast.makeText(ProfilePage.this , "Settings is under development.", Toast.LENGTH_SHORT).show();
             //to_navigate = new Intent(profilePage, MindfulnessMeditationGame_R.class);
             //startActivity(to_navigate);
@@ -140,9 +143,7 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
             //to_navigate = new Intent(profilePage, EndOfMindfulnessGamePage.class);
             //startActivity(to_navigate);
 
-            /* This toast was added to show that settings is under development and the settings
-            * button is unresponsive. */
-            Toast.makeText(ProfilePage.this, "Settings is under development", Toast.LENGTH_SHORT).show();
+
         }
         else if(view_id == pollen_button.getId())
         {

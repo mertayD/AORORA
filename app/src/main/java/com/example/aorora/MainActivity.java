@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 if(is_first_time_username_et)
                 {
                     username_et.setText("");
-                    is_first_time_username_et = false;
+                    //is_first_time_username_et = false;
                 }
             }
         });
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 if(is_first_time_password_et)
                 {
                     password_et.setText("");
-                    is_first_time_password_et = false;
+                    //is_first_time_password_et = false;
                 }
             }
         });

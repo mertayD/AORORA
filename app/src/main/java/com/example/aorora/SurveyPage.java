@@ -79,7 +79,8 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
         navigatedFrom = getIntent();
         if(navigatedFrom.hasExtra("NavigatedFrom"))
         {
-            from = navigatedFrom.getIntExtra("NavigatedFrom", 0);
+            from = navigatedFrom.getIntExtra("NAVIGATEDFROM", 0);
+            Log.d("IntExtraSurvey", "value: " + from);
             if(from == -1 || from == -2 || from == -3)
             {
                 exitButton.setVisibility(View.VISIBLE);
