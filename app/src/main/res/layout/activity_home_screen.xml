@@ -10,7 +10,7 @@
     android:id="@+id/speck_holder_cl">
 
     <include
-        android:id="@+id/include_popup_quick_access_menu"
+        android:id="@+id/include_quick_access_menu"
         layout="@layout/quick_access_menu"
         android:layout_width="355dp"
         android:layout_height="wrap_content"
@@ -142,9 +142,9 @@
         android:text="@string/quest_notification"
         android:textColor="#FFFFFF"
         android:textSize="6pt"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"/>
 
 
     <android.support.constraint.Barrier

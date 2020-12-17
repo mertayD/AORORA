@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pollen"
+        android:text="Welcome to the Pollen Shop"
         android:textSize="10pt"
         android:textColor="#FFFFFF"
         android:layout_margin="4dp"
@@ -41,6 +41,7 @@
             />
 
         <include
+            android:id="@+id/pollen_count_layout"
             layout="@layout/pollen_current_amount_view"
            />
 

@@ -30,6 +30,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProfilePage extends AppCompatActivity implements View.OnClickListener, GestureDetector.OnGestureListener {
+    //User account info
+    String userName;
+    String userNamePower;
+    int userPollen;
 
     GestureDetector gestureDetector;
     ImageButton home_button_bottombar;
@@ -51,6 +55,11 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
+        //Init user account info
+        userName = MainActivity.user_info.getUser_name();
+        userNamePower = MainActivity.user_info.getUser_name_of_strength();
+        userPollen = MainActivity.user_info.getUser_pollen();
+
         home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         profile_button_bottombar.setImageResource(R.drawable.profile_filled_button);
@@ -67,7 +76,8 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         profilePage = this;
 
         //User tv at the top of the page. Pollen is accessed from the backend User Table.
-        user_score_tv.setText("BigMoves" + MainActivity.user_info.getUser_pollen());
+        user_name_tv.setText(userName);
+        user_score_tv.setText(Integer.toString(userPollen));
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
         community_button_bottombar.setOnClickListener(this);
@@ -147,15 +157,15 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         }
         else if(view_id == pollen_button.getId())
         {
-           // to_navigate = new Intent(profilePage, PollenStoreDailyQuestPage.class);
-           // to_navigate.putExtra("NavigatedFrom", 2);
-            //startActivity(to_navigate);
+            to_navigate = new Intent(profilePage, PollenStoreDailyQuestPage.class);
+            to_navigate.putExtra("NavigatedFrom", 2);
+            startActivity(to_navigate);
 
             /* This toast was added to show that navigation has been blocked to the pollen page.
             * Navigation to this page has been blocked because of errors with the display in the
             * pollen page. */
-            Toast.makeText(ProfilePage.this, "Pollen page is under development", Toast.LENGTH_SHORT).show();
-            Toast.makeText(ProfilePage.this, "Settings is under maintenance", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(ProfilePage.this, "Pollen page is under development", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(ProfilePage.this, "Settings is under maintenance", Toast.LENGTH_SHORT).show();
         }
         else if(view_id == pollen_button.getId())
         {

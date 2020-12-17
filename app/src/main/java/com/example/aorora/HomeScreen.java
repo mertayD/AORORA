@@ -1,17 +1,10 @@
 package com.example.aorora;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.media.MediaPlayer;
-import android.os.Build;
-import android.os.CountDownTimer;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.annotation.DrawableRes;
 import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -20,19 +13,21 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Random;
-
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 public class HomeScreen extends AppCompatActivity implements GestureDetector.OnGestureListener, View.OnClickListener {
+    //User account info
+    String userName;
+    String userNamePower;
+    int userPollen;
+
     Context homeScreen;
     GestureDetector gestureDetector;
     ImageButton home_button_bottombar;
@@ -45,6 +40,10 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     TextView notification_tv;
     TextView label_ar_game_button;
     TextView label_quest_button;
+    TextView userPollenTv;
+    TextView quickAccessUName;
+    TextView quickAccessPollen;
+    String userPollenDisplay;
     Boolean isButtonsPoppedUp;
     Animation notification_anim;
     Vibrator myVibrate;
@@ -64,6 +63,10 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        //Fetch userdata from the backend.
+        userPollen = MainActivity.user_info.getUser_pollen();
+        userName = MainActivity.user_info.getUser_name();
+        userNamePower = MainActivity.user_info.getUser_name_of_strength();
 
         homeScreen = this;
         isButtonsPoppedUp = false;
@@ -79,8 +82,22 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         label_ar_game_button = (TextView) findViewById(R.id.label_ar_button);
         label_quest_button = (TextView) findViewById(R.id.label_quest_button);
         popup_quick_access = (LinearLayout) findViewById(R.id.popup_quick_access);
+
+        //User pollen value that will be displayed on the homepage, accessed from included layout.
+        userPollenTv = (TextView) popup_quick_access.findViewById(R.id.pollen_score_layout_tv);
+        userPollenDisplay = Integer.toString(userPollen);
+        userPollenTv.setText(userPollenDisplay);
+        //Update the popup menu for pollen to reflect user account values.
+        quick_menu = (LinearLayout) findViewById(R.id.include_quick_access_menu);
+        quickAccessUName = (TextView) quick_menu.findViewById(R.id.quick_access_user_id_tv);
+        quickAccessPollen = (TextView) quick_menu.findViewById(R.id.quickaccesspollen);
+        quickAccessUName.setText(userName);
+        quickAccessPollen.setText(userPollenDisplay);
+
+
         speck_holder_cl = (ConstraintLayout) findViewById(R.id.speck_holder_cl);
-        quick_menu = (LinearLayout) findViewById(R.id.include_popup_quick_access_menu);
+
+
         is_menu_inflated = false;
 
         //buttonClick = MediaPlayer.create(getBaseContext(), R.raw.button1);
@@ -90,10 +107,9 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
             @Override
             public void onClick(View v) {
                 Toast.makeText(HomeScreen.this, "Pollen Shop is underdevelopment", Toast.LENGTH_SHORT).show();
-               /* ---------------- Not working, underdevelopment --------------
                 Intent to_navigate = new Intent(homeScreen, PollenStoreDailyQuestPage.class);
                 to_navigate.putExtra("NavigatedFrom", 1);
-                startActivity(to_navigate);*/
+                startActivity(to_navigate);
             }
         });
         popup_quick_access.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +201,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         quest_button.setOnClickListener(this);
         notification_tv.setOnClickListener(this);
         speck1.setOnClickListener(this);
-        notification_tv.setVisibility(View.INVISIBLE);
+       // notification_tv.setVisibility(View.VISIBLE);
         ring = MediaPlayer.create(homeScreen,R.raw.notify_2);
         spec_alert = MediaPlayer.create(homeScreen,R.raw.notify_wav);
 
@@ -307,39 +323,6 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
             return true;
         }
     }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent motionEvent) {
-        return gestureDetector.onTouchEvent(motionEvent);
-    }
-
-    // We don't need to implement those unless otherwise told. They just need to be there
-    // because we are implementing the GestureDetector class
-    @Override
-    public boolean onDown(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-
-    }
-
     @Override
     public void onClick(View v) {
         int view_id = v.getId();
@@ -394,4 +377,38 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         }
 
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent) {
+        return gestureDetector.onTouchEvent(motionEvent);
+    }
+
+    // We don't need to implement those unless otherwise told. They just need to be there
+    // because we are implementing the GestureDetector class
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+
 }
