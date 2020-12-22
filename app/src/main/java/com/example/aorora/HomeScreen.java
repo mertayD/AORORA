@@ -183,6 +183,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         community_button_bottombar.setOnClickListener(this);
         quest_button_bottombar.setOnClickListener(this);
         quest_button.setOnClickListener(this);
+        ar_game_button.setOnClickListener(this);
         notification_tv.setOnClickListener(this);
         speck1.setOnClickListener(this);
         notification_tv.setVisibility(View.INVISIBLE);
@@ -385,10 +386,8 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         }
         else if(view_id == ar_game_button.getId())
         {
-            to_navigate = new Intent(homeScreen, DailyQuestPage.class);
+            to_navigate = new Intent(homeScreen, ArActivity.class);
             startActivity(to_navigate);
-            //Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.NAUVRLab.ARProduct");
-            //startActivity(launchIntent);
         }
 
     }
