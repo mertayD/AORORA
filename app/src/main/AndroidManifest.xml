@@ -6,20 +6,18 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
 
-
-
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MindfulnessMeditationGame_R"></activity>
-        <activity android:name=".MindfulnessMeditationGame_R9" />
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ARScreen"></activity>
+        <activity android:name=".MindfulnessMeditationGame_R" />
         <activity android:name=".ReceiptPage" />
         <activity android:name=".EndOfMindfulnessGamePage" />
         <activity android:name=".PollenStoreDailyQuestPage" />
@@ -30,7 +28,6 @@
         <activity android:name=".MindfullnessWalkingGame" />
         <activity android:name=".MindfullnessMeditation" />
         <activity android:name=".MindfullnessFeatherSelection" />
-        <activity android:name=".MindfullnessMeditationGame" />
         <activity android:name=".MindfullnessBreathingGame" />
         <activity android:name=".MindfullnessBreathing" />
         <activity android:name=".ButterflyDetailsPage" />

@@ -37,8 +37,10 @@ public class MainActivity extends AppCompatActivity {
     Context context;
     EditText username_et;
     EditText password_et;
+    //Determined if a user has logged in before. To be used in autopopulating login form.
     boolean is_first_time_username_et;
     boolean is_first_time_password_et;
+    //This service is our backend connection that will respond to http requests we made in GetDataService.java
     GetDataService service;
 
     @Override
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         password_et = findViewById(R.id.login_password_et);
         is_first_time_password_et = true;
         is_first_time_username_et = true;
+        //Init our backend service
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
         context = this;
@@ -99,8 +102,12 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<UserAuth> call, Response<UserAuth> response) {
                 if(response.isSuccess())
                 {
+                    //This UserAuth object is initialized using the very first login object, UserAuth,
+                    //that is generated from this login form. It gives us a userId, which we need.
                     UserAuth user = (UserAuth) response.body();
                     NetworkCalls.getDailyTaskOfUser(user.getUser_id(),MainActivity.this);
+                    //This will build and assign a UserInfo instance to the user_info variable above
+                    //for package-wide use.
                     NetworkCalls.getUserInfo(user.getUser_id(), MainActivity.this);
                     surveyPage = new Intent(context, SurveyPage.class);
                     startActivity(surveyPage);

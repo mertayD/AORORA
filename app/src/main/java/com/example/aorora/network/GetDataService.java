@@ -26,11 +26,20 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+
+
+/*
+This interface defines all of the HTTP requests necessary to access, update, and view contents of
+the Django2 backend database. These are to be called as functions within your code elsewhere, these
+interfaces are populated with code via Retrofit automatically when used with Gson and Retrofit
+functions. See the ARORA-Server repo readme for more information.
+ */
 public interface GetDataService {
 
     @GET("/photos")
@@ -110,12 +119,13 @@ public interface GetDataService {
     @GET("/userinfo/{user_id}")
     Call<UserInfo> getUserInfo(@Path("user_id") Integer user_id);
 
+    //Possible refactor into PATCH??
     @PUT("/userinfo/{user_id}")
     @FormUrlEncoded
     Call<UserIdReturn> updateUserCurrentButterfly(@Path("user_id") Integer user_id,
                                     @Field("user_current_butterfly") Integer user_current_butterfly);
-
-    @PUT("/userinfo/{user_id}")
+    //This needed to be a PATCH, not a PUT! 
+    @PATCH("/userinfo/{user_id}")
     @FormUrlEncoded
     Call<UserIdReturn> updateUserPollen(@Path("user_id") Integer user_id,
                                         @Field("user_pollen") Integer user_pollen);

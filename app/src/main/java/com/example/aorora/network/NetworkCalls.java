@@ -20,6 +20,7 @@ import com.example.aorora.model.NotificationCreateReturn;
 import com.example.aorora.model.QuesrtReportCreateReturn;
 import com.example.aorora.model.UserInfo;
 import com.example.aorora.model.UserInteractionCreateReturn;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -65,14 +66,13 @@ public class NetworkCalls {
             @Override
             public void onResponse(Call call, Response response) {
                 if(response.isSuccess())
-                //response.body().getUsername()
                 {
-                    //Toast.makeText(context, " POLLEN UPDATED Updated Successfuly", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, " POLLEN UPDATED Updated Successfuly", Toast.LENGTH_SHORT).show();
 
                 }
                 else
                 {
-                    //Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -85,6 +85,7 @@ public class NetworkCalls {
 
     public static void getUserInfo(int user_id, final Context context)
     {
+        //Find these services in the interface GetDataService. Create a UserInfo object
         Call<UserInfo> call = service.getUserInfo(user_id);
         call.enqueue(new Callback<UserInfo>() {
             @Override
@@ -92,7 +93,10 @@ public class NetworkCalls {
                 if(response.isSuccess())
                 //response.body().getUsername()
                 {
-                    user_info = response.body();
+                    //PACKAGE GLOBAL USED WITHOUT DOCUMENTATION. BAD! Specify that user_info is from
+                    //MainActivity!
+                    MainActivity.user_info = response.body();
+                    Log.d("RESPONSESTR", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                     //Toast.makeText(context, "User Info Gathered", Toast.LENGTH_SHORT).show();
                 }
                 else

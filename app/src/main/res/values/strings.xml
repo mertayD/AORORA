@@ -11,6 +11,8 @@
         <font fgcolor='#FFD200'>999</font>
         <font fgcolor='#FFFFFF'> Pollens </font>
     </string>
+    <string name="ARPageTitle">"Welcome to the AR Page: 10 pollen to start!</string>
+    <string name="ARPollenPurchase">"Spend 10 pollen"</string>
 
     <string-array name="breathing_menu_selection">
         <item>1</item>

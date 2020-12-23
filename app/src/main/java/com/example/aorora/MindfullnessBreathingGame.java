@@ -62,6 +62,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
     ImageButton pollen_button;
     int points_to_collect;
     int initial_score;
+    int tempBreathCount;
     View pollen_layout;
     View emitter;
     int possible_points;
@@ -85,6 +86,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         possible_points = 100;
         is_button_still_clicked = false;
         performed_click = false;
+        tempBreathCount = 1;
 
         LottieAnimationView animationView = findViewById(R.id.animation_view);
         animationView.setSpeed(1f);
@@ -113,16 +115,16 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         {
             //Changing default value from 1 to 2
             int text = getIntent().getIntExtra("TimerValue", 2);
-           /*
-           Disabling 5 breath option for testing purposes
+
+           //Disabling 5 breath option for testing purposes, possible_points is the amount of breaths remaining.
             if(text == 1)
             {
                 initial_game_count = text;
-                possible_points = 5;
-                text = 5;
+                possible_points = tempBreathCount;
+                text = 1;
             }
-            */
-            if( text == 2)
+
+           else if( text == 2)
             {
                 initial_game_count = text;
                 possible_points = 10;
@@ -144,11 +146,13 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         shrink = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.butterfly_closing);
 
         final Handler handler = new Handler();
+        //This runs in a Runnable thread
         final Runnable mLongPressed = new Runnable() {
             public void run() {
                 Log.d("VERBOSE", "run: INSIDE RUN ");
                 butterfly_image.startAnimation(shrink);
                 isRun = true;
+                //Causes the phone to vibrate using the vibrate function of the myVibrate object.
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
                 } else {
@@ -232,7 +236,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     handler.postDelayed(mLongPressed, 3000);
                     myTimer.start();
                 }
-
+                //The game is over when count reaches 0,
                 if(count == 0)
                 {
                     //DialogFragment newFragment = new BreathDialog();
@@ -244,6 +248,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     int user_points = MainActivity.user_info.getUser_pollen();
                     Log.e("USER POINTS ", user_points + " ");
                     user_points += possible_points;
+                    //TODO: Why are the network calls here instead of recieptpage? KISS and add a consistent number of points when we reach that page.
                     NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), user_points, MindfullnessBreathingGame.this);
                     NetworkCalls.getUserInfo(MainActivity.user_info.getUser_id(), MindfullnessBreathingGame.this);
                     Intent to_navigate = new Intent(mindfullness_breathing_game, ReceiptPage.class);
@@ -269,7 +274,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
 
             }
         });
-
+        //User clicks the x button to end the game early
         exit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

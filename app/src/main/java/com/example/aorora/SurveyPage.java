@@ -303,6 +303,7 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
                     startActivity(to_navigate);
                 }
             }
+            //This is the case that is called when no extras are passed, which is when we first complete the survey.
             else{
                 to_navigate = new Intent(surveyPage, HomeScreen.class);
                 startActivity(to_navigate);
