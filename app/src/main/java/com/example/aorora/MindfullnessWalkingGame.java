@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -35,7 +36,11 @@ import static com.example.aorora.MainActivity.user_info;
 
 
 public class MindfullnessWalkingGame extends AppCompatActivity {
-
+    //Adding a finish button and handler for integration. Handler shows the button after x seconds.
+    Button finishButton;
+    //Testing variable to make the finish button pop up after this amount of milliseconds.
+    Integer timeUntilFinished;
+    Handler handler;
     BroadcastReceiver broadcastReceiver;
     ImageButton exit;
     ParticleSystem myParticle;
@@ -59,7 +64,9 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mindfullness_walking_game);
-
+        //Display the finishButton after x seconds
+        finishButton = (Button) findViewById(R.id.finish_walk_btn);
+        timeUntilFinished = 6000;
         exit = (ImageButton) findViewById(R.id.mindfullness_walking_exit_button);
         emitter = (View) findViewById(R.id.emiter_top);
         walking_game_layout = findViewById(R.id.walking_game_background);
@@ -77,6 +84,15 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
         {
             walking_music.start();
         }
+
+        //Display a finish button for testing.
+        handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finishButton.setVisibility(View.VISIBLE);
+            }
+        },timeUntilFinished);
 
         Toast.makeText(MindfullnessWalkingGame.this,
                 "Listen to the prompt as you walk slowly in a safe place\n" +
@@ -133,6 +149,26 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
             }
         };
         startTracking();
+
+        finishButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if(walking_music.isPlaying()){
+                    walking_music.stop();
+                }
+                Intent to_navigate = new Intent(mindfulness_walking, ReceiptPage.class);
+                to_navigate.putExtra("NavigatedFrom", 3);
+                to_navigate.putExtra("Game Theme", game_theme);
+                stopTracking();
+                startActivity(to_navigate);
+                int user_points = MainActivity.user_info.getUser_pollen();
+                user_points += 25;
+                NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), user_points, MindfullnessWalkingGame.this);
+                MainActivity.user_info.setUser_pollen(user_points);
+                //NetworkCalls.updateDailyTaskM3(user_info.getUser_id(), 1, walking);
+                //NetworkCalls.createQuestReport(3, user_info.getUser_id(),mindfulness_walking);
+            }
+        });
 
         /*walking_loading.setOnClickListener(new View.OnClickListener() {
             @Override

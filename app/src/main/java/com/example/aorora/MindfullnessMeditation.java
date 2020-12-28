@@ -227,8 +227,8 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
             duration_string = String.valueOf(text_view.getText());
             if(duration_string.equals("3 minutes"))
             {
-                //Changing to 5000ms for testing.
-                duration_int = 3000;
+                //Desired duration to be sent to the game in ms.
+                duration_int = 180000;
             }
             else if(duration_string.equals("5 minutes"))
             {
