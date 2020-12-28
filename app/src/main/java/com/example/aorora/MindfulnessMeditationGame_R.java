@@ -382,12 +382,18 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
             Intent to_navigate = new Intent(MindfulnessMeditationGame_R.this, ReceiptPage.class);
             to_navigate.putExtra("NavigatedFrom", 2);
             to_navigate.putExtra("Game Theme", game_theme);
-            int user_points = user_info.getUser_pollen();
-            NetworkCalls.updateUserCurrentPoints(user_info.getUser_id(), user_points + 5 , MindfulnessMeditationGame_R.this);
-            NetworkCalls.updateDailyTaskM2(user_info.getUser_id(), 1, MindfulnessMeditationGame_R.this);
-            NetworkCalls.createQuestReport(2, user_info.getUser_id(),MindfulnessMeditationGame_R.this);
-            startActivity(to_navigate);
+            int new_user_pollen = user_info.getUser_pollen() + 10;
+            //First update our local userInfo instance
+            MainActivity.user_info.setUser_pollen(new_user_pollen);
+            Log.d("EndGame pollen", "onFinish current userpollen: " + new_user_pollen);
+            //Next communicate it to the backend via the appropriate NetworkCall function.
+            NetworkCalls.updateUserCurrentPoints(user_info.getUser_id(), new_user_pollen, MindfulnessMeditationGame_R.this);
+            //Comment out these incorrect/unimplemented calls as the server simply errors.
+           // NetworkCalls.updateDailyTaskM2(user_info.getUser_id(), 1, MindfulnessMeditationGame_R.this);
+            //NetworkCalls.createQuestReport(2, user_info.getUser_id(),MindfulnessMeditationGame_R.this);
             Log.e("ON FINISH", "" + " FINISH");
+            startActivity(to_navigate);
+
         }
 /*
         public long onPause()

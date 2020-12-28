@@ -68,7 +68,7 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
                 //Otherwise, we have enough pollen, decrement it and update the backend.
                 userPollen -= 10;
                 Toast.makeText(ARScreen.this, "Spending pollen to access AR butterflies for one day.", Toast.LENGTH_SHORT).show();
-                //TODO: Add timed activation of butterfly activity, perhaps in MainActivity or UserInfo?
+                //TODO: Add one day activation of butterfly activity, perhaps in MainActivity or UserInfo?
                 //Finally do the PUT request with the new pollen value. May need to refresh the UI.
                 //This is not updating the backend, need to use a network call.
                 MainActivity.user_info.setUser_pollen(userPollen);

@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     //This UserAuth object is initialized using the very first login object, UserAuth,
                     //that is generated from this login form. It gives us a userId, which we need.
                     UserAuth user = (UserAuth) response.body();
-                    NetworkCalls.getDailyTaskOfUser(user.getUser_id(),MainActivity.this);
+                    //NetworkCalls.getDailyTaskOfUser(user.getUser_id(),MainActivity.this);
                     //This will build and assign a UserInfo instance to the user_info variable above
                     //for package-wide use.
                     NetworkCalls.getUserInfo(user.getUser_id(), MainActivity.this);

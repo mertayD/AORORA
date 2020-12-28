@@ -20,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aorora.network.NetworkCalls;
+
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
@@ -65,9 +67,12 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        //Testing a refresh of userData here instead of in M1-M3
+        //NetworkCalls.getUserInfo(MainActivity.user_info.getUser_id(), HomeScreen.this);
         setContentView(R.layout.activity_home_screen);
-        //Fetch userdata from the backend.
+        //Fetch userdata from the local user_info instance in MainActivity.
         userPollen = MainActivity.user_info.getUser_pollen();
+        Log.d("OnCreate Pollen", "onCreate: Displayed userPollen: " + userPollen);
         userName = MainActivity.user_info.getUser_name();
         userNamePower = MainActivity.user_info.getUser_name_of_strength();
 
@@ -417,5 +422,9 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
 
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //TODO: Refresh pollen values from backend. Userinfo call should do it.
+    }
 }

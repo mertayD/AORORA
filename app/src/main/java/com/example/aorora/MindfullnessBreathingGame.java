@@ -86,7 +86,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         possible_points = 100;
         is_button_still_clicked = false;
         performed_click = false;
-        tempBreathCount = 1;
+        tempBreathCount = 2;
 
         LottieAnimationView animationView = findViewById(R.id.animation_view);
         animationView.setSpeed(1f);
@@ -121,7 +121,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
             {
                 initial_game_count = text;
                 possible_points = tempBreathCount;
-                text = 1;
+                text = tempBreathCount;
             }
 
            else if( text == 2)
@@ -236,7 +236,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     handler.postDelayed(mLongPressed, 3000);
                     myTimer.start();
                 }
-                //The game is over when count reaches 0,
+                //The game is over when count reaches 0, navigate to the reciept page.
                 if(count == 0)
                 {
                     //DialogFragment newFragment = new BreathDialog();
@@ -245,16 +245,19 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     {
                         breathing_music.stop();
                     }
-                    int user_points = MainActivity.user_info.getUser_pollen();
-                    Log.e("USER POINTS ", user_points + " ");
-                    user_points += possible_points;
                     //TODO: Why are the network calls here instead of recieptpage? KISS and add a consistent number of points when we reach that page.
-                    NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), user_points, MindfullnessBreathingGame.this);
-                    NetworkCalls.getUserInfo(MainActivity.user_info.getUser_id(), MindfullnessBreathingGame.this);
+                    int new_user_points = MainActivity.user_info.getUser_pollen() + 10;
+                    Log.e("NEW USER POINTS ", new_user_points + " ");
+                    NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), new_user_points, MindfullnessBreathingGame.this);
+                    //Now update our local pollen value
+                    MainActivity.user_info.setUser_pollen(new_user_points);
+                    //This old GET request was causing race conditions with the PATCH above, and wasnt necessary.
+                    //NetworkCalls.getUserInfo(MainActivity.user_info.getUser_id(), MindfullnessBreathingGame.this);
+                    //Set the pollen value locally
                     Intent to_navigate = new Intent(mindfullness_breathing_game, ReceiptPage.class);
                     to_navigate.putExtra("NavigatedFrom", 1);
-                    NetworkCalls.updateDailyTaskM1(user_info.getUser_id(), 1, mindfullness_breathing_game);
-                    NetworkCalls.createQuestReport(1, user_info.getUser_id(),mindfullness_breathing_game);
+                    //NetworkCalls.updateDailyTaskM1(user_info.getUser_id(), 1, mindfullness_breathing_game);
+                    //NetworkCalls.createQuestReport(1, user_info.getUser_id(),mindfullness_breathing_game);
 
                     to_navigate.putExtra("GAME", initial_game_count);
                     startActivity(to_navigate);

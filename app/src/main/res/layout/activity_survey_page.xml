@@ -54,7 +54,7 @@
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/pleasant"/>
+            app:srcCompat="@drawable/yellow_butterfly_button"/>
 
         <ImageButton
             android:id="@+id/darkorange_mood_button"
@@ -66,7 +66,7 @@
             android:scaleType="fitCenter"
             tools:layout_editor_absoluteX="92dp"
             tools:layout_editor_absoluteY="543dp"
-            app:srcCompat="@drawable/darkorange_butterfly_button"/>
+            app:srcCompat="@drawable/green_butterfly_button"/>
         <!---->
 
         <ImageButton
@@ -92,7 +92,7 @@
             android:scaleType="fitCenter"
             tools:layout_editor_absoluteX="246dp"
             tools:layout_editor_absoluteY="543dp"
-            app:srcCompat="@drawable/yellow_butterfly_button"/>
+            app:srcCompat="@drawable/darkorange_butterfly_button"/>
 
 
         <ImageButton
@@ -105,7 +105,7 @@
             android:scaleType="fitCenter"
             tools:layout_editor_absoluteX="327dp"
             tools:layout_editor_absoluteY="543dp"
-            app:srcCompat="@drawable/green_butterfly_button"/>
+            app:srcCompat="@drawable/red_butterfly_button"/>
 
 
     </LinearLayout>

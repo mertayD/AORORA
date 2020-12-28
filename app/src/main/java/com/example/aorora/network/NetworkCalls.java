@@ -1,34 +1,21 @@
 package com.example.aorora.network;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
-import android.widget.ListAdapter;
 import android.widget.Toast;
 
-import com.example.aorora.CommunityPage;
 import com.example.aorora.MainActivity;
-import com.example.aorora.ProfilePage;
-import com.example.aorora.SurveyPage;
-import com.example.aorora.model.Butterfly;
-import com.example.aorora.model.ButterflyLike;
-import com.example.aorora.model.ButterflyLikeCreateReturn;
 import com.example.aorora.model.DailyTask;
 import com.example.aorora.model.DailyTaskReturn;
 import com.example.aorora.model.MoodReportIdReturn;
 import com.example.aorora.model.NotificationCreateReturn;
-import com.example.aorora.model.QuesrtReportCreateReturn;
+import com.example.aorora.model.QuestReportCreateReturn;
 import com.example.aorora.model.UserInfo;
-import com.example.aorora.model.UserInteractionCreateReturn;
 import com.google.gson.GsonBuilder;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.example.aorora.MainActivity.user_info;
 
 public class NetworkCalls {
 
@@ -205,14 +192,14 @@ public class NetworkCalls {
 
     public static void createQuestReport(int quest_id, int user_id, final Context context)
     {
-        Call<QuesrtReportCreateReturn> call = service.createQuestReport(quest_id,user_id);
-        call.enqueue(new Callback<QuesrtReportCreateReturn>() {
+        Call<QuestReportCreateReturn> call = service.createQuestReport(quest_id,user_id);
+        call.enqueue(new Callback<QuestReportCreateReturn>() {
             @Override
-            public void onResponse(Call<QuesrtReportCreateReturn> call, Response<QuesrtReportCreateReturn> response) {
+            public void onResponse(Call<QuestReportCreateReturn> call, Response<QuestReportCreateReturn> response) {
                 //Toast.makeText(context, "Quest Report Created ID: " + response.body(), Toast.LENGTH_SHORT).show();
             }
             @Override
-            public void onFailure(Call<QuesrtReportCreateReturn> call, Throwable t) {
+            public void onFailure(Call<QuestReportCreateReturn> call, Throwable t) {
                 Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
