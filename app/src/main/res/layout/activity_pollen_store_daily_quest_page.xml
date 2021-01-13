@@ -66,7 +66,7 @@
         android:orientation="horizontal"
         >
 
-
+        <!-- Layout of current selection underlines -->
         <ImageView
             android:id="@+id/underline_pollen_shop"
             android:layout_width="wrap_content"

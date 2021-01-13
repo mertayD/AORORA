@@ -18,7 +18,12 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".ARScreen"></activity>
         <activity android:name=".MindfulnessMeditationGame_R" />
-        <activity android:name=".ReceiptPage" />
+        <activity android:name=".ReceiptPage"
+            android:parentActivityName=".HomeScreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen"/>
+        </activity>
         <activity android:name=".EndOfMindfulnessGamePage" />
         <activity android:name=".PollenStoreDailyQuestPage" />
         <activity android:name=".PollenShopPage" />

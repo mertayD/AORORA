@@ -112,7 +112,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         //buttonClick = MediaPlayer.create(getBaseContext(), R.raw.button1);
 
 
-        Log.d("TESTNAV", "Calling onCreate!");
+        //Log.d("TESTNAV", "Calling onCreate!");
 
         quick_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -311,6 +311,10 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         */
     }
 
+    @Override
+    public void onBackPressed() {
+        //Do nothing on backpress, override the default behavior.
+    }
 
     //Built in overriden onFLing method for swiping control between Activities
     //Implements from the GestureDetector interface.
@@ -383,7 +387,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         {
             to_navigate = new Intent(homeScreen, ARScreen.class);
             startActivity(to_navigate);
-            Log.d("ARBUTTON", "Launching arpack, which is where?????");
+            Log.d("ARBUTTON", "Navigating to AR.");
             //Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.NAUVRLab.ARProduct");
             //startActivity(launchIntent);
         }
