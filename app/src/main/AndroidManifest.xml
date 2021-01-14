@@ -38,6 +38,7 @@
         <activity android:name=".MindfullnessBreathing" />
         <activity android:name=".ButterflyDetailsPage" />
         <activity android:name=".ButterflyCollectionPage" />
+        <activity android:name=".AtriumScreen"/>
         <activity android:name=".ProfilePage" />
         <activity android:name=".CommunityPage" />
         <activity android:name=".HomeScreen" />
