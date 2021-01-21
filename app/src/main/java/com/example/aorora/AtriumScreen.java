@@ -13,9 +13,20 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.aorora.adapter.AtriumAdapter;
+import com.example.aorora.network.NetworkCalls;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AtriumScreen extends AppCompatActivity implements View.OnClickListener{
+    //User account info
+    Integer userPollen;
+    Integer userId;
+
+    //RecyclerView Variables
     private RecyclerView atriumRecycler;
+    AtriumAdapter atriumAdapter;
     RecyclerView.LayoutManager layoutManager;
 
 
@@ -25,6 +36,7 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
     ImageButton profile_button_bottombar;
     ImageButton community_button_bottombar;
     ImageButton quest_button_bottombar;
+    Button add_butterflies;
 
     //Images for the butterflies
     int images[] = {R.drawable.red_butterfly_button, R.drawable.yellow_butterfly_button,
@@ -37,14 +49,20 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
             MainActivity.user_info.getUser_b3_count(),
             MainActivity.user_info.getUser_b4_count(),};
 
+    Map<String, Integer> countsMap = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atrium);
+        //Grab the userId
+        userId = MainActivity.user_info.getUser_id();
+
         //Grab the recyclerview
         atriumRecycler = findViewById(R.id.atriumRecycler);
-        atriumRecycler.setAdapter(new AtriumAdapter(this, images, counts));
-        layoutManager = new GridLayoutManager(this, 5);
+        atriumAdapter = new AtriumAdapter(this, images, counts);
+        atriumRecycler.setAdapter(atriumAdapter);
+        layoutManager = new GridLayoutManager(this, 3);
         atriumRecycler.setLayoutManager(layoutManager);
         atriumRecycler.setHasFixedSize(true);
 
@@ -54,6 +72,7 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
         back_button = (ImageButton) findViewById(R.id.back_button_atrium);
+        add_butterflies = (Button) findViewById(R.id.add_button);
 
 
         //Onclicklisteners for this class.
@@ -62,6 +81,9 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
         community_button_bottombar.setOnClickListener(this);
         quest_button_bottombar.setOnClickListener(this);
         back_button.setOnClickListener(this);
+        add_butterflies.setOnClickListener(this);
+
+
 
 
     }
@@ -95,6 +117,18 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
         {
             to_navigate = new Intent(atriumScreen, ProfilePage.class);
             startActivity(to_navigate);
+        }
+        else if(view_id == add_butterflies.getId()){
+            for(Integer i = 0; i < counts.length; i++){
+                String currString = "user_b" + i.toString() + "_count";
+                counts[i] = counts[i] + 1;
+                countsMap.put(currString, counts[i]);
+            }
+            System.out.println(Arrays.asList(countsMap));
+            Toast.makeText(atriumScreen, "Adding to each butterfly count", Toast.LENGTH_SHORT).show();
+            atriumAdapter.notifyDataSetChanged();
+            System.out.println(countsMap.keySet());
+            NetworkCalls.updateUserAtrium(userId, countsMap, atriumScreen);
         }
     }
 }

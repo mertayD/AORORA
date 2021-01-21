@@ -17,10 +17,12 @@ import com.example.aorora.model.UserInteraction;
 import com.example.aorora.model.Notification;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.PATCH;
@@ -124,6 +126,12 @@ public interface GetDataService {
     @FormUrlEncoded
     Call<UserIdReturn> updateUserPollen(@Path("user_id") Integer user_id,
                                         @Field("user_pollen") Integer user_pollen);
+
+    //Patch request to update user_b0_count through user_b4_count in the backend.
+    @PATCH("/userinfo/{user_id}")
+    @FormUrlEncoded
+    Call<UserIdReturn> updateUserAtrium(@Path("user_id") Integer user_id,
+                                        @FieldMap Map<String, Integer> butterflyCounts);
     
     @GET("/userinfos")
     Call<List<UserInfo>> getCommunity();
