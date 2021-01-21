@@ -124,6 +124,7 @@ public interface GetDataService {
     @FormUrlEncoded
     Call<UserIdReturn> updateUserPollen(@Path("user_id") Integer user_id,
                                         @Field("user_pollen") Integer user_pollen);
+    
     @GET("/userinfos")
     Call<List<UserInfo>> getCommunity();
 

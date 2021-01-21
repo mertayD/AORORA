@@ -27,6 +27,17 @@ public class UserInfo {
     private Integer user_pollen;
     @SerializedName("user_points")
     private Integer user_points;
+    //Counts of the first 5 types of butterflies.
+    @SerializedName("user_b0_count")
+    private Integer user_b0_count;
+    @SerializedName("user_b1_count")
+    private Integer user_b1_count;
+    @SerializedName("user_b2_count")
+    private Integer user_b2_count;
+    @SerializedName("user_b3_count")
+    private Integer user_b3_count;
+    @SerializedName("user_b4_count")
+    private Integer user_b4_count;
     @SerializedName("user_name")
     private String user_name;
     @SerializedName("email")
@@ -184,5 +195,46 @@ public class UserInfo {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    //Inventory for butterfly counts
+    public Integer getUser_b0_count() {
+        return user_b0_count;
+    }
+
+    public void setUser_b0_count(Integer user_b0_count) {
+        this.user_b0_count = user_b0_count;
+    }
+
+    public Integer getUser_b1_count() {
+        return user_b1_count;
+    }
+
+    public void setUser_b1_count(Integer user_b1_count) {
+        this.user_b1_count = user_b1_count;
+    }
+
+    public Integer getUser_b2_count() {
+        return user_b2_count;
+    }
+
+    public void setUser_b2_count(Integer user_b2_count) {
+        this.user_b2_count = user_b2_count;
+    }
+
+    public Integer getUser_b3_count() {
+        return user_b3_count;
+    }
+
+    public void setUser_b3_count(Integer user_b3_count) {
+        this.user_b3_count = user_b3_count;
+    }
+
+    public Integer getUser_b4_count() {
+        return user_b4_count;
+    }
+
+    public void setUser_b4_count(Integer user_b4_count) {
+        this.user_b4_count = user_b4_count;
     }
 }
