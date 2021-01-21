@@ -57,6 +57,11 @@ public class UserInfo {
                     Integer user_current_butterfly,
                     Integer user_pollen,
                     Integer user_points,
+                    Integer user_b0_count,
+                    Integer user_b1_count,
+                    Integer user_b2_count,
+                    Integer user_b3_count,
+                    Integer user_b4_count,
                     String username,
                     String user_name, String email,
                     String password) {
@@ -72,6 +77,11 @@ public class UserInfo {
         this.user_current_butterfly = user_current_butterfly;
         this.user_pollen = user_pollen;
         this.user_points = user_points;
+        this.user_b0_count = user_b0_count;
+        this.user_b1_count = user_b1_count;
+        this.user_b2_count = user_b2_count;
+        this.user_b3_count = user_b3_count;
+        this.user_b4_count = user_b4_count;
         this.user_name = user_name;
         this.email = email;
         this.password = password;

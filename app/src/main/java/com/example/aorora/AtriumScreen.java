@@ -30,8 +30,12 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
     int images[] = {R.drawable.red_butterfly_button, R.drawable.yellow_butterfly_button,
             R.drawable.orange_butterfly_button, R.drawable.green_butterfly_button,
             R.drawable.darkorange_butterfly_button};
-    //Counts of each one
-    int counts[] = {0, 3, 5, 3, 4};
+    //Counts of each type of butterfly, we can make this look nicer.
+    int counts[] = {MainActivity.user_info.getUser_b0_count(),
+            MainActivity.user_info.getUser_b1_count(),
+            MainActivity.user_info.getUser_b2_count(),
+            MainActivity.user_info.getUser_b3_count(),
+            MainActivity.user_info.getUser_b4_count(),};
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

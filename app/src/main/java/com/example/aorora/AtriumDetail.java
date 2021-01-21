@@ -24,7 +24,7 @@ public class AtriumDetail extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atrium_detail);
-        //Init context and onclicklisteners
+        //Init context and onclicklistener
         atriumDetail = this;
         back_button = (ImageButton) findViewById(R.id.back_button_atriumDt);
         back_button.setOnClickListener(this);
