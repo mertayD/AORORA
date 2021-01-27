@@ -97,6 +97,12 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
         MainActivity.user_info.build_atrium();
         local_atrium = MainActivity.user_info.get_local_atrium();
         butterflyTypeCount = local_atrium.size();
+        System.out.println("Number of butterfly types: " + butterflyTypeCount);
+
+        //Initialize recyclerview ArrayList with the map values
+        for(Integer i = 0; i < butterflyTypeCount; i++){
+            System.out.println("Testing");
+        }
 
 
     }
