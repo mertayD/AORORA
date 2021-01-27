@@ -2,6 +2,11 @@ package com.example.aorora.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class UserInfo {
     @SerializedName("user_info_id")
     private Integer user_info_id;
@@ -38,6 +43,8 @@ public class UserInfo {
     private Integer user_b3_count;
     @SerializedName("user_b4_count")
     private Integer user_b4_count;
+    //Non-serialzed value for use in storing each count locally.
+    private Map<String, Integer> butterfly_counts;
     @SerializedName("user_name")
     private String user_name;
     @SerializedName("email")
@@ -82,6 +89,7 @@ public class UserInfo {
         this.user_b2_count = user_b2_count;
         this.user_b3_count = user_b3_count;
         this.user_b4_count = user_b4_count;
+
         this.user_name = user_name;
         this.email = email;
         this.password = password;
@@ -243,8 +251,28 @@ public class UserInfo {
     public Integer getUser_b4_count() {
         return user_b4_count;
     }
+    //Might not be what I want to do, but good in case. Will refactor later if needed.
+    public Map<String, Integer> get_local_atrium(){return butterfly_counts;}
 
     public void setUser_b4_count(Integer user_b4_count) {
         this.user_b4_count = user_b4_count;
+    }
+
+    public int get_butterflytype_count(){return butterfly_counts.keySet().size();}
+
+    public void build_atrium(){
+        //Init local inventory hashmap
+        butterfly_counts = new HashMap<>();
+        //Populate our local HashMap, looks ugly for now, will need to make this a map in the backend likely.
+        butterfly_counts.put("user_b0_count", this.user_b0_count);
+        butterfly_counts.put("user_b1_count", this.user_b1_count);
+        butterfly_counts.put("user_b2_count", this.user_b2_count);
+        butterfly_counts.put("user_b3_count", this.user_b3_count);
+        butterfly_counts.put("user_b4_count", this.user_b4_count);
+    }
+
+    public void update_local_atrium(HashMap<String, Integer> newMap){
+        //Refresh our local atrium with the proper counts.
+        this.butterfly_counts = newMap;
     }
 }

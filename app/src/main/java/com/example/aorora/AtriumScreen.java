@@ -15,8 +15,10 @@ import android.widget.Toast;
 import com.example.aorora.adapter.AtriumAdapter;
 import com.example.aorora.network.NetworkCalls;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AtriumScreen extends AppCompatActivity implements View.OnClickListener{
@@ -28,6 +30,7 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
     private RecyclerView atriumRecycler;
     AtriumAdapter atriumAdapter;
     RecyclerView.LayoutManager layoutManager;
+    int unique_butterflies;
 
 
     Context atriumScreen;
@@ -48,8 +51,15 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
             MainActivity.user_info.getUser_b2_count(),
             MainActivity.user_info.getUser_b3_count(),
             MainActivity.user_info.getUser_b4_count(),};
+    //Store the amount of basic butterfly counts
+    List<Integer> butterflyCounts = new ArrayList<>();
+    //Grab the user's local atrium map
+    Map<String, Integer> local_atrium = new HashMap<>();
 
-    Map<String, Integer> countsMap = new HashMap<>();
+    //Stores the total amount of unique basic butterflies currently registered for the user.
+    Integer butterflyTypeCount;
+
+    Map<String, Integer> countsMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -83,7 +93,10 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
         back_button.setOnClickListener(this);
         add_butterflies.setOnClickListener(this);
 
-
+        countsMap = new HashMap<>();
+        MainActivity.user_info.build_atrium();
+        local_atrium = MainActivity.user_info.get_local_atrium();
+        butterflyTypeCount = local_atrium.size();
 
 
     }
