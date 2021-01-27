@@ -46,20 +46,13 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
             R.drawable.orange_butterfly_button, R.drawable.green_butterfly_button,
             R.drawable.darkorange_butterfly_button};
     //Counts of each type of butterfly, we can make this look nicer.
-    int counts[] = {MainActivity.user_info.getUser_b0_count(),
-            MainActivity.user_info.getUser_b1_count(),
-            MainActivity.user_info.getUser_b2_count(),
-            MainActivity.user_info.getUser_b3_count(),
-            MainActivity.user_info.getUser_b4_count(),};
-    //Store the amount of basic butterfly counts
-    List<Integer> butterflyCounts = new ArrayList<>();
+    int counts[];
+
     //Grab the user's local atrium map
     Map<String, Integer> local_atrium = new HashMap<>();
 
     //Stores the total amount of unique basic butterflies currently registered for the user.
     Integer butterflyTypeCount;
-
-    Map<String, Integer> countsMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -67,6 +60,12 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_atrium);
         //Grab the userId
         userId = MainActivity.user_info.getUser_id();
+
+        MainActivity.user_info.build_atrium();
+        local_atrium = MainActivity.user_info.get_local_atrium();
+        butterflyTypeCount = local_atrium.size();
+        counts = new int[butterflyTypeCount];
+
 
         //Grab the recyclerview
         atriumRecycler = findViewById(R.id.atriumRecycler);
@@ -93,15 +92,14 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
         back_button.setOnClickListener(this);
         add_butterflies.setOnClickListener(this);
 
-        countsMap = new HashMap<>();
-        MainActivity.user_info.build_atrium();
-        local_atrium = MainActivity.user_info.get_local_atrium();
-        butterflyTypeCount = local_atrium.size();
+
         System.out.println("Number of butterfly types: " + butterflyTypeCount);
 
         //Initialize recyclerview ArrayList with the map values
         for(Integer i = 0; i < butterflyTypeCount; i++){
-            System.out.println("Testing");
+            String current_butterfly = "user_b" + i.toString() +"_count";
+            counts[i] = local_atrium.get(current_butterfly);
+            System.out.println("Adding butterfly for: " + current_butterfly);
         }
 
 
@@ -141,13 +139,14 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
             for(Integer i = 0; i < counts.length; i++){
                 String currString = "user_b" + i.toString() + "_count";
                 counts[i] = counts[i] + 1;
-                countsMap.put(currString, counts[i]);
+                local_atrium.put(currString, counts[i]);
             }
-            System.out.println(Arrays.asList(countsMap));
+            System.out.println("Local Atrium: " + Arrays.asList(local_atrium));
             Toast.makeText(atriumScreen, "Adding to each butterfly count", Toast.LENGTH_SHORT).show();
             atriumAdapter.notifyDataSetChanged();
-            System.out.println(countsMap.keySet());
-            NetworkCalls.updateUserAtrium(userId, countsMap, atriumScreen);
+            MainActivity.user_info.update_local_atrium(local_atrium);
+            NetworkCalls.updateUserAtrium(userId, local_atrium, atriumScreen);
+            System.out.println("END OF ATRIUM SCREEN UPDATE USER LOCAL_ATRIUM: " + Arrays.asList(MainActivity.user_info.get_local_atrium()));
         }
     }
 }
