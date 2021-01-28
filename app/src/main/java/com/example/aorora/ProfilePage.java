@@ -121,7 +121,8 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         Intent to_navigate;
         if(view_id == butterfly_selection_button.getId() || view_id == jar_button.getId())
         {
-            to_navigate = new Intent(profilePage, ButterflyCollectionPage.class);
+            //Atrium navigation
+            to_navigate = new Intent(profilePage, AtriumScreen.class);
             startActivity(to_navigate);
 
         }

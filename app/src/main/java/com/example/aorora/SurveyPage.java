@@ -206,6 +206,11 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
     }
 
     @Override
+    public void onBackPressed() {
+        //Do nothing, stay in this activity, we do not want to navigate back to the login.
+    }
+
+    @Override
     public void onClick(View v) {
         // result will be considered on a scale of 1-5
         int q1_response = 0;

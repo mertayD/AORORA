@@ -283,6 +283,18 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
 
 
     @Override
+    public void onBackPressed() {
+        //Allow us to leave the Activity as normal, but we need to stop the recording like the x button does.
+        if(theme_music.isPlaying())
+        {
+            Log.e("MUSIC", " STOPPED");
+            theme_music.stop();
+        }
+        myTimer.cancel();
+        super.onBackPressed();
+    }
+
+    @Override
     public void onClick(View v) {
         if(animation_start)
         {
