@@ -31,11 +31,11 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
     TextView pollen_score_tv;
     TextView receipt_desc_tv;
     TextView receipt_desc_tv_2;
-    TextView receipt_score_tv;
-    TextView receipt_score_tv_2;
+    TextView pollenEarnedScoreTv;
+    TextView pollenTotalCountTv;
 
-    int userPollen;
-    int pollenPayout;
+    Integer userPollen;
+    Integer pollenPayout;
     int game_settings;
     int coming_from;
     int game_theme;
@@ -56,8 +56,8 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
         tap_me_text = findViewById(R.id.tap_to_collect_receipt_tv);
         receipt_desc_tv = findViewById(R.id.receipt_desc_text_view);
         receipt_desc_tv_2 = findViewById(R.id.receipt_desc_text_view_2);
-        receipt_score_tv = findViewById(R.id.receipt_desc_score_text_view);
-        receipt_score_tv_2 =  findViewById(R.id.receipt_desc_score_text_view_1);
+        pollenEarnedScoreTv = findViewById(R.id.pollen_earnedcount_tv);
+        pollenTotalCountTv =  findViewById(R.id.pollen_totalcount_tv);
 
         continue_button.setOnClickListener(this);
         replay_button.setOnClickListener(this);
@@ -99,6 +99,9 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
         if(current_intent.hasExtra("PollenPayout")){
             pollenPayout = current_intent.getIntExtra("PollenPayout", 1);
         }
+        //Set the amount of pollen earned in the textview
+        pollenEarnedScoreTv.setText(pollenPayout.toString());
+        pollenTotalCountTv.setText(userPollen.toString());
 
     }
 
@@ -157,8 +160,8 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
 
                 @Override
                 public void onFinish() {
-                    receipt_score_tv.setVisibility(View.INVISIBLE);
-                    receipt_score_tv_2.setVisibility(View.INVISIBLE);
+                    pollenEarnedScoreTv.setVisibility(View.INVISIBLE);
+                    pollenTotalCountTv.setVisibility(View.INVISIBLE);
                     receipt_desc_tv.setVisibility(View.INVISIBLE);
                     receipt_desc_tv_2.setVisibility(View.INVISIBLE);
 

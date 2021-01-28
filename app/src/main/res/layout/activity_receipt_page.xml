@@ -14,10 +14,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="68dp"
-        android:text="Daily Quest Completion: "
+        android:text="Total Pollen "
         android:textColor="@android:color/white"
         android:textSize="8pt"
-        app:layout_constraintEnd_toStartOf="@+id/receipt_desc_score_text_view_1"
+        app:layout_constraintEnd_toStartOf="@+id/pollen_totalcount_tv"
+        app:layout_constraintHorizontal_bias="0.326"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/receipt_desc_text_view" />
 
     <ImageView
@@ -123,17 +125,18 @@
         android:id="@+id/receipt_desc_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="8dp"
-        android:text="Daily Quest Completion: "
+        android:text="Pollen Earned: "
         android:textColor="@android:color/white"
         android:textSize="8pt"
-        app:layout_constraintEnd_toStartOf="@+id/receipt_desc_score_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/pollen_earnedcount_tv"
+        app:layout_constraintHorizontal_bias="0.261"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
-        android:id="@+id/receipt_desc_score_text_view"
+        android:id="@+id/pollen_earnedcount_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -144,7 +147,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
-        android:id="@+id/receipt_desc_score_text_view_1"
+        android:id="@+id/pollen_totalcount_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -152,7 +155,7 @@
         android:text="0000"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/receipt_desc_score_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/pollen_earnedcount_tv" />
 
     <TextView
         android:id="@+id/tap_to_access_shop_tv"
