@@ -282,7 +282,8 @@ public class UserInfo {
             Integer currVal = currEntry.getValue();
             this.local_atrium.put(currKey, currVal);
         }
-        Log.d("USERINFO ATRIUM UPDATE", "update_local_atrium: Current UserInfo atrium: " + Arrays.asList(this.local_atrium) );
+        //Log.d("USERINFO ATRIUM UPDATE", "update_local_atrium: Current UserInfo atrium: " + Arrays.asList(this.local_atrium) );
+        //Reflect the local atrium mapping to the count variables stored in the local model to push to the backend.
         update_counts();
     }
 

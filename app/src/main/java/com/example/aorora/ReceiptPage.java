@@ -11,7 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
-
+/*
+This page is presented after a user completes the M1 - M3 mindfulness activities. The user is
+shown the amount of pollen they earned for this activity as well as their total amount of pollen
+tied to their account. We pass several extras to this activity. The first, NavigatedFrom,
+tells us the previous activity we navigated from in case the user wants to retry. The second,
+GAME, is used to reset the breathing activity based on the user's previous selection there.
+The third, Game Theme, is used
+ */
 public class ReceiptPage extends AppCompatActivity implements View.OnClickListener{
 
     ImageView pollen_view_text_view_holder;
@@ -27,6 +34,8 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
     TextView receipt_score_tv;
     TextView receipt_score_tv_2;
 
+    int userPollen;
+    int pollenPayout;
     int game_settings;
     int coming_from;
     int game_theme;
@@ -34,6 +43,8 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipt_page);
+
+        userPollen = MainActivity.user_info.getUser_pollen();
 
         pollen_view_text_view_holder = findViewById(R.id.receipt_page_pollen_point_holder);
         continue_button = findViewById(R.id.receipt_page_exit_activity_button);
@@ -79,9 +90,19 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
                 }
             }
         }
+        //Init user pollen display values
+        //Total pollen in the account
+        userPollen = MainActivity.user_info.getUser_pollen();
+        //Make sure this is initialized so we don't display a null value without an extra.
+        pollenPayout = 0;
+        //Grab the actual payout value passed from the previous activity.
+        if(current_intent.hasExtra("PollenPayout")){
+            pollenPayout = current_intent.getIntExtra("PollenPayout", 1);
+        }
 
     }
 
+    //Intential override to prevent improper back button navigation.
     @Override
     public void onBackPressed() {
         //Do nothing. Do not pop the stack and go back into the mindfulness activity.

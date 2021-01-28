@@ -20,7 +20,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/*
+This screen contains the atrium inventory logic and code to display butterfly counts from the
+backend. Each butterfly presented is currently one of five basic butterflies for use in the MVP
+of ARORA. These butterflies will be collected and stored here in the Atrium as a core component of
+M4.
+ */
 public class AtriumScreen extends AppCompatActivity implements View.OnClickListener{
     //User account info
     Integer userPollen;
@@ -45,10 +50,10 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
     int images[] = {R.drawable.red_butterfly_button, R.drawable.yellow_butterfly_button,
             R.drawable.orange_butterfly_button, R.drawable.green_butterfly_button,
             R.drawable.darkorange_butterfly_button};
-    //Counts of each type of butterfly, we can make this look nicer.
+    //Counts of each type of butterfly.
     int counts[];
 
-    //Grab the user's local atrium map
+    //Grab the user's local atrium map to be updated and pushed back to the UserInfo Model.
     Map<String, Integer> local_atrium = new HashMap<>();
 
     //Stores the total amount of unique basic butterflies currently registered for the user.
@@ -61,9 +66,14 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
         //Grab the userId
         userId = MainActivity.user_info.getUser_id();
 
+        //Since the user's atrium map is not a serialized value from the backend, we must initialize
+        //it manually with this function.
         MainActivity.user_info.build_atrium();
+        //Get the built atrium and set it to something easier to access here.
         local_atrium = MainActivity.user_info.get_local_atrium();
+        //Grab the unique
         butterflyTypeCount = local_atrium.size();
+        //Initialize out
         counts = new int[butterflyTypeCount];
 
 
@@ -101,8 +111,6 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
             counts[i] = local_atrium.get(current_butterfly);
             System.out.println("Adding butterfly for: " + current_butterfly);
         }
-
-
     }
 
     @Override
@@ -146,7 +154,6 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
             atriumAdapter.notifyDataSetChanged();
             MainActivity.user_info.update_local_atrium(local_atrium);
             NetworkCalls.updateUserAtrium(userId, local_atrium, atriumScreen);
-            System.out.println("END OF ATRIUM SCREEN UPDATE USER LOCAL_ATRIUM: " + Arrays.asList(MainActivity.user_info.get_local_atrium()));
         }
     }
 }
