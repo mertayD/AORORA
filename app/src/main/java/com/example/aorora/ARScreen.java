@@ -1,7 +1,13 @@
 package com.example.aorora;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +20,15 @@ import android.widget.Toast;
 import com.example.aorora.network.GetDataService;
 import com.example.aorora.network.NetworkCalls;
 import com.example.aorora.network.RetrofitClientInstance;
+import com.example.aorora.utils.Coordinate;
+import com.example.aorora.utils.LocationInfo;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
+/*Eventual Gateway to M4, which will take 10 pollen from the user and launch the necessary activity
+for the AR or 2D gamification element where users catch butterflies.
+ */
 public class ARScreen extends AppCompatActivity implements View.OnClickListener {
     //User account info
     Integer userPollen;
@@ -23,12 +37,19 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
     //Retrofit network object
     GetDataService service;
 
+    //Geolocation service
+    private FusedLocationProviderClient fusedLocationClient;
+    //Coordinate list we defined
+    LocationInfo butterFlyLocations;
     Context arScreen;
     ImageButton home_button_bottombar;
     ImageButton profile_button_bottombar;
     ImageButton community_button_bottombar;
     ImageButton quest_button_bottombar;
     Button spendPollenBtn;
+    Button coordsBtn;
+    Coordinate currentCoord;
+    Location currentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +62,15 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
         //Init our backend service
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
+        //Init coords
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        //Init butterfly locations
+        butterFlyLocations = new LocationInfo();
+        Coordinate coordinate = butterFlyLocations.getLocation("Home");
+        Log.d("coordinate", coordinate.toString());
+
+
         setContentView(R.layout.activity_ar_screen);
         arScreen = this;
         home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);
@@ -48,6 +78,7 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
         spendPollenBtn = (Button) findViewById(R.id.spend_pollen_btn);
+        coordsBtn = (Button) findViewById(R.id.geo_coord_bttn);
 
 
         //Onclicklisteners for this class.
@@ -57,11 +88,10 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
         quest_button_bottombar.setOnClickListener(this);
 
 
-
         spendPollenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!hasEnoughPollen()){
+                if (!hasEnoughPollen()) {
                     Toast.makeText(ARScreen.this, "Sorry! Not enough pollen! Complete some quests!", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -73,14 +103,71 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
                 //This is not updating the backend, need to use a network call.
                 MainActivity.user_info.setUser_pollen(userPollen);
                 //This will update the backend and set the current pollen to our decremented value.
-                NetworkCalls.updateUserCurrentPoints(userId, userPollen,ARScreen.this);
+                NetworkCalls.updateUserCurrentPoints(userId, userPollen, ARScreen.this);
             }
         });
 
+        coordsBtn.setOnClickListener(this);
+
+    }
+
+    @SuppressLint("MissingPermission")
+    private void getUserLocation(final GeoCoordsCallback geoCallback) {
+        Toast.makeText(this, "Getting user coordinates", Toast.LENGTH_SHORT).show();
+        String[] permissionsNeeded = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+        Location currentLocation;
+        if (!hasPermissions(this, permissionsNeeded)) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            ActivityCompat.requestPermissions(this, permissionsNeeded, 1);
+        }
+        if(!hasPermissions(this, permissionsNeeded)){
+            Toast.makeText(this, "You must provide location permissions", Toast.LENGTH_SHORT).show();
+        }
+        //If we do end up having the permissions, then try to get the location.
+        else{
+            //Handled by the checks above, getting permissions works with it.
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                // Logic to handle location object
+                                currentCoord = new Coordinate(location.getLatitude(), location.getLongitude());
+                                //Send the location back to the listener via the callback.
+                                geoCallback.onCallBack(location);
+                            }
+                        }
+                    });
+        }
+    }
+
+    public Boolean hasPermissions(Context ct, String[] inputPermissions) {
+        //Make sure we have a context and permission list.
+        if(ct != null && inputPermissions != null){
+            //Check each permission in the list and see if they are GRANTED.
+            for(String currPermission : inputPermissions){
+                if(ActivityCompat.checkSelfPermission(ct,currPermission) != PackageManager.PERMISSION_GRANTED){
+                    return false;
+                }
+            }
+        }
+        //If we either have nothing to check, or we didn't have a denied permission, return true.
+        return true;
     }
 
     public boolean hasEnoughPollen() {
         return userPollen >= 10;
+    }
+
+    private interface GeoCoordsCallback {
+        void onCallBack(Location returnedLocation);
     }
 
     @Override
@@ -108,6 +195,16 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
         {
             to_navigate = new Intent(arScreen, HomeScreen.class);
             startActivity(to_navigate);
+        }
+        else if(view_id == coordsBtn.getId()){
+            //First trying to display latitude.
+            getUserLocation(new GeoCoordsCallback() {
+                @Override
+                public void onCallBack(Location returnedLocation) {
+                    Log.d("Returned Lat", "returnedLocationLat" + returnedLocation.getLatitude());
+                    currentLocation = returnedLocation;
+                }
+            });
         }
 
     }

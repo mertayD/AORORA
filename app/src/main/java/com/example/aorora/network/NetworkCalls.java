@@ -109,6 +109,9 @@ public class NetworkCalls {
                     //PACKAGE GLOBAL USED WITHOUT DOCUMENTATION. BAD! Specify that user_info is from
                     //MainActivity!
                     MainActivity.user_info = response.body();
+                    //Since the user's atrium map is not a serialized value from the backend, we must initialize
+                    //it manually with this function.
+                    MainActivity.user_info.build_atrium();
                     Log.d("RESPONSESTR", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                     //Toast.makeText(context, "User Info Gathered", Toast.LENGTH_SHORT).show();
                 }

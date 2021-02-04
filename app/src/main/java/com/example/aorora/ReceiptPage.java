@@ -52,7 +52,6 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
         home_button = findViewById(R.id.receipt_page_home_button);
         pollen_score_tv = findViewById(R.id.receipt_page_pollen_points_tv);
         jar_button = findViewById(R.id.receipt_page_jar_button);
-        go_to_pollen_tore_text = findViewById(R.id.tap_to_access_shop_tv);
         tap_me_text = findViewById(R.id.tap_to_collect_receipt_tv);
         receipt_desc_tv = findViewById(R.id.receipt_desc_text_view);
         receipt_desc_tv_2 = findViewById(R.id.receipt_desc_text_view_2);
@@ -102,6 +101,7 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
         //Set the amount of pollen earned in the textview
         pollenEarnedScoreTv.setText(pollenPayout.toString());
         pollenTotalCountTv.setText(userPollen.toString());
+        pollen_score_tv.setText(userPollen.toString());
 
     }
 
@@ -165,7 +165,6 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
                     receipt_desc_tv.setVisibility(View.INVISIBLE);
                     receipt_desc_tv_2.setVisibility(View.INVISIBLE);
 
-                    go_to_pollen_tore_text.setVisibility(View.VISIBLE);
                     tap_me_text.setVisibility(View.INVISIBLE);
                     pollen_score_tv.setVisibility(View.VISIBLE);
                     continue_button.setVisibility(View.VISIBLE);

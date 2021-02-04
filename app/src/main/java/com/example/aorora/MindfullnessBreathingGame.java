@@ -94,9 +94,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         animationView.playAnimation();
 
         myDialog = new Dialog(this);
-        pollen_layout = (View) findViewById(R.id.breathing_game_pollen_layout);
-        score_tv = pollen_layout.findViewById(R.id.pollen_score_layout_tv);
-        initial_score = Integer.parseInt(score_tv.getText().toString());
+
 
         tap_me_animation = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.tap_me_animation);

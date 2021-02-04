@@ -59,6 +59,8 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
     ConstraintLayout walking_game_layout;
     int game_theme;
     MediaPlayer walking_music;
+    Integer pollen_payout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
 
         myAlpha = new AlphaModifier(1000, 10, 0, 8000, new AccelerateInterpolator());
         mindfulness_walking = this;
+        pollen_payout = 30;
 
         walking_music = MediaPlayer.create(MindfullnessWalkingGame.this,R.raw.mindfulnesswalking);
 
@@ -159,10 +162,11 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
                 Intent to_navigate = new Intent(mindfulness_walking, ReceiptPage.class);
                 to_navigate.putExtra("NavigatedFrom", 3);
                 to_navigate.putExtra("Game Theme", game_theme);
+                to_navigate.putExtra("PollenPayout", pollen_payout);
                 stopTracking();
                 startActivity(to_navigate);
                 int user_points = MainActivity.user_info.getUser_pollen();
-                user_points += 25;
+                user_points += pollen_payout;
                 NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), user_points, MindfullnessWalkingGame.this);
                 MainActivity.user_info.setUser_pollen(user_points);
                 //NetworkCalls.updateDailyTaskM3(user_info.getUser_id(), 1, walking);

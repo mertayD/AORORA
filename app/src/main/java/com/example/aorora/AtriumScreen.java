@@ -66,14 +66,11 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
         //Grab the userId
         userId = MainActivity.user_info.getUser_id();
 
-        //Since the user's atrium map is not a serialized value from the backend, we must initialize
-        //it manually with this function.
-        MainActivity.user_info.build_atrium();
         //Get the built atrium and set it to something easier to access here.
         local_atrium = MainActivity.user_info.get_local_atrium();
-        //Grab the unique
+        //Grab the unique butterflies in the user atrium
         butterflyTypeCount = local_atrium.size();
-        //Initialize out
+        //Initialize the array to be passed to the recyclerview.
         counts = new int[butterflyTypeCount];
 
 
@@ -103,9 +100,7 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
         add_butterflies.setOnClickListener(this);
 
 
-        System.out.println("Number of butterfly types: " + butterflyTypeCount);
-
-        //Initialize recyclerview ArrayList with the map values
+        //Initialize recyclerview ArrayList with the map values from the user's atrium
         for(Integer i = 0; i < butterflyTypeCount; i++){
             String current_butterfly = "user_b" + i.toString() +"_count";
             counts[i] = local_atrium.get(current_butterfly);
@@ -144,7 +139,7 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
             startActivity(to_navigate);
         }
         else if(view_id == add_butterflies.getId()){
-            for(Integer i = 0; i < counts.length; i++){
+            for(Integer i = 0; i < counts.length - 1; i++){
                 String currString = "user_b" + i.toString() + "_count";
                 counts[i] = counts[i] + 1;
                 local_atrium.put(currString, counts[i]);

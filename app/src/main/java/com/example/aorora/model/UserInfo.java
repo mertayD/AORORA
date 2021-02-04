@@ -286,7 +286,8 @@ public class UserInfo {
         //Reflect the local atrium mapping to the count variables stored in the local model to push to the backend.
         update_counts();
     }
-
+    //This will take translate the atrium mappings to the userinfo counts that are pushed to the
+    //backend, i.e. the user_b0_count through user_b4_count.
     public void update_counts(){
         for(Map.Entry<String,Integer> currEntry : this.local_atrium.entrySet()){
             String currKey = currEntry.getKey();
