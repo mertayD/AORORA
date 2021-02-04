@@ -7,11 +7,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -20,11 +18,12 @@ import android.widget.Toast;
 import com.example.aorora.network.GetDataService;
 import com.example.aorora.network.NetworkCalls;
 import com.example.aorora.network.RetrofitClientInstance;
-import com.example.aorora.utils.Coordinate;
-import com.example.aorora.utils.LocationInfo;
+import com.example.aorora.utils.ButterflyStops;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.Map;
 
 /*Eventual Gateway to M4, which will take 10 pollen from the user and launch the necessary activity
 for the AR or 2D gamification element where users catch butterflies.
@@ -40,7 +39,6 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
     //Geolocation service
     private FusedLocationProviderClient fusedLocationClient;
     //Coordinate list we defined
-    LocationInfo butterFlyLocations;
     Context arScreen;
     ImageButton home_button_bottombar;
     ImageButton profile_button_bottombar;
@@ -48,8 +46,8 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
     ImageButton quest_button_bottombar;
     Button spendPollenBtn;
     Button coordsBtn;
-    Coordinate currentCoord;
     Location currentLocation;
+    ButterflyStops butterflyStops;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +64,9 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         //Init butterfly locations
-        butterFlyLocations = new LocationInfo();
-        Coordinate coordinate = butterFlyLocations.getLocation("Home");
-        Log.d("coordinate", coordinate.toString());
+        butterflyStops = new ButterflyStops();
+        Location locationHome = butterflyStops.getLocation("Home");
+        Log.d("My haus", locationHome.toString());
 
 
         setContentView(R.layout.activity_ar_screen);
@@ -117,13 +115,6 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
         String[] permissionsNeeded = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
         Location currentLocation;
         if (!hasPermissions(this, permissionsNeeded)) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             ActivityCompat.requestPermissions(this, permissionsNeeded, 1);
         }
         if(!hasPermissions(this, permissionsNeeded)){
@@ -138,8 +129,6 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
                         public void onSuccess(Location location) {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
-                                // Logic to handle location object
-                                currentCoord = new Coordinate(location.getLatitude(), location.getLongitude());
                                 //Send the location back to the listener via the callback.
                                 geoCallback.onCallBack(location);
                             }
@@ -161,6 +150,20 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
         //If we either have nothing to check, or we didn't have a denied permission, return true.
         return true;
     }
+
+    private Map<String, Location> findNearbyLocations(Location currLocation) {
+        Log.d("KEYS", butterflyStops.getCoordinateMap().keySet().toString());
+        for(Map.Entry<String,Location> currEntry : butterflyStops.getCoordinateMap().entrySet()) {
+            String locationStr = currEntry.getKey();
+            Log.d("CURR VALUE", "Current key value" + currEntry.getValue().getLatitude());
+            double distance = currLocation.distanceTo(currEntry.getValue());
+            Log.d("Location Checks", "findNearby: Distance to " + locationStr + "from current location: " + distance);
+        }
+        return null;
+        }
+
+
+
 
     public boolean hasEnoughPollen() {
         return userPollen >= 10;
@@ -203,8 +206,11 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
                 public void onCallBack(Location returnedLocation) {
                     Log.d("Returned Lat", "returnedLocationLat" + returnedLocation.getLatitude());
                     currentLocation = returnedLocation;
+                    //Make our coordinate object from the returned location.
+                    findNearbyLocations(currentLocation);
                 }
             });
+
         }
 
     }
