@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.aorora.network.CheckConnectivity;
+import com.example.aorora.network.GetConnInfo;
 import com.example.aorora.network.GetDataService;
 import com.example.aorora.network.NetworkCalls;
 import com.example.aorora.network.RetrofitClientInstance;
@@ -28,7 +31,7 @@ import java.util.Map;
 /*Eventual Gateway to M4, which will take 10 pollen from the user and launch the necessary activity
 for the AR or 2D gamification element where users catch butterflies.
  */
-public class ARScreen extends AppCompatActivity implements View.OnClickListener {
+public class ARScreen extends AppCompatActivity implements View.OnClickListener, GetConnInfo {
     //User account info
     Integer userPollen;
     Integer userId;
@@ -48,6 +51,8 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
     Button coordsBtn;
     Location currentLocation;
     ButterflyStops butterflyStops;
+    Boolean isConnected;
+    CheckConnectivity connCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,9 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
         butterflyStops = new ButterflyStops();
         Location locationHome = butterflyStops.getLocation("Home");
         Log.d("My haus", locationHome.toString());
+
+
+
 
 
         setContentView(R.layout.activity_ar_screen);
@@ -106,6 +114,18 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
         });
 
         coordsBtn.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        //Init async check for connectivity
+        connCheck = new CheckConnectivity();
+        //Set the connCheck to reference this class when returning the connection boolean.
+        connCheck.connInfoCheck = ARScreen.this;
+        //Do the connectivity check everytime we resume the activity. Start the check itself.
+        connCheck.execute();
 
     }
 
@@ -169,6 +189,13 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
         return userPollen >= 10;
     }
 
+    @Override
+    public void getConnInfo(Boolean isConnected){
+        this.isConnected = isConnected;
+        Log.d("GetConnInfo", "Is connected? " + isConnected.toString());
+    }
+
+
     private interface GeoCoordsCallback {
         void onCallBack(Location returnedLocation);
     }
@@ -200,6 +227,7 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
             startActivity(to_navigate);
         }
         else if(view_id == coordsBtn.getId()){
+            Log.d("Connectivity Check", this.isConnected.toString());
             //First trying to display latitude.
             getUserLocation(new GeoCoordsCallback() {
                 @Override
@@ -214,6 +242,15 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener 
         }
 
     }
-
+    //Have an onDestroy method for when we navigate away from this page.
+    @Override
+    protected void onDestroy(){
+        //If we have a connCheck thread running, destroy it to prevent a memory leak.
+        if(connCheck != null && connCheck.getStatus() == AsyncTask.Status.RUNNING){
+            connCheck.cancel(true);
+        }
+        connCheck = null;
+        super.onDestroy();
+    }
 
 }

@@ -71,8 +71,6 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         settings_button = (ImageButton) findViewById(R.id.settings_button_profile_page);
         user_name_tv = (TextView) findViewById(R.id.profile_user_name_tv);
         user_score_tv = (TextView) findViewById(R.id.profile_user_score);
-        butterfly_name_tv = (TextView) findViewById(R.id.profile_page_bf_name_tv);
-        butterfly_description_tv = (TextView) findViewById(R.id.profile_page_bf_desc_tv);
         profilePage = this;
 
         //User tv at the top of the page. Pollen is accessed from the backend User Table.
