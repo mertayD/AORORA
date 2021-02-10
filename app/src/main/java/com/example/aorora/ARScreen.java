@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +21,12 @@ import com.example.aorora.network.GetDataService;
 import com.example.aorora.network.NetworkCalls;
 import com.example.aorora.network.RetrofitClientInstance;
 import com.example.aorora.utils.ButterflyStops;
+//Local GPS Packages
+import android.location.Location;
+import android.location.LocationManager;
+import android.location.LocationListener;
+
+//Networked GPS Packages
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -54,6 +59,10 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener,
     Boolean isConnected;
     CheckConnectivity connCheck;
 
+    //Local GPS Variables
+    protected LocationManager locationManagerLocal;
+    protected LocationListener locationListenerLocal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,16 +74,13 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener,
         //Init our backend service
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
-        //Init coords
+        //Init fused locaiton client, should work with either network or gps.
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         //Init butterfly locations
         butterflyStops = new ButterflyStops();
         Location locationHome = butterflyStops.getLocation("Home");
         Log.d("My haus", locationHome.toString());
-
-
-
 
 
         setContentView(R.layout.activity_ar_screen);
@@ -120,17 +126,21 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener,
     @Override
     public void onResume(){
         super.onResume();
+        runConnCheck();
+
+    }
+
+    private void runConnCheck(){
         //Init async check for connectivity
         connCheck = new CheckConnectivity();
         //Set the connCheck to reference this class when returning the connection boolean.
         connCheck.connInfoCheck = ARScreen.this;
         //Do the connectivity check everytime we resume the activity. Start the check itself.
         connCheck.execute();
-
     }
 
     @SuppressLint("MissingPermission")
-    private void getUserLocation(final GeoCoordsCallback geoCallback) {
+    private void getUserLocationNetwork(final GeoCoordsCallback geoCallback) {
         Toast.makeText(this, "Getting user coordinates", Toast.LENGTH_SHORT).show();
         String[] permissionsNeeded = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
         Location currentLocation;
@@ -227,17 +237,21 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener,
             startActivity(to_navigate);
         }
         else if(view_id == coordsBtn.getId()){
-            Log.d("Connectivity Check", this.isConnected.toString());
-            //First trying to display latitude.
-            getUserLocation(new GeoCoordsCallback() {
-                @Override
-                public void onCallBack(Location returnedLocation) {
-                    Log.d("Returned Lat", "returnedLocationLat" + returnedLocation.getLatitude());
-                    currentLocation = returnedLocation;
-                    //Make our coordinate object from the returned location.
-                    findNearbyLocations(currentLocation);
-                }
-            });
+            runConnCheck();
+            if(!isConnected) {
+                Toast.makeText(this, "Not connected!", Toast.LENGTH_SHORT).show();
+            }
+                //First trying to display latitude.
+                getUserLocationNetwork(new GeoCoordsCallback() {
+                    @Override
+                    public void onCallBack(Location returnedLocation) {
+                        Log.d("Returned Lat", "returnedLocationLat" + returnedLocation.getLatitude());
+                        Toast.makeText(ARScreen.this, "Latitude: " + returnedLocation.getLatitude() + "Long: " + returnedLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+                        currentLocation = returnedLocation;
+                        //Make our coordinate object from the returned location.
+                        findNearbyLocations(currentLocation);
+                    }
+                });
 
         }
 

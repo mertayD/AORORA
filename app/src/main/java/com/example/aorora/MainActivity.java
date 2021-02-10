@@ -95,9 +95,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void login(String username, String password)
     {
+        Log.d("Beginnign login", "Logging into the system via login function");
         Call<UserAuth> call = service.login(username,password);
+        Log.d("Beginnign login", "Invoked service.login");
         call.enqueue(new Callback<UserAuth>() {
-
             @Override
             public void onResponse(Call<UserAuth> call, Response<UserAuth> response) {
                 if(response.isSuccess())
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("VERBOSE1", "" + t.getCause());
                     Log.e("VERBOSE2", "" + t.getMessage());
                     Log.e("VERBOSE3", "" + t.toString());
+                    Toast.makeText(MainActivity.this, "Couldn't reach the network, try again.", Toast.LENGTH_SHORT).show();
 
                     // logging probably not necessary
                 }
