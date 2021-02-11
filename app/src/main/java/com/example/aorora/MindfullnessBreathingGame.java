@@ -248,7 +248,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     int new_user_points = MainActivity.user_info.getUser_pollen() + pollen_payout;
                     Log.e("NEW USER POINTS ", new_user_points + " ");
                     //TODO: Why are the network calls here instead of recieptpage? KISS and add a flat number of points when we reach that page.
-                    NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), new_user_points, MindfullnessBreathingGame.this);
+                    //NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), new_user_points, MindfullnessBreathingGame.this);
                     //Now update our local pollen value
                     MainActivity.user_info.setUser_pollen(new_user_points);
                     //This old GET request was causing race conditions with the PATCH above, and wasnt necessary.

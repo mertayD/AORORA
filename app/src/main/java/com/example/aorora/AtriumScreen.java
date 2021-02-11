@@ -148,6 +148,7 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(atriumScreen, "Adding to each butterfly count", Toast.LENGTH_SHORT).show();
             atriumAdapter.notifyDataSetChanged();
             MainActivity.user_info.update_local_atrium(local_atrium);
+            //Once we get the updated local atrium, push the new atrium map to the backend.
             NetworkCalls.updateUserAtrium(userId, local_atrium, atriumScreen);
         }
     }

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.aorora.interfaces.GeoCoordsCallback;
 import com.example.aorora.network.CheckConnectivity;
 import com.example.aorora.network.GetConnInfo;
 import com.example.aorora.network.GetDataService;
@@ -74,7 +75,7 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener,
         //Init our backend service
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
-        //Init fused locaiton client, should work with either network or gps.
+        //Init fused location client, should work with either network or gps.
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         //Init butterfly locations
@@ -112,7 +113,6 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener,
                 Toast.makeText(ARScreen.this, "Spending pollen to access AR butterflies for one day.", Toast.LENGTH_SHORT).show();
                 //TODO: Add one day activation of butterfly activity, perhaps in MainActivity or UserInfo?
                 //Finally do the PUT request with the new pollen value. May need to refresh the UI.
-                //This is not updating the backend, need to use a network call.
                 MainActivity.user_info.setUser_pollen(userPollen);
                 //This will update the backend and set the current pollen to our decremented value.
                 NetworkCalls.updateUserCurrentPoints(userId, userPollen, ARScreen.this);
@@ -140,7 +140,7 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener,
     }
 
     @SuppressLint("MissingPermission")
-    private void getUserLocationNetwork(final GeoCoordsCallback geoCallback) {
+    private void getUserLocation(final GeoCoordsCallback geoCallback) {
         Toast.makeText(this, "Getting user coordinates", Toast.LENGTH_SHORT).show();
         String[] permissionsNeeded = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
         Location currentLocation;
@@ -148,7 +148,7 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener,
             ActivityCompat.requestPermissions(this, permissionsNeeded, 1);
         }
         if(!hasPermissions(this, permissionsNeeded)){
-            Toast.makeText(this, "You must provide location permissions", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You must provide permissions to use the location services.", Toast.LENGTH_SHORT).show();
         }
         //If we do end up having the permissions, then try to get the location.
         else{
@@ -206,9 +206,7 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener,
     }
 
 
-    private interface GeoCoordsCallback {
-        void onCallBack(Location returnedLocation);
-    }
+
 
     @Override
     public void onClick(View v) {
@@ -242,7 +240,7 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener,
                 Toast.makeText(this, "Not connected!", Toast.LENGTH_SHORT).show();
             }
                 //First trying to display latitude.
-                getUserLocationNetwork(new GeoCoordsCallback() {
+                getUserLocation(new GeoCoordsCallback() {
                     @Override
                     public void onCallBack(Location returnedLocation) {
                         Log.d("Returned Lat", "returnedLocationLat" + returnedLocation.getLatitude());

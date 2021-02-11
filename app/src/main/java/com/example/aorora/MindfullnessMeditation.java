@@ -42,6 +42,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
     ImageButton quest_button_bottombar;
     ImageView alpha_channel_iv;
     TextView text_view;
+    Boolean testMode;
     Animation infinite_blink;
     ImageButton exit_button;
     RecyclerView recyclerView;
@@ -83,6 +84,8 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         alpha_channel_iv.startAnimation(infinite_blink);
         recyclerView.smoothScrollToPosition(3);
         recyclerViewTime.smoothScrollToPosition(3);
+        //DEV MODE FLAG TO END THE ACTIVITY QUICKLY
+        testMode = true;
 
     }
 
@@ -233,6 +236,10 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
             else if(duration_string.equals("5 minutes"))
             {
                 duration_int = 300000;
+            }
+
+            if(testMode){
+                duration_int = 2000;
             }
 
             to_navigate = new Intent(mindfulnessMeditation, MindfulnessMeditationGame_R.class);

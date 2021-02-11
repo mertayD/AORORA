@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.aorora.network.NetworkCalls;
+
 /*
 This page is presented after a user completes the M1 - M3 mindfulness activities. The user is
 shown the amount of pollen they earned for this activity as well as their total amount of pollen
@@ -97,11 +99,13 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
         //Grab the actual payout value passed from the previous activity.
         if(current_intent.hasExtra("PollenPayout")){
             pollenPayout = current_intent.getIntExtra("PollenPayout", 1);
+            //Set the amount of pollen earned in the textview
+            pollenEarnedScoreTv.setText(pollenPayout.toString());
+            pollenTotalCountTv.setText(userPollen.toString());
+            pollen_score_tv.setText(userPollen.toString());
+            NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), userPollen, this);
         }
-        //Set the amount of pollen earned in the textview
-        pollenEarnedScoreTv.setText(pollenPayout.toString());
-        pollenTotalCountTv.setText(userPollen.toString());
-        pollen_score_tv.setText(userPollen.toString());
+
 
     }
 
