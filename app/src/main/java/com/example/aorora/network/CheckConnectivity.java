@@ -8,6 +8,10 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 
+/*
+This asyncronous task will check if we can reach the hosting ARORA-Server in order to ensure we can
+still update the backend via a network connection.
+ */
 public class CheckConnectivity extends AsyncTask<Void,Void,Boolean> {
     public GetConnInfo connInfoCheck = null;
 
@@ -18,7 +22,7 @@ public class CheckConnectivity extends AsyncTask<Void,Void,Boolean> {
             int timeoutMs = 1500;
             Socket testSock = new Socket();
             //Create the address that our socket will connect to. This is a public google DNS.
-            SocketAddress sockAddress = new InetSocketAddress("8.8.8.8", 53);
+            SocketAddress sockAddress = new InetSocketAddress("104.248.178.78", 8000);
             //This will throw an ioException if we cannot connect to the address in the timeout period.
             testSock.connect(sockAddress, timeoutMs);
             //Otherwise, we connected, so close the socket and return true.
