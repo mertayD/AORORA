@@ -26,7 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aorora.network.NetworkCalls;
-
+/*
+This is the page that is displayed directly after the user logs in. The survey page will send a
+record to the backend based on the answers the user clicks to the two presented questions.
+ */
 public class SurveyPage extends AppCompatActivity implements OnClickListener {
     LinearLayout mood_desc_ll;
     LinearLayout mood_desc_stress;

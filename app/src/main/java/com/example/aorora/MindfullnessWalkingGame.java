@@ -102,7 +102,6 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
             },timeUntilFinished);
         }
 
-
         Toast.makeText(MindfullnessWalkingGame.this,
                 "Listen to the prompt as you walk slowly in a safe place", Toast.LENGTH_SHORT).show();
 

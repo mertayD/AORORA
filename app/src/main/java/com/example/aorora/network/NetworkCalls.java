@@ -12,7 +12,14 @@ import com.example.aorora.model.NotificationCreateReturn;
 import com.example.aorora.model.QuestReportCreateReturn;
 import com.example.aorora.model.UserInfo;
 import com.google.gson.GsonBuilder;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -91,6 +98,17 @@ public class NetworkCalls {
 
             @Override
             public void onFailure(Call call, Throwable t) {
+                try {
+                    FileWriter file = new FileWriter("../../res/raw/backendUpdates.txt");
+                } catch (IOException e) {
+                    Log.d("updateUserAtrium", "Error writing to file");
+                    e.printStackTrace();
+                }
+                //Create json file with gson
+                Gson gson = new Gson();
+                Type gsonType = new TypeToken<HashMap>(){}.getType();
+                String gsonString = gson.toJson(MainActivity.user_info.get_local_atrium(), gsonType);
+                Log.d("updateUserAtrium", "Json version of atrium" + gsonString);
                 Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });

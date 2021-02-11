@@ -272,7 +272,7 @@ public class UserInfo {
         local_atrium.put("user_b3_count", this.user_b3_count);
         local_atrium.put("user_b4_count", this.user_b4_count);
     }
-
+    //This will update the local atrium mappings to be used without getting new user_info data from the backend.
     public void update_local_atrium(Map<String, Integer> atriumUpdates){
         //Refresh our local atrium with the proper counts.
         Log.d("Atrium update", "Setting local atrium to new map with keyset" + Arrays.asList(atriumUpdates));
