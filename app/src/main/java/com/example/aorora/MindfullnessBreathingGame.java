@@ -63,6 +63,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
     int points_to_collect;
     int initial_score;
     int tempBreathCount;
+    final int pollen_payout = 10;
     View pollen_layout;
     View emitter;
     int possible_points;
@@ -93,9 +94,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         animationView.playAnimation();
 
         myDialog = new Dialog(this);
-        pollen_layout = (View) findViewById(R.id.breathing_game_pollen_layout);
-        score_tv = pollen_layout.findViewById(R.id.pollen_score_layout_tv);
-        initial_score = Integer.parseInt(score_tv.getText().toString());
+
 
         tap_me_animation = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.tap_me_animation);
@@ -245,10 +244,11 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     {
                         breathing_music.stop();
                     }
-                    //TODO: Why are the network calls here instead of recieptpage? KISS and add a consistent number of points when we reach that page.
-                    int new_user_points = MainActivity.user_info.getUser_pollen() + 10;
+
+                    int new_user_points = MainActivity.user_info.getUser_pollen() + pollen_payout;
                     Log.e("NEW USER POINTS ", new_user_points + " ");
-                    NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), new_user_points, MindfullnessBreathingGame.this);
+                    //TODO: Why are the network calls here instead of recieptpage? KISS and add a flat number of points when we reach that page.
+                    //NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), new_user_points, MindfullnessBreathingGame.this);
                     //Now update our local pollen value
                     MainActivity.user_info.setUser_pollen(new_user_points);
                     //This old GET request was causing race conditions with the PATCH above, and wasnt necessary.
@@ -256,6 +256,8 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     //Set the pollen value locally
                     Intent to_navigate = new Intent(mindfullness_breathing_game, ReceiptPage.class);
                     to_navigate.putExtra("NavigatedFrom", 1);
+                    //Ship the new pollen values to the Recieptpage.
+                    to_navigate.putExtra("PollenPayout", pollen_payout);
                     //NetworkCalls.updateDailyTaskM1(user_info.getUser_id(), 1, mindfullness_breathing_game);
                     //NetworkCalls.createQuestReport(1, user_info.getUser_id(),mindfullness_breathing_game);
 

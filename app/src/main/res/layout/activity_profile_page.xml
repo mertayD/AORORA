@@ -124,33 +124,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="333dp" />
 
-    <TextView
-        android:id="@+id/profile_page_bf_name_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:gravity="clip_vertical|center_horizontal"
-        android:text="Common DarkOrange"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_butterfly_button" />
-
-    <TextView
-        android:id="@+id/profile_page_bf_desc_tv"
-        android:layout_width="255dp"
-        android:layout_height="74dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:gravity="clip_vertical|center_horizontal"
-        android:text='"While shy in nature this particular species becomes more active when around others"'
-        android:textColor="#989898"
-        android:textSize="7pt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_page_bf_name_tv" />
-
     <ImageButton
         android:id="@+id/jar_button_profile_page"
         android:layout_width="40dp"

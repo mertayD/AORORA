@@ -59,11 +59,16 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
     ConstraintLayout walking_game_layout;
     int game_theme;
     MediaPlayer walking_music;
+    Integer pollen_payout;
+    Boolean testMode;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mindfullness_walking_game);
+        //DEV MODE FLAG TO END THE ACTIVITY QUICKLY
+        testMode = true;
         //Display the finishButton after x seconds
         finishButton = (Button) findViewById(R.id.finish_walk_btn);
         timeUntilFinished = 6000;
@@ -73,6 +78,7 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
 
         myAlpha = new AlphaModifier(1000, 10, 0, 8000, new AccelerateInterpolator());
         mindfulness_walking = this;
+        pollen_payout = 30;
 
         walking_music = MediaPlayer.create(MindfullnessWalkingGame.this,R.raw.mindfulnesswalking);
 
@@ -86,17 +92,18 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
         }
 
         //Display a finish button for testing.
-        handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                finishButton.setVisibility(View.VISIBLE);
-            }
-        },timeUntilFinished);
+        if(testMode){
+            handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    finishButton.setVisibility(View.VISIBLE);
+                }
+            },timeUntilFinished);
+        }
 
         Toast.makeText(MindfullnessWalkingGame.this,
-                "Listen to the prompt as you walk slowly in a safe place\n" +
-                        "\n.", Toast.LENGTH_SHORT).show();
+                "Listen to the prompt as you walk slowly in a safe place", Toast.LENGTH_SHORT).show();
 
         walking = this;
         count = 0;
@@ -159,12 +166,13 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
                 Intent to_navigate = new Intent(mindfulness_walking, ReceiptPage.class);
                 to_navigate.putExtra("NavigatedFrom", 3);
                 to_navigate.putExtra("Game Theme", game_theme);
+                to_navigate.putExtra("PollenPayout", pollen_payout);
                 stopTracking();
                 startActivity(to_navigate);
-                int user_points = MainActivity.user_info.getUser_pollen();
-                user_points += 25;
-                NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), user_points, MindfullnessWalkingGame.this);
-                MainActivity.user_info.setUser_pollen(user_points);
+                int new_user_points = MainActivity.user_info.getUser_pollen() + pollen_payout;;
+                MainActivity.user_info.setUser_pollen(new_user_points);
+                NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), new_user_points, MindfullnessWalkingGame.this);
+
                 //NetworkCalls.updateDailyTaskM3(user_info.getUser_id(), 1, walking);
                 //NetworkCalls.createQuestReport(3, user_info.getUser_id(),mindfulness_walking);
             }

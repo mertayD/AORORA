@@ -29,6 +29,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/*
+This page displays the icons to access the atrium, the user name, their pollen count, and their
+currently selected butterfly, which is still only possible to change in the backend. Touching the
+large butterfly displayed, or the atrium jar, will transfer the page to the atrium page.
+
+This page can also access the pollen shop, which is not fully implemented yet. Also if the user swipes
+right the page will transition to the networked page, which is not implemented either. A left swipe
+will return the user to the homepage.
+ */
 public class ProfilePage extends AppCompatActivity implements View.OnClickListener, GestureDetector.OnGestureListener {
     //User account info
     String userName;
@@ -71,8 +80,6 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         settings_button = (ImageButton) findViewById(R.id.settings_button_profile_page);
         user_name_tv = (TextView) findViewById(R.id.profile_user_name_tv);
         user_score_tv = (TextView) findViewById(R.id.profile_user_score);
-        butterfly_name_tv = (TextView) findViewById(R.id.profile_page_bf_name_tv);
-        butterfly_description_tv = (TextView) findViewById(R.id.profile_page_bf_desc_tv);
         profilePage = this;
 
         //User tv at the top of the page. Pollen is accessed from the backend User Table.

@@ -1,11 +1,14 @@
 package com.example.aorora.model;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
+
 
 public class UserInfo {
     @SerializedName("user_info_id")
@@ -44,7 +47,8 @@ public class UserInfo {
     @SerializedName("user_b4_count")
     private Integer user_b4_count;
     //Non-serialzed value for use in storing each count locally.
-    private Map<String, Integer> butterfly_counts;
+    private Map<String, Integer> local_atrium;
+
     @SerializedName("user_name")
     private String user_name;
     @SerializedName("email")
@@ -252,27 +256,62 @@ public class UserInfo {
         return user_b4_count;
     }
     //Might not be what I want to do, but good in case. Will refactor later if needed.
-    public Map<String, Integer> get_local_atrium(){return butterfly_counts;}
+    public Map<String, Integer> get_local_atrium(){return local_atrium;}
+
 
     public void setUser_b4_count(Integer user_b4_count) {
         this.user_b4_count = user_b4_count;
     }
 
-    public int get_butterflytype_count(){return butterfly_counts.keySet().size();}
+    public int get_butterflytype_count(){return local_atrium.keySet().size();}
 
     public void build_atrium(){
         //Init local inventory hashmap
-        butterfly_counts = new HashMap<>();
+        local_atrium = new HashMap<>();
         //Populate our local HashMap, looks ugly for now, will need to make this a map in the backend likely.
-        butterfly_counts.put("user_b0_count", this.user_b0_count);
-        butterfly_counts.put("user_b1_count", this.user_b1_count);
-        butterfly_counts.put("user_b2_count", this.user_b2_count);
-        butterfly_counts.put("user_b3_count", this.user_b3_count);
-        butterfly_counts.put("user_b4_count", this.user_b4_count);
+        local_atrium.put("user_b0_count", this.user_b0_count);
+        local_atrium.put("user_b1_count", this.user_b1_count);
+        local_atrium.put("user_b2_count", this.user_b2_count);
+        local_atrium.put("user_b3_count", this.user_b3_count);
+        local_atrium.put("user_b4_count", this.user_b4_count);
     }
-
-    public void update_local_atrium(HashMap<String, Integer> newMap){
+    //This will update the local atrium mappings to be used without getting new user_info data from the backend.
+    public void update_local_atrium(Map<String, Integer> atriumUpdates){
         //Refresh our local atrium with the proper counts.
-        this.butterfly_counts = newMap;
+        Log.d("Atrium update", "Setting local atrium to new map with keyset" + Arrays.asList(atriumUpdates));
+        Iterator it = atriumUpdates.entrySet().iterator();
+        for(Map.Entry<String,Integer> currEntry : atriumUpdates.entrySet()) {
+            String currKey = currEntry.getKey();
+            Integer currVal = currEntry.getValue();
+            this.local_atrium.put(currKey, currVal);
+        }
+        //Log.d("USERINFO ATRIUM UPDATE", "update_local_atrium: Current UserInfo atrium: " + Arrays.asList(this.local_atrium) );
+        //Reflect the local atrium mapping to the count variables stored in the local model to push to the backend.
+        update_counts();
+    }
+    //This will take translate the atrium mappings to the userinfo counts that are pushed to the
+    //backend, i.e. the user_b0_count through user_b4_count.
+    public void update_counts(){
+        for(Map.Entry<String,Integer> currEntry : this.local_atrium.entrySet()){
+            String currKey = currEntry.getKey();
+            Integer currVal = currEntry.getValue();
+            switch(currKey){
+                case "user_b0_count":
+                    setUser_b0_count(currVal);
+                    break;
+                case "user_b1_count":
+                    setUser_b1_count(currVal);
+                    break;
+                case "user_b2_count":
+                    setUser_b2_count(currVal);
+                    break;
+                case "user_b3_count":
+                    setUser_b3_count(currVal);
+                    break;
+                case "user_b4_count":
+                    setUser_b4_count(currVal);
+                    break;
+            }
+        }
     }
 }
