@@ -115,10 +115,6 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
         //Do nothing. Do not pop the stack and go back into the mindfulness activity.
     }
 
-    @Override
-    public void onBackPressed() {
-        //Do nothing. Do not pop the stack and go back into the mindfulness activity.
-    }
 
     @Override
     public void onClick(View v) {
