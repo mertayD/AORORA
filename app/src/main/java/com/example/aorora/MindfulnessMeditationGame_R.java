@@ -29,8 +29,9 @@ import com.example.aorora.network.NetworkCalls;
 import static com.example.aorora.MainActivity.user_info;
 
 public class MindfulnessMeditationGame_R extends AppCompatActivity implements View.OnClickListener {
-
+    //Class Member variable declaration
     int gameDuration;
+    int pollenPayout;
 
     ImageView outer_most_ring;
     ImageView outer_ring;
@@ -75,8 +76,6 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
         setContentView(R.layout.activity_mindfulness_meditation_game__r);
 
         tutorialPopUp();
-
-
         is_first_cycle = false;
         is_second_cycle = false;
         is_third_cycle = false;
@@ -130,6 +129,9 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
         outer_ring.startAnimation(full_cycle_outer);
 
         myVibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        //Pollen values
+        pollenPayout = 15;
 
         //Game Settings
         Intent meditation_game = getIntent();
@@ -285,6 +287,18 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
 
 
     @Override
+    public void onBackPressed() {
+        //Allow us to leave the Activity as normal, but we need to stop the recording like the x button does.
+        if(theme_music.isPlaying())
+        {
+            Log.e("MUSIC", " STOPPED");
+            theme_music.stop();
+        }
+        myTimer.cancel();
+        super.onBackPressed();
+    }
+
+    @Override
     public void onClick(View v) {
         if(animation_start)
         {
@@ -384,12 +398,18 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
             Intent to_navigate = new Intent(MindfulnessMeditationGame_R.this, ReceiptPage.class);
             to_navigate.putExtra("NavigatedFrom", 2);
             to_navigate.putExtra("Game Theme", game_theme);
-            int user_points = user_info.getUser_pollen();
-            NetworkCalls.updateUserCurrentPoints(user_info.getUser_id(), user_points + 5 , MindfulnessMeditationGame_R.this);
-            NetworkCalls.updateDailyTaskM2(user_info.getUser_id(), 1, MindfulnessMeditationGame_R.this);
-            NetworkCalls.createQuestReport(2, user_info.getUser_id(),MindfulnessMeditationGame_R.this);
-            startActivity(to_navigate);
+            to_navigate.putExtra("PollenPayout", pollenPayout);
+            int new_user_pollen = user_info.getUser_pollen() + pollenPayout;
+            //First update our local userInfo instance
+            MainActivity.user_info.setUser_pollen(new_user_pollen);
+            Log.d("EndGame pollen", "onFinish current userpollen: " + new_user_pollen);
+            //Next communicate it to the backend via the appropriate NetworkCall function.
+            NetworkCalls.updateUserCurrentPoints(user_info.getUser_id(), pollenPayout, MindfulnessMeditationGame_R.this);
+            //Comment out these incorrect/unimplemented calls as the server simply errors.
+           // NetworkCalls.updateDailyTaskM2(user_info.getUser_id(), 1, MindfulnessMeditationGame_R.this);
+            //NetworkCalls.createQuestReport(2, user_info.getUser_id(),MindfulnessMeditationGame_R.this);
             Log.e("ON FINISH", "" + " FINISH");
+            startActivity(to_navigate);
         }
 /*
         public long onPause()

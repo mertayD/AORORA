@@ -21,6 +21,7 @@ import com.example.aorora.adapter.HorizontalAdapter;
 import com.example.aorora.adapter.HorizontalMountainAdapter;
 import com.example.aorora.interfaces.OnItemClickListener;
 
+//Represents the MindfullnessWalking Selection Page, continues into MindfullnessWalkingGame if selected.
 public class MindfullnessWalking extends AppCompatActivity implements View.OnClickListener {
 
     Animation infinite_blink;
