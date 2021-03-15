@@ -26,7 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aorora.network.NetworkCalls;
-
+/*
+This is the page that is displayed directly after the user logs in. The survey page will send a
+record to the backend based on the answers the user clicks to the two presented questions.
+ */
 public class SurveyPage extends AppCompatActivity implements OnClickListener {
     LinearLayout mood_desc_ll;
     LinearLayout mood_desc_stress;
@@ -80,7 +83,8 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
         navigatedFrom = getIntent();
         if(navigatedFrom.hasExtra("NavigatedFrom"))
         {
-            from = navigatedFrom.getIntExtra("NavigatedFrom", 0);
+            from = navigatedFrom.getIntExtra("NAVIGATEDFROM", 0);
+            Log.d("IntExtraSurvey", "value: " + from);
             if(from == -1 || from == -2 || from == -3)
             {
                 exitButton.setVisibility(View.VISIBLE);
@@ -209,6 +213,11 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
     }
 
     @Override
+    public void onBackPressed() {
+        //Do nothing, stay in this activity, we do not want to navigate back to the login.
+    }
+
+    @Override
     public void onClick(View v) {
         // result will be considered on a scale of 1-5
         int q1_response = 0;
@@ -308,6 +317,7 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
                     startActivity(to_navigate);
                 }
             }
+            //This is the case that is called when no extras are passed, which is when we first complete the survey.
             else{
                 to_navigate = new Intent(surveyPage, HomeScreen.class);
                 startActivity(to_navigate);

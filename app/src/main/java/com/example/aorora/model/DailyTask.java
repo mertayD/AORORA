@@ -1,7 +1,8 @@
 package com.example.aorora.model;
 
 import com.google.gson.annotations.SerializedName;
-
+//This class serves to embody an entire daily task and uses SerializedName to access the Django
+//backend fields via JSON format?
 public class DailyTask {
     /*
         "daily_task_id": 3,

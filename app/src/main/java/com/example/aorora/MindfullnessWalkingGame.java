@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -35,7 +36,11 @@ import static com.example.aorora.MainActivity.user_info;
 
 
 public class MindfullnessWalkingGame extends AppCompatActivity {
-
+    //Adding a finish button and handler for integration. Handler shows the button after x seconds.
+    Button finishButton;
+    //Testing variable to make the finish button pop up after this amount of milliseconds.
+    Integer timeUntilFinished;
+    Handler handler;
     BroadcastReceiver broadcastReceiver;
     ImageButton exit;
     ParticleSystem myParticle;
@@ -54,18 +59,26 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
     ConstraintLayout walking_game_layout;
     int game_theme;
     MediaPlayer walking_music;
+    Integer pollen_payout;
+    Boolean testMode;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mindfullness_walking_game);
-
+        //DEV MODE FLAG TO END THE ACTIVITY QUICKLY
+        testMode = true;
+        //Display the finishButton after x seconds
+        finishButton = (Button) findViewById(R.id.finish_walk_btn);
+        timeUntilFinished = 6000;
         exit = (ImageButton) findViewById(R.id.mindfullness_walking_exit_button);
         emitter = (View) findViewById(R.id.emiter_top);
         walking_game_layout = findViewById(R.id.walking_game_background);
 
         myAlpha = new AlphaModifier(1000, 10, 0, 8000, new AccelerateInterpolator());
         mindfulness_walking = this;
+        pollen_payout = 30;
 
         walking_music = MediaPlayer.create(MindfullnessWalkingGame.this,R.raw.mindfulnesswalking);
 
@@ -78,9 +91,19 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
             walking_music.start();
         }
 
+        //Display a finish button for testing.
+        if(testMode){
+            handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    finishButton.setVisibility(View.VISIBLE);
+                }
+            },timeUntilFinished);
+        }
+
         Toast.makeText(MindfullnessWalkingGame.this,
-                "Listen to the prompt as you walk slowly in a safe place\n" +
-                        "\n.", Toast.LENGTH_SHORT).show();
+                "Listen to the prompt as you walk slowly in a safe place", Toast.LENGTH_SHORT).show();
 
         walking = this;
         count = 0;
@@ -133,6 +156,27 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
             }
         };
         startTracking();
+
+        finishButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if(walking_music.isPlaying()){
+                    walking_music.stop();
+                }
+                Intent to_navigate = new Intent(mindfulness_walking, ReceiptPage.class);
+                to_navigate.putExtra("NavigatedFrom", 3);
+                to_navigate.putExtra("Game Theme", game_theme);
+                to_navigate.putExtra("PollenPayout", pollen_payout);
+                stopTracking();
+                startActivity(to_navigate);
+                int new_user_points = MainActivity.user_info.getUser_pollen() + pollen_payout;;
+                MainActivity.user_info.setUser_pollen(new_user_points);
+                NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), new_user_points, MindfullnessWalkingGame.this);
+
+                //NetworkCalls.updateDailyTaskM3(user_info.getUser_id(), 1, walking);
+                //NetworkCalls.createQuestReport(3, user_info.getUser_id(),mindfulness_walking);
+            }
+        });
 
         /*walking_loading.setOnClickListener(new View.OnClickListener() {
             @Override

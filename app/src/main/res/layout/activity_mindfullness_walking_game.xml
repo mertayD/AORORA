@@ -45,15 +45,27 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/exit_button_breathing" />
 
- <!--   <ImageView
-        android:id="@+id/loading_walking_image_view"
-        android:layout_width="93dp"
-        android:layout_height="103dp"
-        android:layout_marginTop="16dp"
+    <Button
+        android:id="@+id/finish_walk_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
+        android:text="Finish"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/animation_view_walking"
-        app:srcCompat="@drawable/walking_loading_zero" /> -->
+        android:visibility="invisible"/>
+
+    <!--   <ImageView
+           android:id="@+id/loading_walking_image_view"
+           android:layout_width="93dp"
+           android:layout_height="103dp"
+           android:layout_marginTop="16dp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/animation_view_walking"
+           app:srcCompat="@drawable/walking_loading_zero" /> -->
 
 <!--
     <TextView

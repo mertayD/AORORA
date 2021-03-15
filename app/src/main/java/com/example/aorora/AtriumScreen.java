@@ -155,5 +155,4 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
         NetworkCalls.updateUserAtrium(userId, local_atrium, atriumScreen);
         }
     }
-
 }

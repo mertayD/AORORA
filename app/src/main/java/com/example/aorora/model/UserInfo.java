@@ -1,6 +1,14 @@
 package com.example.aorora.model;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 
 public class UserInfo {
     @SerializedName("user_info_id")
@@ -27,6 +35,20 @@ public class UserInfo {
     private Integer user_pollen;
     @SerializedName("user_points")
     private Integer user_points;
+    //Counts of the first 5 types of butterflies.
+    @SerializedName("user_b0_count")
+    private Integer user_b0_count;
+    @SerializedName("user_b1_count")
+    private Integer user_b1_count;
+    @SerializedName("user_b2_count")
+    private Integer user_b2_count;
+    @SerializedName("user_b3_count")
+    private Integer user_b3_count;
+    @SerializedName("user_b4_count")
+    private Integer user_b4_count;
+    //Non-serialzed value for use in storing each count locally.
+    private Map<String, Integer> local_atrium;
+
     @SerializedName("user_name")
     private String user_name;
     @SerializedName("email")
@@ -46,6 +68,11 @@ public class UserInfo {
                     Integer user_current_butterfly,
                     Integer user_pollen,
                     Integer user_points,
+                    Integer user_b0_count,
+                    Integer user_b1_count,
+                    Integer user_b2_count,
+                    Integer user_b3_count,
+                    Integer user_b4_count,
                     String username,
                     String user_name, String email,
                     String password) {
@@ -61,6 +88,12 @@ public class UserInfo {
         this.user_current_butterfly = user_current_butterfly;
         this.user_pollen = user_pollen;
         this.user_points = user_points;
+        this.user_b0_count = user_b0_count;
+        this.user_b1_count = user_b1_count;
+        this.user_b2_count = user_b2_count;
+        this.user_b3_count = user_b3_count;
+        this.user_b4_count = user_b4_count;
+
         this.user_name = user_name;
         this.email = email;
         this.password = password;
@@ -222,7 +255,7 @@ public class UserInfo {
     public Integer getUser_b4_count() {
         return user_b4_count;
     }
-
+    
     //Might not be what I want to do, but good in case. Will refactor later if needed.
     public Map<String, Integer> get_local_atrium(){return local_atrium;}
 
