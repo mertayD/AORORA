@@ -46,39 +46,31 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
         receipt_desc_tv = findViewById(R.id.receipt_desc_text_view);
         receipt_desc_tv_2 = findViewById(R.id.receipt_desc_text_view_2);
         receipt_score_tv = findViewById(R.id.receipt_desc_score_text_view);
-        receipt_score_tv_2 =  findViewById(R.id.receipt_desc_score_text_view_1);
+        receipt_score_tv_2 = findViewById(R.id.receipt_desc_score_text_view_1);
 
         continue_button.setOnClickListener(this);
         replay_button.setOnClickListener(this);
         home_button.setOnClickListener(this);
         jar_button.setOnClickListener(this);
         Intent current_intent = this.getIntent();
-        if(current_intent.hasExtra("NavigatedFrom"))
-        {
+        if (current_intent.hasExtra("NavigatedFrom")) {
             coming_from = current_intent.getIntExtra("NavigatedFrom", 1);
             Log.e("NAVIGATED FROM", "" + coming_from);
-            if(coming_from == 1)
-            {
-                if(current_intent.hasExtra("GAME"))
-                {
+            if (coming_from == 1) {
+                if (current_intent.hasExtra("GAME")) {
                     game_settings = current_intent.getIntExtra("GAME", 1);
                 }
-            }
-            else if(coming_from == 2)
-            {
-                if(current_intent.hasExtra("Game Theme"))
-                {
-                    game_theme = current_intent.getIntExtra("Game Theme",1);
+            } else if (coming_from == 2) {
+                if (current_intent.hasExtra("Game Theme")) {
+                    game_theme = current_intent.getIntExtra("Game Theme", 1);
                 }
-            }
-            else
-            {
-                if(current_intent.hasExtra("Game Theme"))
-                {
-                    game_theme = current_intent.getIntExtra("Game Theme",1);
+            } else {
+                if (current_intent.hasExtra("Game Theme")) {
+                    game_theme = current_intent.getIntExtra("Game Theme", 1);
                 }
             }
         }
+    }
 
     //Intential override to prevent improper back button navigation.
     @Override

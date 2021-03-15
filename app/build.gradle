@@ -1,12 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.ar.sceneform.plugin'
-
-sceneform.asset(
-        'sampledata/models/caterpiller.obj',
-        'default',
-        'sampledata/models/caterpiller.sfa',
-        'src/main/res/raw/caterpiller'
-)
 
 android {
     compileSdkVersion 28
