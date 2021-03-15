@@ -80,6 +80,10 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
             }
         }
 
+    //Intential override to prevent improper back button navigation.
+    @Override
+    public void onBackPressed() {
+        //Do nothing. Do not pop the stack and go back into the mindfulness activity.
     }
 
     @Override

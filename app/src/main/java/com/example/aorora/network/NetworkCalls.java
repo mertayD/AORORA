@@ -67,7 +67,31 @@ public class NetworkCalls {
                 if(response.isSuccess())
                 //response.body().getUsername()
                 {
-                    //Toast.makeText(context, " POLLEN UPDATED Updated Successfuly", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, " POLLEN UPDATED Updated Successfuly", Toast.LENGTH_SHORT).show();
+
+                }
+                else
+                {
+                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    //FIXME: this probably doesn't work yet, but its a good start.
+    public static void updateUserAtrium(int user_id, Map<String, Integer> counts, final Context context) {
+        Call call = service.updateUserAtrium(user_id, counts);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if(response.isSuccess())
+                {
+                    Toast.makeText(context, " Atrium Counts Updated Successfully", Toast.LENGTH_SHORT).show();
 
                 }
                 else

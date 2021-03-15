@@ -185,4 +185,108 @@ public class UserInfo {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    //Inventory for butterfly counts
+    public Integer getUser_b0_count() {
+        return user_b0_count;
+    }
+
+    public void setUser_b0_count(Integer user_b0_count) {
+        this.user_b0_count = user_b0_count;
+    }
+
+    public Integer getUser_b1_count() {
+        return user_b1_count;
+    }
+
+    public void setUser_b1_count(Integer user_b1_count) {
+        this.user_b1_count = user_b1_count;
+    }
+
+    public Integer getUser_b2_count() {
+        return user_b2_count;
+    }
+
+    public void setUser_b2_count(Integer user_b2_count) {
+        this.user_b2_count = user_b2_count;
+    }
+
+    public Integer getUser_b3_count() {
+        return user_b3_count;
+    }
+
+    public void setUser_b3_count(Integer user_b3_count) {
+        this.user_b3_count = user_b3_count;
+    }
+
+    public Integer getUser_b4_count() {
+        return user_b4_count;
+    }
+
+    //Might not be what I want to do, but good in case. Will refactor later if needed.
+    public Map<String, Integer> get_local_atrium(){return local_atrium;}
+
+
+    public void setUser_b4_count(Integer user_b4_count) {
+        this.user_b4_count = user_b4_count;
+    }
+
+    public int get_butterflytype_count(){return local_atrium.keySet().size();}
+
+    public void build_atrium(){
+        //Init local inventory hashmap
+        local_atrium = new HashMap<>();
+        //Populate our local HashMap, looks ugly for now, will need to make this a map in the backend likely.
+        local_atrium.put("user_b0_count", this.user_b0_count);
+        local_atrium.put("user_b1_count", this.user_b1_count);
+        local_atrium.put("user_b2_count", this.user_b2_count);
+        local_atrium.put("user_b3_count", this.user_b3_count);
+        local_atrium.put("user_b4_count", this.user_b4_count);
+    }
+    //This will update the local atrium mappings to be used without getting new user_info data from the backend.
+    public void update_local_atrium(Map<String, Integer> atriumUpdates){
+        //Refresh our local atrium with the proper counts.
+        Log.d("Atrium update", "Setting local atrium to new map with keyset" + Arrays.asList(atriumUpdates));
+        Iterator it = atriumUpdates.entrySet().iterator();
+        for(Map.Entry<String,Integer> currEntry : atriumUpdates.entrySet()) {
+            String currKey = currEntry.getKey();
+            Integer currVal = currEntry.getValue();
+
+            //if key is already initialized then add previous value
+            if(local_atrium.containsKey(currKey))
+            {
+                currVal += local_atrium.get(currKey);
+            }
+
+            this.local_atrium.put(currKey, currVal);
+        }
+        //Log.d("USERINFO ATRIUM UPDATE", "update_local_atrium: Current UserInfo atrium: " + Arrays.asList(this.local_atrium) );
+        //Reflect the local atrium mapping to the count variables stored in the local model to push to the backend.
+        update_counts();
+    }
+    //This will take translate the atrium mappings to the userinfo counts that are pushed to the
+    //backend, i.e. the user_b0_count through user_b4_count.
+    public void update_counts(){
+        for(Map.Entry<String,Integer> currEntry : this.local_atrium.entrySet()){
+            String currKey = currEntry.getKey();
+            Integer currVal = currEntry.getValue();
+            switch(currKey){
+                case "user_b0_count":
+                    setUser_b0_count(currVal);
+                    break;
+                case "user_b1_count":
+                    setUser_b1_count(currVal);
+                    break;
+                case "user_b2_count":
+                    setUser_b2_count(currVal);
+                    break;
+                case "user_b3_count":
+                    setUser_b3_count(currVal);
+                    break;
+                case "user_b4_count":
+                    setUser_b4_count(currVal);
+                    break;
+            }
+        }
+    }
 }
