@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.aorora.interfaces.GeoCoordsCallback;
+import com.example.aorora.model.Butterfly;
 import com.example.aorora.network.CheckConnectivity;
 import com.example.aorora.network.GetConnInfo;
 import com.example.aorora.network.GetDataService;
@@ -116,6 +117,9 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener,
                 MainActivity.user_info.setUser_pollen(userPollen);
                 //This will update the backend and set the current pollen to our decremented value.
                 NetworkCalls.updateUserCurrentPoints(userId, userPollen, ARScreen.this);
+
+                //intent to butterfly game
+                startActivity(new Intent(arScreen, ButterflyGameActivity.class));
             }
         });
 

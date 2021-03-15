@@ -81,7 +81,7 @@ public class NetworkCalls {
         });
     }
 
-    //This probably doesn't work yet, but its a good start.
+    //FIXME: this probably doesn't work yet, but its a good start.
     public static void updateUserAtrium(int user_id, Map<String, Integer> counts, final Context context) {
         Call call = service.updateUserAtrium(user_id, counts);
         call.enqueue(new Callback() {
@@ -89,7 +89,7 @@ public class NetworkCalls {
             public void onResponse(Call call, Response response) {
                 if(response.isSuccess())
                 {
-                    Toast.makeText(context, " Atrium Counts Updated Successfuly", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, " Atrium Counts Updated Successfully", Toast.LENGTH_SHORT).show();
 
                 }
                 else
