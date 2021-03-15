@@ -57,10 +57,8 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
         tap_me_text = findViewById(R.id.tap_to_collect_receipt_tv);
         receipt_desc_tv = findViewById(R.id.receipt_desc_text_view);
         receipt_desc_tv_2 = findViewById(R.id.receipt_desc_text_view_2);
-        receipt_score_tv = findViewById(R.id.receipt_desc_score_text_view);
-        receipt_score_tv_2 = findViewById(R.id.receipt_desc_score_text_view_1);
         pollenEarnedScoreTv = findViewById(R.id.pollen_earnedcount_tv);
-        pollenTotalCountTv =  findViewById(R.id.pollen_totalcount_tv);
+        pollenTotalCountTv = findViewById(R.id.pollen_totalcount_tv);
 
         continue_button.setOnClickListener(this);
         replay_button.setOnClickListener(this);
@@ -90,7 +88,7 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
         //Make sure this is initialized so we don't display a null value without an extra.
         pollenPayout = 0;
         //Grab the actual payout value passed from the previous activity.
-        if(current_intent.hasExtra("PollenPayout")){
+        if (current_intent.hasExtra("PollenPayout")) {
             pollenPayout = current_intent.getIntExtra("PollenPayout", 1);
             //Set the amount of pollen earned in the textview
             pollenEarnedScoreTv.setText(pollenPayout.toString());
@@ -98,6 +96,7 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
             pollen_score_tv.setText(userPollen.toString());
             NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), userPollen, this);
         }
+    }
 
 
     //Intential override to prevent improper back button navigation.
@@ -105,13 +104,6 @@ public class ReceiptPage extends AppCompatActivity implements View.OnClickListen
     public void onBackPressed() {
         //Do nothing. Do not pop the stack and go back into the mindfulness activity.
     }
-
-    //Intential override to prevent improper back button navigation.
-    @Override
-    public void onBackPressed() {
-        //Do nothing. Do not pop the stack and go back into the mindfulness activity.
-    }
-
 
     @Override
     public void onClick(View v) {
