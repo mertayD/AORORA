@@ -141,8 +141,8 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
 
                 if(isInMiddle)
                 {
-                    //TODO Fix this, it is currently hardcoded, setting to 1 for the 1 breath option.
-                    timerCount = 1; //viewHolder.getAdapterPosition();
+                    //TODO Fix this, it is currently hardcoded
+                    timerCount = 10; //viewHolder.getAdapterPosition();
                     text_view.setTextColor(getResources().getColor(R.color.colorWhite));
                 }
             }

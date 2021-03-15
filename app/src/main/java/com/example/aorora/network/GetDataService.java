@@ -2,11 +2,12 @@ package com.example.aorora.network;
 
 import com.example.aorora.model.Butterfly;
 import com.example.aorora.model.ButterflyLike;
+import com.example.aorora.model.ButterflyLikeCreateReturn;
 import com.example.aorora.model.DailyTask;
 import com.example.aorora.model.DailyTaskReturn;
 import com.example.aorora.model.MoodReportIdReturn;
 import com.example.aorora.model.NotificationCreateReturn;
-import com.example.aorora.model.QuestReportCreateReturn;
+import com.example.aorora.model.QuesrtReportCreateReturn;
 import com.example.aorora.model.Quest;
 import com.example.aorora.model.QuestReport;
 import com.example.aorora.model.RetroPhoto;
@@ -15,28 +16,21 @@ import com.example.aorora.model.UserIdReturn;
 import com.example.aorora.model.UserInfo;
 import com.example.aorora.model.UserInteraction;
 import com.example.aorora.model.Notification;
+import com.example.aorora.model.UserInteractionCreateReturn;
 
 import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
-import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
-
-/*
-This interface defines all of the HTTP requests necessary to access, update, and view contents of
-the Django2 backend database. These are to be called as functions within your code elsewhere, these
-interfaces are populated with code via Retrofit automatically when used with Gson and Retrofit
-functions. See the ARORA-Server repo readme for more information.
- */
 public interface GetDataService {
 
     @GET("/photos")
@@ -116,23 +110,15 @@ public interface GetDataService {
     @GET("/userinfo/{user_id}")
     Call<UserInfo> getUserInfo(@Path("user_id") Integer user_id);
 
-    //Possible refactor into PATCH??
     @PUT("/userinfo/{user_id}")
     @FormUrlEncoded
     Call<UserIdReturn> updateUserCurrentButterfly(@Path("user_id") Integer user_id,
                                     @Field("user_current_butterfly") Integer user_current_butterfly);
-    //This needed to be a PATCH, not a PUT! 
-    @PATCH("/userinfo/{user_id}")
+
+    @PUT("/userinfo/{user_id}")
     @FormUrlEncoded
     Call<UserIdReturn> updateUserPollen(@Path("user_id") Integer user_id,
                                         @Field("user_pollen") Integer user_pollen);
-
-    //Patch request to update user_b0_count through user_b4_count in the backend.
-    @PATCH("/userinfo/{user_id}")
-    @FormUrlEncoded
-    Call<UserIdReturn> updateUserAtrium(@Path("user_id") Integer user_id,
-                                        @FieldMap Map<String, Integer> butterflyCounts);
-    
     @GET("/userinfos")
     Call<List<UserInfo>> getCommunity();
 
@@ -158,6 +144,6 @@ public interface GetDataService {
                            @Field("daily_task_m3_achieved") Integer daily_task_m3_achieved);
     @POST("/questreport")
     @FormUrlEncoded
-    Call<QuestReportCreateReturn> createQuestReport(@Field("quest_id") Integer quest_id,
-                                                    @Field("user_id") Integer user_id);
+    Call<QuesrtReportCreateReturn> createQuestReport(@Field("quest_id") Integer quest_id,
+                                                     @Field("user_id") Integer user_id);
 }

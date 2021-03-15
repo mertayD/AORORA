@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aorora.model.RetroPhoto;
@@ -30,11 +28,9 @@ public class PollenStoreDailyQuestPage extends AppCompatActivity implements View
     ImageButton quest_button_bottombar;
     Context pollenStoreDailyQuestPage;
     RecyclerView pollen_recycler;
-    RelativeLayout currentPollenLayout;
     private com.example.aorora.adapter.QuestAdapter questAdapter;
     private com.example.aorora.adapter.PollenShopAdapter shopAdapter;
-    int userPollen;
-    TextView userPollenTv;
+
     Button daily_quest_button;
     Button pollen_shop_button;
     ImageView daily_quest_underline;
@@ -46,9 +42,6 @@ public class PollenStoreDailyQuestPage extends AppCompatActivity implements View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pollen_store_daily_quest_page);
-
-        //Fetch user account details
-        userPollen = MainActivity.user_info.getUser_pollen();
 
         pollenStoreDailyQuestPage = this;
         pollen_recycler = (RecyclerView) findViewById(R.id.pollenRecyclerView);
@@ -67,9 +60,6 @@ public class PollenStoreDailyQuestPage extends AppCompatActivity implements View
         pollen_shop_button = (Button) findViewById(R.id.pollen_shop_tabs_button);
         daily_quest_underline = (ImageView) findViewById(R.id.underline_daily_quests);
         pollen_shop_underline = (ImageView) findViewById(R.id.underline_pollen_shop);
-        currentPollenLayout = (RelativeLayout) findViewById(R.id.pollen_count_layout);
-        userPollenTv = (TextView) currentPollenLayout.findViewById(R.id.current_pollentv);
-        userPollenTv.setText(Integer.toString(userPollen) + " Pollen"  );
 
         currentIntent = this.getIntent();
 

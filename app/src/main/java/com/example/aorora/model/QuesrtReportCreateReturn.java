@@ -3,12 +3,12 @@ package com.example.aorora.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class QuestReportCreateReturn {
+public class QuesrtReportCreateReturn {
     @SerializedName("quest_report_id")
     @Expose
     private Integer quest_report_id;
 
-    public QuestReportCreateReturn(Integer quest_report_id) {
+    public QuesrtReportCreateReturn(Integer quest_report_id) {
         this.quest_report_id = quest_report_id;
     }
 

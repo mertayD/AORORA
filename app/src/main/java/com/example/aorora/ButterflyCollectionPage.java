@@ -25,9 +25,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/*OLD VERSION of Atrium, which is integrated with the unimplemented community logic that breaks the
-whole thing. Reference AtriumScreen and AtriumDetail for now.
- */
 public class ButterflyCollectionPage extends AppCompatActivity implements View.OnClickListener {
 
     private com.example.aorora.adapter.GridViewAdapter adapter;

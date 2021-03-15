@@ -29,20 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/*
-This page displays the icons to access the atrium, the user name, their pollen count, and their
-currently selected butterfly, which is still only possible to change in the backend. Touching the
-large butterfly displayed, or the atrium jar, will transfer the page to the atrium page.
-
-This page can also access the pollen shop, which is not fully implemented yet. Also if the user swipes
-right the page will transition to the networked page, which is not implemented either. A left swipe
-will return the user to the homepage.
- */
 public class ProfilePage extends AppCompatActivity implements View.OnClickListener, GestureDetector.OnGestureListener {
-    //User account info
-    String userName;
-    String userNamePower;
-    int userPollen;
 
     GestureDetector gestureDetector;
     ImageButton home_button_bottombar;
@@ -64,11 +51,6 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
-        //Init user account info
-        userName = MainActivity.user_info.getUser_name();
-        userNamePower = MainActivity.user_info.getUser_name_of_strength();
-        userPollen = MainActivity.user_info.getUser_pollen();
-
         home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         profile_button_bottombar.setImageResource(R.drawable.profile_filled_button);
@@ -80,11 +62,11 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         settings_button = (ImageButton) findViewById(R.id.settings_button_profile_page);
         user_name_tv = (TextView) findViewById(R.id.profile_user_name_tv);
         user_score_tv = (TextView) findViewById(R.id.profile_user_score);
+        butterfly_name_tv = (TextView) findViewById(R.id.profile_page_bf_name_tv);
+        butterfly_description_tv = (TextView) findViewById(R.id.profile_page_bf_desc_tv);
         profilePage = this;
 
-        //User tv at the top of the page. Pollen is accessed from the backend User Table.
-        user_name_tv.setText(userName);
-        user_score_tv.setText(Integer.toString(userPollen));
+        user_score_tv.setText("" + MainActivity.user_info.getUser_pollen());
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
         community_button_bottombar.setOnClickListener(this);
@@ -128,8 +110,7 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         Intent to_navigate;
         if(view_id == butterfly_selection_button.getId() || view_id == jar_button.getId())
         {
-            //Atrium navigation
-            to_navigate = new Intent(profilePage, AtriumScreen.class);
+            to_navigate = new Intent(profilePage, ButterflyCollectionPage.class);
             startActivity(to_navigate);
 
         }
@@ -151,8 +132,6 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         }
         else if(view_id == settings_button.getId())
         {
-            /* This toast was added to show that settings is under development and the settings
-             * button is unresponsive. */
             Toast.makeText(ProfilePage.this , "Settings is under development.", Toast.LENGTH_SHORT).show();
             //to_navigate = new Intent(profilePage, MindfulnessMeditationGame_R.class);
             //startActivity(to_navigate);
@@ -161,19 +140,21 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
             //to_navigate = new Intent(profilePage, EndOfMindfulnessGamePage.class);
             //startActivity(to_navigate);
 
-
+            /* This toast was added to show that settings is under development and the settings
+            * button is unresponsive. */
+            Toast.makeText(ProfilePage.this, "Settings is under development", Toast.LENGTH_SHORT).show();
         }
         else if(view_id == pollen_button.getId())
         {
-            to_navigate = new Intent(profilePage, PollenStoreDailyQuestPage.class);
-            to_navigate.putExtra("NavigatedFrom", 2);
-            startActivity(to_navigate);
+           // to_navigate = new Intent(profilePage, PollenStoreDailyQuestPage.class);
+           // to_navigate.putExtra("NavigatedFrom", 2);
+            //startActivity(to_navigate);
 
             /* This toast was added to show that navigation has been blocked to the pollen page.
             * Navigation to this page has been blocked because of errors with the display in the
             * pollen page. */
-            //Toast.makeText(ProfilePage.this, "Pollen page is under development", Toast.LENGTH_SHORT).show();
-            //Toast.makeText(ProfilePage.this, "Settings is under maintenance", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProfilePage.this, "Pollen page is under development", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProfilePage.this, "Settings is under maintenance", Toast.LENGTH_SHORT).show();
         }
         else if(view_id == pollen_button.getId())
         {

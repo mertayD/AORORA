@@ -1,32 +1,33 @@
 package com.example.aorora.network;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.widget.ListAdapter;
 import android.widget.Toast;
 
+import com.example.aorora.CommunityPage;
 import com.example.aorora.MainActivity;
+import com.example.aorora.ProfilePage;
+import com.example.aorora.SurveyPage;
+import com.example.aorora.model.Butterfly;
+import com.example.aorora.model.ButterflyLike;
+import com.example.aorora.model.ButterflyLikeCreateReturn;
 import com.example.aorora.model.DailyTask;
 import com.example.aorora.model.DailyTaskReturn;
 import com.example.aorora.model.MoodReportIdReturn;
 import com.example.aorora.model.NotificationCreateReturn;
-import com.example.aorora.model.QuestReportCreateReturn;
+import com.example.aorora.model.QuesrtReportCreateReturn;
 import com.example.aorora.model.UserInfo;
-import com.google.gson.GsonBuilder;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.example.aorora.model.UserInteractionCreateReturn;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
-
-import java.util.Map;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.aorora.MainActivity.user_info;
 
 public class NetworkCalls {
 
@@ -64,53 +65,19 @@ public class NetworkCalls {
             @Override
             public void onResponse(Call call, Response response) {
                 if(response.isSuccess())
+                //response.body().getUsername()
                 {
-                    Toast.makeText(context, " POLLEN UPDATED Updated Successfuly", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, " POLLEN UPDATED Updated Successfuly", Toast.LENGTH_SHORT).show();
 
                 }
                 else
                 {
-                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    //This probably doesn't work yet, but its a good start.
-    public static void updateUserAtrium(int user_id, Map<String, Integer> counts, final Context context) {
-        Call call = service.updateUserAtrium(user_id, counts);
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) {
-                if(response.isSuccess())
-                {
-                    Toast.makeText(context, " Atrium Counts Updated Successfuly", Toast.LENGTH_SHORT).show();
-
-                }
-                else
-                {
-                    Toast.makeText(context, "Atrium Update FAILED!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-                try {
-                    FileWriter file = new FileWriter("../../res/raw/backendUpdates.txt");
-                } catch (IOException e) {
-                    Log.d("updateUserAtrium", "Error writing to file");
-                    e.printStackTrace();
-                }
-                //Create json file with gson
-                Gson gson = new Gson();
-                Type gsonType = new TypeToken<HashMap>(){}.getType();
-                String gsonString = gson.toJson(MainActivity.user_info.get_local_atrium(), gsonType);
-                Log.d("updateUserAtrium", "Json version of atrium" + gsonString);
                 Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -118,7 +85,6 @@ public class NetworkCalls {
 
     public static void getUserInfo(int user_id, final Context context)
     {
-        //Find these services in the interface GetDataService. Create a UserInfo object
         Call<UserInfo> call = service.getUserInfo(user_id);
         call.enqueue(new Callback<UserInfo>() {
             @Override
@@ -126,13 +92,7 @@ public class NetworkCalls {
                 if(response.isSuccess())
                 //response.body().getUsername()
                 {
-                    //PACKAGE GLOBAL USED WITHOUT DOCUMENTATION. BAD! Specify that user_info is from
-                    //MainActivity!
-                    MainActivity.user_info = response.body();
-                    //Since the user's atrium map is not a serialized value from the backend, we must initialize
-                    //it manually with this function.
-                    MainActivity.user_info.build_atrium();
-                    Log.d("RESPONSESTR", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+                    user_info = response.body();
                     //Toast.makeText(context, "User Info Gathered", Toast.LENGTH_SHORT).show();
                 }
                 else
@@ -241,14 +201,14 @@ public class NetworkCalls {
 
     public static void createQuestReport(int quest_id, int user_id, final Context context)
     {
-        Call<QuestReportCreateReturn> call = service.createQuestReport(quest_id,user_id);
-        call.enqueue(new Callback<QuestReportCreateReturn>() {
+        Call<QuesrtReportCreateReturn> call = service.createQuestReport(quest_id,user_id);
+        call.enqueue(new Callback<QuesrtReportCreateReturn>() {
             @Override
-            public void onResponse(Call<QuestReportCreateReturn> call, Response<QuestReportCreateReturn> response) {
+            public void onResponse(Call<QuesrtReportCreateReturn> call, Response<QuesrtReportCreateReturn> response) {
                 //Toast.makeText(context, "Quest Report Created ID: " + response.body(), Toast.LENGTH_SHORT).show();
             }
             @Override
-            public void onFailure(Call<QuestReportCreateReturn> call, Throwable t) {
+            public void onFailure(Call<QuesrtReportCreateReturn> call, Throwable t) {
                 Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
