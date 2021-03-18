@@ -19,7 +19,7 @@ public class Butterfly extends android.support.v7.widget.AppCompatImageView {
 
     //TODO change the string name across this and back end for better readability
     public enum Type {
-        RED("user_b0_count", R.drawable.yellow_butterfly , 0),
+        RED("user_b0_count", R.drawable.red_butterfly , 0),
         YELLOW("user_b1_count", R.drawable.yellow_butterfly, 1),
         ORANGE("user_b2_count", R.drawable.orange_butterfly,2),
         GREEN("user_b3_count", R.drawable.green_butterfly,3),
