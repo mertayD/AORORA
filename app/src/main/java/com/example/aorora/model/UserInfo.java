@@ -255,7 +255,7 @@ public class UserInfo {
     public Integer getUser_b4_count() {
         return user_b4_count;
     }
-
+    
     //Might not be what I want to do, but good in case. Will refactor later if needed.
     public Map<String, Integer> get_local_atrium(){return local_atrium;}
 
