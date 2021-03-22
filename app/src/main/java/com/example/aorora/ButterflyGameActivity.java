@@ -1,21 +1,48 @@
 package com.example.aorora;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+
+import androidx.annotation.NonNull;
+import androidx.camera.core.AspectRatio;
+import androidx.camera.core.Camera;
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageAnalysis;
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.Preview;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.camera.view.PreviewView;
+import androidx.constraintlayout.solver.widgets.ResolutionDimension;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LifecycleOwner;
+
+import android.print.PrintAttributes;
+import android.util.DisplayMetrics;
+import android.util.Rational;
+import android.util.Size;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.aorora.butterflyGame.Basket;
 import com.example.aorora.butterflyGame.Butterfly;
 import com.example.aorora.butterflyGame.ButterflyBasketOnDragListener;
 import com.example.aorora.network.NetworkCalls;
+import com.google.ar.sceneform.rendering.CameraProvider;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 /**
  * ButterflyGame Activity contains the butterfly catching game component of the ARORA app.
@@ -36,9 +63,21 @@ public class ButterflyGameActivity extends AppCompatActivity {
     //30 seconds
     final private int MAX_TIMER_MILLISECONDS = 30000;
 
-    Basket basket;
+    private static final String[] CAMERA_PERMISSION =
+            new String[] {Manifest.permission.CAMERA};
 
-    Butterfly bView;
+    private static final int CAMERA_REQUEST_CODE = 10;
+
+    private Basket basket;
+
+    private Butterfly bView;
+
+    private Preview preview;
+    private PreviewView cameraPreview;
+    private Camera camera;
+    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+
+    private Switch cameraSwitch;
 
     private TextView gameTimeText;
 
@@ -55,7 +94,38 @@ public class ButterflyGameActivity extends AppCompatActivity {
 
         layout = (ConstraintLayout) findViewById(R.id.layout);
         basket = (Basket) findViewById(R.id.basket);
+        cameraPreview = (PreviewView) findViewById(R.id.cameraView);
+        cameraSwitch = (Switch) findViewById(R.id.cameraSwitch);
         gameTimeText = (TextView) findViewById(R.id.gameTimeText);
+
+        //initialize camera preview
+        cameraProviderFuture = ProcessCameraProvider.getInstance(this);
+
+        cameraProviderFuture.addListener(() -> {
+            try {
+                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                bindPreview(cameraProvider);
+            } catch (ExecutionException | InterruptedException e) {
+                //this shouldn't be reached
+            }
+        }, ContextCompat.getMainExecutor(this));
+
+//        //set up onclicklistener to enable live camera background
+//        cameraSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if(isChecked)
+//                {
+//                    if(hasCameraPermission()) {
+//                        cameraPreview.setVisibility(View.VISIBLE);
+//                    } else {
+//                        requestPermsission();
+//                    }
+//                } else {
+//                    cameraPreview.setVisibility(View.GONE);
+//                }
+//            }
+//        });
 
         seed = new Random();
 
@@ -93,16 +163,38 @@ public class ButterflyGameActivity extends AppCompatActivity {
 
     }
 
+    private void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        ImageCapture imageCapture = new ImageCapture.Builder()
+                .setTargetAspectRatio(AspectRatio.RATIO_4_3)
+                .build();
+
+        cameraPreview.setScaleType(PreviewView.ScaleType.FIT_CENTER);
+
+        preview = new Preview.Builder()
+                .build();
+
+        CameraSelector cameraSelector = new CameraSelector.Builder()
+                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                .build();
+
+        preview.setSurfaceProvider(cameraPreview.getSurfaceProvider());
+
+        camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, preview);
+    }
+
     private void endOfGameActions() {
 
-        //TODO update user info table local
+        // update user info table local
         MainActivity.user_info.update_local_atrium(basket.basketContents);
 
-        //TODO update network db with hashmap?
+        // update network db with hashmap
         NetworkCalls.updateUserAtrium(MainActivity.user_info.getUser_id(),
                             basket.basketContents, getApplicationContext());
 
-        //TODO implement atrium screen code
+        // implement atrium screen code
         startActivity(new Intent(butterflyGameContext, AtriumScreen.class));
         finish();
     }
@@ -193,6 +285,22 @@ public class ButterflyGameActivity extends AppCompatActivity {
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        );
+    }
+
+    private boolean hasCameraPermission() {
+        return ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermsission()
+    {
+        ActivityCompat.requestPermissions(
+                this,
+                CAMERA_PERMISSION,
+                CAMERA_REQUEST_CODE
         );
     }
 }
