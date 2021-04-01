@@ -296,7 +296,7 @@ public class ButterflyGameActivity extends AppCompatActivity {
                 .setTargetRotation(this.getWindowManager().getDefaultDisplay().getRotation())
                 .build();
 
-        preview.setSurfaceProvider(mPreviewView.createSurfaceProvider());
+        preview.setSurfaceProvider(mPreviewView.getSurfaceProvider());
 
         Camera camera = cameraProvider.bindToLifecycle
                 (
