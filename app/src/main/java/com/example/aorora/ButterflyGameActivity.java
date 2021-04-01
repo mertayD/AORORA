@@ -15,6 +15,7 @@ import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.Preview;
+import androidx.camera.extensions.HdrImageCaptureExtender;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.constraintlayout.solver.widgets.ResolutionDimension;
@@ -33,6 +34,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.aorora.butterflyGame.Basket;
 import com.example.aorora.butterflyGame.Butterfly;
@@ -41,6 +43,7 @@ import com.example.aorora.network.NetworkCalls;
 import com.google.ar.sceneform.rendering.CameraProvider;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
@@ -55,79 +58,83 @@ public class ButterflyGameActivity extends AppCompatActivity {
     //FIXME: add back button override
     //FIXME: add pause override
 
-    Context butterflyGameContext;
+    Context mContext;
 
     ConstraintLayout layout;
     ConstraintLayout.LayoutParams params;
 
-    //30 seconds
-    final private int MAX_TIMER_MILLISECONDS = 30000;
+    /**
+     *  default max time for in game time: set to 30 seconds
+     */
+    private final int MAX_TIMER_MILLISECONDS = 30000;
 
-    private static final String[] CAMERA_PERMISSION =
-            new String[] {Manifest.permission.CAMERA};
+    /**
+     * Request code for requesting camera permissions
+     * reference Request Code Permissions on Android website for further detail
+     */
+    private final int REQUEST_CODE_PERMISSIONS = 1001;
 
-    private static final int CAMERA_REQUEST_CODE = 10;
+    /**
+     * String array filled with needed permission to request camera access
+     * for further permissions just add permission strings to array
+     */
+    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA"};
 
+    /**
+     * Basket where users drag butterflies to collect them
+     */
     private Basket basket;
 
-    private Butterfly bView;
+    /**
+     * PreviewView for camera background option
+     * necessary in order to show camera feed on screen
+     */
+    private PreviewView mPreviewView;
 
-    private Preview preview;
-    private PreviewView cameraPreview;
-    private Camera camera;
-    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
-
+    /**
+     * Switch that controls whether the background is the camera view or not
+     * if permission is not granted for camera switch will switch to off
+     */
     private Switch cameraSwitch;
 
+    /**
+     * Displays remaining in game time on screen
+     */
     private TextView gameTimeText;
 
-    private long timeLeftInMilliseconds = MAX_TIMER_MILLISECONDS; //30 seconds
-
-    private Random seed;
+    /**
+     * time left in miisceonds starting at default max time
+     */
+    private long timeLeftInMilliseconds = MAX_TIMER_MILLISECONDS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_butterfly_game);
 
-        butterflyGameContext = this;
+        mContext = this;
 
         layout = (ConstraintLayout) findViewById(R.id.layout);
         basket = (Basket) findViewById(R.id.basket);
-        cameraPreview = (PreviewView) findViewById(R.id.cameraView);
+        mPreviewView = (PreviewView) findViewById(R.id.previewView);
         cameraSwitch = (Switch) findViewById(R.id.cameraSwitch);
         gameTimeText = (TextView) findViewById(R.id.gameTimeText);
 
         //initialize camera preview
-        cameraProviderFuture = ProcessCameraProvider.getInstance(this);
+        if (cameraPermissionsGranted()) {
+            startCamera(); //start camera if permission has been granted by user
+        } else {
+            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
+        }
 
-        cameraProviderFuture.addListener(() -> {
-            try {
-                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
-                bindPreview(cameraProvider);
-            } catch (ExecutionException | InterruptedException e) {
-                //this shouldn't be reached
-            }
-        }, ContextCompat.getMainExecutor(this));
 
-//        //set up onclicklistener to enable live camera background
-//        cameraSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(isChecked)
-//                {
-//                    if(hasCameraPermission()) {
-//                        cameraPreview.setVisibility(View.VISIBLE);
-//                    } else {
-//                        requestPermsission();
-//                    }
-//                } else {
-//                    cameraPreview.setVisibility(View.GONE);
-//                }
-//            }
-//        });
+        startGame();
 
-        seed = new Random();
+    }
+
+    private void startGame() {
+
+        Random seed = new Random();
 
         //GAME LIFECYCLE
         CountDownTimer gameTimer = new CountDownTimer(timeLeftInMilliseconds, 1000) {
@@ -135,68 +142,25 @@ public class ButterflyGameActivity extends AppCompatActivity {
             public void onTick(long l) {
 
                 //update text in view to remaining time
-                gameTimeText.setText(String.valueOf(l/1000));
+                gameTimeText.setText(String.valueOf(l / 1000));
 
                 //try to spawn extra butterfly at any given second (1/4 chance)
-                if(seed.nextInt() % 4 == 0)
-                {
+                if (seed.nextInt() % 4 == 0) {
                     createRandomButterfly();
                 }
 
                 //spawn butterfly every 5 seconds after the start and not on zero
-                if(timeLeftInMilliseconds/1000 != 30 &&
-                        timeLeftInMilliseconds/1000 % 5 == 0 &&
-                        timeLeftInMilliseconds/1000 <= 1 )
-                {
+                if (timeLeftInMilliseconds / 1000 != 30 &&
+                        timeLeftInMilliseconds / 1000 % 5 == 0 &&
+                        timeLeftInMilliseconds / 1000 <= 1) {
                     createRandomButterfly();
                 }
             }
 
-
             @Override
-            public void onFinish() {
+            public void onFinish() { endOfGameActions(); }
 
-                endOfGameActions();
-
-            }
         }.start();
-
-    }
-
-    private void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
-        ImageCapture imageCapture = new ImageCapture.Builder()
-                .setTargetAspectRatio(AspectRatio.RATIO_4_3)
-                .build();
-
-        cameraPreview.setScaleType(PreviewView.ScaleType.FIT_CENTER);
-
-        preview = new Preview.Builder()
-                .build();
-
-        CameraSelector cameraSelector = new CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                .build();
-
-        preview.setSurfaceProvider(cameraPreview.getSurfaceProvider());
-
-        camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, preview);
-    }
-
-    private void endOfGameActions() {
-
-        // update user info table local
-        MainActivity.user_info.update_local_atrium(basket.basketContents);
-
-        // update network db with hashmap
-        NetworkCalls.updateUserAtrium(MainActivity.user_info.getUser_id(),
-                            basket.basketContents, getApplicationContext());
-
-        // implement atrium screen code
-        startActivity(new Intent(butterflyGameContext, AtriumScreen.class));
-        finish();
     }
 
     /**
@@ -204,25 +168,28 @@ public class ButterflyGameActivity extends AppCompatActivity {
      * the layouts bounds, random y value within layout bounds.
      */
     private void createRandomButterfly() {
+
+        Random seed = new Random();
+
         int typeID = seed.nextInt(Butterfly.Type.getCount());
         int x = seed.nextInt() % layout.getWidth();
         int y = seed.nextInt() % layout.getHeight();
-        createButterfly( Butterfly.Type.valueOf(typeID), x, y);
+        createButterfly(Butterfly.Type.valueOf(typeID), x, y);
     }
-
 
     /**
      * creates a butterfly view and adds it to the layout and starts the butterflies
      * animation to move around the screen. also adds an ButterflyBasketOnDragListener
      * to the butterfly.
+     *
      * @param type Butterfly.Type that will define the type of butterfly.
-     * @param x coordinate for butterfly to be added to layout at
-     * @param y coordinate for butterfly to be added to layout at
+     * @param x    coordinate for butterfly to be added to layout at
+     * @param y    coordinate for butterfly to be added to layout at
      * @return a reference to the butterfly added to layout.
      */
     private Butterfly createButterfly(Butterfly.Type type, float x, float y) {
 
-        bView = new Butterfly(this, type);
+        Butterfly mButterfly = new Butterfly(this, type);
 
         //adding constraint layout (neede to add view to layout)
         ConstraintLayout.LayoutParams newParams = new ConstraintLayout.LayoutParams(
@@ -230,35 +197,149 @@ public class ButterflyGameActivity extends AppCompatActivity {
                 ConstraintLayout.LayoutParams.WRAP_CONTENT);
 
         //width = 120dp
-        float width = TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 120,
-                this.getResources().getDisplayMetrics() );
+        float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 120,
+                this.getResources().getDisplayMetrics());
         newParams.width = (int) width;
 
         //height = 86dp
-        float height = TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 86,
-                this.getResources().getDisplayMetrics() );
+        float height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 86,
+                this.getResources().getDisplayMetrics());
         newParams.height = (int) height;
 
         //set view coordinates
-        bView.setX(x);
-        bView.setY(y);
+        mButterfly.setX(x);
+        mButterfly.setY(y);
 
-        layout.addView(bView, newParams);
-        bView.spawnAnimation();
+        layout.addView(mButterfly, newParams);
+        mButterfly.spawnAnimation();
 
         //add listener to view assuming basket exists already
-        bView.setOnTouchListener(new ButterflyBasketOnDragListener(bView, basket));
+        mButterfly.setOnTouchListener(new ButterflyBasketOnDragListener(mButterfly, basket));
 
         //FIXME: be able to get width and height of parent view without bugs
-        bView.animateToRandomPoints(720, 1472);
+        mButterfly.animateToRandomPoints(720, 1472);
 
-        return bView;
+        return mButterfly;
+    }
+
+    /**
+     * updates user local atrium table with butterflies from basket
+     * attempts to update network table with butterflies from basket
+     * startActivity to move to atrium screen
+     * TODO: instead of going to atrium screen have a fragment pop up instead.
+     */
+    private void endOfGameActions() {
+
+        // update user info table local
+        MainActivity.user_info.update_local_atrium(basket.basketContents);
+
+        // update network db with hashmap
+        NetworkCalls.updateUserAtrium(MainActivity.user_info.getUser_id(),
+                basket.basketContents, getApplicationContext());
+
+        // implement atrium screen code
+        startActivity(new Intent(mContext, AtriumScreen.class));
+        finish();
+    }
+
+    /**
+     * initializes ProcessCameraProvider and once the provider is given, bind the preview to the
+     * camera view.
+     */
+    private void startCamera() {
+        final ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(this);
+
+        cameraProviderFuture.addListener(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                    bindPreview(cameraProvider);
+                } catch (ExecutionException | InterruptedException e) {
+                    // No errors need to be handled for this Future.
+                    // This should never be reached.
+                }
+            }
+        }, ContextCompat.getMainExecutor(this));
+    }
+
+    /**
+     * bindPreview attaches all components needed to build our camera and its preview
+     * and binds them to he camera provider lifecycle
+     *
+     * for more information on this reference https://developer.android.com/training/camerax
+     * @param cameraProvider provides system camera for cameraX functions
+     */
+    private void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
+        Preview preview = new Preview.Builder()
+                .build();
+
+        CameraSelector cameraSelector = new CameraSelector.Builder()
+                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                .build();
+
+        ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
+                .build();
+
+        ImageCapture.Builder builder = new ImageCapture.Builder();
+
+        //Vendor-Extensions (The CameraX extensions dependency in build.gradle)
+        HdrImageCaptureExtender hdrImageCaptureExtender = HdrImageCaptureExtender.create(builder);
+
+        // Query if extension is available (optional).
+        if (hdrImageCaptureExtender.isExtensionAvailable(cameraSelector)) {
+            // Enable the extension if available.
+            hdrImageCaptureExtender.enableExtension(cameraSelector);
+        }
+
+        final ImageCapture imageCapture = builder
+                .setTargetRotation(this.getWindowManager().getDefaultDisplay().getRotation())
+                .build();
+
+        preview.setSurfaceProvider(mPreviewView.createSurfaceProvider());
+
+        Camera camera = cameraProvider.bindToLifecycle
+                (
+                    this,
+                    cameraSelector,
+                    preview,
+                    imageAnalysis,
+                    imageCapture
+                );
+
+    }
+
+    /**
+     * checks if each permission is granted in the required permissions string array
+     * @return true if all permissions are granted. false if else
+     */
+    private boolean cameraPermissionsGranted() {
+
+        for (String permission : REQUIRED_PERMISSIONS) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+            if (cameraPermissionsGranted()) {
+                startCamera();
+            } else {
+                Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show();
+                this.finish();
+            }
+        }
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if(hasFocus) {
+        if (hasFocus) {
             hideSystemUI();
         }
     }
@@ -278,29 +359,12 @@ public class ButterflyGameActivity extends AppCompatActivity {
         );
     }
 
-    private void showSystemUI()
-    {
+    private void showSystemUI() {
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        );
-    }
-
-    private boolean hasCameraPermission() {
-        return ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void requestPermsission()
-    {
-        ActivityCompat.requestPermissions(
-                this,
-                CAMERA_PERMISSION,
-                CAMERA_REQUEST_CODE
         );
     }
 }

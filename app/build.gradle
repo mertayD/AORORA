@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 
-def camerax_version = "1.0.0-rc03"
+def camerax_version = "1.0.0-beta05"
 
 android {
     compileSdkVersion 28
@@ -53,8 +53,8 @@ dependencies {
 
     implementation "androidx.camera:camera-camera2:$camerax_version"
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
-    implementation "androidx.camera:camera-view:1.0.0-alpha22"
-    implementation "androidx.camera:camera-extensions:1.0.0-alpha22"
+    implementation "androidx.camera:camera-view:1.0.0-alpha12"
+    implementation "androidx.camera:camera-extensions:1.0.0-alpha12"
 
 
 }

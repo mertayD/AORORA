@@ -8,6 +8,19 @@
     tools:context=".ButterflyGameActivity"
     android:background="@drawable/receipt_page_backgrpund">
 
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="preview"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"/>
+
     <Switch
         android:id="@+id/cameraSwitch"
         android:layout_width="52dp"
@@ -20,15 +33,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.958" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.camera.view.PreviewView
-            android:id="@+id/cameraView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </FrameLayout>
-
     <TextView
         android:id="@+id/gameTimeText"
         android:layout_width="wrap_content"
@@ -36,7 +40,7 @@
         android:fontFamily="cursive"
         android:lineSpacingExtra="8sp"
         android:shadowColor="#414141"
-        android:text="00"
+        android:text="@string/_defaultTimerText"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -70,7 +74,7 @@
         app:layout_constraintEnd_toEndOf="@+id/cameraSwitch"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/cameraSwitch"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
+        android:src="@android:drawable/ic_menu_camera" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
