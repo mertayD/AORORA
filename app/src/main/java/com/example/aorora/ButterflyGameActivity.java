@@ -1,5 +1,6 @@
 package com.example.aorora;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,7 +10,6 @@ import android.os.CountDownTimer;
 import androidx.annotation.NonNull;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.Preview;
 import androidx.camera.extensions.HdrImageCaptureExtender;
@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat;
 
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -85,6 +86,11 @@ public class ButterflyGameActivity extends AppCompatActivity {
     private Switch cameraSwitch;
 
     /**
+     * Once camera is initialized this flag will prevent it from being reinitialized
+     */
+    private boolean cameraInitFlag = false;
+
+    /**
      * Displays remaining in game time on screen
      */
     private TextView gameTimeText;
@@ -107,13 +113,28 @@ public class ButterflyGameActivity extends AppCompatActivity {
         cameraSwitch = findViewById(R.id.cameraSwitch);
         gameTimeText = findViewById(R.id.gameTimeText);
 
-        //initialize camera preview
-        if (cameraPermissionsGranted()) {
-            startCamera(); //start camera if permission has been granted by user
-        } else {
-            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
-        }
+        cameraSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                {
+                    if (cameraPermissionsGranted()) {
 
+                        if(!cameraInitFlag)
+                        {
+                            startCamera(); //start camera if permission has been granted by user
+                        } else {
+                            mPreviewView.setVisibility(View.VISIBLE);
+                        }
+
+                    } else {
+                        ActivityCompat.requestPermissions((Activity) mContext, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
+                    }
+                } else {
+                    mPreviewView.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
 
         startGame();
 
@@ -248,6 +269,8 @@ public class ButterflyGameActivity extends AppCompatActivity {
                 }
             }
         }, ContextCompat.getMainExecutor(this));
+
+        cameraInitFlag = true;
     }
 
     /**
@@ -277,6 +300,7 @@ public class ButterflyGameActivity extends AppCompatActivity {
         }
 
         preview.setSurfaceProvider(mPreviewView.getSurfaceProvider());
+        mPreviewView.setVisibility(View.VISIBLE);
 
         Camera camera = cameraProvider.bindToLifecycle
                 (
@@ -306,9 +330,10 @@ public class ButterflyGameActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (cameraPermissionsGranted()) {
                 startCamera();
+                cameraSwitch.setChecked(true);
             } else {
+                cameraSwitch.setChecked(false);
                 Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show();
-                this.finish();
             }
         }
     }
