@@ -180,8 +180,8 @@ public class ButterflyGameActivity extends AppCompatActivity {
         Random seed = new Random();
 
         int typeID = seed.nextInt(Butterfly.Type.getCount());
-        int x = seed.nextInt() % layout.getWidth();
-        int y = seed.nextInt() % layout.getHeight();
+        int x = seed.nextInt(layout.getMaxWidth());
+        int y = seed.nextInt(layout.getMaxHeight());
         createButterfly(Butterfly.Type.valueOf(typeID), x, y);
     }
 
