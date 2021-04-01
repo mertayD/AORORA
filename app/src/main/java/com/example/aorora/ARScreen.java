@@ -8,10 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.os.Bundle;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +17,6 @@ import android.widget.Toast;
 
 import com.example.aorora.interfaces.GeoCoordsCallback;
 import com.example.aorora.model.LocalUpdate;
-import com.example.aorora.model.Butterfly;
 import com.example.aorora.network.CheckConnectivity;
 import com.example.aorora.network.GetConnInfo;
 import com.example.aorora.network.GetDataService;
