@@ -166,7 +166,9 @@ public class ButterflyGameActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFinish() { endOfGameActions(); }
+            public void onFinish() {
+                //endOfGameActions();
+            }
 
         }.start();
     }
