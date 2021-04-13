@@ -1,13 +1,24 @@
 package com.example.aorora;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
@@ -16,16 +27,8 @@ import androidx.camera.extensions.HdrImageCaptureExtender;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-import android.util.TypedValue;
-import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.aorora.butterflyGame.Basket;
 import com.example.aorora.butterflyGame.Butterfly;
@@ -100,10 +103,14 @@ public class ButterflyGameActivity extends AppCompatActivity {
      */
     private long timeLeftInMilliseconds = MAX_TIMER_MILLISECONDS;
 
+    private CountDownTimer gameTimer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_butterfly_game);
+
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mContext = this;
 
@@ -145,9 +152,11 @@ public class ButterflyGameActivity extends AppCompatActivity {
         Random seed = new Random();
 
         //GAME LIFECYCLE
-        new CountDownTimer(timeLeftInMilliseconds, 1000) {
+        gameTimer = new CountDownTimer(timeLeftInMilliseconds, 1000) {
             @Override
             public void onTick(long l) {
+
+                timeLeftInMilliseconds = timeLeftInMilliseconds - 1000;
 
                 //update text in view to remaining time
                 gameTimeText.setText(String.valueOf(l / 1000));
@@ -167,7 +176,7 @@ public class ButterflyGameActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                //endOfGameActions();
+                endOfGameActions();
             }
 
         }.start();
@@ -346,6 +355,24 @@ public class ButterflyGameActivity extends AppCompatActivity {
         if (hasFocus) {
             hideSystemUI();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        promptLeaveActivity();
+    }
+
+    private void promptLeaveActivity(){
+        new AlertDialog.Builder(mContext)
+                .setMessage("Are you sure you want to leave the game?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        endOfGameActions();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     /**
