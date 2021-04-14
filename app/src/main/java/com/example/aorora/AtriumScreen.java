@@ -2,11 +2,10 @@ package com.example.aorora;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,10 +14,8 @@ import android.widget.Toast;
 import com.example.aorora.adapter.AtriumAdapter;
 import com.example.aorora.network.NetworkCalls;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /*
@@ -46,9 +43,9 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
     Button add_butterflies;
 
     //Images for the butterflies
-    int images[] = {R.drawable.red_butterfly, R.drawable.yellow_butterfly,
-            R.drawable.orange_butterfly, R.drawable.green_butterfly,
-            R.drawable.blue_butterfly};
+    int images[] = {R.drawable.red_1, R.drawable.yellow_1,
+            R.drawable.violet_1, R.drawable.green_1,
+            R.drawable.blue_2};
 
     //Counts of each type of butterfly.
     int counts[];
