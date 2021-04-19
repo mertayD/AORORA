@@ -1,10 +1,10 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MindfullnessMeditation"
-    android:background="@drawable/background">
+    android:background="@drawable/dusk_background">
 
     <TextView
         android:id="@+id/textView2"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="46dp"
         android:gravity="center_horizontal"
-        android:text="Focus on meditation audio \n to regain your calm"
+        android:text="Focus on the meditation audio \n to regain your calm mind"
         android:textColor="#989898"
         android:textSize="7pt"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/mindfullness_meditation_button" />
+        app:srcCompat="@drawable/mindfulness_meditation_button" />
 
     <ImageButton
         android:id="@+id/play_button_walking"
@@ -85,15 +85,16 @@
 
     <ImageView
         android:id="@+id/alpha_channel_meditation_icon"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="24dp"
         android:alpha="0.5"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/mindfullness_meditation_button" />
+        app:srcCompat="@drawable/mindfulness_meditation_alpha" />
 
     <ImageButton
         android:id="@+id/exit_button_meditation"
@@ -108,7 +109,7 @@
         app:srcCompat="@drawable/exit_button_breathing" />
 
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/horizontal_recycler_view_meditation"
         android:layout_width="371dp"
         android:layout_height="103dp"
@@ -119,7 +120,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTime"
         android:layout_width="371dp"
         android:layout_height="52dp"
@@ -153,4 +154,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerViewTime" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

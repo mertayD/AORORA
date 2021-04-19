@@ -2,19 +2,17 @@ package com.example.aorora;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
-import android.util.Log;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
+
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,8 +51,8 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         exit_button = (ImageButton) findViewById(R.id.exit_button_walking);
         time_selection_recyler_view = (RecyclerView) findViewById(R.id.recycler_view_time_selection_breathing);
 
-
-        List<String> data = Arrays.asList("", "5 Breaths", "10 Breaths","15 Breaths","");
+        //Removed "5 Breaths" and "15 Breaths" strings from array list for testing purposes
+        List<String> data = Arrays.asList("", "10 Breaths" ,"");
         generateTimeDataList(data);
         time_selection_recyler_view.smoothScrollToPosition(3);
         /*
@@ -140,7 +138,8 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
 
                 if(isInMiddle)
                 {
-                    timerCount = viewHolder.getAdapterPosition();
+                    //TODO Fix this, it is currently hardcoded, setting to 1 for the 1 breath option.
+                    timerCount = 1; //viewHolder.getAdapterPosition();
                     text_view.setTextColor(getResources().getColor(R.color.colorWhite));
                 }
             }

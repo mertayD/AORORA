@@ -1,26 +1,19 @@
 package com.example.aorora;
 
-import android.animation.Animator;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -31,10 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.aorora.network.NetworkCalls;
-import com.plattysoft.leonids.ParticleSystem;
-
-import static com.example.aorora.MainActivity.user_info;
 
 public class MindfullnessBreathingGame extends AppCompatActivity {
 
@@ -54,7 +43,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
     Context mindfullness_breathing_game;
     MediaPlayer breathing_music;
     String inhale_text = "Press and hold as \n you breath in";
-    String exhale_text = "Exhale as butterfly shrinks \n and leave the button";
+    String exhale_text = "Let go of the button and exhale \n and leave the button";
     TextView desc_tv;
     Dialog myDialog;
     TextView score_tv;
@@ -62,6 +51,8 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
     ImageButton pollen_button;
     int points_to_collect;
     int initial_score;
+    int tempBreathCount;
+    int pollen_payout;
     View pollen_layout;
     View emitter;
     int possible_points;
@@ -85,15 +76,14 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         possible_points = 100;
         is_button_still_clicked = false;
         performed_click = false;
-
+        pollen_payout = 10;
+        tempBreathCount = 2;
         LottieAnimationView animationView = findViewById(R.id.animation_view);
         animationView.setSpeed(1f);
         animationView.playAnimation();
 
         myDialog = new Dialog(this);
-        pollen_layout = (View) findViewById(R.id.breathing_game_pollen_layout);
-        score_tv = pollen_layout.findViewById(R.id.pollen_score_layout_tv);
-        initial_score = Integer.parseInt(score_tv.getText().toString());
+
 
         tap_me_animation = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.tap_me_animation);
@@ -111,26 +101,32 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         remaining_sec.setText("3 Seconds");
         if(getIntent().hasExtra("TimerValue"))
         {
-            int text = getIntent().getIntExtra("TimerValue", 1);
+            //Changing default value from 1 to 2
+            int text = getIntent().getIntExtra("TimerValue", 2);
+
+           //Disabling 5 breath option for testing purposes, possible_points is the amount of breaths remaining.
             if(text == 1)
             {
                 initial_game_count = text;
-                possible_points = 5;
-                text = 2;
+                possible_points = tempBreathCount;
+                text = tempBreathCount;
             }
 
-            else if( text == 2)
+           else if( text == 2)
             {
                 initial_game_count = text;
                 possible_points = 10;
                 text = 10;
             }
 
+            /*
+            Disabling 15 breath option for testing purposes
             else{
                 initial_game_count = text;
                 possible_points = 15;
                 text = 15;
             }
+            */
             remaining_breaths.setText(text + " Breaths");
         }
         enlarge = AnimationUtils.loadAnimation(getApplicationContext(),
@@ -138,11 +134,13 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         shrink = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.butterfly_closing);
 
         final Handler handler = new Handler();
+        //This runs in a Runnable thread
         final Runnable mLongPressed = new Runnable() {
             public void run() {
                 Log.d("VERBOSE", "run: INSIDE RUN ");
                 butterfly_image.startAnimation(shrink);
                 isRun = true;
+                //Causes the phone to vibrate using the vibrate function of the myVibrate object.
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
                 } else {
@@ -183,10 +181,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     butterfly_image.startAnimation(enlarge);
                     handler.postDelayed(mLongPressed, 3000);
                     myTimer.start();
-                    if(!breathing_music.isPlaying())
-                    {
-                        breathing_music.start();
-                    }
+
                     is_button_still_clicked = true;
                     return true;
                 }
@@ -199,8 +194,13 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                         butterfly_image.clearAnimation();
                         myTimer.cancel();
                     }
-                    breathing_music.pause();
+                    //breathing_music.pause();
                     return false;
+                }
+
+                if(!breathing_music.isPlaying())
+                {
+                    breathing_music.start();
                 }
                 return false;
             }
@@ -224,7 +224,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     handler.postDelayed(mLongPressed, 3000);
                     myTimer.start();
                 }
-
+                //The game is over when count reaches 0, navigate to the reciept page.
                 if(count == 0)
                 {
                     //DialogFragment newFragment = new BreathDialog();
@@ -233,15 +233,22 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     {
                         breathing_music.stop();
                     }
-                    int user_points = MainActivity.user_info.getUser_pollen();
-                    Log.e("USER POINTS ", user_points + " ");
-                    user_points += possible_points;
-                    NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), user_points, MindfullnessBreathingGame.this);
-                    NetworkCalls.getUserInfo(MainActivity.user_info.getUser_id(), MindfullnessBreathingGame.this);
+
+                    int new_user_points = MainActivity.user_info.getUser_pollen() + pollen_payout;
+                    Log.e("NEW USER POINTS ", new_user_points + " ");
+                    //TODO: Why are the network calls here instead of recieptpage? KISS and add a flat number of points when we reach that page.
+                    //NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), new_user_points, MindfullnessBreathingGame.this);
+                    //Now update our local pollen value
+                    MainActivity.user_info.setUser_pollen(new_user_points);
+                    //This old GET request was causing race conditions with the PATCH above, and wasnt necessary.
+                    //NetworkCalls.getUserInfo(MainActivity.user_info.getUser_id(), MindfullnessBreathingGame.this);
+                    //Set the pollen value locally
                     Intent to_navigate = new Intent(mindfullness_breathing_game, ReceiptPage.class);
                     to_navigate.putExtra("NavigatedFrom", 1);
-                    NetworkCalls.updateDailyTaskM1(user_info.getUser_id(), 1, mindfullness_breathing_game);
-                    NetworkCalls.createQuestReport(1, user_info.getUser_id(),mindfullness_breathing_game);
+                    //Ship the new pollen values to the Recieptpage.
+                    to_navigate.putExtra("PollenPayout", pollen_payout);
+                    //NetworkCalls.updateDailyTaskM1(user_info.getUser_id(), 1, mindfullness_breathing_game);
+                    //NetworkCalls.createQuestReport(1, user_info.getUser_id(),mindfullness_breathing_game);
 
                     to_navigate.putExtra("GAME", initial_game_count);
                     startActivity(to_navigate);
@@ -261,7 +268,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
 
             }
         });
-
+        //User clicks the x button to end the game early
         exit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

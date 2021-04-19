@@ -2,35 +2,52 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.aorora">
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
-        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MindfulnessMeditationGame_R"></activity>
-        <activity android:name=".MindfulnessMeditationGame_R9" />
-        <activity android:name=".ReceiptPage" />
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".AtriumDetail"/>
+        <activity android:name=".ARScreen" />
+        <activity android:name=".ButterflyGameActivity"/>
+        <activity android:name=".MindfulnessMeditationGame_R" />
+        <activity
+            android:name=".ReceiptPage"
+            android:parentActivityName=".HomeScreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen" />
+        </activity>
         <activity android:name=".EndOfMindfulnessGamePage" />
         <activity android:name=".PollenStoreDailyQuestPage" />
         <activity android:name=".PollenShopPage" />
         <activity android:name=".DailyQuestPage" />
         <activity android:name=".MindfullnessWalking" />
         <activity android:name=".BackendTest" />
-        <activity android:name=".MindfullnessWalkingGame" />
+        <activity
+            android:name=".MindfullnessWalkingGame"
+            android:screenOrientation="portrait" />
         <activity android:name=".MindfullnessMeditation" />
         <activity android:name=".MindfullnessFeatherSelection" />
-        <activity android:name=".MindfullnessMeditationGame" />
         <activity android:name=".MindfullnessBreathingGame" />
         <activity android:name=".MindfullnessBreathing" />
         <activity android:name=".ButterflyDetailsPage" />
         <activity android:name=".ButterflyCollectionPage" />
+        <activity android:name=".AtriumScreen" />
         <activity android:name=".ProfilePage" />
         <activity android:name=".CommunityPage" />
         <activity android:name=".HomeScreen" />

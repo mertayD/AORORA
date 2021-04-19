@@ -1,9 +1,10 @@
 package com.example.aorora.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.aorora.R;
 import com.example.aorora.interfaces.OnItemClickListener;
-import com.example.aorora.model.RetroPhoto;
 import com.example.aorora.model.UserInfo;
 
 import java.util.List;
@@ -57,7 +57,7 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.GridVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final GridViewAdapter.GridViewHolder customViewHolder, final int position) {
+    public void onBindViewHolder(@NonNull final GridViewAdapter.GridViewHolder customViewHolder, @SuppressLint("RecyclerView") final int position) {
         customViewHolder.userName.setText(dataList.get(position).getUser_name());
         int user_butterfly = dataList.get(position).getUser_current_butterfly();
         switch (user_butterfly){

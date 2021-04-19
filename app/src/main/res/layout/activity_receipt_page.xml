@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,10 +14,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="68dp"
-        android:text="Daily Quest Completion: "
+        android:text="Total Pollen "
         android:textColor="@android:color/white"
         android:textSize="8pt"
-        app:layout_constraintEnd_toStartOf="@+id/receipt_desc_score_text_view_1"
+        app:layout_constraintEnd_toStartOf="@+id/pollen_totalcount_tv"
+        app:layout_constraintHorizontal_bias="0.326"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/receipt_desc_text_view" />
 
     <ImageView
@@ -29,7 +31,7 @@
         android:scaleType="fitCenter"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10"
         app:srcCompat="@drawable/receipt_page_pollen" />
@@ -38,8 +40,10 @@
         android:id="@+id/receipt_page_pollen_points_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="108dp"
-        android:text="999"
+        android:layout_marginTop="116dp"
+        android:text="100"
+        android:textColor="#000000"
+        android:textSize="20dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -100,7 +104,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tap_to_collect_receipt_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tap_to_access_shop_tv"
+        app:layout_constraintTop_toBottomOf="@+id/receipt_page_pollen_point_holder"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/jar_wiggle" />
@@ -123,49 +127,40 @@
         android:id="@+id/receipt_desc_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="8dp"
-        android:text="Daily Quest Completion: "
+        android:text="Pollen Earned: "
         android:textColor="@android:color/white"
         android:textSize="8pt"
-        app:layout_constraintEnd_toStartOf="@+id/receipt_desc_score_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/pollen_earnedcount_tv"
+        app:layout_constraintHorizontal_bias="0.261"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
-        android:id="@+id/receipt_desc_score_text_view"
+        android:id="@+id/pollen_earnedcount_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginEnd="64dp"
         android:text="0000"
         android:textColor="@color/colorWhite"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
-        android:id="@+id/receipt_desc_score_text_view_1"
+        android:id="@+id/pollen_totalcount_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="64dp"
         android:text="0000"
         android:textColor="@color/colorWhite"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/receipt_desc_score_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/pollen_earnedcount_tv" />
 
-    <TextView
-        android:id="@+id/tap_to_access_shop_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Tap to Access Shop"
-        android:textColor="@color/customGray"
-        android:textSize="7pt"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/receipt_page_pollen_point_holder" />
 
     <TextView
         android:id="@+id/tap_to_collect_receipt_tv"
@@ -179,4 +174,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

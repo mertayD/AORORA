@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="550dp"
     android:orientation="vertical"
-    android:background="@drawable/quest_recipt_panel"
+    android:background="@drawable/quest_receipt_panel"
     android:gravity="center_horizontal"
     >
     <TextView
