@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                     //This will build and assign a UserInfo instance to the user_info variable above
                     //for package-wide use.
                     NetworkCalls.getUserInfo(user.getUser_id(), MainActivity.this);
-                    surveyPage = new Intent(context, SurveyPage.class);
+                    surveyPage = new Intent(context, slider_survey_page.class);
                     startActivity(surveyPage);
                 }
                 else
