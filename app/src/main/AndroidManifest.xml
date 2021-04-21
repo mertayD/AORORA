@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,9 +20,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AtriumDetail"/>
+        <activity android:name=".SuperflyInvites"/>
+        <activity android:name=".SuperflyLobby" />
+        <activity android:name=".AtriumDetail" />
         <activity android:name=".ARScreen" />
-        <activity android:name=".ButterflyGameActivity"/>
+        <activity android:name=".ButterflyGameActivity" />
         <activity android:name=".MindfulnessMeditationGame_R" />
         <activity
             android:name=".ReceiptPage"
