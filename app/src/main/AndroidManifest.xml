@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.aorora">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
@@ -20,9 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".slider_survey_page">
-        </activity>
-        <activity android:name=".SuperflyInvites"/>
+        <activity android:name=".slider_survey_page" />
+        <activity android:name=".SuperflyInvites" />
         <activity android:name=".SuperflyLobby" />
         <activity android:name=".AtriumDetail" />
         <activity android:name=".ARScreen" />
@@ -55,10 +53,8 @@
         <activity android:name=".CommunityPage" />
         <activity android:name=".HomeScreen" />
         <activity android:name=".MindfullnessSelection" />
-        <activity android:name=".SurveyPage">
-
-        </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".SurveyPage" />
+        <activity android:name=".MainActivity" android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

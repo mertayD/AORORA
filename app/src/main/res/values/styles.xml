@@ -17,30 +17,28 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="survey_card_view">
+    <style name="survey_card_view" parent="width_matchparent_height_wrapcontent">
         <item name="android:layout_gravity">center</item>
-        <item name="cardCornerRadius">5dp</item>
+        <item name="cardCornerRadius">10dp</item>
         <item name="cardBackgroundColor">#40ffffff</item>
-        <item name="cardElevation">5dp</item>
+        <item name="cardElevation">0dp</item>
         <item name="android:layout_marginTop">@dimen/horizontal_margin</item>
         <item name="android:layout_marginLeft">@dimen/vertical_margin</item>
         <item name="android:layout_marginRight">@dimen/vertical_margin</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="survey_card_linear_layout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="login_page_fields" parent="width_matchparent_height_wrapcontent">
+        <item name="android:layout_gravity">center</item>
+        <item name="cardCornerRadius">10dp</item>
+        <item name="cardBackgroundColor">#40ffffff</item>
+        <item name="cardElevation">10dp</item>
+    </style>
+
+    <style name="survey_card_linear_layout" parent="width_matchparent_height_wrapcontent">
         <item name="android:orientation">vertical</item>
-
-        <!--        android:layout_margin="4dp"-->
     </style>
 
-    <style name="survey_card_question_text_view">
-
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="survey_card_question_text_view" parent="width_matchparent_height_wrapcontent">
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Large</item>
@@ -48,9 +46,7 @@
 
     </style>
 
-    <style name="survey_card_seekbar">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="survey_card_seekbar" parent="width_matchparent_height_wrapcontent">
         <item name="android:layout_gravity">center</item>
         <item name="android:max">5</item>
         <item name="android:min">1</item>
@@ -61,5 +57,18 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
     </style>
+
+    <style name="login_text_views" parent="width_matchparent_height_wrapcontent">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+    </style>
+
+    <style name="buttons" parent="width_matchparent_height_wrapcontent">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">#5A8BBF</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
 
 </resources>
