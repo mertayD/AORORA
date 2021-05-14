@@ -46,10 +46,12 @@
     </string-array>
 
 
-    <string name="survey_question_1">What is your mood today?</string>
-    <string name="survey_question_2">What is your stress level?</string>
+    <string name="survey_question_1">How is your mood today?</string>
+    <string name="survey_question_2">Are you feeling stressed out?</string>
     <string name="a_white_butterfly">a white butterfly</string>
     <string name="a_black_butterfly">a black butterfly</string>
+    <string name="username">Username</string>
+    <string name="password">password</string>
 
     <string-array name="mood_array_pleasent_unpleasent">
         <item>Very Unpleasent</item>
@@ -66,5 +68,16 @@
         <item>Just Calm</item>
         <item>Very Calm</item>
     </string-array>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_login">Login</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="arora">ARORA</string>
 
 </resources>
