@@ -28,8 +28,6 @@ import com.airbnb.lottie.LottieAnimationView;
 /**
  * TODO: remove useless code
  * TODO: rename some vars
- * TODO: create new frame animation
- * TODO: remove network calls
  * TODO: comments
  */
 
@@ -114,15 +112,11 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 possible_points = 10;
                 text = 10;
             }
-
-            /*
-            Disabling 15 breath option for testing purposes
             else{
                 initial_game_count = text;
                 possible_points = 15;
                 text = 15;
             }
-            */
             remaining_breaths.setText(text + " Breaths");
         }
         enlarge = AnimationUtils.loadAnimation(getApplicationContext(),
@@ -137,12 +131,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 butterfly_image.startAnimation(shrink);
                 isRun = true;
                 //Causes the phone to vibrate using the vibrate function of the myVibrate object.
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-                } else {
-                    //deprecated in API 26
-                    myVibrate.vibrate(500);
-                }
+                myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
 
                 String temp = remaining_breaths.getText().toString();
                 String counted = "";
@@ -233,20 +222,15 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     Log.e("NEW USER POINTS ", new_user_points + " ");
 
                     //TODO: Why are the network calls here instead of recieptpage? KISS and add a flat number of points when we reach that page.
-                    //NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), new_user_points, MindfullnessBreathingGame.this);
-                    //Now update our local pollen value
 
                     MainActivity.user_info.setUser_pollen(new_user_points);
-                    //This old GET request was causing race conditions with the PATCH above, and wasnt necessary.
-                    //NetworkCalls.getUserInfo(MainActivity.user_info.getUser_id(), MindfullnessBreathingGame.this);
-                    //Set the pollen value locally
 
                     Intent to_navigate = new Intent(mindfullness_breathing_game, ReceiptPage.class);
+
                     to_navigate.putExtra("NavigatedFrom", 1);
+
                     //Ship the new pollen values to the Recieptpage.
                     to_navigate.putExtra("PollenPayout", pollen_payout);
-                    //NetworkCalls.updateDailyTaskM1(user_info.getUser_id(), 1, mindfullness_breathing_game);
-                    //NetworkCalls.createQuestReport(1, user_info.getUser_id(),mindfullness_breathing_game);
 
                     to_navigate.putExtra("GAME", initial_game_count);
                     startActivity(to_navigate);
@@ -254,7 +238,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 else
                 {
                     desc_tv.setText("" + inhale_text);
-                    myVibrate.vibrate(500);
+                    myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
                 }
                 isRun = false;
                 clickable = true;
@@ -296,11 +280,11 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 myVibrate.vibrate(350);
             }
             if(millisUntilFinished < 1000 ){
-                myVibrate.vibrate(700);
+                myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
             }
             else
             {
-                myVibrate.vibrate(100);
+                myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
             }
         }
         @Override
