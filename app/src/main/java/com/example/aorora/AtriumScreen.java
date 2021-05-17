@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -74,7 +75,7 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
         atriumRecycler = findViewById(R.id.atriumRecycler);
         atriumAdapter = new AtriumAdapter(this, images, counts);
         atriumRecycler.setAdapter(atriumAdapter);
-        layoutManager = new GridLayoutManager(this, 3);
+        layoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         atriumRecycler.setLayoutManager(layoutManager);
         atriumRecycler.setHasFixedSize(true);
 
