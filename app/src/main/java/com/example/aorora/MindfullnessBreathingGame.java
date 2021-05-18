@@ -73,7 +73,10 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         is_button_still_clicked = false;
         performed_click = false;
         pollen_payout = 10;
-        tempBreathCount = 2;
+
+        //TODO: for dev purposes remove
+        tempBreathCount = 5;
+
         LottieAnimationView animationView = findViewById(R.id.animation_view);
         animationView.setSpeed(1f);
         animationView.playAnimation();
@@ -96,26 +99,25 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         if(getIntent().hasExtra("TimerValue"))
         {
             //Changing default value from 1 to 2
-            int text = getIntent().getIntExtra("TimerValue", 2);
+            int text = getIntent().getIntExtra("TimerValue", 1);
 
-           //Disabling 5 breath option for testing purposes, possible_points is the amount of breaths remaining.
+           //Disabling all breath options to dev temp count
             if(text == 1)
             {
                 initial_game_count = text;
                 possible_points = tempBreathCount;
                 text = tempBreathCount;
             }
-
            else if( text == 2)
             {
                 initial_game_count = text;
-                possible_points = 10;
-                text = 10;
+                possible_points = tempBreathCount;
+                text = tempBreathCount;
             }
             else{
                 initial_game_count = text;
-                possible_points = 15;
-                text = 15;
+                possible_points = tempBreathCount;
+                text = tempBreathCount;
             }
             remaining_breaths.setText(text + " Breaths");
         }

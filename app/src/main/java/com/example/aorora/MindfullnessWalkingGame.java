@@ -60,7 +60,7 @@ public class MindfullnessWalkingGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mindfullness_walking_game);
         //DEV MODE FLAG TO END THE ACTIVITY QUICKLY
-        testMode = true;
+        testMode = false;
         //Display the finishButton after x seconds
         finishButton = (Button) findViewById(R.id.finish_walk_btn);
         timeUntilFinished = 6000;

@@ -79,7 +79,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         recyclerView.smoothScrollToPosition(3);
         recyclerViewTime.smoothScrollToPosition(3);
         //DEV MODE FLAG TO END THE ACTIVITY QUICKLY
-        testMode = true;
+        testMode = false;
 
     }
 
