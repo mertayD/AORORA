@@ -134,8 +134,8 @@ public class AtriumScreen extends AppCompatActivity implements View.OnClickListe
         }
         else if(view_id == back_button.getId())
         {
-            //This returns us to our previous page.
-            finish();
+            to_navigate = new Intent(atriumScreen, ProfilePage.class );
+            startActivity(to_navigate);
         }
         else if(view_id == add_butterflies.getId()){
 

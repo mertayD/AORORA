@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/receipt_page_backgrpund"
+    android:background="@drawable/atrium_background"
     tools:context=".AtriumDetail">
 
     <ImageButton
@@ -33,12 +33,19 @@
 
     <TextView
         android:id="@+id/butterfly_desc"
-        android:layout_width="wrap_content"
+        android:layout_width="243dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="176dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="176dp"
+        android:shadowColor="#646464"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
         android:text="Description"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/butterfly_display" />
