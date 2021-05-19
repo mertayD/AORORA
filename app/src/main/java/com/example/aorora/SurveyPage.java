@@ -32,7 +32,7 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
     ImageButton green_mood_button;
     TextView survey_question_tv;
     ImageButton exitButton;
-    String[] questions = {"What is your mood today?","What is your stress level?"};
+    String[] questions = {"What is your mood today?","How stressed do you feel today?"};
     final int questions_array_size = 2;
     int question_order_count;
     Intent navigatedFrom;
