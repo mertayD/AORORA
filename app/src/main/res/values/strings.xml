@@ -47,7 +47,7 @@
 
 
     <string name="survey_question_1">How is your mood today?</string>
-    <string name="survey_question_2">Are you feeling stressed out?</string>
+    <string name="survey_question_2">How stressed do you feel today?</string>
     <string name="a_white_butterfly">a white butterfly</string>
     <string name="a_black_butterfly">a black butterfly</string>
     <string name="username">Username</string>
