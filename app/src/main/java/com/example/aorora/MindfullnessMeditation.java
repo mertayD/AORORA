@@ -2,31 +2,25 @@ package com.example.aorora;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.aorora.ClickListener.SpinnerActivity;
 import com.example.aorora.adapter.HorizontalAdapter;
 import com.example.aorora.adapter.HorizontalTimeAdapter;
 import com.example.aorora.interfaces.OnItemClickListener;
-import com.example.aorora.model.RetroPhoto;
-
-import org.w3c.dom.Text;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,6 +35,8 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
     ImageButton community_button_bottombar;
     ImageButton quest_button_bottombar;
     ImageView alpha_channel_iv;
+    TextView text_view;
+    Boolean testMode;
     Animation infinite_blink;
     ImageButton exit_button;
     RecyclerView recyclerView;
@@ -50,7 +46,8 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
     com.example.aorora.adapter.HorizontalTimeAdapter horizontalTimeAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)  {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mindfullness_meditation);
 
@@ -81,13 +78,17 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         alpha_channel_iv.startAnimation(infinite_blink);
         recyclerView.smoothScrollToPosition(3);
         recyclerViewTime.smoothScrollToPosition(3);
+        //DEV MODE FLAG TO END THE ACTIVITY QUICKLY
+        testMode = false;
 
     }
 
-    private void generateDataListHorizontal() {
+
+    private void generateDataListHorizontal()
+    {
         horizontalAdapter = new com.example.aorora.adapter.HorizontalAdapter(this, new OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(View v, int position) {Log.e("ItemClicked", "Item Clicked at Position " + position);
             }
         });
 
@@ -104,6 +105,8 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
             }
         });
     }
+
+
     private void generateTimeDataList(List<String> data)
     {
         horizontalTimeAdapter = new com.example.aorora.adapter.HorizontalTimeAdapter(MindfullnessMeditation.this, data);
@@ -120,6 +123,8 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
             }
         });
     }
+
+
     public void selectMiddleItem()
     {
         LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -161,7 +166,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerViewTime.getLayoutManager();
         int firstVisibleIndex = layoutManager.findFirstVisibleItemPosition();
         int lastVisibleIndex = layoutManager.findLastVisibleItemPosition();
-        TextView text_view;
+
         for(int visibleIndex = firstVisibleIndex; visibleIndex < lastVisibleIndex; visibleIndex++)
         {
             HorizontalTimeAdapter.HorizontalTimeViewHolder viewHolder = (HorizontalTimeAdapter.HorizontalTimeViewHolder) recyclerViewTime.findViewHolderForAdapterPosition(visibleIndex);
@@ -187,8 +192,10 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
 
         }
     }
+
     @Override
-    public void onClick(View v) {
+    public void onClick(View v)
+    {
         int view_id = v.getId();
         Intent to_navigate;
         if(view_id == profile_button_bottombar.getId())
@@ -212,26 +219,27 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         }
         else if(view_id == play_button.getId())
         {
-            /*boolean two_digit = false;
+            boolean two_digit = false;
             int duration_int = 0;
-            //duration_string = String.valueOf(duration_selection_spinner.getSelectedItem());
-            if(duration_string.equals("Short"))
+            duration_string = String.valueOf(text_view.getText());
+            if(duration_string.equals("3 minutes"))
             {
-                duration_int = 1;
+                //Desired duration to be sent to the game in ms.
+                duration_int = 180000;
             }
-            else if(duration_string.equals("Medium"))
+            else if(duration_string.equals("5 minutes"))
             {
-                duration_int = 2;
+                duration_int = 300000;
             }
-            else
-            {
-                duration_int = 3;
+
+            if(testMode){
+                duration_int = 10000;
             }
-            */
+
             to_navigate = new Intent(mindfulnessMeditation, MindfulnessMeditationGame_R.class);
             to_navigate.putExtra("Theme",game_theme);
             //to_navigate.putExtra("NavigatedFrom", -2);
-            //to_navigate.putExtra("Duration", duration_int);
+            to_navigate.putExtra("Duration", duration_int);
             startActivity(to_navigate);
         }
         else if(view_id == exit_button.getId())

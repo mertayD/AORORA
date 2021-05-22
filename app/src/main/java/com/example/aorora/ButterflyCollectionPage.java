@@ -3,20 +3,17 @@ package com.example.aorora;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
-import com.example.aorora.adapter.GridViewAdapter;
 
 import com.example.aorora.interfaces.OnItemClickListener;
-import com.example.aorora.model.RetroPhoto;
 import com.example.aorora.model.UserInfo;
 
 import java.util.List;
@@ -25,6 +22,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/*OLD VERSION of Atrium, which is integrated with the unimplemented community logic that breaks the
+whole thing. Reference AtriumScreen and AtriumDetail for now.
+ */
 public class ButterflyCollectionPage extends AppCompatActivity implements View.OnClickListener {
 
     private com.example.aorora.adapter.GridViewAdapter adapter;
@@ -122,8 +122,9 @@ public class ButterflyCollectionPage extends AppCompatActivity implements View.O
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            to_navigate = new Intent(butterflyCollection, CommunityPage.class);
-            startActivity(to_navigate);
+            Toast.makeText(ButterflyCollectionPage.this, "Community page is under maintenance.", Toast.LENGTH_SHORT).show();
+            //to_navigate = new Intent(butterflyCollection, CommunityPage.class);
+            //startActivity(to_navigate);
         }
         else if(view_id == back_button.getId())
         {

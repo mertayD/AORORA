@@ -1,24 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SurveyPage"
-    android:background="@drawable/background"
+    android:background="@drawable/dusk_background"
     >
-
-    <ImageView
-        android:id="@+id/user_butterfly_imageView"
-        android:layout_width="255dp"
-        android:layout_height="234dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/orange_butterfly_image" />
 
     <TextView
         android:id="@+id/survey_question_tv"
@@ -36,15 +24,20 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="313dp"
-        android:layout_height="76dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:orientation="horizontal"
+        android:gravity="center_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.155"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/survey_question_tv">
+        app:layout_constraintTop_toBottomOf="@+id/survey_question_tv"
+
+        android:background="#40ffffff"
+        >
 
         <ImageButton
             android:id="@+id/red_mood_button"
@@ -54,8 +47,8 @@
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/red_butterfly_button"
-            tools:layout_editor_absoluteX="16dp"
+            app:srcCompat="@drawable/yellow_butterfly_button"
+            tools:layout_editor_absoluteX="92dp"
             tools:layout_editor_absoluteY="543dp" />
 
         <ImageButton
@@ -66,9 +59,10 @@
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/darkorange_butterfly_button"
+            app:srcCompat="@drawable/green_butterfly_button"
             tools:layout_editor_absoluteX="92dp"
             tools:layout_editor_absoluteY="543dp" />
+        <!---->
 
         <ImageButton
             android:id="@+id/orange_mood_button"
@@ -81,6 +75,7 @@
             app:srcCompat="@drawable/orange_butterfly_button"
             tools:layout_editor_absoluteX="171dp"
             tools:layout_editor_absoluteY="543dp" />
+        <!---->
 
         <ImageButton
             android:id="@+id/yellow_mood_button"
@@ -90,9 +85,10 @@
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/yellow_butterflu_button"
+            app:srcCompat="@drawable/darkorange_butterfly_button"
             tools:layout_editor_absoluteX="246dp"
             tools:layout_editor_absoluteY="543dp" />
+
 
         <ImageButton
             android:id="@+id/green_mood_button"
@@ -102,9 +98,10 @@
             android:layout_weight="1"
             android:background="#00000000"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/green_butterfly_button"
+            app:srcCompat="@drawable/red_butterfly_button"
             tools:layout_editor_absoluteX="327dp"
             tools:layout_editor_absoluteY="543dp" />
+
 
     </LinearLayout>
 
@@ -113,54 +110,107 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="Take the Quick BaseLine Survey"
         android:textColor="#FFFFFF"
         android:textSize="8pt"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.295"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_butterfly_imageView" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
         android:id="@+id/mood_desc_ll"
-        android:layout_width="311dp"
-        android:layout_height="wrap_content"
+        android:layout_width="197dp"
+        android:layout_height="231dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.833"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:background="#40ffffff">
 
         <TextView
             android:id="@+id/mood_desc_tv_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
+            android:layout_marginBottom="40dp"
             android:layout_weight="1"
             android:gravity="start"
-            android:text="Very Bad"
+            android:text="Pleasant"
             android:textColor="#989898" />
 
         <TextView
             android:id="@+id/mood_desc_tv_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
+            android:layout_marginBottom="56dp"
             android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="Good"
+            android:gravity="start"
+            android:text="Neither pleasant nor unpleasant"
             android:textColor="#989898" />
 
         <TextView
             android:id="@+id/mood_desc_tv_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="Unpleasant"
+            android:textColor="#989898"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mood_desc_stress"
+        android:layout_width="201dp"
+        android:layout_height="228dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.856"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:background="#40ffffff">
+
+        <TextView
+            android:id="@+id/mood_desc_stress_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="Very calm"
+            android:textColor="#989898" />
+
+        <TextView
+            android:id="@+id/mood_desc_stress_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="45dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="Neither calm nor tense"
+            android:textColor="#989898" />
+
+        <TextView
+            android:id="@+id/mood_desc_stress_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:gravity="end"
-            android:text="Very Good"
+            android:text="Tense"
             android:textColor="#989898"
 
             />
@@ -179,4 +229,4 @@
         app:srcCompat="@drawable/exit_button_breathing"
         android:visibility="invisible"/>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,38 +1,37 @@
 package com.example.aorora;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.media.MediaPlayer;
-import android.os.Build;
-import android.os.CountDownTimer;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.annotation.DrawableRes;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
-import android.support.v7.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Random;
+import com.example.aorora.network.NetworkCalls;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 public class HomeScreen extends AppCompatActivity implements GestureDetector.OnGestureListener, View.OnClickListener {
+    //User account info
+    String userName;
+    String userNamePower;
+    Integer userPollen;
+
+    //UI and Activity Elements
     Context homeScreen;
     GestureDetector gestureDetector;
     ImageButton home_button_bottombar;
@@ -45,14 +44,20 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     TextView notification_tv;
     TextView label_ar_game_button;
     TextView label_quest_button;
+    TextView userPollenTv;
+    TextView quickAccessUName;
+    TextView quickAccessPollen;
+    String userPollenDisplay;
     Boolean isButtonsPoppedUp;
     Animation notification_anim;
     Vibrator myVibrate;
+    LinearLayout ar_layout;
     public LayoutInflater layoutInflater;
     public View speck1;
     ConstraintLayout speck_holder_cl;
     MediaPlayer ring;
     MediaPlayer spec_alert;
+    MediaPlayer buttonClick;
     boolean page_left;
     ImageView profile_butterfly;
     View popup_quick_access;
@@ -62,7 +67,16 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        //Testing a refresh of userData here instead of in M1-M3
+        //NetworkCalls.getUserInfo(MainActivity.user_info.getUser_id(), HomeScreen.this);
         setContentView(R.layout.activity_home_screen);
+        //First check for local updates
+        NetworkCalls.checkLocalUpdates(HomeScreen.this);
+        //Fetch userdata from the local user_info instance in MainActivity.
+        userPollen = MainActivity.user_info.getUser_pollen();
+        Log.d("OnCreate Pollen", "onCreate: Displayed userPollen: " + userPollen);
+        userName = MainActivity.user_info.getUser_name();
+        userNamePower = MainActivity.user_info.getUser_name_of_strength();
 
         homeScreen = this;
         isButtonsPoppedUp = false;
@@ -71,6 +85,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
         community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
         quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
+        ar_layout = (LinearLayout) findViewById(R.id.ar_game_button_ll);
         ar_game_button = (ImageButton) findViewById(R.id.ar_game_button);
         quest_button = (ImageButton) findViewById(R.id.quest_button);
         pop_up_twobuttons_button = findViewById(R.id.pop_up_buttons_button);
@@ -78,13 +93,33 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         label_ar_game_button = (TextView) findViewById(R.id.label_ar_button);
         label_quest_button = (TextView) findViewById(R.id.label_quest_button);
         popup_quick_access = (LinearLayout) findViewById(R.id.popup_quick_access);
+
+        //User pollen value that will be displayed on the homepage, accessed from included layout.
+        userPollenTv = (TextView) popup_quick_access.findViewById(R.id.pollen_score_layout_tv);
+        userPollenDisplay = Integer.toString(userPollen);
+        userPollenTv.setText(userPollenDisplay);
+        //Update the popup menu for pollen to reflect user account values.
+        quick_menu = (LinearLayout) findViewById(R.id.include_quick_access_menu);
+        quickAccessUName = (TextView) quick_menu.findViewById(R.id.quick_access_user_id_tv);
+        quickAccessPollen = (TextView) quick_menu.findViewById(R.id.quickaccesspollen);
+        quickAccessUName.setText(userName);
+        quickAccessPollen.setText(userPollenDisplay);
+
+
         speck_holder_cl = (ConstraintLayout) findViewById(R.id.speck_holder_cl);
-        quick_menu = (LinearLayout) findViewById(R.id.include_popup_quick_access_menu);
+
+
         is_menu_inflated = false;
+
+        //buttonClick = MediaPlayer.create(getBaseContext(), R.raw.button1);
+
+
+        //Log.d("TESTNAV", "Calling onCreate!");
 
         quick_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(HomeScreen.this, "Pollen Shop is underdevelopment", Toast.LENGTH_SHORT).show();
                 Intent to_navigate = new Intent(homeScreen, PollenStoreDailyQuestPage.class);
                 to_navigate.putExtra("NavigatedFrom", 1);
                 startActivity(to_navigate);
@@ -93,10 +128,23 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         popup_quick_access.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
+                try {
+                    if (buttonClick.isPlaying()) {
+                        buttonClick.stop();
+                        buttonClick.release();
+                      buttonClick = MediaPlayer.create(getBaseContext(), R.raw.button1);
+                    } buttonClick.start();
+                } catch(Exception e) { e.printStackTrace(); }
+
+                buttonClick = MediaPlayer.create(getBaseContext(), R.raw.button1);
+                */
+
                 ImageView popup_quick_acces_image = (ImageView) popup_quick_access.findViewById(R.id.pollen_score_layout_imageview);
                 if(is_menu_inflated)
                 {
                     popup_quick_access.findViewById(R.id.pollen_score_layout_tv).setVisibility(View.VISIBLE);
+
                     popup_quick_acces_image.setImageResource(R.drawable.half_pollen);
                     quick_menu.setVisibility(View.INVISIBLE);
                     is_menu_inflated = false;
@@ -129,6 +177,7 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
 
             }
         });
+        //This does not invoke the network calls, it simply accesses the user_info object values.
         switch (MainActivity.user_info.getUser_current_butterfly()){
             case 0:
                 profile_butterfly.setImageResource(R.drawable.orange_butterfly_image);
@@ -164,9 +213,10 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         community_button_bottombar.setOnClickListener(this);
         quest_button_bottombar.setOnClickListener(this);
         quest_button.setOnClickListener(this);
+        ar_game_button.setOnClickListener(this);
         notification_tv.setOnClickListener(this);
         speck1.setOnClickListener(this);
-        notification_tv.setVisibility(View.INVISIBLE);
+       // notification_tv.setVisibility(View.VISIBLE);
         ring = MediaPlayer.create(homeScreen,R.raw.notify_2);
         spec_alert = MediaPlayer.create(homeScreen,R.raw.notify_wav);
 
@@ -214,13 +264,13 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
             }
         });
 
+        //Central white button to show and hide AR and Quest buttons.
         pop_up_twobuttons_button.setOnClickListener(new ImageButton.OnClickListener() {
             public void onClick(View v) {
                 if(!isButtonsPoppedUp) {
                     pop_up_twobuttons_button.setImageDrawable(getResources().getDrawable(R.drawable.menu_button_unfilled));
+                    ar_layout.setVisibility(View.VISIBLE);
                     quest_button.setVisibility(View.VISIBLE);
-                    ar_game_button.setVisibility(View.VISIBLE);
-                    label_ar_game_button.setVisibility(View.VISIBLE);
                     label_quest_button.setVisibility(View.VISIBLE);
                     isButtonsPoppedUp = true;
                     ar_game_button.setClickable(TRUE);
@@ -228,9 +278,8 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
                 }
                 else{
                     pop_up_twobuttons_button.setImageDrawable(getResources().getDrawable(R.drawable.menu_button_filled));
+                    ar_layout.setVisibility(View.INVISIBLE);
                     quest_button.setVisibility(View.INVISIBLE);
-                    ar_game_button.setVisibility(View.INVISIBLE);
-                    label_ar_game_button.setVisibility(View.INVISIBLE);
                     label_quest_button.setVisibility(View.INVISIBLE);
                     isButtonsPoppedUp = false;
                     ar_game_button.setClickable(FALSE);
@@ -262,18 +311,27 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
             }
         }.start();
         */
-
     }
+
+    @Override
+    public void onBackPressed() {
+        //Do nothing on backpress, override the default behavior.
+    }
+
+    //Built in overriden onFLing method for swiping control between Activities
+    //Implements from the GestureDetector interface.
     @Override
     public boolean onFling (MotionEvent motionEvent1, MotionEvent motionEvent2, float X, float Y)
     {
         page_left = true;
+        //This checks if we swiped left on the homepage
         if (motionEvent1.getX() - motionEvent2.getX() > 150) {
             Intent profilePage = new Intent(homeScreen, MindfullnessSelection.class);
             startActivity(profilePage);
             overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             return true;
         }
+        //This checks if we swiped right on the homepage
         if (motionEvent2.getX() - motionEvent1.getX() > 150) {
             Intent mindfullness = new Intent(homeScreen, ProfilePage.class);
             startActivity(mindfullness);
@@ -282,6 +340,60 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
         } else {
             return true;
         }
+    }
+    @Override
+    public void onClick(View v) {
+        int view_id = v.getId();
+        Intent to_navigate;
+        if(ring.isPlaying()) {
+            ring.stop();
+        }
+        if(spec_alert.isPlaying())
+        {
+            spec_alert.stop();
+        }
+        page_left = true;
+
+        if(view_id == profile_button_bottombar.getId())
+        {
+            to_navigate = new Intent(homeScreen, ProfilePage.class);
+            startActivity(to_navigate);
+        }
+        else if(view_id == community_button_bottombar.getId())
+        {
+            to_navigate = new Intent(homeScreen, CommunityPage.class);
+            startActivity(to_navigate);
+        }
+        else if(view_id == quest_button_bottombar.getId() || view_id == quest_button.getId())
+        {
+            to_navigate = new Intent(homeScreen, MindfullnessSelection.class);
+            startActivity(to_navigate);
+
+        }
+        else if(view_id == home_button_bottombar.getId())
+        {
+            //to_navigate = new Intent(homeScreen, homeScreen);
+        }
+        else if (view_id == speck1.getId())
+        {
+            to_navigate = new Intent(homeScreen, CommunityPage.class);
+            to_navigate.putExtra("notification", true);
+            startActivity(to_navigate);
+        }
+        else if(view_id == notification_tv.getId())
+        {
+            to_navigate = new Intent(homeScreen, MindfullnessBreathing.class);
+            startActivity(to_navigate);
+        }
+        else if(view_id == ar_game_button.getId())
+        {
+            to_navigate = new Intent(homeScreen, ARScreen.class);
+            startActivity(to_navigate);
+            Log.d("ARBUTTON", "Navigating to AR.");
+            //Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.NAUVRLab.ARProduct");
+            //startActivity(launchIntent);
+        }
+
     }
 
     @Override
@@ -317,58 +429,9 @@ public class HomeScreen extends AppCompatActivity implements GestureDetector.OnG
     }
 
     @Override
-    public void onClick(View v) {
-        int view_id = v.getId();
-        Intent to_navigate;
-        if(ring.isPlaying()) {
-            ring.stop();
-        }
-        if(spec_alert.isPlaying())
-        {
-            spec_alert.stop();
-        }
-        page_left = true;
-
-        if(view_id == profile_button_bottombar.getId())
-        {
-            to_navigate = new Intent(homeScreen, ProfilePage.class);
-            startActivity(to_navigate);
-        }
-        else if(view_id == community_button_bottombar.getId())
-        {
-            to_navigate = new Intent(homeScreen, CommunityPage.class);
-            startActivity(to_navigate);
-        }
-        else if(view_id == quest_button_bottombar.getId() || view_id == quest_button.getId())
-        {
-
-            to_navigate = new Intent(homeScreen, MindfullnessSelection.class);
-            startActivity(to_navigate);
-
-        }
-        else if(view_id == home_button_bottombar.getId())
-        {
-            //to_navigate = new Intent(homeScreen, homeScreen);
-        }
-        else if (view_id == speck1.getId())
-        {
-            to_navigate = new Intent(homeScreen, CommunityPage.class);
-            to_navigate.putExtra("notification", true);
-            startActivity(to_navigate);
-        }
-        else if(view_id == notification_tv.getId())
-        {
-
-            to_navigate = new Intent(homeScreen, MindfullnessBreathing.class);
-            startActivity(to_navigate);
-        }
-        else if(view_id == ar_game_button.getId())
-        {
-            to_navigate = new Intent(homeScreen, DailyQuestPage.class);
-            startActivity(to_navigate);
-            //Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.NAUVRLab.ARProduct");
-            //startActivity(launchIntent);
-        }
-
+    protected void onResume() {
+        super.onResume();
+        //TODO: Push local updates to the backend, keep trying. Userinfo call should do it.
+        //NetworkCalls.checkLocalUpdates(HomeScreen.this);
     }
 }

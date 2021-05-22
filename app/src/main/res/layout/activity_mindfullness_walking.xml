@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MindfullnessWalking"
-    android:background="@drawable/background">
+    android:background="@drawable/dusk_background">
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="31dp"
         android:layout_marginTop="60dp"
-        android:text="Mindfullness Walking"
+        android:text="Mindfulness Walking"
         android:textColor="#FFFFFF"
         android:textSize="10pt"
         android:textStyle="bold"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center_horizontal"
-        android:text="Take a walk to clear your mind \n and regain your calm"
+        android:text="Take a walk to clear your mind \n and regain your calm mind"
         android:textColor="#989898"
         android:textSize="7pt"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +35,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/horizontal_recycler_view_walking"
         android:layout_width="371dp"
         android:layout_height="103dp"
@@ -55,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/breathing_button" />
+        app:srcCompat="@drawable/mindfulness_meditation_button" />
 
     <ImageButton
         android:id="@+id/play_button_walking"
@@ -125,7 +125,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/breathing_button" />
+        app:srcCompat="@drawable/mindfulness_meditation_button" />
 
 
     <ImageButton
@@ -140,4 +140,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/exit_button_breathing" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

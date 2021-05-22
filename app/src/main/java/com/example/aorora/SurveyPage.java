@@ -1,34 +1,27 @@
 package com.example.aorora;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.gesture.GestureOverlayView;
-import android.media.Image;
 import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.aorora.network.NetworkCalls;
-
+/*
+This is the page that is displayed directly after the user logs in. The survey page will send a
+record to the backend based on the answers the user clicks to the two presented questions.
+ */
 public class SurveyPage extends AppCompatActivity implements OnClickListener {
     LinearLayout mood_desc_ll;
+    LinearLayout mood_desc_stress;
     Context surveyPage;
     Animation move_to_animation;
     Animation move_from_animation;
@@ -39,12 +32,13 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
     ImageButton green_mood_button;
     TextView survey_question_tv;
     ImageButton exitButton;
-    String[] questions = {"How is your mood today?","How is your health today?"};
+    String[] questions = {"What is your mood today?","What is your stress level?"};
     final int questions_array_size = 2;
     int question_order_count;
     Intent navigatedFrom;
     Boolean exitVisible;
     int from;
+
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +55,11 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
         survey_question_tv.setText(questions[question_order_count]);
         surveyPage = this;
         mood_desc_ll = findViewById(R.id.mood_desc_ll);
+        mood_desc_stress = findViewById(R.id.mood_desc_stress);
         exitButton = (ImageButton) findViewById(R.id.exit_button_survey);
 
         mood_desc_ll.setVisibility(View.INVISIBLE);
+        mood_desc_stress.setVisibility(View.INVISIBLE);
         survey_question_tv.setVisibility(View.INVISIBLE);
         red_mood_button.setVisibility(View.INVISIBLE);
         darkorange_mood_button.setVisibility(View.INVISIBLE);
@@ -76,7 +72,8 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
         navigatedFrom = getIntent();
         if(navigatedFrom.hasExtra("NavigatedFrom"))
         {
-            from = navigatedFrom.getIntExtra("NavigatedFrom", 0);
+            from = navigatedFrom.getIntExtra("NAVIGATEDFROM", 0);
+            Log.d("IntExtraSurvey", "value: " + from);
             if(from == -1 || from == -2 || from == -3)
             {
                 exitButton.setVisibility(View.VISIBLE);
@@ -103,6 +100,8 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
                 yellow_mood_button.setVisibility(View.VISIBLE);
                 green_mood_button.setVisibility(View.VISIBLE);
                 mood_desc_ll.setVisibility(View.VISIBLE);
+               // mood_desc_stress.setVisibility(View.VISIBLE);
+
 
             }
         }.start();
@@ -112,6 +111,8 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
         orange_mood_button.setOnClickListener(this);
         yellow_mood_button.setOnClickListener(this);
         green_mood_button.setOnClickListener(this);
+
+        //if survey is accessed through a mindfullness exercise return user to that page
         exitButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,9 +141,10 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
                 R.anim.movefromnegative);
 
         move_from_animation.setAnimationListener(new Animation.AnimationListener() {
+
             @Override
             public void onAnimationStart(Animation animation) {
-            }
+            } //FIXME why is this empty?
 
             @Override
             public void onAnimationEnd(Animation animation) {
@@ -179,6 +181,15 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
             @Override
             public void onAnimationEnd(Animation animation) {
                 survey_question_tv.setText(questions[question_order_count]);
+                if(question_order_count == 0)
+                {
+                    mood_desc_ll.setVisibility(View.VISIBLE);
+                }
+                else if(question_order_count == 1)
+                {
+                    mood_desc_ll.setVisibility(View.INVISIBLE);
+                    mood_desc_stress.setVisibility(View.VISIBLE);
+                }
                 survey_question_tv.startAnimation(move_from_animation);
             }
 
@@ -191,6 +202,11 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
     }
 
     @Override
+    public void onBackPressed() {
+        //Do nothing, stay in this activity, we do not want to navigate back to the login.
+    }
+
+    @Override
     public void onClick(View v) {
         // result will be considered on a scale of 1-5
         int q1_response = 0;
@@ -199,11 +215,13 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
         //v_id is the id of the view that is passed as a parameter
         int v_id = v.getId();
 
+
         if(exitVisible)
         {
             exitButton.setVisibility(View.INVISIBLE);
             exitVisible = false;
         }
+        //TODO change structure to switch case2
         if(v_id == red_mood_button.getId())
         {
             red_mood_button.setVisibility(View.INVISIBLE);
@@ -247,6 +265,7 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
         }
         else
         {
+            //POST the new mood report to the backend.
             NetworkCalls.createMoodReport(MainActivity.user_info.getUser_id(), q1_response,q2_response, surveyPage);
 
             Intent navigated_from = getIntent();
@@ -288,6 +307,7 @@ public class SurveyPage extends AppCompatActivity implements OnClickListener {
                     startActivity(to_navigate);
                 }
             }
+            //This is the case that is called when no extras are passed, which is when we first complete the survey.
             else{
                 to_navigate = new Intent(surveyPage, HomeScreen.class);
                 startActivity(to_navigate);

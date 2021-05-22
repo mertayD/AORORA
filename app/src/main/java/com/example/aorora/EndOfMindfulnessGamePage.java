@@ -2,18 +2,17 @@ package com.example.aorora;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.ConditionVariable;
 import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.plattysoft.leonids.ParticleSystem;
 
@@ -128,8 +127,9 @@ public class EndOfMindfulnessGamePage extends AppCompatActivity implements View.
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            to_navigate = new Intent(endOfMindfulnessGamePage, CommunityPage.class);
-            startActivity(to_navigate);
+            Toast.makeText(EndOfMindfulnessGamePage.this, "Community page is under maintenance.", Toast.LENGTH_SHORT).show();
+            //to_navigate = new Intent(endOfMindfullnessGamePage, CommunityPage.class);
+            //startActivity(to_navigate);
         }
     }
 }

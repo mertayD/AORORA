@@ -2,14 +2,14 @@ package com.example.aorora;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PollenShopPage extends AppCompatActivity implements View.OnClickListener {
 
@@ -64,8 +64,9 @@ public class PollenShopPage extends AppCompatActivity implements View.OnClickLis
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            to_navigate = new Intent(pollenShopPage, CommunityPage.class);
-            startActivity(to_navigate);
+            Toast.makeText(PollenShopPage.this, "Community page is under maintenance.", Toast.LENGTH_SHORT).show();
+            //to_navigate = new Intent(pollenShopPage, CommunityPage.class);
+            //startActivity(to_navigate);
         }
 
     }

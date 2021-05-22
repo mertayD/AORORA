@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MindfullnessWalkingGame"
-    android:background="@drawable/walking_background"
+    android:background="@drawable/orange_mountain_background"
     android:id="@+id/walking_game_background">
 
-    <com.airbnb.lottie.LottieAnimationView
+   <!-- <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation_view_walking"
         android:layout_width="match_parent"
         android:layout_height="445dp"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/stage_1" />
+        app:lottie_rawRes="@raw/stage_1" />-->
     <View
         android:id="@+id/emiter_top"
         android:layout_width="409dp"
@@ -45,20 +45,34 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/exit_button_breathing" />
 
-    <ImageView
-        android:id="@+id/loading_walking_image_view"
-        android:layout_width="93dp"
-        android:layout_height="103dp"
-        android:layout_marginTop="16dp"
+    <Button
+        android:id="@+id/finish_walk_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
+        android:text="Finish"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/animation_view_walking"
-        app:srcCompat="@drawable/walking_loading_zero" />
+        android:visibility="invisible"/>
 
+    <!--   <ImageView
+           android:id="@+id/loading_walking_image_view"
+           android:layout_width="93dp"
+           android:layout_height="103dp"
+           android:layout_marginTop="16dp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/animation_view_walking"
+           app:srcCompat="@drawable/walking_loading_zero" /> -->
+
+<!--
     <TextView
         android:id="@+id/hint_text_walking_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:text="Hint: Keep walking to \n grow your flower"
 
         android:textAlignment="center"
@@ -69,6 +83,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
+        -->
 
-
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

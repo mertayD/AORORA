@@ -2,8 +2,8 @@ package com.example.aorora;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Trace;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -104,7 +104,7 @@ public class MindfullnessFeatherSelection extends AppCompatActivity implements V
         }
         else if(view_id == start_meditation.getId())
         {
-            Intent to_navigate = new Intent(featherSelection, MindfullnessMeditationGame.class);
+            Intent to_navigate = new Intent(featherSelection, MindfulnessMeditationGame_R.class);
             to_navigate.putExtra("Duration", duration);
             to_navigate.putExtra("Feather", feather_selected);
             startActivity(to_navigate);
