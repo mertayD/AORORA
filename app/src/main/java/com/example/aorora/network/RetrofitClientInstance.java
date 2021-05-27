@@ -11,7 +11,7 @@ public class RetrofitClientInstance {
     //"http://104.248.178.78:8000"
     public static final String IP = "104.248.178.78";
     public static final Integer PORT = 8080;
-    private static final String BASE_URL = "http://" + IP + ":" + PORT;
+    private static final String BASE_URL = String.format("http://%s:%d", IP, PORT);
 
 
     public static Retrofit getRetrofitInstance() {
