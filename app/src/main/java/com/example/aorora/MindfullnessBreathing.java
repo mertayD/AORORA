@@ -16,6 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.aorora.adapter.HorizontalTimeAdapter;
 
@@ -165,8 +166,9 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            to_navigate = new Intent(mindfullnessBreathing, CommunityPage.class);
-            startActivity(to_navigate);
+            Toast.makeText(this, "Community page is under maintenance.", Toast.LENGTH_SHORT).show();
+            //to_navigate = new Intent(bfDetailsPage, CommunityPage.class);
+            //startActivity(to_navigate);
         }
         else if(view_id == play_button.getId())
         {

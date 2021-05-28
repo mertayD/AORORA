@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.aorora.adapter.HorizontalAdapter;
 import com.example.aorora.adapter.HorizontalTimeAdapter;
@@ -214,8 +215,9 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         }
         else if(view_id == community_button_bottombar.getId())
         {
-            to_navigate = new Intent(mindfulnessMeditation, CommunityPage.class);
-            startActivity(to_navigate);
+            Toast.makeText(this, "Community page is under maintenance.", Toast.LENGTH_SHORT).show();
+            //to_navigate = new Intent(bfDetailsPage, CommunityPage.class);
+            //startActivity(to_navigate);
         }
         else if(view_id == play_button.getId())
         {
