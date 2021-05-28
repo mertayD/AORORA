@@ -3,21 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MindfullnessMeditation"
-    android:background="@drawable/dusk_background">
+    android:background="@drawable/dusk_background"
+    tools:context=".MindfullnessMeditation">
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="31dp"
-        android:layout_marginTop="8dp"
         android:text="Meditation"
         android:textColor="#FFFFFF"
         android:textSize="10pt"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_meditation_mindfullness" />
+        app:layout_constraintEnd_toEndOf="@+id/alpha_channel_meditation_icon"
+        app:layout_constraintStart_toStartOf="@+id/alpha_channel_meditation_icon"
+        app:layout_constraintTop_toBottomOf="@+id/alpha_channel_meditation_icon" />
 
     <TextView
         android:id="@+id/textView3"
@@ -25,50 +24,40 @@
         android:layout_height="46dp"
         android:gravity="center_horizontal"
         android:text="Focus on the meditation audio \n to regain your calm mind"
-        android:textColor="#989898"
+        android:textColor="#FFFFFF"
         android:textSize="7pt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <ImageView
-        android:id="@+id/imageView_meditation_mindfullness"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="48dp"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/mindfulness_meditation_button" />
 
     <ImageButton
         android:id="@+id/play_button_walking"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
         android:background="#00000000"
         android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontal_recycler_view_meditation"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.872"
         app:srcCompat="@drawable/play_button" />
 
     <TextView
         android:id="@+id/start_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_width="60dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="60dp"
         android:text="Start"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="10pt"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/play_button_walking" />
+        app:layout_constraintEnd_toEndOf="@+id/play_button_walking"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/play_button_walking"
+        app:layout_constraintTop_toTopOf="@+id/play_button_walking" />
 
     <include
         android:id="@+id/include"
@@ -85,16 +74,26 @@
 
     <ImageView
         android:id="@+id/alpha_channel_meditation_icon"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="173dp"
+        android:layout_height="167dp"
+        android:layout_marginTop="4dp"
         android:alpha="0.5"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/mindfulness_meditation_alpha" />
+
+    <ImageView
+        android:id="@+id/imageView_meditation_mindfullness"
+        android:layout_width="133dp"
+        android:layout_height="128dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/alpha_channel_meditation_icon"
+        app:layout_constraintEnd_toEndOf="@+id/alpha_channel_meditation_icon"
+        app:layout_constraintStart_toStartOf="@+id/alpha_channel_meditation_icon"
+        app:layout_constraintTop_toTopOf="@+id/alpha_channel_meditation_icon"
+        app:srcCompat="@drawable/mindfulness_meditation_button" />
 
     <ImageButton
         android:id="@+id/exit_button_meditation"
@@ -111,47 +110,49 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/horizontal_recycler_view_meditation"
-        android:layout_width="371dp"
-        android:layout_height="103dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="0dp"
+        android:layout_height="88dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/play_button_walking"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewTime"
+        app:layout_constraintVertical_bias="0.121" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTime"
-        android:layout_width="371dp"
+        android:layout_width="0dp"
         android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="108dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/alpha_channel_meditation_icon" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
         android:text="Choose Time"
         android:textColor="@android:color/white"
         android:textSize="8pt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewTime"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerViewTime"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="@+id/recyclerViewTime" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="Choose Theme"
         android:textColor="@android:color/white"
         android:textSize="8pt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewTime" />
+        app:layout_constraintBottom_toTopOf="@+id/horizontal_recycler_view_meditation"
+        app:layout_constraintEnd_toEndOf="@+id/horizontal_recycler_view_meditation"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="@+id/horizontal_recycler_view_meditation" />
 </androidx.constraintlayout.widget.ConstraintLayout>
