@@ -44,21 +44,6 @@
         app:layout_constraintVertical_bias="0.872"
         app:srcCompat="@drawable/play_button" />
 
-    <TextView
-        android:id="@+id/start_text_view"
-        android:layout_width="60dp"
-        android:layout_height="29dp"
-        android:layout_marginTop="60dp"
-        android:text="Start"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="10pt"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/play_button_walking"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/play_button_walking"
-        app:layout_constraintTop_toTopOf="@+id/play_button_walking" />
-
     <include
         android:id="@+id/include"
         layout="@layout/bottom_menu_bar"
@@ -135,7 +120,6 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
         android:text="Choose Time"
         android:textColor="@android:color/white"
         android:textSize="8pt"

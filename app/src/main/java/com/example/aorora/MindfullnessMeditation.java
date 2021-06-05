@@ -72,7 +72,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         exit_button.setOnClickListener(this);
 
         generateDataListHorizontal();
-        List<String> data = Arrays.asList("", "3 minutes", "5 minutes","");
+        List<String> data = Arrays.asList("","3 minutes", "");
         generateTimeDataList(data);
         infinite_blink = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.infinite_blink);
