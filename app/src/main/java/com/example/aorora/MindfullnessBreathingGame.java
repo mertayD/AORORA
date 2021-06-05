@@ -260,12 +260,13 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                 {
                     possible_points = 0;
                 }
-                Intent to_navigate = new Intent(mindfullness_breathing_game, MindfullnessBreathing.class);
                 if(breathing_music.isPlaying())
                 {
                     breathing_music.stop();
                 }
-                startActivity(to_navigate);
+                //kill activity with no pollen payout
+                //TODO: put a warning popup to close activity
+                finish();
             }
         });
     }
