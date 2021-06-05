@@ -149,8 +149,7 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         }
         else if(view_id == exit_button.getId())
         {
-            to_navigate = new Intent(mindfullnessBreathing, MindfullnessSelection.class);
-            startActivity(to_navigate);
+            finish();
         }
     }
 }

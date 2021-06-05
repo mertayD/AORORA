@@ -223,8 +223,6 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
                     int new_user_points = MainActivity.user_info.getUser_pollen() + pollen_payout;
                     Log.e("NEW USER POINTS ", new_user_points + " ");
 
-                    //TODO: Why are the network calls here instead of recieptpage? KISS and add a flat number of points when we reach that page.
-
                     MainActivity.user_info.setUser_pollen(new_user_points);
 
                     Intent to_navigate = new Intent(mindfullness_breathing_game, ReceiptPage.class);
@@ -280,7 +278,7 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         @Override
         public void onTick(long millisUntilFinished) {
             if(millisUntilFinished < 2000 ){
-                myVibrate.vibrate(350);
+                myVibrate.vibrate(VibrationEffect.createOneShot(350, VibrationEffect.DEFAULT_AMPLITUDE));
             }
             if(millisUntilFinished < 1000 ){
                 myVibrate.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
