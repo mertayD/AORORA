@@ -1,9 +1,12 @@
 package com.example.aorora;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.CountDownTimer;
@@ -14,6 +17,7 @@ import android.os.Vibrator;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -76,6 +80,8 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
 
         //TODO: for dev purposes remove
         tempBreathCount = 5;
+
+        tutorialPopUp();
 
         LottieAnimationView animationView = findViewById(R.id.animation_view);
         animationView.setSpeed(1f);
@@ -292,5 +298,26 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         public void onFinish() {
             desc_tv.setText("" + exhale_text);
         }
+    }
+
+    /**Tutorial pop-up that overlays the game's view*/
+    public void tutorialPopUp()
+    {
+        final AlertDialog myDialog = new AlertDialog.Builder(this).create();
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        //This allows us to use custom views instead of the basic AlertDialog
+        View dialogView = LayoutInflater.from(this)
+                .inflate(R.layout.custom_dialog_breathing_tutorial, null);
+
+        Button cont_button = dialogView.findViewById(R.id.continue_button);
+        cont_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+
+        myDialog.setView(dialogView);
+        myDialog.show();
     }
 }
