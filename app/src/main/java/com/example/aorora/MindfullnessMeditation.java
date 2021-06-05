@@ -206,7 +206,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         }
         else if(view_id == quest_button_bottombar.getId())
         {
-            to_navigate = new Intent(mindfulnessMeditation, MindfullnessSelection.class);
+            finish();
         }
         else if(view_id == home_button_bottombar.getId())
         {
