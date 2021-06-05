@@ -246,8 +246,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         }
         else if(view_id == exit_button.getId())
         {
-            to_navigate = new Intent(mindfulnessMeditation, MindfullnessSelection.class);
-            startActivity(to_navigate);
+            finish();
         }
     }
 }
