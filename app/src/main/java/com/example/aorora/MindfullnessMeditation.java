@@ -72,7 +72,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         exit_button.setOnClickListener(this);
 
         generateDataListHorizontal();
-        List<String> data = Arrays.asList("","3 minutes", "");
+        List<String> data = Arrays.asList("","90 seconds", "");
         generateTimeDataList(data);
         infinite_blink = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.infinite_blink);
@@ -224,10 +224,10 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
             boolean two_digit = false;
             int duration_int = 0;
             duration_string = String.valueOf(text_view.getText());
-            if(duration_string.equals("3 minutes"))
+            if(duration_string.equals("90 seconds"))
             {
                 //Desired duration to be sent to the game in ms.
-                duration_int = 180000;
+                duration_int = 90000;
             }
             else if(duration_string.equals("5 minutes"))
             {
