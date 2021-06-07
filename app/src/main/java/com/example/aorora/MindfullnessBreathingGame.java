@@ -338,6 +338,8 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
         super.onStop();
         breathing_music.stop();
 
+    }
+
     /**Tutorial pop-up that overlays the game's view*/
     public void tutorialPopUp()
     {
