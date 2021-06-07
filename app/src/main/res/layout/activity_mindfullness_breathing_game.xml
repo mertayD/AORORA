@@ -31,7 +31,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.022"
-        app:srcCompat="@drawable/exit_button_breathing" />
+        app:srcCompat="@drawable/exit_button_breathing"
+        android:visibility="gone"/>
+
 
     <TextView
         android:id="@+id/breath_count_tv"
@@ -68,7 +70,9 @@
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/butterfly_image_breathinggame" />
+        app:layout_constraintTop_toBottomOf="@+id/butterfly_image_breathinggame"
+        style="@style/inverse_text_views"/>
+
 
     <ImageView
         android:id="@+id/breathing_inhale_button"

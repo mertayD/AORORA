@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 
@@ -62,6 +63,9 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
     boolean performed_click;
     final Timer myTimer= new Timer(3000,100);
     int initial_game_count;
+    private long pressedTime;
+
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,14 +111,15 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
             //Changing default value from 1 to 2
             int text = getIntent().getIntExtra("TimerValue", 1);
 
-           //Disabling all breath options to dev temp count
+            //Disabling all breath options to dev temp count
+          
             if(text == 1)
             {
                 initial_game_count = text;
                 possible_points = tempBreathCount;
                 text = tempBreathCount;
             }
-           else if( text == 2)
+            else if( text == 2)
             {
                 initial_game_count = text;
                 possible_points = tempBreathCount;
@@ -299,6 +304,39 @@ public class MindfullnessBreathingGame extends AppCompatActivity {
             desc_tv.setText("" + exhale_text);
         }
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            //Allow us to leave the Activity as normal, but we need to stop the recording like the x button does.
+            if(breathing_music.isPlaying())
+            {
+                Log.e("MUSIC", " STOPPED");
+                breathing_music.stop();
+            }
+            myTimer.cancel();
+            super.onBackPressed();
+            finish();
+
+        } else {
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+        pressedTime = System.currentTimeMillis();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        breathing_music.stop();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        breathing_music.stop();
 
     /**Tutorial pop-up that overlays the game's view*/
     public void tutorialPopUp()

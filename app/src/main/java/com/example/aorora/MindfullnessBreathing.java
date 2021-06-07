@@ -53,10 +53,10 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         time_selection_recyler_view = (RecyclerView) findViewById(R.id.recycler_view_time_selection_breathing);
 
         //Removed "5 Breaths" and "15 Breaths" strings from array list for testing purposes
+
         List<String> data = Arrays.asList("", "5 Breaths" ,"");
         generateTimeDataList(data);
         time_selection_recyler_view.smoothScrollToPosition(3);
-
         home_button_bottombar.setOnClickListener(this);
         profile_button_bottombar.setOnClickListener(this);
         community_button_bottombar.setOnClickListener(this);

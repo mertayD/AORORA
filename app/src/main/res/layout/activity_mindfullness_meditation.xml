@@ -6,43 +6,146 @@
     android:background="@drawable/dusk_background"
     tools:context=".MindfullnessMeditation">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="31dp"
-        android:text="Meditation"
-        android:textColor="#FFFFFF"
-        android:textSize="10pt"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/alpha_channel_meditation_icon"
-        app:layout_constraintStart_toStartOf="@+id/alpha_channel_meditation_icon"
-        app:layout_constraintTop_toBottomOf="@+id/alpha_channel_meditation_icon" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="46dp"
-        android:gravity="center_horizontal"
-        android:text="Focus on the meditation audio \n to regain your calm mind"
-        android:textColor="#FFFFFF"
-        android:textSize="7pt"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/mindfulness_meditation"
+            style="@style/inverse_page_header_text_views"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_alignParentTop="true"
+            android:id="@+id/meditation_page_header"
+            />
 
-    <ImageButton
-        android:id="@+id/play_button_walking"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="#00000000"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.872"
-        app:srcCompat="@drawable/play_button" />
+        <ImageView
+            android:id="@+id/alpha_channel_meditation_icon"
+            android:layout_width="173dp"
+            android:layout_height="167dp"
+
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/meditation_page_header"
+
+            android:alpha="0.5"
+            android:scaleType="fitXY"
+
+            app:srcCompat="@drawable/mindfulness_meditation_alpha" />
+
+        <ImageView
+            android:id="@+id/imageView_meditation_mindfullness"
+            android:layout_width="133dp"
+            android:layout_height="128dp"
+
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/meditation_page_header"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+
+            android:scaleType="fitXY"
+
+            app:srcCompat="@drawable/mindfulness_meditation_button" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/survey_card_view_inverse"
+            android:layout_below="@id/alpha_channel_meditation_icon">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                >
+                <TextView
+                    android:id="@+id/textView3"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+
+                    android:layout_centerHorizontal="true"
+                    android:text="Focus on the meditation audio \n to regain your calm mind"
+
+                    style="@style/inverse_text_views"
+                    android:layout_below="@id/alpha_channel_meditation_icon"
+                    />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+
+                    android:text="Choose Time (in minutes)"
+                    android:layout_centerHorizontal="true"
+
+                    android:textColor="@android:color/white"
+                    android:textSize="8pt"
+                    android:layout_below="@id/textView3"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewTime"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+
+                    android:layout_below="@id/textView4"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:layout_marginStart="@dimen/activity_vertical_margin"
+                    android:layout_marginEnd="@dimen/activity_vertical_margin"
+                    />
+
+                <TextView
+                    android:id="@+id/theme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Choose Theme"
+
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+
+
+                    android:textColor="@android:color/white"
+                    android:textSize="8pt"
+
+                    android:layout_below="@id/recyclerViewTime"
+                    />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/horizontal_recycler_view_meditation"
+                    android:layout_width="match_parent"
+                    android:layout_height="88dp"
+
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:layout_marginStart="@dimen/activity_vertical_margin"
+                    android:layout_marginEnd="@dimen/activity_vertical_margin"
+
+                    android:layout_below="@id/theme"
+                    />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <ImageButton
+            android:id="@+id/play_button_walking"
+
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="48dp"
+            android:layout_centerHorizontal="true"
+
+            app:srcCompat="@drawable/play_button"  />
+    </RelativeLayout>
 
     <include
         android:id="@+id/include"
@@ -55,19 +158,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/alpha_channel_meditation_icon"
-        android:layout_width="173dp"
-        android:layout_height="167dp"
-        android:layout_marginTop="4dp"
-        android:alpha="0.5"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/mindfulness_meditation_alpha" />
+        android:visibility="gone"/>
+
 
     <ImageView
         android:id="@+id/imageView_meditation_mindfullness"
@@ -90,53 +183,6 @@
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/exit_button_breathing" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/horizontal_recycler_view_meditation"
-        android:layout_width="0dp"
-        android:layout_height="88dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/play_button_walking"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewTime"
-        app:layout_constraintVertical_bias="0.121" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewTime"
-        android:layout_width="0dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="108dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alpha_channel_meditation_icon" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose Time"
-        android:textColor="@android:color/white"
-        android:textSize="8pt"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerViewTime"
-        app:layout_constraintEnd_toEndOf="@+id/recyclerViewTime"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="@+id/recyclerViewTime" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose Theme"
-        android:textColor="@android:color/white"
-        android:textSize="8pt"
-        app:layout_constraintBottom_toTopOf="@+id/horizontal_recycler_view_meditation"
-        app:layout_constraintEnd_toEndOf="@+id/horizontal_recycler_view_meditation"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toStartOf="@+id/horizontal_recycler_view_meditation" />
+        app:srcCompat="@drawable/exit_button_breathing"
+        android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
