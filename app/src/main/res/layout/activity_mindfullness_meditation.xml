@@ -69,7 +69,6 @@
                     android:text="Focus on the meditation audio \n to regain your calm mind"
 
                     style="@style/inverse_text_views"
-                    android:layout_below="@id/alpha_channel_meditation_icon"
                     />
 
                 <TextView
@@ -160,18 +159,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         android:visibility="gone"/>
-
-
-    <ImageView
-        android:id="@+id/imageView_meditation_mindfullness"
-        android:layout_width="133dp"
-        android:layout_height="128dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@+id/alpha_channel_meditation_icon"
-        app:layout_constraintEnd_toEndOf="@+id/alpha_channel_meditation_icon"
-        app:layout_constraintStart_toStartOf="@+id/alpha_channel_meditation_icon"
-        app:layout_constraintTop_toTopOf="@+id/alpha_channel_meditation_icon"
-        app:srcCompat="@drawable/mindfulness_meditation_button" />
 
     <ImageButton
         android:id="@+id/exit_button_meditation"
