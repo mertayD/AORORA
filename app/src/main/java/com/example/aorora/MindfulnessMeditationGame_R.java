@@ -358,22 +358,9 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
             super(ms,countdownInterval);
             //remaining = ms;
         }
+
         @Override
-        public void onTick(long millisUntilFinished) {
-            /*
-            mins = (int) millisUntilFinished/60000;
-            mod_sec = millisUntilFinished % 60000;
-            sec = (int) mod_sec / 1000;
-            remaining = millisUntilFinished;
-            if(sec > 9) {
-                countDownTimer.setText(mins + ":" + sec);
-            }
-            else
-            {
-                countDownTimer.setText(mins + ":0" + sec);
-            }
-            */
-            //Log.e("ON TICK", "" + " TICK");
+        public void onTick(long l) {
         }
 
         @Override
@@ -392,19 +379,9 @@ public class MindfulnessMeditationGame_R extends AppCompatActivity implements Vi
             Log.d("EndGame pollen", "onFinish current userpollen: " + new_user_pollen);
             //Next communicate it to the backend via the appropriate NetworkCall function.
             NetworkCalls.updateUserCurrentPoints(user_info.getUser_id(), pollenPayout, MindfulnessMeditationGame_R.this);
-            //Comment out these incorrect/unimplemented calls as the server simply errors.
-           // NetworkCalls.updateDailyTaskM2(user_info.getUser_id(), 1, MindfulnessMeditationGame_R.this);
-            //NetworkCalls.createQuestReport(2, user_info.getUser_id(),MindfulnessMeditationGame_R.this);
             Log.e("ON FINISH", "" + " FINISH");
             startActivity(to_navigate);
         }
-/*
-        public long onPause()
-        {
-            this.cancel();
-            return remaining;
-        }
-        */
     }
 
     /**Tutorial pop-up that overlays the game's view*/

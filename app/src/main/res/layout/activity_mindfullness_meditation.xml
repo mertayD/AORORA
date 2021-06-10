@@ -146,20 +146,6 @@
             app:srcCompat="@drawable/play_button"  />
     </RelativeLayout>
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/bottom_menu_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"/>
-
     <ImageButton
         android:id="@+id/exit_button_meditation"
         android:layout_width="25dp"

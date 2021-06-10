@@ -31,15 +31,10 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
     ImageButton play_button;
     String duration_string;
     Context mindfulnessMeditation;
-    ImageButton home_button_bottombar;
-    ImageButton profile_button_bottombar;
-    ImageButton community_button_bottombar;
-    ImageButton quest_button_bottombar;
     ImageView alpha_channel_iv;
     TextView text_view;
     Boolean testMode;
     Animation infinite_blink;
-    ImageButton exit_button;
     RecyclerView recyclerView;
     RecyclerView recyclerViewTime;
     int game_theme;
@@ -54,22 +49,11 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
 
         mindfulnessMeditation = this;
         game_theme = 0;
-        home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);
-        profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
-        community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
-        quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
         play_button = (ImageButton) findViewById(R.id.play_button_walking);
         alpha_channel_iv = (ImageView) findViewById(R.id.alpha_channel_meditation_icon);
-        exit_button = (ImageButton) findViewById(R.id.exit_button_meditation);
-
         recyclerViewTime = findViewById(R.id.recyclerViewTime);
         recyclerView = findViewById(R.id.horizontal_recycler_view_meditation);
-        home_button_bottombar.setOnClickListener(this);
-        profile_button_bottombar.setOnClickListener(this);
-        community_button_bottombar.setOnClickListener(this);
-        quest_button_bottombar.setOnClickListener(this);
         play_button.setOnClickListener(this);
-        exit_button.setOnClickListener(this);
 
         generateDataListHorizontal();
       
@@ -81,6 +65,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
         alpha_channel_iv.startAnimation(infinite_blink);
         recyclerView.smoothScrollToPosition(3);
         recyclerViewTime.smoothScrollToPosition(3);
+
         //DEV MODE FLAG TO END THE ACTIVITY QUICKLY
         testMode = false;
 
@@ -201,27 +186,7 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
     {
         int view_id = v.getId();
         Intent to_navigate;
-        if(view_id == profile_button_bottombar.getId())
-        {
-            to_navigate = new Intent(mindfulnessMeditation, ProfilePage.class );
-            startActivity(to_navigate);
-        }
-        else if(view_id == quest_button_bottombar.getId())
-        {
-            finish();
-        }
-        else if(view_id == home_button_bottombar.getId())
-        {
-            to_navigate = new Intent(mindfulnessMeditation, HomeScreen.class);
-            startActivity(to_navigate);
-        }
-        else if(view_id == community_button_bottombar.getId())
-        {
-            Toast.makeText(this, "Community page is under maintenance.", Toast.LENGTH_SHORT).show();
-            //to_navigate = new Intent(bfDetailsPage, CommunityPage.class);
-            //startActivity(to_navigate);
-        }
-        else if(view_id == play_button.getId())
+        if(view_id == play_button.getId())
         {
             boolean two_digit = false;
             int duration_int = 0;
@@ -245,10 +210,6 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
             //to_navigate.putExtra("NavigatedFrom", -2);
             to_navigate.putExtra("Duration", duration_int);
             startActivity(to_navigate);
-        }
-        else if(view_id == exit_button.getId())
-        {
-            finish();
         }
     }
 }

@@ -28,13 +28,8 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
     ImageButton play_button;
     int timerCount;
     Context mindfullnessBreathing;
-    ImageButton home_button_bottombar;
-    ImageButton profile_button_bottombar;
-    ImageButton community_button_bottombar;
-    ImageButton quest_button_bottombar;
     ImageView alpha_channel_iv;
     Animation infinite_blink;
-    ImageButton exit_button;
     RecyclerView time_selection_recyler_view;
     com.example.aorora.adapter.HorizontalTimeAdapter horizontalTimeAdapter;
     @Override
@@ -43,13 +38,8 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_mindfullness_breathing);
         mindfullnessBreathing = this;
 
-        home_button_bottombar = (ImageButton) findViewById(R.id.home_button_bottom_bar);
-        profile_button_bottombar = (ImageButton) findViewById(R.id.profile_button_bottom_bar);
-        community_button_bottombar = (ImageButton) findViewById(R.id.community_button_bottom_bar);
-        quest_button_bottombar = (ImageButton) findViewById(R.id.quest_button_bottom_bar);
         play_button = (ImageButton) findViewById(R.id.play_button_walking);
         alpha_channel_iv = (ImageView) findViewById(R.id.alpha_channel_breathing_icon);
-        exit_button = (ImageButton) findViewById(R.id.exit_button_walking);
         time_selection_recyler_view = (RecyclerView) findViewById(R.id.recycler_view_time_selection_breathing);
 
         //Removed "5 Breaths" and "15 Breaths" strings from array list for testing purposes
@@ -57,12 +47,7 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         List<String> data = Arrays.asList("", "5 Breaths" ,"");
         generateTimeDataList(data);
         time_selection_recyler_view.smoothScrollToPosition(3);
-        home_button_bottombar.setOnClickListener(this);
-        profile_button_bottombar.setOnClickListener(this);
-        community_button_bottombar.setOnClickListener(this);
-        quest_button_bottombar.setOnClickListener(this);
         play_button.setOnClickListener(this);
-        exit_button.setOnClickListener(this);
 
         infinite_blink = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.infinite_blink);
@@ -120,36 +105,12 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         int view_id = v.getId();
         Intent to_navigate;
-        if(view_id == profile_button_bottombar.getId())
-        {
-            to_navigate = new Intent(mindfullnessBreathing, ProfilePage.class );
-            startActivity(to_navigate);
-        }
-        else if(view_id == quest_button_bottombar.getId())
-        {
-            to_navigate = new Intent(mindfullnessBreathing, MindfullnessSelection.class);
-        }
-        else if(view_id == home_button_bottombar.getId())
-        {
-            to_navigate = new Intent(mindfullnessBreathing, HomeScreen.class);
-            startActivity(to_navigate);
-        }
-        else if(view_id == community_button_bottombar.getId())
-        {
-            Toast.makeText(this, "Community page is under maintenance.", Toast.LENGTH_SHORT).show();
-            //to_navigate = new Intent(bfDetailsPage, CommunityPage.class);
-            //startActivity(to_navigate);
-        }
-        else if(view_id == play_button.getId())
+        if(view_id == play_button.getId())
         {
             to_navigate = new Intent(mindfullnessBreathing, MindfullnessBreathingGame.class);
             to_navigate.putExtra("TimerValue", timerCount);
             //to_navigate.putExtra("NavigatedFrom", -1);
             startActivity(to_navigate);
-        }
-        else if(view_id == exit_button.getId())
-        {
-            finish();
         }
     }
 }

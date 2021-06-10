@@ -1,7 +1,6 @@
 package com.example.aorora.ui;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +14,8 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.aorora.AtriumScreen;
-import com.example.aorora.ButterflyCollectionPage;
 import com.example.aorora.MainActivity;
 import com.example.aorora.R;
-import com.example.aorora.model.UserAuth;
-import com.example.aorora.network.NetworkCalls;
 
 
 public class ProfileFragment extends Fragment {
