@@ -26,7 +26,7 @@ import java.util.List;
 public class MindfullnessBreathing extends AppCompatActivity implements View.OnClickListener {
 
     ImageButton play_button;
-    int timerCount;
+    int timerCount = 1;
     Context mindfullnessBreathing;
     ImageView alpha_channel_iv;
     Animation infinite_blink;
@@ -40,13 +40,13 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
 
         play_button = (ImageButton) findViewById(R.id.play_button_walking);
         alpha_channel_iv = (ImageView) findViewById(R.id.alpha_channel_breathing_icon);
-        time_selection_recyler_view = (RecyclerView) findViewById(R.id.recycler_view_time_selection_breathing);
 
+        //TODO: implement different breath counts again
         //Removed "5 Breaths" and "15 Breaths" strings from array list for testing purposes
+        //List<String> data = Arrays.asList("", "5 Breaths" ,"");
+        //generateTimeDataList(data);
+        //time_selection_recyler_view.smoothScrollToPosition(3);
 
-        List<String> data = Arrays.asList("", "5 Breaths" ,"");
-        generateTimeDataList(data);
-        time_selection_recyler_view.smoothScrollToPosition(3);
         play_button.setOnClickListener(this);
 
         infinite_blink = AnimationUtils.loadAnimation(getApplicationContext(),
