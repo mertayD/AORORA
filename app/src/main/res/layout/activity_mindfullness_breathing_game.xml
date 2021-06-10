@@ -39,7 +39,7 @@
         android:id="@+id/breath_count_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:text="BreathCount"
         android:textColor="#FFFFFF"
         android:textSize="10pt"
@@ -62,16 +62,16 @@
 
     <TextView
         android:id="@+id/desc_to_breathinggame_tv"
+        style="@style/inverse_text_views"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="32dp"
         android:gravity="center_horizontal"
         android:text="Press and hold as \n you breathe in"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/butterfly_image_breathinggame"
-        style="@style/inverse_text_views"/>
+        app:layout_constraintTop_toBottomOf="@+id/butterfly_image_breathinggame" />
 
 
     <ImageView

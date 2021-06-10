@@ -7,84 +7,75 @@
     tools:context=".MindfullnessBreathing"
     android:background="@drawable/dusk_background">
 
-    <RelativeLayout
+
+    <TextView
+        android:id="@+id/breathing_page_header"
+        style="@style/inverse_page_header_text_views"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content"
+        android:text="@string/mindfulness_breathing"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/mindfulness_breathing"
-            style="@style/inverse_page_header_text_views"
-            android:textAlignment="center"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/breathing_page_header"
-            />
+    <ImageView
+        android:id="@+id/imageView_meditation_mindfullness"
 
-        <ImageView
-            android:id="@+id/imageView_meditation_mindfullness"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@id/breathing_page_header"
 
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:scaleType="fitXY"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
 
-            android:layout_below="@id/breathing_page_header"
-            android:layout_centerHorizontal="true"
-
-            app:srcCompat="@drawable/breathing_button" />
-
-        <ImageView
-            android:id="@+id/alpha_channel_breathing_icon"
-
-            android:layout_width="250dp"
-            android:layout_height="260dp"
-
-            android:layout_centerHorizontal="true"
-
-            android:alpha="0.5"
-            android:scaleType="fitXY"
-
-            app:srcCompat="@drawable/breathing_button" />
+        app:layout_constraintBottom_toBottomOf="@+id/alpha_channel_breathing_icon"
+        app:layout_constraintEnd_toEndOf="@+id/alpha_channel_breathing_icon"
+        app:layout_constraintStart_toStartOf="@+id/alpha_channel_breathing_icon"
+        app:layout_constraintTop_toTopOf="@+id/alpha_channel_breathing_icon"
+        app:srcCompat="@drawable/breathing_button" />
 
 
+    <ImageView
+        android:id="@+id/alpha_channel_breathing_icon"
+
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+
+        android:layout_centerHorizontal="true"
+
+        android:alpha="0.5"
+        android:scaleType="centerCrop"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/breathing_page_header"
+        app:srcCompat="@drawable/breathing_button" />
 
 
     <androidx.cardview.widget.CardView
+        style="@style/survey_card_view_inverse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/survey_card_view_inverse"
-        android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"
-
         android:layout_below="@id/alpha_channel_breathing_icon"
-        >
+
+        android:layout_centerHorizontal="true"
+        app:layout_constraintBottom_toTopOf="@+id/play_button_walking"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_meditation_mindfullness"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/textView3"
 
+            style="@style/inverse_text_views"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_vertical_margin"
-            android:text="INSTRUCTIONS:\n\nFocus on your breath to regain your calm\n\nLet's exercise 5 Breaths\n\nPress the icon below to start\n\nHold the button when you breathe in \nRelease the icon when you breathe out"
-            style="@style/inverse_text_views" />
+            android:text="INSTRUCTIONS:\n\nFocus on your breath to regain your calm\n\nLet's exercise 5 Breaths\n\nPress the icon below to start\n\nHold the button when you breathe in \nRelease the icon when you breathe out" />
     </androidx.cardview.widget.CardView>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_time_selection_breathing"
-        android:layout_width="340dp"
-        android:layout_height="59dp"
-
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-
-        android:layout_below="@id/textView3"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"
-        />
 
     <ImageButton
         android:id="@+id/play_button_walking"
@@ -92,28 +83,17 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
 
-        android:background="#00000000"
-        android:scaleType="fitCenter"
-
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="48dp"
         android:layout_centerHorizontal="true"
 
+        android:layout_marginBottom="16dp"
+        android:background="#00000000"
+
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/play_button" />
 
-    <ImageButton
-        android:id="@+id/exit_button_walking"
-        android:layout_width="25dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="#00000000"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/exit_button_breathing"
-        android:visibility="gone"/>
 
-
-    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
