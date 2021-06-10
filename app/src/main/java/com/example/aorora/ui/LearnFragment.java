@@ -54,50 +54,11 @@ public class LearnFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-// -------------------------------------------------------------------------------------------------
         mindfulness_breathing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toNavigate = new Intent(getContext(), MindfullnessBreathing.class);
                 startActivity(toNavigate);
-//                //Uncomment the below code to Set the message and title from the strings.xml file
-//                builder.setMessage("You are going to spend 10 pollen to catch some butterflies.\n\nPress ok to continue")
-//                        .setTitle("Catch Butterflies")
-//                        .setCancelable(false)
-//                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-////
-//                                Toast.makeText(getContext(),"Ok",Toast.LENGTH_SHORT).show();
-//
-//                                if (!hasEnoughPollen()) {
-//                                    Toast.makeText(getContext(), "Sorry! Not enough pollen! Complete some quests!", Toast.LENGTH_SHORT).show();
-//                                    return;
-//                                }
-//                                //Otherwise, we have enough pollen, decrement it and update the backend.
-//                                userPollen -= 10;
-//                                //Finally do the PUT request with the new pollen value. May need to refresh the UI.
-//                                MainActivity.user_info.setUser_pollen(userPollen);
-//                                //This will update the backend and set the current pollen to our decremented value.
-//                                NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), userPollen, getContext());
-//
-//                                //intent to butterfly game
-//                                startActivity(new Intent(getContext(), ButterflyGameActivity.class));
-//                            }
-//                        })
-//                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog, int id) {
-//                                        //  Action for 'NO' Button
-//                                        dialog.cancel();
-//                                        Toast.makeText(getContext(), "Cancel", Toast.LENGTH_SHORT).show();
-//                                    }
-//
-//                                    ;
-//                                });
-//                //Creating dialog box
-//                AlertDialog alert = builder.create();
-//                //Setting the title manually
-////                alert.setTitle("AlertDialogExample");
-//                alert.show();
             }
         });
 
@@ -108,50 +69,12 @@ public class LearnFragment extends Fragment {
                 return true;
             }
         });
-// -------------------------------------------------------------------------------------------------
+
         mindfulness_meditation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toNavigate = new Intent(getContext(), MindfullnessMeditation.class);
                 startActivity(toNavigate);
-//                //Uncomment the below code to Set the message and title from the strings.xml file
-//                builder.setMessage("You are going to spend 10 pollen to catch some butterflies.\n\nPress ok to continue")
-//                        .setTitle("Catch Butterflies")
-//                        .setCancelable(false)
-//                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-////
-//                                Toast.makeText(getContext(),"Ok",Toast.LENGTH_SHORT).show();
-//
-//                                if (!hasEnoughPollen()) {
-//                                    Toast.makeText(getContext(), "Sorry! Not enough pollen! Complete some quests!", Toast.LENGTH_SHORT).show();
-//                                    return;
-//                                }
-//                                //Otherwise, we have enough pollen, decrement it and update the backend.
-//                                userPollen -= 10;
-//                                //Finally do the PUT request with the new pollen value. May need to refresh the UI.
-//                                MainActivity.user_info.setUser_pollen(userPollen);
-//                                //This will update the backend and set the current pollen to our decremented value.
-//                                NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), userPollen, getContext());
-//
-//                                //intent to butterfly game
-//                                startActivity(new Intent(getContext(), ButterflyGameActivity.class));
-//                            }
-//                        })
-//                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog, int id) {
-//                                        //  Action for 'NO' Button
-//                                        dialog.cancel();
-//                                        Toast.makeText(getContext(), "Cancel", Toast.LENGTH_SHORT).show();
-//                                    }
-//
-//                                    ;
-//                                });
-//                //Creating dialog box
-//                AlertDialog alert = builder.create();
-//                //Setting the title manually
-////                alert.setTitle("AlertDialogExample");
-//                alert.show();
             }
         });
 
@@ -162,50 +85,12 @@ public class LearnFragment extends Fragment {
                 return true;
             }
         });
-// -------------------------------------------------------------------------------------------------
+
         mindfulness_walking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toNavigate = new Intent(getContext(), MindfullnessWalking.class);
                 startActivity(toNavigate);
-//                //Uncomment the below code to Set the message and title from the strings.xml file
-//                builder.setMessage("You are going to spend 10 pollen to catch some butterflies.\n\nPress ok to continue")
-//                        .setTitle("Catch Butterflies")
-//                        .setCancelable(false)
-//                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-////
-//                                Toast.makeText(getContext(),"Ok",Toast.LENGTH_SHORT).show();
-//
-//                                if (!hasEnoughPollen()) {
-//                                    Toast.makeText(getContext(), "Sorry! Not enough pollen! Complete some quests!", Toast.LENGTH_SHORT).show();
-//                                    return;
-//                                }
-//                                //Otherwise, we have enough pollen, decrement it and update the backend.
-//                                userPollen -= 10;
-//                                //Finally do the PUT request with the new pollen value. May need to refresh the UI.
-//                                MainActivity.user_info.setUser_pollen(userPollen);
-//                                //This will update the backend and set the current pollen to our decremented value.
-//                                NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), userPollen, getContext());
-//
-//                                //intent to butterfly game
-//                                startActivity(new Intent(getContext(), ButterflyGameActivity.class));
-//                            }
-//                        })
-//                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog, int id) {
-//                                        //  Action for 'NO' Button
-//                                        dialog.cancel();
-//                                        Toast.makeText(getContext(), "Cancel", Toast.LENGTH_SHORT).show();
-//                                    }
-//
-//                                    ;
-//                                });
-//                //Creating dialog box
-//                AlertDialog alert = builder.create();
-//                //Setting the title manually
-////                alert.setTitle("AlertDialogExample");
-//                alert.show();
             }
         });
 
@@ -227,7 +112,6 @@ public class LearnFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-//        NetworkCalls.getUserInfo(MainActivity.user_info.getUser_id(), getContext());
     }
 
 }

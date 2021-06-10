@@ -64,7 +64,7 @@ public class PracticeFragment extends Fragment {
                 Intent toNavigate = new Intent(getContext(), ARScreen.class);
                 startActivity(toNavigate);
 
-//                //Uncomment the below code to Set the message and title from the strings.xml file
+//                //TODO: Uncomment the below code to Set the message and title from the strings.xml file
 //                builder.setMessage("You are going to spend 10 pollen to catch some butterflies.\n\nPress ok to continue")
 //                        .setTitle("Catch Butterflies")
 //                        .setCancelable(false)

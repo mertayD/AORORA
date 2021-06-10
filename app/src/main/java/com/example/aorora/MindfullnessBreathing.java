@@ -109,7 +109,6 @@ public class MindfullnessBreathing extends AppCompatActivity implements View.OnC
         {
             to_navigate = new Intent(mindfullnessBreathing, MindfullnessBreathingGame.class);
             to_navigate.putExtra("TimerValue", timerCount);
-            //to_navigate.putExtra("NavigatedFrom", -1);
             startActivity(to_navigate);
         }
     }

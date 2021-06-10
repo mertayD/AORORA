@@ -169,7 +169,6 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
                 double halfWidth = viewHolder.itemView.getWidth() * .5;
                 double rightSide = x + halfWidth;
                 double leftSide = x - halfWidth;
-                //double halfScreen = recyclerViewTime.getWidth() * .5;
                 double halfScreen = 400;
                 boolean isInMiddle =  leftSide < halfScreen && halfScreen < rightSide;
                 if(isInMiddle)
@@ -207,7 +206,6 @@ public class MindfullnessMeditation extends AppCompatActivity implements View.On
 
             to_navigate = new Intent(mindfulnessMeditation, MindfulnessMeditationGame_R.class);
             to_navigate.putExtra("Theme",game_theme);
-            //to_navigate.putExtra("NavigatedFrom", -2);
             to_navigate.putExtra("Duration", duration_int);
             startActivity(to_navigate);
         }
