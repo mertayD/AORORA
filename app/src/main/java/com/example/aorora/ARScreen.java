@@ -67,10 +67,10 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener,
     private FusedLocationProviderClient fusedLocationClient;
     //Coordinate list we defined
     Context arScreen;
-    ImageButton home_button_bottombar;
-    ImageButton profile_button_bottombar;
-    ImageButton community_button_bottombar;
-    ImageButton quest_button_bottombar;
+//    ImageButton home_button_bottombar;
+//    ImageButton profile_button_bottombar;
+//    ImageButton community_button_bottombar;
+//    ImageButton quest_button_bottombar;
     Button spendPollenBtn;
     Button coordsBtn;
     Location currentLocation;
@@ -105,10 +105,10 @@ public class ARScreen extends AppCompatActivity implements View.OnClickListener,
 
 
         //Onclicklisteners for this class.
-        home_button_bottombar.setOnClickListener(this);
-        profile_button_bottombar.setOnClickListener(this);
-        community_button_bottombar.setOnClickListener(this);
-        quest_button_bottombar.setOnClickListener(this);
+//        home_button_bottombar.setOnClickListener(this);
+//        profile_button_bottombar.setOnClickListener(this);
+//        community_button_bottombar.setOnClickListener(this);
+//        quest_button_bottombar.setOnClickListener(this);
 
         //This onClickListener will spend pollen if the user has at least 10 of it.
         spendPollenBtn.setOnClickListener(new View.OnClickListener() {

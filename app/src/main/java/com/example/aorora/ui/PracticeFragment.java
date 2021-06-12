@@ -25,7 +25,7 @@ import com.example.aorora.ARScreen.*;
 
 public class PracticeFragment extends Fragment {
 
-    CardView catch_butterfly;
+    CardView catch_butterfly, superfly;
     AlertDialog.Builder builder;
     Integer userPollen;
 
@@ -46,7 +46,9 @@ public class PracticeFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_practice, container, false);
         catch_butterfly = (CardView) rootView.findViewById(R.id.catch_butterfly);
-        builder = new AlertDialog.Builder(getContext());
+        superfly = (CardView) rootView.findViewById(R.id.superfly);
+
+//        builder = new AlertDialog.Builder(getContext());
         return rootView;
     }
 
@@ -109,6 +111,23 @@ public class PracticeFragment extends Fragment {
             @Override
             public boolean onLongClick(View v) {
                 android.widget.Toast.makeText(getContext(), "Play this game to catch more butterflies", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        superfly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent toNavigate = new Intent(getContext(), ARScreen.class);
+//                startActivity(toNavigate);
+                android.widget.Toast.makeText(getContext(), "Game under development", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        superfly.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                android.widget.Toast.makeText(getContext(), "Create super butterflies", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
