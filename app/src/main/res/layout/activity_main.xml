@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/dusk_background"
     >
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -69,14 +68,15 @@
 
     <TextView
         android:id="@+id/app_name"
+
         android:layout_below="@id/logo_butterfly"
         android:layout_centerHorizontal="true"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="28sp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:text="@string/arora" />
+
+        android:text="@string/arora"
+        style="@style/inverse_page_header_text_views"/>
 
 
 </RelativeLayout>

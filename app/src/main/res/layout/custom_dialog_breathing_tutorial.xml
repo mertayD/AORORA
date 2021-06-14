@@ -39,10 +39,12 @@
         android:id="@+id/continue_button"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/common_google_signin_btn_text_light_pressed"
-        android:backgroundTint="#000000"
+
+        android:layout_marginTop="30dp"
+
         android:text="continue"
+        style="@style/buttons"
+
         android:textColor="@color/colorWhite" />
 
 </LinearLayout>

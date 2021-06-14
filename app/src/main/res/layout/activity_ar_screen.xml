@@ -37,7 +37,7 @@
 
     <Button
         android:id="@+id/spend_pollen_btn"
-        android:layout_width="wrap_constent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start"
         app:layout_constraintBottom_toBottomOf="parent"

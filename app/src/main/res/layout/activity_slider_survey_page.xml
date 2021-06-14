@@ -10,8 +10,6 @@
 
 
     tools:context=".slider_survey_page"
-    android:background="@drawable/dusk_background"
-
     >
 
 

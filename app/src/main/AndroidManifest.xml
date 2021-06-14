@@ -17,7 +17,7 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity android:name=".mMainActivity"></activity>
         <activity android:name=".slider_survey_page" android:noHistory="true"/>
@@ -43,7 +43,8 @@
         <activity android:name=".AtriumScreen" />
         <activity android:name=".MainActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"
-            android:noHistory="true">
+            android:noHistory="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
