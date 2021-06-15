@@ -18,8 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".mMainActivity"></activity>
+        android:usesCleartextTraffic="true"
+        >
+        <activity android:name=".mMainActivity"/>
         <activity android:name=".slider_survey_page" android:noHistory="true"/>
         <activity android:name=".SuperflyInvites" />
         <activity android:name=".SuperflyLobby" />

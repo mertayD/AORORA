@@ -63,9 +63,9 @@ public class PracticeFragment extends Fragment {
         catch_butterfly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toNavigate = new Intent(getContext(), ARScreen.class);
-                startActivity(toNavigate);
-
+//                Intent toNavigate = new Intent(getContext(), ARScreen.class);
+//                startActivity(toNavigate);
+                android.widget.Toast.makeText(getContext(), "Game under development", Toast.LENGTH_SHORT).show();
 //                //TODO: Uncomment the below code to Set the message and title from the strings.xml file
 //                builder.setMessage("You are going to spend 10 pollen to catch some butterflies.\n\nPress ok to continue")
 //                        .setTitle("Catch Butterflies")
