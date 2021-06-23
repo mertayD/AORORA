@@ -25,6 +25,8 @@ import com.example.aorora.ARScreen.*;
 
 public class PracticeFragment extends Fragment {
 
+    final int TEN_POLLEN = 10;
+
     CardView catch_butterfly, superfly;
     AlertDialog.Builder builder;
     Integer userPollen;
@@ -48,7 +50,7 @@ public class PracticeFragment extends Fragment {
         catch_butterfly = (CardView) rootView.findViewById(R.id.catch_butterfly);
         superfly = (CardView) rootView.findViewById(R.id.superfly);
 
-//        builder = new AlertDialog.Builder(getContext());
+        builder = new AlertDialog.Builder(getContext());
         return rootView;
     }
 
@@ -63,47 +65,38 @@ public class PracticeFragment extends Fragment {
         catch_butterfly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                userPollen = MainActivity.user_info.getUser_pollen();
+
+                //check if user has enough pollen to spend. if not send toast message
+                if (!hasEnoughPollen(TEN_POLLEN)) {
+                    Toast.makeText(getContext(), "\"Sorry! Not enough pollen! Complete some quests!\"", Toast.LENGTH_SHORT).show();
+                } else {
+                    //display pollen spend confirmation
+                    builder
+                            .setMessage("Spend 10 pollen to Play?")
+                            .setIcon(R.drawable.orange_butterfly_image)
+                            .setPositiveButton("10 Pollen", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //we have enough pollen, decrement it and update the backend.
+                                    userPollen -= 10;
+                                    //Finally do the PUT request with the new pollen value. May need to refresh the UI.
+                                    MainActivity.user_info.setUser_pollen(userPollen);
+                                    //This will update the backend and set the current pollen to our decremented value.
+                                    NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), userPollen, getContext());
+
+                                    //intent to butterfly game
+                                    startActivity(new Intent(getContext(), ButterflyGameActivity.class));
+
+                                }
+                            })
+                            .setNegativeButton("Cancel", null)
+                            .show();
+                }
+
 //                Intent toNavigate = new Intent(getContext(), ARScreen.class);
 //                startActivity(toNavigate);
-                android.widget.Toast.makeText(getContext(), "Game under development", Toast.LENGTH_SHORT).show();
-//                //TODO: Uncomment the below code to Set the message and title from the strings.xml file
-//                builder.setMessage("You are going to spend 10 pollen to catch some butterflies.\n\nPress ok to continue")
-//                        .setTitle("Catch Butterflies")
-//                        .setCancelable(false)
-//                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-////
-//                                Toast.makeText(getContext(),"Ok",Toast.LENGTH_SHORT).show();
-//
-//                                if (!hasEnoughPollen()) {
-//                                    Toast.makeText(getContext(), "Sorry! Not enough pollen! Complete some quests!", Toast.LENGTH_SHORT).show();
-//                                    return;
-//                                }
-//                                //Otherwise, we have enough pollen, decrement it and update the backend.
-//                                userPollen -= 10;
-//                                //Finally do the PUT request with the new pollen value. May need to refresh the UI.
-//                                MainActivity.user_info.setUser_pollen(userPollen);
-//                                //This will update the backend and set the current pollen to our decremented value.
-//                                NetworkCalls.updateUserCurrentPoints(MainActivity.user_info.getUser_id(), userPollen, getContext());
-//
-//                                //intent to butterfly game
-//                                startActivity(new Intent(getContext(), ButterflyGameActivity.class));
-//                            }
-//                        })
-//                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog, int id) {
-//                                        //  Action for 'NO' Button
-//                                        dialog.cancel();
-//                                        Toast.makeText(getContext(), "Cancel", Toast.LENGTH_SHORT).show();
-//                                    }
-//
-//                                    ;
-//                                });
-//                //Creating dialog box
-//                AlertDialog alert = builder.create();
-//                //Setting the title manually
-////                alert.setTitle("AlertDialogExample");
-//                alert.show();
+               //android.widget.Toast.makeText(getContext(), "Game under development", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -141,11 +134,10 @@ public class PracticeFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-//        NetworkCalls.getUserInfo(MainActivity.user_info.getUser_id(), getContext());
     }
 
     //Check called before launching the game.
-    public boolean hasEnoughPollen() {
-        return userPollen >= 10;
+    public boolean hasEnoughPollen(int requiredPollenCount) {
+        return userPollen >= requiredPollenCount;
     }
 }
