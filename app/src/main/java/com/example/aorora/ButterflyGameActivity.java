@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Parcelable;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -190,8 +191,8 @@ public class ButterflyGameActivity extends AppCompatActivity {
         Random seed = new Random();
 
         int typeID = seed.nextInt(Butterfly.Type.getCount());
-        int x = seed.nextInt(720);
-        int y = seed.nextInt(1000);
+        float x = seed.nextFloat();
+        float y = seed.nextFloat();
         createButterfly(Butterfly.Type.valueOf(typeID), x, y);
     }
 
@@ -201,11 +202,11 @@ public class ButterflyGameActivity extends AppCompatActivity {
      * to the butterfly.
      *
      * @param type Butterfly.Type that will define the type of butterfly.
-     * @param x    coordinate for butterfly to be added to layout at
-     * @param y    coordinate for butterfly to be added to layout at
+     * @param h_bias horizontal bias for layout position (x coordinate)
+     * @param v_bias vertical bias for layout position (y coordinate)
      * @return a reference to the butterfly added to layout.
      */
-    private Butterfly createButterfly(Butterfly.Type type, float x, float y) {
+    private Butterfly createButterfly(Butterfly.Type type, float v_bias, float h_bias) {
 
         Butterfly mButterfly = new Butterfly(this, type);
 
@@ -213,6 +214,12 @@ public class ButterflyGameActivity extends AppCompatActivity {
         ConstraintLayout.LayoutParams newParams = new ConstraintLayout.LayoutParams(
                 ConstraintLayout.LayoutParams.WRAP_CONTENT,
                 ConstraintLayout.LayoutParams.WRAP_CONTENT);
+
+        //constraining layout to view
+        newParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+        newParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
+        newParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+        newParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
 
         //width = 120dp
         float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 120,
@@ -225,8 +232,8 @@ public class ButterflyGameActivity extends AppCompatActivity {
         newParams.height = (int) height;
 
         //set view coordinates
-        mButterfly.setX(x);
-        mButterfly.setY(y);
+        newParams.verticalBias = v_bias;
+        newParams.horizontalBias = h_bias;
 
         layout.addView(mButterfly, newParams);
         mButterfly.spawnAnimation();
@@ -234,7 +241,6 @@ public class ButterflyGameActivity extends AppCompatActivity {
         //add listener to view assuming basket exists already
         mButterfly.setOnTouchListener(new ButterflyBasketOnDragListener(mButterfly, basket));
 
-        //FIXME: be able to get width and height of parent view without bugs
         mButterfly.animateToRandomPoints(720, 1472);
 
         return mButterfly;
@@ -260,8 +266,7 @@ public class ButterflyGameActivity extends AppCompatActivity {
         mIntent.putExtra("CaughtButterflies", 1);
         mIntent.putExtra("map", new MapWrapper(basket.basketContents));
 
-
-        startActivity(mIntent); //FIXME: left off here
+        startActivity(mIntent);
         finish();
     }
 

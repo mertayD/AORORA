@@ -218,7 +218,7 @@ public class Butterfly extends androidx.appcompat.widget.AppCompatImageView {
         this.animate()
                 .scaleX(0.02f)
                 .scaleY(0.02f)
-                .setDuration(100)
+                .setDuration(80)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(android.animation.Animator animation) {
