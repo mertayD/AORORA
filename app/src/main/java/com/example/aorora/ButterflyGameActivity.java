@@ -10,6 +10,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Parcelable;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -34,8 +35,10 @@ import com.example.aorora.butterflyGame.Basket;
 import com.example.aorora.butterflyGame.Butterfly;
 import com.example.aorora.butterflyGame.ButterflyBasketOnDragListener;
 import com.example.aorora.network.NetworkCalls;
+import com.example.aorora.utils.MapWrapper;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.io.Serializable;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
@@ -100,8 +103,6 @@ public class ButterflyGameActivity extends AppCompatActivity {
      */
     private long timeLeftInMilliseconds = MAX_TIMER_MILLISECONDS;
 
-    private CountDownTimer gameTimer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,6 +136,7 @@ public class ButterflyGameActivity extends AppCompatActivity {
                         ActivityCompat.requestPermissions((Activity) mContext, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
                     }
                 } else {
+                    layout.setBackground(getDrawable(R.drawable.butterfly_catching_bg));
                     mPreviewView.setVisibility(View.INVISIBLE);
                 }
             }
@@ -149,7 +151,7 @@ public class ButterflyGameActivity extends AppCompatActivity {
         Random seed = new Random();
 
         //GAME LIFECYCLE
-        gameTimer = new CountDownTimer(timeLeftInMilliseconds, 1000) {
+        new CountDownTimer(timeLeftInMilliseconds, 1000) {
             @Override
             public void onTick(long l) {
 
@@ -218,7 +220,7 @@ public class ButterflyGameActivity extends AppCompatActivity {
         newParams.width = (int) width;
 
         //height = 86dp
-        float height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 86,
+        float height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90,
                 this.getResources().getDisplayMetrics());
         newParams.height = (int) height;
 
@@ -245,6 +247,7 @@ public class ButterflyGameActivity extends AppCompatActivity {
      * TODO: instead of going to atrium screen have a fragment pop up instead.
      */
     private void endOfGameActions() {
+        Intent mIntent = new Intent(mContext, AtriumScreen.class);
 
         // update user info table local
         MainActivity.user_info.update_local_atrium(basket.basketContents);
@@ -254,7 +257,11 @@ public class ButterflyGameActivity extends AppCompatActivity {
                 basket.basketContents, getApplicationContext());
 
         // implement atrium screen code
-        startActivity(new Intent(mContext, AtriumScreen.class));
+        mIntent.putExtra("CaughtButterflies", 1);
+        mIntent.putExtra("map", new MapWrapper(basket.basketContents));
+
+
+        startActivity(mIntent); //FIXME: left off here
         finish();
     }
 
@@ -278,6 +285,7 @@ public class ButterflyGameActivity extends AppCompatActivity {
             }
         }, ContextCompat.getMainExecutor(this));
 
+        layout.setBackgroundColor(getResources().getColor(R.color.black, this.getTheme()));
         cameraInitFlag = true;
     }
 

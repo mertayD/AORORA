@@ -6,29 +6,13 @@
     android:layout_height="match_parent"
     android:background="@drawable/atrium_background">
 
-
-    <ImageButton
-        android:id="@+id/back_button_atrium"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_weight="1"
-        android:background="#00000000"
-        android:scaleType="fitCenter"
-        android:src="@drawable/back_button"
-        app:layout_constraintBottom_toBottomOf="@+id/textView13"
-        app:layout_constraintEnd_toStartOf="@+id/textView13"
-        app:layout_constraintHorizontal_bias="0.118"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView13"
-        android:visibility="gone"/>
-
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/title"
+        style="@style/inverse_page_header_text_views"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Atrium"
-        style="@style/inverse_page_header_text_views"
-        app:layout_constraintBottom_toTopOf="@+id/include"
+        android:layout_marginTop="24dp"
+        android:text=" Your Atrium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,26 +21,34 @@
 
     <Button
         android:id="@+id/add_button"
-        android:layout_width="85dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="12dp"
-        android:text="Add butterflies"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="7dp"
+        android:layout_width="176dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="8dp"
+        android:text="Add to Atrium"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/recycler_card_view"
+        app:cornerRadius="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.907"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintTop_toBottomOf="@+id/recycler_card_view"
+        app:layout_constraintVertical_bias="0.051" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/recycler_card_view"
+        style="@style/survey_card_view_inverse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/survey_card_view_inverse"
-        android:id="@+id/recycler_card_view"
-        app:layout_constraintTop_toBottomOf="@+id/textView13">
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/atriumRecycler"
@@ -69,7 +61,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textView13"
             app:layout_constraintVertical_bias="0.236" />
     </androidx.cardview.widget.CardView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

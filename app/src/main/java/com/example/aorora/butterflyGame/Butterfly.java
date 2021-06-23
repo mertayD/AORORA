@@ -50,9 +50,9 @@ public class Butterfly extends androidx.appcompat.widget.AppCompatImageView {
         GREEN(
                 "user_b3_count",
                 new int[]{
-                        R.drawable.violet_1,
-                        R.drawable.violet_2,
-                        R.drawable.violet_3,
+                        R.drawable.green_1,
+                        R.drawable.green_2,
+                        R.drawable.green_3,
 
                 },
                 3),
@@ -69,7 +69,8 @@ public class Butterfly extends androidx.appcompat.widget.AppCompatImageView {
         private int imageResource;
         final int id;
 
-        final static Map<Integer, Butterfly.Type> map = new HashMap<>();
+        final static Map<Integer, Butterfly.Type> idMap = new HashMap<>();
+        final static Map<String, Butterfly.Type> dbMap = new HashMap<>();
 
         private Type(String dbField, int[] imageResources, int id)
         {
@@ -81,13 +82,19 @@ public class Butterfly extends androidx.appcompat.widget.AppCompatImageView {
         static {
             for (Type type : Butterfly.Type.values())
             {
-                map.put(type.id, type);
+                idMap.put(type.id, type);
+                dbMap.put(type.dbField, type);
             }
         }
 
         public static Type valueOf(int typeID)
         {
-            return (Type) map.get(typeID);
+            return (Type) idMap.get(typeID);
+        }
+
+        public static Type dbValueOf(String dbField)
+        {
+            return (Type) dbMap.get(dbField);
         }
 
         public static int getCount()

@@ -17,16 +17,21 @@ import android.widget.TextView;
 
 import com.example.aorora.AtriumDetail;
 import com.example.aorora.R;
+import com.example.aorora.butterflyGame.Butterfly;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class AtriumAdapter extends RecyclerView.Adapter<AtriumAdapter.AtriumViewHolder> {
     Context context;
-    int imgs[];
-    int counts[];
+    LinkedHashMap<String, Integer> atrium;
+    ArrayList<String> keyList;
 
     //This will take in the names, descs, and images to be held in our recyclerview.
-    public AtriumAdapter(Context ct, int inImg[], int inCounts[]){
-        imgs = inImg;
-        counts = inCounts;
+    public AtriumAdapter(Context ct, LinkedHashMap<String, Integer>atrium){
+        this.atrium = atrium;
+        keyList = new ArrayList<>(atrium.keySet());
         context = ct;
     }
 
@@ -43,15 +48,19 @@ public class AtriumAdapter extends RecyclerView.Adapter<AtriumAdapter.AtriumView
     //declared final to use in the onclicklistener.
     @Override
     public void onBindViewHolder(@NonNull AtriumViewHolder atriumAdapterHolder, @SuppressLint("RecyclerView") final int position) {
-        atriumAdapterHolder.butterflyImage.setImageResource(imgs[position]);
-        atriumAdapterHolder.butterflyCount.setText(Integer.toString(counts[position]));
+        String key = keyList.get(position);
+        int image = Butterfly.Type.dbValueOf(key).getImageResource(0);
+        int count = atrium.get(key);
+
+        atriumAdapterHolder.butterflyImage.setImageResource(image);
+        atriumAdapterHolder.butterflyCount.setText(Integer.toString(count));
         atriumAdapterHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("CLICKIGN ATRIUM", "Clicked imagebutton in atrium");
 
                 Intent intent = new Intent(context, AtriumDetail.class);
-                intent.putExtra("image", imgs[position]);
+                intent.putExtra("image", image);
                 context.startActivity(intent);
             }
         });
@@ -59,7 +68,7 @@ public class AtriumAdapter extends RecyclerView.Adapter<AtriumAdapter.AtriumView
 
     @Override
     public int getItemCount() {
-        return imgs.length;
+        return atrium.size();
     }
 
     public class AtriumViewHolder extends RecyclerView.ViewHolder{

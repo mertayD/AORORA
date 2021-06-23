@@ -9,6 +9,7 @@ import android.util.Log;
 import com.example.aorora.R;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -16,11 +17,11 @@ import java.util.Map;
  */
 public class Basket extends androidx.appcompat.widget.AppCompatImageButton {
 
-    final private int IMAGE_RESOURCE = R.drawable.jar_button;
+    final private int IMAGE_RESOURCE = R.drawable.bfg_basket;
 
     boolean isViewExpanding = false;
 
-    public Map<String, Integer> basketContents;
+    public LinkedHashMap<String, Integer> basketContents;
 
     float scaleX;
     float scaleY;
@@ -41,7 +42,7 @@ public class Basket extends androidx.appcompat.widget.AppCompatImageButton {
     }
 
     private void innitBasket() {
-        basketContents = new HashMap<String, Integer>();
+        basketContents = new LinkedHashMap<String, Integer>();
         this.setImageResource(IMAGE_RESOURCE);
         scaleX = this.getScaleX();
         scaleY = this.getScaleY();

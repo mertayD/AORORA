@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 
@@ -47,7 +48,7 @@ public class UserInfo {
     @SerializedName("user_b4_count")
     private Integer user_b4_count;
     //Non-serialzed value for use in storing each count locally.
-    private Map<String, Integer> local_atrium;
+    private LinkedHashMap<String, Integer> local_atrium;
 
     @SerializedName("user_name")
     private String user_name;
@@ -257,7 +258,7 @@ public class UserInfo {
     }
     
     //Might not be what I want to do, but good in case. Will refactor later if needed.
-    public Map<String, Integer> get_local_atrium(){return local_atrium;}
+    public LinkedHashMap<String, Integer> get_local_atrium(){return local_atrium;}
 
 
     public void setUser_b4_count(Integer user_b4_count) {
@@ -268,7 +269,7 @@ public class UserInfo {
 
     public void build_atrium(){
         //Init local inventory hashmap
-        local_atrium = new HashMap<>();
+        local_atrium = new LinkedHashMap<>();
         //Populate our local HashMap, looks ugly for now, will need to make this a map in the backend likely.
         local_atrium.put("user_b0_count", this.user_b0_count);
         local_atrium.put("user_b1_count", this.user_b1_count);
